@@ -5,8 +5,8 @@ apis:
   - aid: facets:facets
     name: Facets
     tags:
-      - Infrastructure
       - Automation
+      - Infrastructure
       - Orchestration
     humanURL: https://www.facets.cloud/
     properties:
@@ -18,8 +18,8 @@ apis:
       declarative model for governed, secure and self-serve cloud operations.
 name: Facets
 tags:
-  - Infrastructure
   - Automation
+  - Infrastructure
   - Orchestration
 type: Contract
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
