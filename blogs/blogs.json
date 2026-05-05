@@ -1,0 +1,13 @@
+{
+  "repo": "facets",
+  "feeds": [
+    {
+      "source": "https://www.facets.cloud/blog",
+      "feed_url": "https://www.facets.cloud/blog/rss.xml",
+      "saved": 10,
+      "title": "Facets Blog"
+    }
+  ],
+  "post_count": 10,
+  "fetched": "2026-05-03T23:27:56Z"
+}
