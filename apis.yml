@@ -61,6 +61,10 @@ common:
     url: https://www.facets.cloud/pricing
   - type: Sign Up
     url: https://www.facets.cloud/get-started
+  - type: Integrations
+    url: https://www.facets.cloud/partners
+integrations:
+  - name: Become a Partner
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
