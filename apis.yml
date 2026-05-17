@@ -12,7 +12,7 @@ url: >-
 created: '2025-02-08'
 modified: '2026-04-28'
 specificationVersion: '0.19'
-type: Contract
+kind: contract
 position: Consumer
 access: 3rd-Party
 tags:
@@ -42,24 +42,24 @@ apis:
     properties:
       - type: Documentation
         url: https://readme.facets.cloud/
-      - type: API Reference
+      - type: APIReference
         url: https://readme.facets.cloud/reference/getting-started-with-your-api
-      - type: Getting Started
+      - type: GettingStarted
         url: https://readme.facets.cloud/docs/getting-started
-      - type: Release Notes
+      - type: ReleaseNotes
         url: https://readme.facets.cloud/changelog
 common:
   - type: Website
     url: https://www.facets.cloud/
   - type: Documentation
     url: https://readme.facets.cloud/
-  - type: API Reference
+  - type: APIReference
     url: https://readme.facets.cloud/reference
   - type: Blog
     url: https://www.facets.cloud/blog
   - type: Pricing
     url: https://www.facets.cloud/pricing
-  - type: Sign Up
+  - type: SignUp
     url: https://www.facets.cloud/get-started
   - type: Integrations
     url: https://www.facets.cloud/partners
