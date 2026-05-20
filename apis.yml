@@ -49,6 +49,8 @@ apis:
       - type: ReleaseNotes
         url: https://readme.facets.cloud/changelog
 common:
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/facets-cloud
   - type: Website
     url: https://www.facets.cloud/
   - type: Documentation
