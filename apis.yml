@@ -65,6 +65,8 @@ common:
     url: https://www.facets.cloud/get-started
   - type: Integrations
     url: https://www.facets.cloud/partners
+  - type: LLMsTxt
+    url: https://www.facets.cloud/llms.txt
 integrations:
   - name: Become a Partner
 maintainers:
