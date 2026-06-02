@@ -2,12 +2,17 @@
   "repo": "facets",
   "feeds": [
     {
-      "source": "https://www.facets.cloud/blog",
+      "source": "https://www.facets.cloud/blog/rss.xml",
       "feed_url": "https://www.facets.cloud/blog/rss.xml",
-      "title": "Facets Blog",
-      "saved": 45
+      "title": "",
+      "saved": 0,
+      "method": "feed"
+    },
+    {
+      "source": "https://readme.facets.cloud/reference",
+      "error": "HTTPError"
     }
   ],
   "post_count": 55,
-  "fetched": "2026-05-17T20:20:35Z"
+  "fetched": "2026-06-01T23:35:02Z"
 }
