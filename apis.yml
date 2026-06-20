@@ -6,7 +6,7 @@ description: >-
   model for governed, secure, and self-serve cloud operations. The Facets
   Control Plane exposes a REST API for managing blueprints, environments,
   releases, resources, and integrations across the platform.
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 url: >-
   https://raw.githubusercontent.com/api-evangelist/facets/refs/heads/main/apis.yml
 created: '2025-02-08'
@@ -32,7 +32,7 @@ apis:
       environments, releases, resources, integrations, and access control,
       enabling automation of platform engineering workflows across cloud
       providers and Kubernetes.
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     humanURL: https://www.facets.cloud/
     tags:
       - Automation
