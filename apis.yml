@@ -49,6 +49,8 @@ apis:
       - type: ReleaseNotes
         url: https://readme.facets.cloud/changelog
 common:
+  - type: DomainSecurity
+    url: security/facets-domain-security.yml
   - type: LinkedIn
     url: https://www.linkedin.com/company/facets-cloud
   - type: Website
