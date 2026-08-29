@@ -6,6 +6,17 @@ description: >-
   model for governed, secure, and self-serve cloud operations. The Facets
   Control Plane exposes a REST API for managing blueprints, environments,
   releases, resources, and integrations across the platform.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: unknown
