@@ -36,7 +36,7 @@ created: '2025-02-08'
 modified: '2026-04-28'
 specificationVersion: '0.23'
 kind: contract
-position: Consumer
+position: Consuming
 access: 3rd-Party
 tags:
   - Automation
