@@ -1,0 +1,132 @@
+generated: '2026-09-07'
+method: searched
+status: published
+source: >-
+  https://github.com/Facets-cloud/control-plane-openapi-mcp,
+  https://github.com/Facets-cloud/control-plane-mcp-server,
+  https://github.com/Facets-cloud/facets-module-mcp,
+  https://github.com/Facets-cloud/praxis-cli,
+  https://www.facets.cloud/docs/getting-started/build-with-an-ai-agent
+provider: Facets
+providerId: facets
+deployment:
+  mode: local-stdio
+  endpoint: null
+  install: uvx control-plane-openapi-mcp
+  package: https://pypi.org/project/control-plane-openapi-mcp/
+  auth: api-key
+  verified: searched
+  note: >-
+    Facets ships THREE first-party MCP servers, all as PyPI packages a human installs and
+    runs locally over stdio. There is no hosted, publicly addressable MCP endpoint an agent
+    can POST to. facets-cp-mcp-server additionally supports a --transport streamable-http
+    mode, but that server is one YOU run (default http://localhost:3000/mcp) - it is not a
+    Facets-operated URL. Separately, Facets operates a server-side MCP gateway inside each
+    customer's own control plane, reached through the `praxis mcp` CLI subcommand under the
+    org's credentials; it is real agent infrastructure but it is per-tenant and is not a
+    published https MCP endpoint, so it is recorded under gateway: below rather than as
+    deployment.endpoint. auth is api-key because every server authenticates with
+    FACETS_USERNAME plus a personal access token (HTTP Basic against the control plane).
+servers:
+  - name: control-plane-openapi
+    package: control-plane-openapi-mcp
+    registry: pypi
+    transport: stdio
+    install: uvx control-plane-openapi-mcp
+    repository: https://github.com/Facets-cloud/control-plane-openapi-mcp
+    auth:
+      style: env
+      variables: [CONTROL_PLANE_URL, FACETS_USERNAME, FACETS_TOKEN, FACETS_PROFILE]
+      credentials_file: ~/.facets/credentials
+    description: >-
+      Loads the live Control Plane OpenAPI from <CONTROL_PLANE_URL>/v3/api-docs and exposes
+      fuzzy search and detail lookup over its operations and schemas. The repository README
+      states the catalog holds 566 operations of which 17 are deprecated, leaving 549
+      active, plus 500+ schemas.
+    tools:
+      - {name: FIRST_STEP_get_api_script_guide, description: Load the API script generation guide. Call first.}
+      - {name: refresh_api_catalog, description: Re-fetch the latest OpenAPI spec from the control plane.}
+      - {name: search_api_operations, description: Fuzzy search operations by id, summary, description, tag.}
+      - {name: search_api_schemas, description: Search schemas by name and description.}
+      - {name: load_api_operation_by_operationId, description: Load full operation detail by operationId.}
+      - {name: load_api_operation_by_path_and_method, description: Load operation detail by path plus HTTP method.}
+      - {name: load_api_schema_by_schemaName, description: Load a schema's properties, types and validation.}
+      - {name: call_control_plane_api, description: Make an authenticated GET request to the Control Plane API.}
+  - name: facets-control-plane
+    package: facets-cp-mcp-server
+    registry: pypi
+    transport: stdio
+    also_supports: streamable-http
+    install: uvx facets-cp-mcp-server@latest
+    repository: https://github.com/Facets-cloud/control-plane-mcp-server
+    auth:
+      style: env
+      variables: [CONTROL_PLANE_URL, FACETS_USERNAME, FACETS_TOKEN, FACETS_PROFILE]
+    description: >-
+      Task-level tools over the control plane for project, variable, resource, environment
+      and override management. Destructive operations require explicit confirmation and
+      offer dry-run previews.
+    tools:
+      - {name: get_all_projects, category: project}
+      - {name: get_project_details, category: project}
+      - {name: use_project, category: project}
+      - {name: refresh_current_project, category: project}
+      - {name: get_secrets_and_vars, category: variable}
+      - {name: get_variable_by_name, category: variable}
+      - {name: create_variable, category: variable}
+      - {name: update_variable, category: variable}
+      - {name: delete_variable, category: variable}
+      - {name: get_variable_environment_values, category: variable}
+      - {name: update_variable_environment_value, category: variable}
+      - {name: list_available_resources, category: resource}
+      - {name: get_all_resources_by_project, category: resource}
+      - {name: get_resource_by_project, category: resource}
+      - {name: get_spec_for_resource, category: resource}
+      - {name: get_module_inputs, category: resource}
+      - {name: get_spec_for_module, category: resource}
+      - {name: get_sample_for_module, category: resource}
+      - {name: get_resource_schema_public, category: resource}
+      - {name: add_resource, category: resource}
+      - {name: update_resource, category: resource}
+      - {name: delete_resource, category: resource}
+      - {name: get_output_references, category: resource-config}
+      - {name: explain_ui_annotation, category: resource-config}
+      - {name: get_resource_output_tree, category: resource-config}
+      - {name: get_resource_management_guide, category: resource-config}
+      - {name: get_all_environments, category: environment}
+      - {name: use_environment, category: environment}
+      - {name: get_current_environment_details, category: environment}
+      - {name: get_all_resources_by_environment, category: environment}
+      - {name: get_resource_by_environment, category: environment}
+      - {name: add_or_update_override_property, category: override}
+      - {name: remove_override_property, category: override}
+      - {name: replace_all_overrides, category: override}
+      - {name: clear_all_overrides, category: override}
+      - {name: preview_override_effect, category: override}
+  - name: facets-module
+    package: facets-module-mcp
+    registry: pypi
+    transport: stdio
+    install: uvx facets-module-mcp
+    repository: https://github.com/Facets-cloud/facets-module-mcp
+    description: MCP server for authoring, validating and publishing Facets Terraform modules.
+    tools: []
+    tools_note: Tool list not enumerated - the repository README documents a module-authoring workflow rather than a tool table.
+gateway:
+  name: Praxis MCP gateway
+  reachable_via: praxis mcp [<mcp> <fn>] --json
+  hosted: per-tenant, inside the customer's own control plane
+  published_endpoint: null
+  namespaces:
+    - {name: k8s_cli, description: Read-only kubectl against connected clusters; credentials resolved server-side.}
+    - {name: cloud_cli, description: Read-only aws / gcloud / az against the org's cloud integrations; mutating verbs blocked at the validator.}
+    - {name: catalog_ops, description: List registered repos, search GitHub, register newly discovered repos.}
+  note: >-
+    Facets documents that "MCP tools run server-side under your organisation's managed
+    credentials" so the developer's laptop needs no AWS, Kubernetes or Terraform
+    credentials. The live namespace list is per-org - `praxis mcp` with no arguments returns
+    it - so the three above are the ones the praxis-cli README names, not an exhaustive
+    catalog. NOT recorded as deployment.endpoint because no https MCP URL is published.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

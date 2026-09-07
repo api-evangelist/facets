@@ -1,0 +1,83 @@
+generated: '2026-09-07'
+method: searched
+source: https://www.facets.cloud/docs/changelog
+provider: Facets
+providerId: facets
+url: https://www.facets.cloud/docs/changelog
+scheme: platform-release-train
+cadence: roughly monthly
+current_version: '0.94'
+current_date: '2026-09-02'
+note: >-
+  This is a PLATFORM changelog, not an API changelog. It records product capability by
+  release train and does not call out API additions, signature changes or removals, so a
+  consumer cannot use it to tell whether an endpoint they depend on changed. Facets marks 14
+  operations deprecated:true in the OpenAPI itself, but no changelog entry announces a
+  deprecation. Recent window only - the live changelog carries entries back to v0.58.
+entries:
+  - version: '0.94'
+    date: '2026-09-02'
+    url: https://www.facets.cloud/docs/changelog/release-notes-v094
+    breaking: false
+    highlights:
+      - Web components sourced from a Git repository or a bundle upload, scoped to a project or environment.
+      - Built-in ci-user service account for automation.
+      - Linked GitHub, GitLab and Bitbucket accounts now work automatically in Praxis.
+      - Parallel releases for every resource type.
+  - version: '0.93'
+    date: '2026-08-04'
+    url: https://www.facets.cloud/docs/changelog/release-notes-v093
+    breaking: false
+    highlights:
+      - No-code release approval gates.
+      - Operational actions generated with your modules.
+      - Git-backed module registry with generated CI.
+      - Shared GitHub App installation with permission health surfaced in Facets.
+  - version: '0.92'
+    date: '2026-07-13'
+    url: https://www.facets.cloud/docs/changelog/release-notes-v092
+    breaking: false
+    highlights:
+      - Per-user credit allocation for Praxis, capping an individual's share of the shared AI budget per billing cycle.
+      - 'AI Permissions on roles: AI actions can be restricted to a subset and can never exceed the role''s own non-Kubernetes permissions.'
+      - Alert Doctor - an autonomous agent that refines Prometheus alert rules and verifies each change landed in the cluster.
+  - version: '0.91'
+    date: '2026-06-26'
+    url: https://www.facets.cloud/docs/changelog/release-notes-v091
+    breaking: false
+    highlights:
+      - Praxis CLI - brings Praxis to the terminal.
+      - Agent Duties (scheduled agents), Infrastructure Catalog, cross-cloud cost projections.
+  - version: '0.90'
+    date: '2026-05-07'
+    url: https://www.facets.cloud/docs/changelog/release-notes-v090
+    breaking: false
+    highlights:
+      - New React-powered control-plane UI, replacing the Angular interface.
+  - version: '0.89'
+    date: '2026-03-26'
+    url: https://www.facets.cloud/docs/changelog/release-notes-v089
+    breaking: false
+    highlights:
+      - Audit log notifications.
+      - Praxis activity attribution in audit logs.
+      - Import project type from library.
+  - version: '0.88'
+    date: '2026-02-24'
+    url: https://www.facets.cloud/docs/changelog/release-notes-v088
+    breaking: false
+    highlights:
+      - AI-driven Incident Responder.
+      - Conversational Web Component Builder.
+      - Usage dashboard for AI agent costs.
+  - version: '0.87'
+    date: '2026-01-30'
+    url: https://www.facets.cloud/docs/changelog/release-notes-v087
+    breaking: false
+    highlights:
+      - React-based UI rollout.
+      - Further Praxis incident-responder work.
+history_depth: 'v0.58 through v0.94 are all published, each on its own release-notes page under /docs/changelog/.'
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

@@ -1,0 +1,107 @@
+generated: '2026-09-07'
+method: derived
+source: >-
+  Derived from openapi/_original/facets-control-plane-openapi.json (harvested 2026-09-07)
+  and searched against https://www.facets.cloud/docs and
+  https://www.facets.cloud/product/deployment.
+provider: Facets
+providerId: facets
+standards:
+  - id: openapi-3.0
+    conforms: true
+    evidence: 'openapi: 3.0.1 at the document root of openapi/_original/facets-control-plane-openapi.json, served live at https://facetsdemo.console.facets.cloud/v3/api-docs (HTTP 200).'
+  - id: http-basic-auth
+    conforms: true
+    evidence: 'components.securitySchemes.basicAuth {type: http, scheme: basic}; document-level security requires it. Confirmed in prose at https://www.facets.cloud/docs/api/recipes/authentication-setup.'
+  - id: oauth2
+    conforms: false
+    evidence: >-
+      No oauth2 securityScheme in the spec. Facets does support OAuth/OIDC and SAML for
+      HUMAN sign-in to the control plane (Google, Okta, Azure AD, OneLogin, JumpCloud,
+      generic SSO - https://www.facets.cloud/docs/features-and-guides/authentication-and-sso),
+      but the API itself is Basic-auth only. Recorded false deliberately: the API surface,
+      not the console login, is what this entry measures.
+  - id: oidc
+    conforms: false
+    evidence: 'No openIdConnect securityScheme; /.well-known/openid-configuration returns 404 on www.facets.cloud and is answered only by the console SPA catch-all. See well-known/facets-well-known.yml.'
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: 'Zero occurrences of application/problem+json in the 1.05 MB spec. Errors use a bespoke {code, message} envelope (components.schemas.ErrorDetails).'
+  - id: rfc8594-sunset-header
+    conforms: false
+    evidence: No Sunset or Deprecation response header is declared anywhere in the spec, although 14 operations carry deprecated:true.
+  - id: idempotency-key
+    conforms: false
+    evidence: Zero occurrences of "idempoten" in the spec; no idempotency-key header, parameter or documented convention. See conventions/facets-conventions.yml.
+  - id: json-api
+    conforms: false
+    evidence: Plain application/json request and response bodies; no JSON:API media type or document structure.
+  - id: pagination
+    conforms: partial
+    evidence: >-
+      Only three of 519 paths declare pagination parameters, and they disagree:
+      offset/limit/sort on /cc-ui/v1/artifactHub/search-packages, size on
+      /cc-ui/v1/audit-logs, page on /cc-ui/v1/stacks/clusters. Collection endpoints such as
+      getStacks and getAllArtifactories return unbounded arrays.
+  - id: json-schema
+    conforms: true
+    evidence: >-
+      /public/v1/module/{intent}/{flavor}/{version}/schema (operationId getModuleSchema)
+      serves JSON Schema documents describing module inputs; Facets documents x-ui
+      annotations layered on those schemas at
+      https://www.facets.cloud/docs/modules/form-ui-with-x-ui-tags.
+  - id: mcp
+    conforms: true
+    evidence: 'Three first-party MCP servers on PyPI plus a per-tenant server-side MCP gateway. See mcp/facets-mcp.yml.'
+  - id: a2a
+    conforms: false
+    evidence: No agent card served at /.well-known/agent-card.json or /.well-known/agent.json on any host. See well-known/facets-well-known.yml.
+  - id: asyncapi
+    conforms: false
+    evidence: >-
+      No AsyncAPI document published. Facets does operate an event/webhook surface
+      (notification channels and subscriptions) - captured in
+      asyncapi/facets-webhooks.yml - but describes it only in prose.
+  - id: openapi-overlay
+    conforms: false
+    evidence: No provider-published Overlay. The overlay in overlays/ is ours, not theirs.
+  - id: terraform-provider-protocol
+    conforms: true
+    evidence: 'Facets-cloud/facets v1.3.0 published on the Terraform Registry (community tier), https://registry.terraform.io/providers/Facets-cloud/facets/latest.'
+  - id: custom-elements-v1
+    conforms: true
+    evidence: >-
+      The Facets Web Components SDK requires components to extend HTMLElement, attach Shadow
+      DOM and register with customElements.define() - the browser-native Custom Elements v1
+      standard. https://www.facets.cloud/docs/web-components/manual-guide/developer-guide
+domain_standard:
+  probed: true
+  found: false
+  note: >-
+    REWARD-ONLY CHECK, AND FACETS DOES NOT TRIP IT - which is not a mark against them.
+    Platform engineering / infrastructure orchestration has no adopted machine-readable
+    interoperability standard for a control plane the way SCIM covers identity or FHIR
+    covers health records. We probed the spec for the shapes that would count: no SCIM
+    schema URNs, no OData $metadata, no OpenRTB, no Sparkplug topic namespace, no
+    ActivityPub actor, no LTI/OneRoster, no OAI-PMH verb, no HL7v2/X12/EDIFACT/ISO-20022
+    message type. The nearest thing to a domain contract Facets speaks is Terraform/OpenTofu
+    HCL and the Kubernetes API, both of which it consumes rather than exposes. No conformance
+    is asserted here, because inventing one to fill the slot would be a fabrication.
+compliance:
+  published: true
+  claims:
+    - certification: ISO 27001
+      evidence: 'Named under a "Compliant" heading on https://www.facets.cloud/product/deployment (HTTP 200, fetched 2026-09-07).'
+    - certification: SOC 2
+      evidence: 'Named under a "Compliant" heading on https://www.facets.cloud/product/deployment (HTTP 200, fetched 2026-09-07).'
+  note: >-
+    Facets names ISO 27001 and SOC 2 on its deployment/security marketing page and sells an
+    Enterprise tier on "Advanced security & compliance" (https://www.facets.cloud/pricing).
+    It publishes NO trust center, NO audit report portal and NO security.txt - probing
+    trust.facets.cloud and security.facets.cloud returned NXDOMAIN, and
+    /security, /trust and /compliance on www.facets.cloud all returned 404. The claim is
+    therefore a marketing assertion with no machine-readable or downloadable evidence
+    behind it. Recorded at that strength, not stronger.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

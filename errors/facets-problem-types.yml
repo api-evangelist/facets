@@ -1,0 +1,84 @@
+generated: '2026-09-07'
+method: derived
+source: >-
+  Derived from the 4xx/5xx responses of all 627 tagged operations in
+  openapi/_original/facets-control-plane-openapi.json (harvested 2026-09-07). Searched
+  https://www.facets.cloud/docs for an error reference page; none exists.
+provider: Facets
+providerId: facets
+format: custom
+media_type: application/json
+rfc9457: false
+note: >-
+  The Facets Control Plane is a springdoc-generated Spring Boot API and its error contract is
+  uniform to the point of being uninformative: EVERY one of the 627 tagged operations
+  declares exactly the same six error responses - 400, 403, 404, 405, 409, 500 - each with
+  the same schema and the same one-word description. There is no per-operation error
+  documentation, no error code registry, and no prose error reference in the docs. What an
+  agent can rely on is the envelope shape; what it cannot get from the published contract is
+  the set of `code` values the API actually returns, because the spec types `code` as an
+  open string with no enum. That gap is recorded here rather than filled in.
+envelope:
+  schema: ErrorDetails
+  fields:
+    - {name: code, type: string, enumerated: false, note: Open string. No enum, no registry, no docs page listing possible values.}
+    - {name: message, type: string, note: Human-readable message.}
+  variant:
+    schema: GithubAppPermissionsPendingErrorDetails
+    used_on: 'The 400 response of many operations, via oneOf with ErrorDetails.'
+    fields: [approvalUrl, code, errorCode, message, missingPermissions]
+    note: >-
+      The one genuinely actionable error shape in the API. When a GitHub App installation is
+      missing permissions, the 400 body carries missingPermissions[] and an approvalUrl an
+      operator (or an agent, with a human at the browser) can follow to grant them.
+problems:
+  - status: 400
+    title: Bad Request
+    schema: 'oneOf [ErrorDetails, GithubAppPermissionsPendingErrorDetails]'
+    occurrences: 627
+    remediation: >-
+      Inspect the body. If it carries missingPermissions[] and approvalUrl, the call failed
+      because the linked GitHub App lacks a permission - send a human to approvalUrl. Otherwise
+      it is a validation failure on the request body; re-read the operation's requestBody
+      schema in the spec.
+  - status: 403
+    title: Forbidden
+    schema: string
+    occurrences: 627
+    remediation: >-
+      Credentials are valid but the role lacks the permission. Facets caps AI-agent
+      permissions at or below the acting user's own (AI Permissions, release v0.92), so an
+      agent can see a 403 on an operation the human it acts for could perform. Check the
+      user's role and its AI Permissions setting.
+    note: The only response in the API whose schema is a bare string rather than ErrorDetails.
+  - status: 404
+    title: Not Found
+    schema: ErrorDetails
+    occurrences: 627
+    remediation: The named stack, cluster, resource, module or artifact does not exist. Note that Facets names the same object differently across layers - a "project" in the MCP/CLI surface is a "stack" in REST, an "environment" is a "cluster".
+  - status: 405
+    title: Method Not Allowed
+    schema: ErrorDetails
+    occurrences: 627
+    remediation: Wrong HTTP verb for the path. Declared on every operation by the framework rather than because every operation can return it.
+  - status: 409
+    title: Conflict
+    schema: ErrorDetails
+    occurrences: 627
+    remediation: >-
+      State conflict - a name already taken, a release already running on the environment, a
+      resource already enabled. THE API HAS NO IDEMPOTENCY MECHANISM, so a retried write that
+      partially succeeded will surface here rather than replaying safely. Read the current
+      state before retrying.
+  - status: 500
+    title: Internal Server Error
+    schema: ErrorDetails
+    occurrences: 627
+    remediation: Server-side failure. Safe to retry only for reads; see the idempotency warning in conventions/facets-conventions.yml before retrying a write.
+absent:
+  - {status: 401, note: "NOT declared on any operation, even though the whole API is HTTP Basic. An unauthenticated request to /cc/v3/api-docs was observed returning 401 with a JSON body, so the API does return 401 - the generated spec simply does not document it."}
+  - {status: 429, note: No rate-limit response is declared anywhere. See rate-limits/facets-rate-limits.yml.}
+  - {status: 422, note: Validation failures surface as 400.}
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

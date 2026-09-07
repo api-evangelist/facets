@@ -1,0 +1,52 @@
+generated: '2026-09-07'
+method: generated
+provider: Facets
+providerId: facets
+source: >-
+  Authored by API Evangelist against openapi/_original/facets-control-plane-openapi.json
+  (harvested 2026-09-07) and https://www.facets.cloud/docs. Every operationId referenced in
+  every skill was grepped and verified to exist verbatim in the spec.
+note: >-
+  Facets publishes its OWN agent skills too, and they are the better source when you have
+  access: `praxis login` installs the organisation's skill catalogue from the control plane,
+  and `raptor install-skills --agent claude` installs the CLI skills that ship inside the
+  raptor binary. Both are per-tenant and could not be harvested from outside a customer
+  account. These four skills are the catalog-side complement - grounded in the public
+  OpenAPI, usable against any Facets control plane, and written for direct REST callers
+  rather than for raptor.
+skills:
+  - file: facets-discover-projects-and-environments.md
+    name: Discover Facets projects and environments
+    api: openapi/facets-control-plane-openapi.yml
+    operations: [healthCheck, getStacks, getStack, getClusters, getClusterCommon, getClusterState, getLatestRelease]
+    risk: read-only
+  - file: facets-register-artifact-and-release.md
+    name: Register a build and release it to an environment
+    api: openapi/facets-control-plane-openapi.yml
+    operations: [getArtifactCiByName, registerArtifactV2, getArtifactsForCI, promoteArtifact, createDeployment, releaseV2, getDeployment, getDeploymentLogs, getReleaseChanges, abortRelease]
+    risk: changes cloud infrastructure - requires human confirmation
+  - file: facets-rollback-a-release.md
+    name: Roll a Facets release back to a known-good state
+    api: openapi/facets-control-plane-openapi.yml
+    operations: [getDeployments, getDeployment, getLatestRelease, triggerRollbackPlanRelease, getReleaseChanges, getDeploymentLogs, abortRelease]
+    risk: two-phase - the plan is safe, the apply changes cloud infrastructure
+  - file: facets-manage-project-variables.md
+    name: Manage Facets project variables and secrets
+    api: openapi/facets-control-plane-openapi.yml
+    operations: [getStack, addVariable, addVariablesBulk, updateVariable, deleteVariables, getVariableAcrossEnvironments, getAllVariableUsages, getVariableUsages, getVariableCounts]
+    risk: handles secrets - never echo values
+  - file: facets-wire-notifications.md
+    name: Wire Facets notifications to a channel
+    api: openapi/facets-control-plane-openapi.yml
+    operations: [getAllChannelTypes, getAllChannels, createNotificationChannel, testNotificationChannel, getAllNotificationTypes, getSubscriptionAttributes, getNotificationTagsForNotificationType, createSubscription, getAllSubscriptions, editSubscription]
+    risk: handles channel credentials - never echo authorizationHeader or integrationKey
+shared_rules:
+  - 'Base URL is per-tenant: https://{account-id}.console.facets.cloud. There is no shared API host.'
+  - 'Auth is HTTP Basic - sign-in email as username, a personal access token as password.'
+  - 'REST says stack/cluster where the product says project/environment. Translate before every call.'
+  - 'There is NO idempotency mechanism. Never blind-retry a write; re-read state and decide.'
+  - 'No rate limits and no 429 are published. Back off conservatively anyway.'
+  - 'Errors are {code, message}, not RFC 9457. 401 is returned but not declared in the spec.'
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

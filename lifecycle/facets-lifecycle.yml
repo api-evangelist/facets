@@ -1,0 +1,90 @@
+generated: '2026-09-07'
+method: searched
+source: >-
+  https://www.facets.cloud/docs/changelog, https://www.facets.cloud/docs/support/support-model,
+  https://www.facets.cloud/docs/features-and-guides/cli/unsupported-versions,
+  https://www.facets.cloud/pricing, plus deprecated:true operations derived from
+  openapi/_original/facets-control-plane-openapi.json.
+provider: Facets
+providerId: facets
+versioning:
+  scheme: uri-path
+  api_versions: [v1]
+  current: v1
+  note: >-
+    Two things version independently and it matters. The API PATH version has been v1 since
+    the product shipped - every operation sits under /cc-ui/v1, /public/v1, /public-ui/v1 or
+    /api. The PLATFORM version moves on a roughly monthly release train (v0.94 as of
+    2026-09-02) and is what the changelog tracks. A "v2" appears only as an operation-level
+    suffix (createStackV2, registerArtifactV2, releaseV2, getResourceByNameV2) alongside the
+    v1 original, never as a new path version. Consequence for a consumer: there is no version
+    negotiation, no version header, and no way to pin - you get whatever the control plane
+    you are pointed at is running.
+  spec_version:
+    field: info.version
+    value: '1.0'
+    note: The generated spec's info.version is the constant string "1.0" and does not track the platform release.
+release_train:
+  cadence: roughly monthly
+  current: '0.94'
+  current_date: '2026-09-02'
+  changelog: https://www.facets.cloud/docs/changelog
+  note: Self-hosted (Enterprise) customers run the control plane in their own VPC, so the version an API consumer faces depends on when that customer upgraded.
+deprecation:
+  policy_url: null
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  note: >-
+    Facets publishes NO API deprecation policy - no notice period, no sunset dates, no RFC
+    8594 Sunset/Deprecation headers, and no removal log. It does mark 14 operations
+    deprecated:true in the spec, which is a real signal and better than nothing, but nothing
+    tells a consumer how long a deprecated operation will keep working. The one lifecycle
+    policy Facets does publish is for the CLI, not the API:
+    https://www.facets.cloud/docs/features-and-guides/cli/unsupported-versions.
+  in_spec_signal: true
+deprecated_operations:
+  - {operationId: registerArtifact, method: POST, path: /cc-ui/v1/artifacts/register, replacement: registerArtifactV2}
+  - {operationId: deleteOverrides, method: DELETE, path: '/cc-ui/v1/clusters/{clusterId}/overrides/{resourceType}/{resourceName}'}
+  - {operationId: getResourceByName, method: GET, path: '/cc-ui/v1/clusters/{clusterId}/{resourceType}/{appName}', replacement: getResourceByNameV2}
+  - {operationId: getApplicationOverrides, method: GET, path: '/cc-ui/v1/clusters/{clusterId}/{resourceType}/{appName}/overrides', replacement: getResourceOverrideObject}
+  - {operationId: getRegions, method: GET, path: '/cc-ui/v1/dropdown/{cloud}/regions'}
+  - {operationId: getOutputReferences, method: GET, path: '/cc-ui/v1/dropdown/{stackName}/output/{outputType}/references'}
+  - {operationId: getResourceHistoriesByStack, method: GET, path: '/cc-ui/v1/dropdown/{stackName}/resourceType/{resourceType}/resourceName/{resourceName}/resource-history'}
+  - {operationId: registerWebhook, method: POST, path: /cc-ui/v1/onetime-webhook/register}
+  - {operationId: getClustersWithStatus, method: GET, path: '/cc-ui/v1/stacks/{stackName}/clustersWithStatus'}
+  - {operationId: getResourceTypes, method: GET, path: '/cc-ui/v1/stacks/{stackName}/suggestions/resourceType'}
+  - {operationId: getResourcesByTypes, method: GET, path: '/cc-ui/v1/stacks/{stackName}/suggestions/resourceType/{resourceType}'}
+  - {operationId: syncStackWithGit, method: GET, path: '/cc-ui/v1/stacks/{stackName}/sync-with-git', replacement: stackSyncWithGit}
+  - {operationId: getApplicationList, method: GET, path: '/cc-ui/v1/stacks/{stackName}/{resourceType}/'}
+  - {operationId: getTfVersionsForStream, method: GET, path: '/cc-ui/v1/terraform/stream/{tfStream}/versions'}
+deprecated_operation_count: 14
+sla:
+  url: null
+  uptime_target: null
+  note: >-
+    No published SLA. https://www.facets.cloud/pricing offers "Custom SLA guarantees" only on
+    the Enterprise (self-hosted, custom-contract) tier, so any SLA is negotiated per contract
+    and not public. The SaaS tier's support commitment is "Standard support" plus a 24x7
+    Slack community.
+support:
+  model_url: https://www.facets.cloud/docs/support/support-model
+  ticket_url: https://www.facets.cloud/docs/support/raise-a-support-ticket
+  email: support@facets.cloud
+  tiers:
+    - {name: Growth, hosting: Facets cloud, rbac: basic, support: 24x7 Slack community}
+    - {name: Enterprise, hosting: customer VPC, rbac: comprehensive, support: 'dedicated Slack channels, onboarding support, consultation calls, 24/7 priority'}
+  note: Support tickets are raised through ClickUp, not a first-party portal.
+status_page:
+  url: null
+  probed:
+    - {url: 'https://status.facets.cloud/', result: NXDOMAIN}
+    - {url: 'https://facets.statuspage.io/', result: 'redirects to atlassian.com/software/statuspage - not a Facets page'}
+  note: >-
+    Facets operates NO public status page. This is a real gap for a SaaS control plane, and
+    is partly explained by the deployment model - Enterprise customers self-host, so there is
+    no single shared plane whose uptime could be published. It does not explain the absence
+    for the Facets-hosted SaaS tier.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

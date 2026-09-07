@@ -1,0 +1,185 @@
+generated: '2026-09-07'
+method: derived
+source: >-
+  Derived from components.schemas (582 schemas) and path parameters in
+  openapi/_original/facets-control-plane-openapi.json (harvested 2026-09-07). Naming
+  reconciled against https://www.facets.cloud/docs.
+provider: Facets
+providerId: facets
+note: >-
+  Relationships in this API are carried by NAME STRINGS, not by nested objects or typed
+  references. Stack.name, AbstractCluster.stackName, Artifact.clusterId,
+  OverrideObject.resourceName - the graph is joinable but nothing in the schema declares the
+  join, so every `via` field below was derived by matching a field name to the path parameter
+  that addresses the owning entity. Two schema quirks worth knowing before you model against
+  it: the spec exposes AbstractCluster rather than a concrete Cluster type, and several
+  entities carry a `versioningKey` string that is the handle the blueprint version history
+  is keyed on.
+naming:
+  warning: The REST names and the product names differ. Both are given on every entity.
+  map:
+    - {rest: Stack, product: Project, path_param: stackName}
+    - {rest: Cluster / AbstractCluster, product: Environment, path_param: clusterId}
+    - {rest: DeploymentLog, product: Release, path_param: deploymentId}
+    - {rest: Artifact, product: Build, path_param: artifactId}
+    - {rest: ArtifactCI, product: Artifact (the named CI integration), path_param: ciId / ciName}
+entities:
+  - name: Stack
+    product_name: Project
+    id_field: name
+    also: [id, versioningKey]
+    property_count: 41
+    read: [getStacks, getStack, getStackWithAccount, getProjectOverview]
+    write: [createStack, createStackV2, createProject, updateStack, deleteStack, createSubStack]
+    relationships:
+      - {type: has_many, target: AbstractCluster, via: stackName, note: 'A project owns its environments. getClusters reads them.'}
+      - {type: has_many, target: Variables, via: 'stackVars / clusterVariablesMeta', note: 'Project-level variables and secrets.'}
+      - {type: has_many, target: Stack, via: childStacks, note: 'Sub-stacks. autoEnabledSubStacks names the ones enabled by default.'}
+      - {type: belongs_to, target: Account, via: accountId}
+      - {type: belongs_to, target: Account, via: versionControlAccountId, note: The VCS account the blueprint repo lives in.}
+      - {type: belongs_to, target: Account, via: coderAccountId}
+      - {type: has_many, target: Artifactory, via: artifactories}
+      - {type: has_many, target: FacetsResource, via: providedResources}
+      - {type: belongs_to, target: ProjectType, via: projectTypeId}
+      - {type: has_one, target: OverrideConfig, via: overrideConfig}
+      - {type: has_many, target: Subscription, via: stackName}
+  - name: AbstractCluster
+    product_name: Environment
+    id_field: id
+    also: [name, clusterCode, versioningKey]
+    property_count: 36
+    read: [getClusterCommon, getClusterInfo, getClusterMetadata, getClusters, getAllClusters, getClusterInfoByName]
+    write: [createDraftCluster_1, updateDraftCluster, createClusterUsingPOST2, createAzureCluster, deleteCluster, deleteClusterForce, destroyCluster, launchCluster]
+    relationships:
+      - {type: belongs_to, target: Stack, via: stackName}
+      - {type: belongs_to, target: AbstractCluster, via: baseClusterId, note: 'Dependent environments inherit from a base environment. baseClusterName is the human handle.'}
+      - {type: has_many, target: DeploymentLog, via: clusterId}
+      - {type: has_many, target: Artifact, via: clusterId}
+      - {type: has_many, target: OverrideObject, via: clusterId}
+      - {type: belongs_to, target: CloudAccount, via: cloudAccountId}
+      - {type: has_many, target: AvailabilitySchedule, via: clusterId}
+    lifecycle_fields: [clusterState, isEphemeral, pauseReleases, requireSignOff, enableAutoSignOff, deleted]
+  - name: DeploymentLog
+    product_name: Release
+    id_field: id
+    property_count: 40
+    read: [getDeployments, getDeployment, getDeploymentLogs, getLatestRelease, getDeploymentByReleaseTraceId, getReleaseChanges, getReleaseMetadata]
+    write: [createDeployment, release, releaseV2, abortRelease, triggerRollbackPlanRelease, triggerMaintenanceRelease]
+    relationships:
+      - {type: belongs_to, target: AbstractCluster, via: clusterId}
+      - {type: belongs_to, target: DeploymentLog, via: rollbackDeploymentId, note: 'THE REVERSIBILITY EDGE. A rollback release points at the release it restores.'}
+      - {type: belongs_to, target: DeploymentLog, via: approvedReleaseId}
+      - {type: has_many, target: AppDeployment, via: appDeployments}
+      - {type: has_many, target: TerraformChange, via: changesApplied}
+      - {type: has_many, target: ValidationResponse, via: validationResponses}
+      - {type: has_many, target: FacetsResource, via: hotfixResources}
+      - {type: has_many, target: Label, via: labelIds}
+    key_fields:
+      - {name: deploymentContextFilePath, note: 'The S3 pointer that makes a release a valid rollback target. A release without it cannot be rolled back to.'}
+      - {name: releaseTraceId, note: The only correlation handle in the API; getDeploymentByReleaseTraceId reads by it.}
+      - {name: releaseType, note: 'Includes ROLLBACK_PLAN and APPLY ROLLBACK PLAN, which is how the two-phase rollback is modelled as data.'}
+      - {name: status}
+      - {name: currentPhase}
+  - name: Artifact
+    product_name: Build
+    id_field: id
+    property_count: 26
+    read: [getArtifactByClusterId, getArtifactsForCI, getArtifactsByResourceNameAndResourceType]
+    write: [registerArtifact, registerArtifactV2, registerArtifactByEnv, registerArtifactByReleaseStream, promoteArtifact, deleteArtifact]
+    relationships:
+      - {type: belongs_to, target: AbstractCluster, via: clusterId}
+      - {type: belongs_to, target: ArtifactoryEntry, via: artifactory}
+      - {type: belongs_to, target: ArtifactRoutingRule, via: appliedRuleId}
+      - {type: has_one, target: ReleaseStream, via: releaseStream}
+    key_fields: [artifactUri, buildId, tag, repositoryName, promoted, metadata]
+  - name: ArtifactCI
+    product_name: Artifact (the named CI integration)
+    id_field: id
+    also: [ciName]
+    property_count: 10
+    read: [getAllArtifactsCI, getArtifactCI, getArtifactCiByName, getArtifactCisByStack]
+    write: [createArtifactCI, updateArtifactCI, deleteArtifactCI]
+    relationships:
+      - {type: belongs_to, target: Stack, via: stackName}
+      - {type: has_many, target: Artifact, via: ciName}
+      - {type: belongs_to, target: PromotionWorkflow, via: promotionWorkflowId}
+      - {type: belongs_to, target: ArtifactRoutingRule, via: ruleId}
+  - name: OverrideObject
+    product_name: Environment override
+    id_field: id
+    property_count: 11
+    read: [getResourceOverrideObject, getOverrides, getOverrides_1]
+    write: [postResourceOverrideObject, deleteOverrides, deleteOverridesFields]
+    relationships:
+      - {type: belongs_to, target: AbstractCluster, via: clusterId, note: Addressed by path, not by a field on the object.}
+      - {type: belongs_to, target: FacetsResource, via: 'resourceType + resourceName'}
+    note: 'The whole override document is one opaque `overrides` object. There is no per-property patch operation - the MCP layer''s add_or_update_override_property is a client-side read-modify-write.'
+  - name: Variables
+    product_name: Variable / Secret
+    id_field: 'name (path parameter variableName)'
+    property_count: 5
+    read: [getVariableAcrossEnvironments, getAllVariableUsages, getVariableUsages, getVariableCounts]
+    write: [addVariable, addVariables, addVariablesBulk, updateVariable, updateVariables, deleteVariables]
+    relationships:
+      - {type: belongs_to, target: Stack, via: stackName}
+    key_fields: [secret, global, status, value, description]
+    gap: 'No GET lists a project''s variables. The MCP server''s get_secrets_and_vars composes this; the REST API does not expose it.'
+  - name: FacetsResource
+    product_name: Resource
+    id_field: 'resourceType + resourceName'
+    read: [getDesignerResources, getResourceByNameV2, resourceDetails, getProvidedResources, getResourceHistory]
+    write: [createResources, createResources_1, updateResources, updateResources_1, deleteResources, renameResource, bulkToggleResources, bulkEnableDisableResources]
+    relationships:
+      - {type: belongs_to, target: Stack, via: stackName}
+      - {type: has_one, target: Module, via: 'intent + flavor + version'}
+      - {type: has_many, target: OverrideObject, via: 'resourceType + resourceName'}
+      - {type: has_many, target: Artifact, via: applicationName}
+    note: 'A resource is addressed by a COMPOSITE key (resourceType, resourceName) throughout, never by an id.'
+  - name: User
+    id_field: id
+    also: [userName]
+    property_count: 11
+    read: [getUsers]
+    write: [createUser, createUserCC, updateUser]
+    relationships:
+      - {type: has_many, target: UserGroup, via: groupIds}
+      - {type: has_many, target: Role, via: roles}
+      - {type: has_many, target: AbstractCluster, via: clusterIds}
+    key_fields: [serviceAccount, teams]
+  - name: Subscription
+    product_name: Notification subscription
+    id_field: id
+    property_count: 12
+    read: [getAllSubscriptions, getAllSubscriptions_1, getSubscription]
+    write: [createSubscription, createSubscription_1, editSubscription, deleteSubscription]
+    relationships:
+      - {type: belongs_to, target: Stack, via: stackName}
+      - {type: belongs_to, target: NotificationChannel, via: channelId}
+    key_fields: [notificationType, filters, payloadJson, channelType, test]
+  - name: NotificationChannel
+    id_field: id
+    property_count: 8
+    read: [getAllChannels, getChannel, getAllChannelTypes]
+    write: [createNotificationChannel, editNotificationChannel, deleteNotificationChannel, testNotificationChannel]
+    key_fields: [channelType, channelAddress, authorizationHeader, integrationKey, emailAddresses]
+    note: 'channelAddress is the outbound webhook URL. See asyncapi/facets-webhooks.yml.'
+  - name: Account
+    variants: [AwsAccount, AzureAccount, GcpAccount, KubernetesAccount, GitHubAccount, GitLabAccount, BitBucketAccount, CoderAccount]
+    id_field: id
+    read: [getAllAccounts, getAccount, getAccountByName, getAccountsByType]
+    write: [createAwsAccount, createGcpAccount, createAzureAccount, createKubernetesAccount, createGitHubAccount, createGitLabAccount, createBitBucketAccount, deleteAccount]
+    note: 'Each cloud/VCS provider gets its own schema (19-21 properties each) rather than one polymorphic Account type.'
+  - name: ResourceGroup
+    id_field: id
+    property_count: 8
+    note: RBAC grouping. Relates to ResourceInfo entries rather than to FacetsResource directly.
+graph_summary:
+  root: Stack
+  spine: Stack -> AbstractCluster -> DeploymentLog
+  join_style: name-string and composite-key joins; no nested objects, no HAL/JSON:API links, no id prefixes
+  id_prefixes: none - ids are opaque strings with no type prefix, so an id alone does not tell you what it addresses
+  schema_count: 582
+  error_schemas: [ErrorDetails, GithubAppPermissionsPendingErrorDetails]
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

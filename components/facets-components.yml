@@ -1,0 +1,64 @@
+generated: '2026-09-07'
+method: searched
+source: >-
+  https://www.facets.cloud/docs/web-components,
+  https://www.facets.cloud/docs/web-components/manual-guide/developer-guide,
+  https://www.facets.cloud/docs/web-components/via-praxis,
+  https://www.facets.cloud/docs/changelog/release-notes-v094,
+  https://github.com/Facets-cloud/webcomponents-bundle
+provider: Facets
+providerId: facets
+note: >-
+  Facets' embeddable-UI story is the inverse of the usual one. Most providers ship a library
+  of THEIR components for you to drop into YOUR app. Facets ships a contract for YOU to build
+  components that render inside THEIR control plane. There is no Facets element library, no
+  npm loader package and no CDN bundle to import; there is a registration mechanism, a
+  runtime contract, and a set of reference components published as separate GitHub repos.
+families:
+  - name: Facets Web Components SDK
+    kind: host-embedded custom elements
+    docs: https://www.facets.cloud/docs/web-components
+    standard: Custom Elements v1 + Shadow DOM (browser-native, no framework, no build step)
+    runtime_contract:
+      loader: >-
+        Facets fetches your .js file from the remoteURL you registered and injects it as
+        <script type="text/javascript"> - NOT as an ES module.
+      constraints:
+        - No import or export statements - ES module syntax throws a SyntaxError.
+        - No top-level await.
+        - No external dependencies; everything inlined in a single self-contained .js file.
+        - Must call customElements.define() at top level, not inside a function.
+        - Must attachShadow({mode:'open'}) in the constructor and query via this.shadowRoot.
+      lifecycle: [constructor, connectedCallback, disconnectedCallback, attributeChangedCallback]
+      context: Facets passes contextual attributes (user data, custom config) and renders the element in an isolated container in the sidebar or a tab.
+    registration:
+      via_ui: Register a component against a Facets instance with a remoteURL.
+      via_api: 'ui-web-component-controller - 6 operations in openapi/facets-control-plane-openapi.yml.'
+      scoping: 'Since release v0.94, components can be sourced from a Git repository or a bundle upload and scoped to a project or an environment.'
+    integration_paths:
+      - {name: Via Praxis, docs: https://www.facets.cloud/docs/web-components/via-praxis, note: 'A single Praxis conversation scaffolds the component, deploys it to GitHub Pages and registers it.'}
+      - {name: Manual, docs: https://www.facets.cloud/docs/web-components/manual-guide, guides: [developer-guide, api-integration-guide, deployment-guide, testing-guide, sample-web-component]}
+    use_cases:
+      - Custom dashboards over Facets API data (environment metrics, release timelines, cost breakdowns).
+      - Team-specific tooling embedded in the deployment context (runbooks, approval flows, incident trackers).
+      - Extending the control plane without forking it.
+      - Per-team customisation against one shared Facets instance.
+published_examples:
+  - {name: dora-metrics-dashboard, repository: https://github.com/Facets-cloud/dora-metrics-dashboard, description: DORA metrics dashboard integrated with Facets Praxis data.}
+  - {name: environment-overview, repository: https://github.com/Facets-cloud/environment-overview, description: Comprehensive environment dashboard.}
+  - {name: release-qual-dash, repository: https://github.com/Facets-cloud/release-qual-dash, description: Release quality metrics for any Facets environment.}
+  - {name: release-timeline-graph, repository: https://github.com/Facets-cloud/release-timeline-graph, description: Release duration trends and anomaly spotting.}
+  - {name: artifact-promoter, repository: https://github.com/Facets-cloud/artifact-promoter, description: Promote service artifacts between environments.}
+  - {name: agent-service-images, repository: https://github.com/Facets-cloud/agent-service-images, description: Running agent-service container images per environment.}
+distribution:
+  registry: null
+  cdn: https://github.com/Facets-cloud/webcomponents-bundle
+  cdn_note: >-
+    A GitHub Pages host for built bundles of the Facets-cloud/webcomponents monorepo (which
+    is not public). There is no npm package, no jsDelivr/unpkg entry and no pinned version
+    URL, so a consumer cannot pin what they load - the same finding as an unpinned CDN
+    distribution. version: null, deliberately.
+  version: null
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

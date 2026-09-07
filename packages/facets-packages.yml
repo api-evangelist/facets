@@ -1,0 +1,126 @@
+generated: '2026-09-07'
+method: searched
+source: >-
+  PyPI JSON API (pypi.org/pypi/<pkg>/json), Terraform Registry v1 API
+  (registry.terraform.io/v1/providers/Facets-cloud/facets), GitHub Releases API for the
+  Facets-cloud organization, and the Facets-cloud/homebrew-tap cask, all fetched 2026-09-07.
+provider: Facets
+providerId: facets
+note: >-
+  Facets publishes NO language SDK for the Control Plane REST API - there is no first-party
+  npm, PyPI, Maven, NuGet, Go or RubyGems client library that wraps the 629 documented
+  operations. What Facets does ship first-party is a CLI (raptor), an agent CLI (praxis),
+  three MCP servers on PyPI, and a Terraform provider. Consumers of the REST API hand-roll
+  HTTP with HTTP Basic auth. A registry search on 2026-09-07 for facets-cli, @facets/sdk and
+  @facets-cloud/* on npm returned no packages. No `SDKs` pointer is emitted for this
+  provider because none of the packages below is a language client for the REST API.
+packages:
+  - name: control-plane-openapi-mcp
+    registry: pypi
+    url: https://pypi.org/project/control-plane-openapi-mcp/
+    official: true
+    kind: mcp-server
+    language: python
+    version: 1.0.4
+    published: '2026-08-06'
+    repository: https://github.com/Facets-cloud/control-plane-openapi-mcp
+    description: >-
+      MCP server that fetches the live Facets Control Plane OpenAPI spec from
+      <control-plane>/v3/api-docs and exposes fuzzy search over its operations and schemas.
+  - name: facets-cp-mcp-server
+    registry: pypi
+    url: https://pypi.org/project/facets-cp-mcp-server/
+    official: true
+    kind: mcp-server
+    language: python
+    version: 0.1.1
+    published: '2025-10-06'
+    repository: https://github.com/Facets-cloud/control-plane-mcp-server
+    description: >-
+      MCP server exposing ~35 tools over the Facets Control Plane for project, resource,
+      environment and override management. Supports stdio and streamable-http transports.
+  - name: facets-module-mcp
+    registry: pypi
+    url: https://pypi.org/project/facets-module-mcp/
+    official: true
+    kind: mcp-server
+    language: python
+    version: 0.1.21
+    published: '2025-12-01'
+    repository: https://github.com/Facets-cloud/facets-module-mcp
+    description: MCP server for authoring and validating Facets Terraform modules.
+  - name: Facets-cloud/facets
+    registry: terraform
+    url: https://registry.terraform.io/providers/Facets-cloud/facets/latest
+    official: true
+    kind: terraform-provider
+    language: go
+    version: 1.3.0
+    published: '2026-09-07'
+    repository: https://github.com/Facets-cloud/terraform-provider-facets
+    description: >-
+      First-party Terraform provider (community tier, 273,727 downloads as of 2026-09-07)
+      exposing Facets actions and Tekton action resources.
+  - name: praxis
+    registry: homebrew
+    url: https://github.com/Facets-cloud/homebrew-tap
+    install: brew install --cask Facets-cloud/tap/praxis
+    official: true
+    kind: cli
+    language: go
+    version: 1.11.0
+    published: '2026-09-03'
+    repository: https://github.com/Facets-cloud/praxis-cli
+    description: >-
+      Praxis CLI - installs the org's Facets agent skills into Claude Code / Codex / Gemini
+      CLI and proxies calls to the control plane's server-side MCP gateway.
+  - name: raptor
+    registry: github-releases
+    url: https://github.com/Facets-cloud/raptor-releases/releases/latest
+    official: true
+    kind: cli
+    language: go
+    version: v0.1.102
+    published: '2026-09-07'
+    repository: https://github.com/Facets-cloud/raptor-releases
+    description: >-
+      raptor, the kubectl-style Facets CLI. Distributed as a single pre-built binary from
+      GitHub Releases (darwin/linux, amd64/arm64); no package-manager registry entry.
+  - name: praxis-cli
+    registry: github-releases
+    url: https://github.com/Facets-cloud/praxis-cli/releases/latest
+    official: true
+    kind: cli
+    language: go
+    version: v1.11.0
+    published: '2026-09-03'
+    repository: https://github.com/Facets-cloud/praxis-cli
+    description: Praxis CLI binaries for Linux, where Homebrew casks are unavailable.
+  - name: iac-generator
+    registry: github-releases
+    url: https://github.com/Facets-cloud/iac-generator-releases/releases/latest
+    official: true
+    kind: cli
+    version: v1.3.1
+    published: '2026-09-03'
+    repository: https://github.com/Facets-cloud/iac-generator-releases
+    description: Public release channel for Facets IaC generator tooling.
+  - name: tf-state-pusher
+    registry: github-releases
+    url: https://github.com/Facets-cloud/tf-state-pusher-releases/releases/latest
+    official: true
+    kind: cli
+    version: v0.1.3
+    published: '2026-08-10'
+    repository: https://github.com/Facets-cloud/tf-state-pusher-releases
+    description: Public release channel for the Facets Terraform state pusher.
+absent:
+  - registry: npm
+    checked: '2026-09-07'
+    note: No first-party Facets package found (facets-cli, @facets/sdk, @facets-cloud/webcomponents all 404).
+  - registry: maven-central
+    checked: '2026-09-07'
+    note: Not searched to a hit; no Java client is referenced anywhere in the Facets docs.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

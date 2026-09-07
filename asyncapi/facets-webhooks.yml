@@ -1,0 +1,82 @@
+generated: '2026-09-07'
+method: searched
+source: >-
+  https://www.facets.cloud/docs/features-and-guides/monitoring-and-observability/notifications,
+  https://www.facets.cloud/docs/features-and-guides/monitoring-and-observability/notifications/notification-channels-subscriptions,
+  plus the ui-notification-controller operations in
+  openapi/_original/facets-control-plane-openapi.json.
+provider: Facets
+providerId: facets
+spec_type: Webhooks
+asyncapi_published: false
+asyncapi_probe:
+  - {url: 'https://www.facets.cloud/asyncapi.yaml', status: 404}
+  - {note: 'No AsyncAPI document is referenced anywhere in the docs, the sitemap or the Facets-cloud GitHub organization.'}
+note: >-
+  Facets HAS a real outbound event surface and does NOT describe it machine-readably. Events
+  are delivered by subscription: a subscription is a unique grouping of blueprint (project),
+  channel and notification type, with optional advanced filters. Channels include generic
+  webhooks with a custom payload. What is missing is any published schema for what arrives -
+  no AsyncAPI, no event-payload reference, no JSON Schema per notification type. The
+  authoritative type list is not even in the docs: Facets tells you to run
+  `raptor get notification-types` against your own control plane to get it, together with the
+  filter tags each type supports. So the catalogue below is the docs' own non-authoritative
+  list, recorded as such.
+model:
+  style: subscription
+  grouping: [blueprint/project, channel, notification type]
+  filters: 'Advanced filters narrow a subscription within a notification type - the docs'' example is "only Critical severity alerts in a particular blueprint".'
+  test: 'A Test Notification button (and testNotificationChannel, POST /cc-ui/v1/notification/channels/test) sends a mock notification shaped by the subscription.'
+  authoritative_list_command: raptor get notification-types
+channels:
+  - {type: Slack}
+  - {type: Microsoft Teams (connector)}
+  - {type: Microsoft Teams Workflow}
+  - {type: PagerDuty}
+  - {type: Zenduty}
+  - {type: Email}
+  - {type: Generic Webhook, note: 'Custom payload. NotificationChannel carries channelAddress (the URL) and authorizationHeader, so the receiver can be authenticated.'}
+event_types:
+  authoritative: false
+  source: 'https://www.facets.cloud/docs/features-and-guides/monitoring-and-observability/notifications FAQ ("Facets currently supports the following notification types")'
+  types:
+    - {name: Alerts, note: Supports severity filtering.}
+    - {name: Application Deployment In Progress}
+    - {name: Application Deployment Complete}
+    - {name: Deployment Status updates}
+    - {name: Environment Configuration}
+    - {name: Environment Create}
+    - {name: Environment Delete}
+    - {name: Environment Destroy}
+    - {name: Environment Launch}
+    - {name: Stack Signoff}
+    - {name: Audit Log events, note: Can be subscribed globally, without a project.}
+    - {name: Short-lived environment teardown warnings}
+  payload_schema: null
+  payload_note: 'Subscription.payloadJson holds a custom payload template for generic webhooks; no schema is published for what any notification type emits.'
+management_api:
+  channels:
+    read: [getAllChannels, getChannel, getAllChannelTypes]
+    write: [createNotificationChannel, editNotificationChannel, deleteNotificationChannel, testNotificationChannel]
+  subscriptions:
+    read: [getAllSubscriptions, getAllSubscriptions_1, getSubscription, getSubscriptionAttributes, getAllNotificationTypes, getAllNotificationTags, getNotificationTagsForNotificationType, getFiltersForSubscriptions]
+    write: [createSubscription, createSubscription_1, editSubscription, deleteSubscription]
+  spec: openapi/facets-control-plane-openapi.yml
+inbound_webhooks:
+  - name: One-time webhook
+    operations: [registerWebhook, pollWebhook]
+    paths: [/cc-ui/v1/onetime-webhook/register, '/cc-ui/v1/onetime-webhook/poll/{webhookId}']
+    deprecated: true
+    note: registerWebhook is marked deprecated:true in the spec. Register-then-poll, not a subscription.
+  - name: GitHub App installation callback
+    operations: [processGithubInstallationRequest]
+    path: /public/v1/github-installation-request
+    note: Unauthenticated inbound callback for the shared GitHub App installation flow.
+delivery_semantics:
+  retries: undocumented
+  ordering: undocumented
+  signing: 'Not documented. Generic webhook channels carry an authorizationHeader the sender attaches, which is a shared secret rather than a per-message signature.'
+  replay: undocumented
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

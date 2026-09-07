@@ -1,0 +1,77 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Facets Control Plane API
+  version: 1.0.0
+extends: openapi/facets-control-plane-openapi.yml
+x-provenance:
+  generated: '2026-09-07'
+  method: generated
+  source: >-
+    API Evangelist enrichment pass. Captures our findings ABOUT the harvested spec without
+    mutating openapi/_original/facets-control-plane-openapi.json, which stays byte-identical
+    to what https://facetsdemo.console.facets.cloud/v3/api-docs served on 2026-09-07.
+actions:
+  - target: $.info
+    description: Record provenance, the real product name, and the templated base URL the docs state.
+    update:
+      x-apievangelist-provider: facets
+      x-apievangelist-harvested: '2026-09-07'
+      x-apievangelist-source: https://facetsdemo.console.facets.cloud/v3/api-docs
+      x-apievangelist-product: Facets Control Plane
+      x-apievangelist-base-url-template: https://{account-id}.console.facets.cloud
+      x-apievangelist-base-url-note: >-
+        servers[] names the Facets demo tenant because springdoc generates it from the host
+        that served the document. Facets documents the real base as your own control plane
+        host - "https://myorg.console.facets.cloud" - at
+        https://www.facets.cloud/docs/api. The demo host is a live first-party Facets
+        deployment, not a third-party one, so the spec's self-description and its fetch URL
+        agree; only the tenant is a placeholder.
+      x-apievangelist-surface-count: 2
+      x-apievangelist-surface-note: >-
+        Facets publishes two OpenAPI surfaces. This one (/v3/api-docs, Deployment
+        Controller) is served anonymously. The second (/cc/v3/api-docs, Artifact
+        Management, documented at
+        https://www.facets.cloud/docs/api/artifact-management) returns HTTP 401 to an
+        unauthenticated fetch and is therefore NOT in this repository.
+  - target: $.info
+    description: Point at the human documentation, which the generated spec omits entirely.
+    update:
+      x-apievangelist-documentation: https://www.facets.cloud/docs
+      x-apievangelist-api-reference: https://www.facets.cloud/docs/api
+      x-apievangelist-authentication-docs: https://www.facets.cloud/docs/api/recipes/authentication-setup
+      x-apievangelist-changelog: https://www.facets.cloud/docs/changelog
+  - target: $.components.securitySchemes.basicAuth
+    description: Say what the Basic credentials actually are - the spec only says "Basic Authentication".
+    update:
+      x-apievangelist-username: The email address you sign in to the Facets Control Plane with.
+      x-apievangelist-password: >-
+        A personal access token generated in the Control Plane under Account Settings ->
+        Personal Token. Shown once at creation and not retrievable afterwards.
+      x-apievangelist-token-page: <control-plane-url>/v2/home#personal-access-tokens
+      x-apievangelist-ci-env-vars: [FACETS_USERNAME, FACETS_TOKEN, CONTROL_PLANE_URL]
+  - target: $
+    description: Record the cross-cutting conventions we measured across all 629 operations.
+    update:
+      x-apievangelist-conventions:
+        error_envelope: '{code, message} - components.schemas.ErrorDetails. NOT RFC 9457; no application/problem+json anywhere in the document.'
+        error_statuses: [400, 403, 404, 405, 409, 500]
+        error_uniformity: All 627 tagged operations declare the identical six error responses.
+        idempotency: none - no Idempotency-Key header, parameter or extension appears in the document.
+        pagination: inconsistent - offset/limit/sort on /cc-ui/v1/artifactHub/search-packages, size on /cc-ui/v1/audit-logs, page on /cc-ui/v1/stacks/clusters, nothing elsewhere.
+        rate_limit_headers: none declared.
+        deprecation_headers: none - no Sunset or Deprecation response header is declared, though 14 operations carry deprecated:true.
+  - target: $
+    description: Flag the unauthenticated public surface, which is useful to an agent deciding what it can call before login.
+    update:
+      x-apievangelist-public-operations:
+        - healthCheck
+        - getLoginOptions
+        - getSamlLoginOptions
+        - getAllFeatureProperties
+        - getModuleSchema
+        - getModuleSchemaByType
+        - getLogo
+        - retrieveThemeFile
+      x-apievangelist-public-note: >-
+        These sit under /public/v1 and describe the control plane before authentication. Every
+        other operation in the document requires HTTP Basic credentials.

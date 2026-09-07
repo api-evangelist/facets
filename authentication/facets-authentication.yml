@@ -1,0 +1,63 @@
+generated: '2026-09-07'
+method: searched
+source: openapi/facets-control-plane-openapi.yml
+docs: https://www.facets.cloud/docs/api/recipes/authentication-setup
+summary:
+  types:
+  - http
+  http_schemes:
+  - basic
+  api_key_in: []
+  oauth2_flows: []
+schemes:
+- name: basicAuth
+  type: http
+  scheme: basic
+  description: Basic Authentication
+  sources:
+  - openapi/facets-control-plane-openapi.yml
+  applies_to: document-level `security` - every operation except the /public/v1 surface
+  credentials:
+    username: The email address you sign in to the Facets Control Plane with.
+    password: >-
+      A personal access token generated inside the Control Plane, NOT your login password.
+      Account Settings -> Personal Token -> Generate Token. The token string is displayed
+      once in the creation pop-up and cannot be retrieved afterwards.
+    token_page: <control-plane-url>/v2/home#personal-access-tokens
+    docs: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  machine_credentials:
+    env_vars: [FACETS_USERNAME, FACETS_TOKEN, CONTROL_PLANE_URL]
+    credentials_file: ~/.facets/credentials
+    profile_env: FACETS_PROFILE
+    note: >-
+      The same three environment variables authenticate raptor in CI, all three MCP servers,
+      and praxis. A `raptor login` writes the profile that every other Facets tool reads.
+    service_account: 'Release v0.94 added a built-in ci-user service account for automation; the spec carries a Service Accounts tag with 4 operations.'
+  rotation:
+    documented: false
+    expiry: not documented
+    revocation: 'Tokens are listed and managed on the Personal Token page; no API operation for rotation is documented.'
+unauthenticated_surface:
+  note: The /public/v1 operations answer without credentials and describe the control plane before login.
+  operations: [healthCheck, getLoginOptions, getSamlLoginOptions, getAllFeatureProperties, getFeatureProperty, getCPCloud, getModuleSchema, getModuleSchemaByType, getLogo, retrieveThemeFile]
+console_sso:
+  note: >-
+    DISTINCT FROM API AUTH - included because it is easy to conflate. Human sign-in to the
+    Facets console supports OAuth and SAML SSO (Google, Okta, Azure AD, OneLogin, JumpCloud,
+    generic SSO). None of it applies to the API, which is HTTP Basic only.
+  docs: https://www.facets.cloud/docs/features-and-guides/authentication-and-sso
+authorization:
+  model: RBAC
+  docs: https://www.facets.cloud/docs/features-and-guides/rbac
+  features: [users, user groups, user roles, custom roles, custom Kubernetes roles, resource groups]
+  ai_permissions:
+    note: >-
+      Roles carry a separate AI Permissions setting. By default AI actions inherit the role's
+      permissions; admins can switch a role to "Customize for AI" and restrict it further. AI
+      permissions can never exceed the role's own non-Kubernetes permissions, so an agent is
+      always capped at what the user it acts for could already do, or less.
+    since: v0.92
+    source: https://www.facets.cloud/docs/changelog/release-notes-v092
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

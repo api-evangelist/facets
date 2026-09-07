@@ -1,0 +1,164 @@
+generated: '2026-09-07'
+method: searched
+source: >-
+  https://www.facets.cloud/docs/api, https://www.facets.cloud/docs/api/recipes/authentication-setup,
+  https://www.facets.cloud/docs/features-and-guides/releases-concept/rolling-back-a-release,
+  https://www.facets.cloud/docs/features-and-guides/cli/commands, plus derivation from
+  openapi/_original/facets-control-plane-openapi.json (629 operations, harvested 2026-09-07).
+provider: Facets
+providerId: facets
+base_url:
+  template: https://{account-id}.console.facets.cloud
+  observed: https://facetsdemo.console.facets.cloud
+  docs: https://www.facets.cloud/docs/api
+  note: >-
+    Every customer gets their own control-plane host. Facets' docs state it plainly: "Every
+    endpoint is served from your own control plane, so the base URL is your control plane
+    host, for example https://myorg.console.facets.cloud." The demo tenant is the placeholder
+    the docs' own sample requests use.
+authentication:
+  style: http-basic
+  username: the email address you sign in to the control plane with
+  password: a personal access token created in Account Settings -> Personal Token
+  token_page: <control-plane-url>/v2/home#personal-access-tokens
+  docs: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  rotation: Tokens are shown once at creation and are not retrievable afterwards; there is no documented expiry or rotation policy.
+  ci_env: [FACETS_USERNAME, FACETS_TOKEN, CONTROL_PLANE_URL]
+  service_accounts: 'Release v0.94 added a built-in ci-user service account for automation (https://www.facets.cloud/docs/changelog/release-notes-v094); the spec carries a Service Accounts tag with 4 operations.'
+  see: authentication/facets-authentication.yml
+idempotency:
+  supported: false
+  coverage: none
+  mechanism: null
+  header: null
+  scope: []
+  retention: null
+  evidence: >-
+    Zero occurrences of "idempoten" in the 1.05 MB OpenAPI document, and no idempotency
+    section anywhere in https://www.facets.cloud/docs. No Idempotency-Key header, no client
+    request id, no dedupe window.
+  consequence: >-
+    An agent that retries a failed write cannot know whether the first attempt landed. The
+    write surface is 313 non-GET operations (177 POST, 77 PUT, 54 DELETE, 5 PATCH) including createDeployment, release, releaseV2,
+    launchCluster and registerArtifact - operations that provision cloud infrastructure and
+    cost money. The mitigations Facets does offer are procedural, not protocol-level:
+    `raptor plan` as a pre-release gate, ROLLBACK_PLAN as a two-phase review-then-apply
+    workflow, and 409 Conflict on state collisions. Read current state before retrying.
+dry_run_mode:
+  supported: true
+  coverage: partial
+  mechanisms:
+    - {name: raptor plan, kind: cli, scope: 'a project + environment, optionally narrowed with --target KIND/NAME', docs: 'https://www.facets.cloud/docs/features-and-guides/cli/commands', note: 'Runs local validation (expression resolution, dependency cycles, input wiring) then requests a server-side Terraform plan. --skip-server-plan runs local validation only.'}
+    - {name: ROLLBACK_PLAN release type, kind: api, operations: [triggerRollbackPlanRelease], note: 'Creating the plan changes nothing on the environment; a separate apply executes it.'}
+    - {name: preview_override_effect, kind: mcp, note: 'MCP tool that returns the effective configuration a proposed override would produce, without writing it.'}
+    - {name: add_resource / update_resource dry-run, kind: mcp, note: 'The control-plane MCP server documents dry-run previews and explicit confirmation for destructive operations.'}
+  gap: >-
+    None of these is a request-level dry-run parameter on the REST API. There is no
+    ?dry_run=true, no X-Dry-Run header, and no plan-only variant of createDeployment. A
+    direct REST caller gets no rehearsal; the rehearsal lives in the CLI and MCP layers.
+reversibility:
+  grade: documented
+  coverage: partial
+  note: >-
+    GRADE IS `documented`, NOT `verified`, AND THE REASON MATTERS. Facets documents a real,
+    audited reversal path for releases - and states a PRECONDITION rather than a WINDOW. The
+    rollback docs say a release can only be a rollback target if it has a
+    deploymentContextFilePath stored in S3, and that "older deployments created before the
+    deployment context storage feature cannot be used as rollback targets". That is a
+    capability boundary, not a time bound: Facets nowhere states how long deployment context
+    is retained, so nobody can tell an agent how far back it can roll. No window is asserted
+    here, because inventing one could cost a user a production environment.
+  reversals:
+    - surface: Release / deployment
+      forward: [createDeployment, release, releaseV2, launchCluster, triggerMaintenanceRelease]
+      reversal: triggerRollbackPlanRelease
+      path: '/cc-ui/v1/clusters/{clusterId}/deployments/{deploymentId}/{resourceType}/{resourceName}/rollback-plan'
+      shape: two-phase - the POST creates a ROLLBACK_PLAN release that changes nothing; a separate Apply Plan executes it and is recorded as its own APPLY ROLLBACK PLAN release
+      precondition: The target release must have a deploymentContextFilePath stored in S3.
+      window: null
+      window_stated: false
+      docs: https://www.facets.cloud/docs/features-and-guides/releases-concept/rolling-back-a-release
+      audit: Both the plan and the apply stay in release history; if an approval gate is configured, the apply passes through it like any other release.
+    - surface: In-flight release
+      forward: [release, releaseV2, createDeployment]
+      reversal: abortRelease
+      path: '/cc-ui/v1/clusters/{clusterId}/deployments/{deploymentId}/abort'
+      shape: abort
+      window: only while the release is still running
+      window_stated: true
+      note: '`abort` (PUT /cc-ui/v1/clusters/{clusterId}/abort) and abortAutomationSuite are the cluster-level and QA-suite equivalents.'
+    - surface: Blueprint / designer version
+      forward: [createResources, updateResources, addVariables, updateVariables]
+      reversal: restore
+      path: '/cc-ui/v1/versions/{versionId}/restore'
+      shape: restore a previous blueprint version
+      window: null
+      window_stated: false
+    - surface: Soft-deleted entities
+      forward: [deleteResources, deleteStack, deleteVariables]
+      reversal: restoreSoftDelete
+      path: '/cc-ui/v1/versions/softDeletedEntities/{entityId}'
+      shape: restore a soft-deleted entity
+      window: null
+      window_stated: false
+      note: The existence of a soft-delete tier is itself the strongest reversibility signal in this API, but no retention period is published.
+  irreversible:
+    - {operation: destroyCluster, path: '/cc-ui/v1/clusters/{clusterId}/deployments/destroy', note: Tears down the environment's cloud infrastructure. No reversal operation exists.}
+    - {operation: deleteClusterForce, path: '/cc-ui/v1/clusters/{clusterId}/force', note: Force delete. No reversal operation exists.}
+    - {operation: deleteStack, path: '/cc-ui/v1/stacks/{stackName}', note: 'May be recoverable via restoreSoftDelete; Facets does not document which deletes are soft.'}
+pagination:
+  style: inconsistent
+  coverage: 3 of 519 paths
+  variants:
+    - {path: /cc-ui/v1/artifactHub/search-packages, params: [offset, limit, sort], defaults: {offset: 0, limit: 20}}
+    - {path: /cc-ui/v1/audit-logs, params: [size], defaults: {size: 50}}
+    - {path: /cc-ui/v1/stacks/clusters, params: [page], defaults: {page: 0}}
+  response_fields: []
+  note: >-
+    There is no provider-wide pagination convention. Collection reads such as getStacks,
+    getAllArtifactories, getAllModules and getUsers return unbounded JSON arrays with no
+    page/cursor parameters and no envelope. A large tenant's getAllModules response is
+    whatever size it is. Plan for that.
+field_expansion:
+  supported: false
+  note: 'No fields=, expand= or include= parameter anywhere. Facets instead ships fatter variants of the same read - getStackWithAccount alongside getStack, getUserGroupExpanded alongside getUserGroup, getAllUserGroupsExpanded alongside getAllGroup.'
+metadata:
+  supported: partial
+  note: 'Artifacts carry arbitrary metadata; /cc-ui/v1/artifacts/metadata/keys (getMetadataKeys) enumerates the keys in use. No general-purpose metadata bag on other resources.'
+request_tracing:
+  request_id_header: null
+  note: >-
+    No X-Request-Id or correlation header is declared. Facets does expose a domain-level
+    trace id for releases - getDeploymentByReleaseTraceId reads a deployment by
+    releaseTraceId at /cc-ui/v1/clusters/{clusterId}/deployments/trace-id/{releaseTraceId} -
+    which is the closest thing to a correlation handle in the API, and it is release-scoped,
+    not request-scoped.
+  audit_trail: 'getAuditLogs (/cc-ui/v1/audit-logs) with entity and entity-action filters; Praxis agent activity is attributed in the audit log since release v0.89.'
+versioning:
+  see: lifecycle/facets-lifecycle.yml
+  summary: 'URI path v1, unchanged since launch; the platform moves on a monthly release train (v0.94). No version header, no negotiation, no pinning.'
+error_envelope:
+  format: 'custom {code, message}'
+  media_type: application/json
+  rfc9457: false
+  see: errors/facets-problem-types.yml
+rate_limit_signaling:
+  headers: []
+  status_on_exhaustion: null
+  see: rate-limits/facets-rate-limits.yml
+  note: No rate-limit headers and no 429 response are declared anywhere in the spec or the docs.
+naming_trap:
+  note: >-
+    The same object has three names depending on which Facets surface you are on, and this is
+    the single most likely cause of a wrong call. REST calls it a `stack`; the UI, CLI and
+    MCP servers call it a `project`. REST calls it a `cluster`; the UI, CLI and MCP servers
+    call it an `environment`. Both mappings are one-to-one. An agent reading the OpenAPI and
+    the docs at the same time must translate between them.
+  mappings:
+    - {rest: stack, product: project}
+    - {rest: cluster, product: environment}
+    - {rest: 'artifact (registered image/zip)', product: build}
+    - {rest: 'artifact CI (named CI integration)', product: artifact}
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

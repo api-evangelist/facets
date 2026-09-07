@@ -1,0 +1,108 @@
+generated: '2026-09-07'
+method: searched
+source: >-
+  https://www.facets.cloud/docs/cli,
+  https://www.facets.cloud/docs/features-and-guides/cli/installation,
+  https://www.facets.cloud/docs/features-and-guides/cli/commands,
+  https://github.com/Facets-cloud/praxis-cli, https://github.com/Facets-cloud/raptor-releases
+provider: Facets
+providerId: facets
+note: >-
+  Facets ships TWO first-party CLIs and they do different jobs. `raptor` is the product CLI -
+  a kubectl-style client for the control plane that a human or a CI job drives. `praxis` is
+  the agent CLI - it installs the org's Facets skills into your AI coding host and proxies
+  calls to the control plane's server-side MCP gateway. They share one credential store
+  (~/.facets/credentials), so a `raptor login` is already a praxis login.
+clis:
+  - name: raptor
+    role: product CLI
+    style: kubectl-style (verb + resource category)
+    version: v0.1.102
+    released: '2026-09-07'
+    repository: https://github.com/Facets-cloud/raptor-releases
+    docs: https://www.facets.cloud/docs/cli
+    install:
+      - method: binary
+        note: Single pre-built binary from GitHub Releases; darwin/linux, amd64/arm64.
+        example: 'curl -L -o raptor https://github.com/Facets-cloud/raptor-releases/releases/latest/download/raptor-darwin-arm64'
+      - method: self-update
+        example: raptor upgrade
+    auth:
+      interactive: raptor login
+      non_interactive_env: [FACETS_USERNAME, FACETS_TOKEN, CONTROL_PLANE_URL]
+      credentials_file: ~/.facets/credentials
+      token_page: '<your-control-plane-url>/v2/home#personal-access-tokens'
+    verbs: [get, create, apply, set, delete, describe, plan]
+    command_groups:
+      - {category: Authentication, purpose: Log in and inspect identity, examples: [login, whoami, 'auth can-i']}
+      - {category: Projects & types, purpose: Manage projects and project types, examples: ['get projects', 'create project', 'get project-types', 'import project-type']}
+      - {category: Resources (blueprint), purpose: Add and update resources, examples: ['apply resource', 'get resources', 'delete resource']}
+      - {category: Overrides, purpose: Per-environment configuration, examples: ['apply override', 'get overrides', 'delete override']}
+      - {category: Plan & deploy, purpose: Validate and roll out changes, examples: [plan, 'create release', 'logs release', 'abort release']}
+      - {category: Environments, purpose: Provision and tear down environments, examples: ['create environment', 'launch environment', 'destroy environment']}
+      - {category: Artifacts & builds, purpose: Register container images and zip bundles and manage what is registered, examples: ['create artifact', 'set artifact-uri', 'set artifact-zip', 'get artifacts', 'get builds', 'promote build', 'delete build']}
+      - {category: Delivery configuration, purpose: 'Branch mapping and promotion ladder', examples: ['get ci-cd', 'set ci-cd', 'test ci-cd', 'attach artifact', 'detach artifact', 'get artifact-usages']}
+      - {category: Registries, purpose: Container registry credentials, examples: ['get registries', 'get registry-credentials']}
+      - {category: Modules (IaC), purpose: Author and publish Terraform modules, examples: ['module init', 'module set-spec', 'create iac-module', 'publish iac-module']}
+      - {category: Variables & secrets, purpose: Project configuration values, examples: ['get variables', 'create variable', 'set variable']}
+      - {category: Discovery, purpose: Schema and expression lookup, examples: ['describe module', 'describe expressions', 'get resource-types']}
+      - {category: Impact, purpose: Dependency analysis, examples: ['impact <kind>/<name>', 'impact ... --reverse']}
+      - {category: Users & access, purpose: RBAC, users, groups, roles, examples: ['get users', 'create user', 'apply role']}
+      - {category: Accounts, purpose: Cloud and VCS integrations, examples: ['create account', 'create github-account', 'get accounts']}
+    key_flows:
+      - name: Pre-release validation
+        command: raptor plan -p PROJECT -e ENV
+        note: >-
+          The pre-release gate. Runs local validation (expression resolution, dependency
+          cycles, input wiring) then requests a server-side Terraform plan. Flags:
+          --skip-server-plan (local only, fastest), --target KIND/NAME (scope to named
+          resources, repeatable), --force (plan even with no pending changes), --allow-destroy,
+          -m/--message.
+      - name: CI/CD registration
+        docs: https://www.facets.cloud/docs/features-and-guides/integration-and-delivery/integrating-with-ci-pipelines
+        note: Build a container image, push it, register it as a Facets artifact, trigger a release.
+      - name: Agent skills from the binary
+        command: raptor install-skills --agent claude
+        note: >-
+          raptor embeds its own CLI skills and installs them into Claude Code, Gemini or
+          Codex. They ship with the binary, so they always match the installed version.
+          `--upgrade` refreshes them; `--path <dir>` installs project-scoped instead of globally.
+          These are SEPARATE from the org skill catalogue that `praxis login` installs.
+    terminology_warning: >-
+      In raptor an "artifact" is the named CI integration a resource deploys from, and a
+      "build" is one image or zip registered under it. `create artifact` and `delete artifact`
+      act on the first; `get builds`, `promote build` and `delete build` act on the second.
+  - name: praxis
+    role: agent CLI
+    version: v1.11.0
+    released: '2026-09-03'
+    repository: https://github.com/Facets-cloud/praxis-cli
+    docs: https://www.facets.cloud/docs/getting-started/build-with-an-ai-agent
+    install:
+      - {method: homebrew-cask, example: 'brew install --cask Facets-cloud/tap/praxis'}
+      - {method: binary, example: 'curl -fsSL -o praxis https://github.com/Facets-cloud/praxis-cli/releases/latest/download/praxis_linux_amd64', note: Linux - Homebrew on Linux does not support casks.}
+      - {method: self-update, example: praxis update}
+    auth:
+      interactive: praxis login
+      flags: ['--profile', '--url https://<account-id>.console.facets.cloud', '--token', '--local', '--dry-run']
+      note: >-
+        Reuses raptor's control-plane token from ~/.facets/credentials when one is present -
+        no browser. Otherwise opens the control plane's personal-access-token page. A Praxis
+        API key (distinct from a control-plane token) is stored in ~/.praxis/credentials.
+      env: [PRAXIS_PROFILE]
+    commands:
+      - {name: login, note: 'One-stop idempotent setup - installs the praxis meta-skill into every detected AI host, authenticates, wipes stale org skills, fetches the org skill catalogue, and writes ~/.praxis/mcp-tools.json.'}
+      - {name: status, note: 'Local snapshot of profile, auth and installed skills; --refresh adds a live /auth/me check.'}
+      - {name: profiles, note: List every profile with URL, username and active marker.}
+      - {name: mcp, note: 'No args lists every MCP namespace and function the gateway exposes; `praxis mcp <mcp> <fn>` invokes one under org credentials.'}
+      - {name: agents, note: List every org-curated agent file praxis has installed on this host.}
+      - {name: duty, note: 'Read-only triage of scheduled-agent output - list, runs, run, report, findings.'}
+      - {name: refresh-skills, note: Re-fetch the catalogue and rewrite skill files plus the MCP snapshot without re-authenticating.}
+      - {name: list-skills, note: Show what was installed and where.}
+      - {name: logout, note: '--all wipes every profile''s credentials and every host''s org skills.'}
+    ai_hosts: [Claude Code, Codex, Gemini CLI]
+    skill_install_paths: ['~/.claude/skills/praxis/', '~/.agents/skills/praxis/', '~/.gemini/skills/praxis/']
+    json_output: Every AI-callable command accepts --json and auto-emits it when stdout is non-TTY.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

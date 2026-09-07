@@ -35,6 +35,7 @@ Praxis is the AI platform engineer in Facets: a set of AI agents that automate p
 - Aster DM Healthcare cut per-environment costs by 52% | source: Kadam Jeet Jain, CTO, Aster DM Healthcare digital arm | https://www.facets.cloud/case-study/aster-dm-healthcare
 - Aster ships 21 self-serve releases a day (about 8,000 in 12 months) | source: Aster DM Healthcare case study | https://www.facets.cloud/case-study/aster-dm-healthcare
 - Astuto runs at under 1% change failure rate with 15 deployments a day | source: Astuto case study
+- Astuto ships 15 deployments a day at an under 1% change failure rate | source: Astuto case study
 - Capillary measured a 20% developer productivity boost (30-40 hours saved per sprint) | source: Piyush K, CTO, Capillary Technologies | https://www.facets.cloud/case-study/capillary-technologies
 - Capillary reduced environment launch effort by 87.5% (64 person-weeks down to 8) | source: Piyush K, CTO, Capillary Technologies | https://www.facets.cloud/case-study/capillary-technologies
 - Capillary Technologies cut ops tickets by 95% with Facets | source: Piyush K, CTO, Capillary Technologies | https://www.facets.cloud/case-study/capillary-technologies
@@ -112,6 +113,7 @@ Praxis is the AI platform engineer in Facets: a set of AI agents that automate p
 - [Google Cloud Migration](https://www.facets.cloud/solutions/facets-gcp-migration): Migrate to Google Cloud with AI agents that map your current setup, rebuild it on Google Cloud-native services, and hand your team a platform they can run themselves. Any cloud or on-prem. No rewrite, no lock-in.
 - [AWS Migration](https://www.facets.cloud/solutions/facets-aws-migration): Migrate to AWS with AI agents that map your current setup, rebuild it on AWS-native services, and hand your team a platform they can run themselves. Any cloud or on-prem. No rewrite, no lock-in.
 - [Managed Services](https://www.facets.cloud/solutions/managed-services): Facets replaces the need to build a DevOps team by running your infrastructure through a standardised platform, with a team accountable for outcomes.
+- [Disaster Recovery](https://www.facets.cloud/solutions/disaster-recovery): Recover the networking, IAM, config, secrets and wiring, not just the VMs and the database. Read-only discovery of your complete running estate, pinned into one governed blueprint, recoverable in days not months.
 - [Azure Migration](https://www.facets.cloud/solutions/facets-azure-migration): Migrate to Azure with AI agents that map your current setup, rebuild it on Azure-native services, and hand your team a platform they can run themselves. Any cloud or on-prem. No rewrite, no lock-in.
 
 ## Case studies

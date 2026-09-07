@@ -1,0 +1,114 @@
+generated: '2026-09-07'
+method: derived
+source: >-
+  MCP tool names read verbatim from https://github.com/Facets-cloud/control-plane-mcp-server
+  and https://github.com/Facets-cloud/control-plane-openapi-mcp; operationIds grepped from
+  openapi/_original/facets-control-plane-openapi.json (harvested 2026-09-07 from
+  https://facetsdemo.console.facets.cloud/v3/api-docs).
+provider: Facets
+providerId: facets
+note: >-
+  The live MCP servers are stdio-only and authenticate against a customer control plane, so
+  tools/list could not be introspected anonymously. Every row below is mapped by name and by
+  the tool description the provider publishes, against operationIds that were grepped and
+  verified to exist verbatim in the harvested spec. Confidence is set honestly: `high` where
+  the tool name and the operation are a one-to-one semantic match, `medium` where the tool
+  fans out to more than one operation or the provider's naming diverges from the spec's
+  (Facets calls the same object a "project" in the MCP layer and a "stack" in the REST
+  layer, and an "environment" in the MCP layer and a "cluster" in the REST layer).
+surfaces:
+  openapi:
+    file: openapi/facets-control-plane-openapi.yml
+    original: openapi/_original/facets-control-plane-openapi.json
+    server: https://facetsdemo.console.facets.cloud
+    gated: false
+    note: Served unauthenticated at /v3/api-docs on the demo control plane; the sibling /cc/v3/api-docs group returns 401.
+  mcp:
+    server: facets-cp-mcp-server
+    transport: stdio
+    url: null
+    gated: true
+    note: No hosted endpoint. tools/list requires a locally installed server plus control-plane credentials.
+  graphql:
+    endpoint: null
+coverage:
+  tools_named: 36
+  tools_bound: 27
+  mcp_only: 9
+  rest_operations_total: 629
+  rest_operations_with_a_tool: 33
+crosswalk:
+  - {tool: get_all_projects, category: project, rest: [getStacks], binding: rest, confidence: high, note: "MCP 'project' == REST 'stack'."}
+  - {tool: get_project_details, category: project, rest: [getStack, getStackWithAccount, getProjectOverview], binding: rest, confidence: medium}
+  - {tool: use_project, category: project, rest: [getStack], binding: rest, confidence: low, note: Client-side session state; reads the stack to validate the name.}
+  - {tool: refresh_current_project, category: project, rest: [reloadStack, getStack], binding: rest, confidence: medium}
+  - {tool: get_variable_by_name, category: variable, rest: [getVariableUsages], binding: rest, confidence: low, note: The spec exposes no GET for a single variable; usages is the closest read.}
+  - {tool: create_variable, category: variable, rest: [addVariable, addVariables, addVariables_1], binding: rest, confidence: high}
+  - {tool: update_variable, category: variable, rest: [updateVariable, updateVariables, updateVariables_1], binding: rest, confidence: high}
+  - {tool: delete_variable, category: variable, rest: [deleteVariables, deleteVariables_1], binding: rest, confidence: high}
+  - {tool: get_variable_environment_values, category: variable, rest: [getVariableAcrossEnvironments], binding: rest, confidence: high}
+  - {tool: get_all_resources_by_project, category: resource, rest: [getDesignerResources], binding: rest, confidence: medium}
+  - {tool: get_resource_by_project, category: resource, rest: [getApplication, getResourceByNameV2], binding: rest, confidence: medium}
+  - {tool: get_spec_for_resource, category: resource, rest: [getModuleSchema, getModuleSchemaByType], binding: rest, confidence: medium}
+  - {tool: get_module_inputs, category: resource, rest: [getModuleInputs, getModuleInputs_1], binding: rest, confidence: high}
+  - {tool: get_spec_for_module, category: resource, rest: [getModuleSchema], binding: rest, confidence: high}
+  - {tool: get_resource_schema_public, category: resource, rest: [getModuleSchemaByType], binding: rest, confidence: high, note: Backed by the unauthenticated /public/v1/module/... schema surface.}
+  - {tool: add_resource, category: resource, rest: [createResources, createResources_1], binding: rest, confidence: high}
+  - {tool: update_resource, category: resource, rest: [updateResources, updateResources_1], binding: rest, confidence: high}
+  - {tool: delete_resource, category: resource, rest: [deleteResources, deleteResources_1], binding: rest, confidence: high}
+  - {tool: get_output_references, category: resource-config, rest: [getOutputReferences], binding: rest, confidence: high, note: Backing operation is marked deprecated in the spec.}
+  - {tool: get_resource_output_tree, category: resource-config, rest: [getResourceOutProperties], binding: rest, confidence: medium}
+  - {tool: get_all_environments, category: environment, rest: [getClusters, getAllClusters], binding: rest, confidence: high, note: "MCP 'environment' == REST 'cluster'."}
+  - {tool: use_environment, category: environment, rest: [getClusterInfoByName], binding: rest, confidence: low, note: Client-side session state; resolves the cluster by name.}
+  - {tool: get_current_environment_details, category: environment, rest: [getClusterCommon, getClusterInfo, getClusterMetadata], binding: rest, confidence: medium}
+  - {tool: get_all_resources_by_environment, category: environment, rest: [resourceDetails, getProvidedResources], binding: rest, confidence: medium}
+  - {tool: get_resource_by_environment, category: environment, rest: [getResourceByNameV2, getResourceOverrideObject], binding: rest, confidence: high}
+  - {tool: add_or_update_override_property, category: override, rest: [postResourceOverrideObject], binding: rest, confidence: medium, note: Read-modify-write over the single override document; the REST layer has no per-property patch.}
+  - {tool: remove_override_property, category: override, rest: [postResourceOverrideObject, getResourceOverrideObject], binding: rest, confidence: medium, note: Same read-modify-write; the property is removed client-side before the POST.}
+  - {tool: replace_all_overrides, category: override, rest: [postResourceOverrideObject], binding: rest, confidence: high}
+  - {tool: clear_all_overrides, category: override, rest: [deleteOverrides], binding: rest, confidence: high, note: Backing operation is marked deprecated in the spec.}
+  - {tool: search_api_operations, category: meta, rest: [], binding: none, confidence: high, note: control-plane-openapi-mcp; operates on the spec document, not on a control-plane endpoint.}
+  - {tool: search_api_schemas, category: meta, rest: [], binding: none, confidence: high, note: control-plane-openapi-mcp; spec-local.}
+  - {tool: load_api_operation_by_operationId, category: meta, rest: [], binding: none, confidence: high, note: control-plane-openapi-mcp; spec-local.}
+  - {tool: load_api_operation_by_path_and_method, category: meta, rest: [], binding: none, confidence: high, note: control-plane-openapi-mcp; spec-local.}
+  - {tool: load_api_schema_by_schemaName, category: meta, rest: [], binding: none, confidence: high, note: control-plane-openapi-mcp; spec-local.}
+  - {tool: refresh_api_catalog, category: meta, rest: [], binding: none, confidence: high, note: Re-fetches /v3/api-docs itself; not a catalogued operation.}
+  - {tool: call_control_plane_api, category: meta, rest: [], binding: passthrough, confidence: high, note: Generic authenticated GET passthrough - can reach any of the 314 GET operations in the spec.}
+mcp_only:
+  - {tool: get_secrets_and_vars, reason: "The spec exposes POST/PUT/DELETE on /cc-ui/v1/stacks/{stackName}/variables but no GET that lists a project's variables and secrets; the server composes this."}
+  - {tool: update_variable_environment_value, reason: No REST operation writes a single variable's value for one environment; the server routes it through the override surface.}
+  - {tool: get_sample_for_module, reason: Server-side generation of a complete sample JSON from the module schema; no REST operation returns a sample document.}
+  - {tool: explain_ui_annotation, reason: Static guidance about x-ui annotations packaged with the MCP server; no backing endpoint.}
+  - {tool: get_resource_management_guide, reason: Static workflow instructions packaged with the MCP server; no backing endpoint.}
+  - {tool: preview_override_effect, reason: Server-side merge preview of a proposed override against base config; no REST operation returns an effective-config preview.}
+  - {tool: FIRST_STEP_get_api_script_guide, reason: Static prompt guidance shipped with control-plane-openapi-mcp.}
+  - {tool: k8s_cli, reason: Praxis gateway namespace - read-only kubectl executed server-side under org-managed credentials. Not a control-plane REST operation.}
+  - {tool: cloud_cli, reason: Praxis gateway namespace - read-only aws/gcloud/az executed server-side under org-managed credentials. Not a control-plane REST operation.}
+rest_only:
+  - capability: Releases and deployments
+    count: 34
+    examples: [createDeployment, release, releaseV2, launchCluster, abortRelease, triggerRollbackPlanRelease, getDeploymentLogs, getReleaseChanges, triggerMaintenanceRelease, promote]
+    note: The largest uncovered surface. No MCP tool creates, aborts or rolls back a release; the agent path for that is the raptor CLI, not MCP.
+  - capability: Artifacts and CI/CD
+    count: 46
+    examples: [registerArtifact, registerArtifactV2, promoteArtifact, createArtifactCI, getCiCdDetails, addArtifactRoutingRule]
+  - capability: Kubernetes explorer
+    count: 23
+    examples: [getManifest, listPods, getPodsForDeployment, getSecretsData, getAllIngressRulesForCluster]
+    note: Covered instead by the Praxis gateway's k8s_cli namespace, not by the control-plane MCP server.
+  - capability: Accounts and cloud/VCS integrations
+    count: 39
+    examples: [createAwsAccount, createGcpAccount, createGitHubAccount, linkAwsAccount, getAllAccounts]
+  - capability: Users, groups, roles and RBAC
+    count: 37
+    examples: [getUsers, createUser, createCustomRole, getAllGroup]
+  - capability: Notifications and subscriptions
+    count: 17
+    examples: [createSubscription, getAllSubscriptions, getAllNotificationTypes]
+  - capability: Modules and module registry
+    count: 24
+    examples: [getAllModules, markAsPublished, uploadModule]
+    note: Partly covered by the separate facets-module-mcp server, which was not tool-enumerated.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

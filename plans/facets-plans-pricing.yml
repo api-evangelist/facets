@@ -3,142 +3,107 @@ specificationVersion: '0.1'
 schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
 provider: Facets
 providerId: facets
+generated: '2026-09-07'
+method: searched
+source: https://www.facets.cloud/pricing
 created: '2026-05-04'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-04'
+modified: '2026-09-07'
+note: >-
+  REPLACES A SCAFFOLD. Until 2026-09-07 this file carried invented tiers (a "Free" plan with
+  1,000 requests a month, a "Professional" plan priced TBD) written by the 2026-05-04 bulk
+  sweep. Facets has none of those. Everything below is read verbatim from
+  https://www.facets.cloud/pricing (HTTP 200, fetched 2026-09-07) and its FAQ.
+  IMPORTANT: Facets does not meter API calls at all. It meters RESOURCE INSTANCES - "any
+  cloud resource managed by Facets: databases, compute instances, load balancers, storage
+  buckets, etc. Each unique resource counts as one RI regardless of size." There is no
+  per-request price, no request quota and no API-call overage anywhere in the pricing. An
+  API-request quota would be a fabrication, so none is recorded.
+plan_count: 2
+billing_unit: Resource Instance (RI)
+currency: USD
 tags:
   - Automation
   - Infrastructure
   - Orchestration
   - Platform Engineering
   - DevOps
-description: Machine-readable plans and pricing scaffold for this API provider. Conforms to the API Commons
-  Plans schema. Tier limits and prices are scaffold defaults; replace with provider-published values.
+description: >-
+  Facets published plans and pricing, harvested from the provider's own pricing page. Two
+  tiers - a pay-as-you-go SaaS plan metered on Resource Instances, and a custom-contract
+  self-hosted Enterprise tier - plus transactable listings on all three major cloud
+  marketplaces.
 plans:
-  - id: facets-free
-    name: Free
-    type: freemium
-    description: Free entry tier for the Facets API surface. Intended for evaluation, prototyping, and
-      low-volume integrations. Real limits and pricing must be reconciled with the provider's published
-      plan documentation.
-    entries:
-      - label: API Requests
-        description: Monthly API request quota across all included endpoints
-        name: api_requests
-        type: quota
-        metric: requests
-        limit: 1000
-        timeFrame: month
-        geo: global
-        domains: []
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-      - label: Rate Limit
-        description: Maximum requests per minute on the free tier
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 10
-        timeFrame: minute
-        geo: global
-        domains: []
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-    elements:
-      - name: Public Documentation
-      - name: Community Support
-      - name: Sandbox Access
-      - name: Facets
-  - id: facets-pro
-    name: Professional
+  - id: facets-saas
+    name: SaaS (Pay-as-you-go)
     type: paid
-    description: Production tier for Facets. Provides higher quotas, priority support, and access to the
-      broader API portfolio. Pricing placeholder; align with the provider's pricing page.
+    most_popular: true
+    price: '799.00'
+    currency: USD
+    period: month
+    trial: {available: true, days: 14}
+    hosting: Facets-hosted control plane; customer applications and data stay in the customer's cloud account.
+    description: >-
+      Usage-based pricing for growing platform teams. $799/month includes 20 Resource
+      Instances. Additional RIs are $10/month each for the first 250 and $8/month each from
+      251 to 500. Above 500 RIs, pricing is custom.
     entries:
-      - label: API Requests
-        description: Monthly API request quota
-        name: api_requests
-        type: quota
-        metric: requests
-        limit: 100000
-        timeFrame: month
-        geo: global
-        domains: []
-        unit: 1
-        price: TBD
-        userMultiplied: false
-      - label: Rate Limit
-        description: Maximum requests per minute on the professional tier
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 100
-        timeFrame: minute
-        geo: global
-        domains: []
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-      - label: Overage
-        description: Per-request price after monthly quota is exceeded
-        name: overage
-        type: metered
-        metric: requests
-        limit: -1
-        timeFrame: month
-        geo: global
-        domains: []
-        unit: 1000
-        price: TBD
-        userMultiplied: false
+      - {label: Included Resource Instances, name: included_ri, type: quota, metric: resource_instances, limit: 20, timeFrame: month, unit: 1, price: '0.00', note: Included in the $799 base.}
+      - {label: Additional RI (1-250), name: overage_ri_tier1, type: metered, metric: resource_instances, limit: 250, timeFrame: month, unit: 1, price: '10.00'}
+      - {label: Additional RI (251-500), name: overage_ri_tier2, type: metered, metric: resource_instances, limit: 500, timeFrame: month, unit: 1, price: '8.00'}
+      - {label: Above 500 RIs, name: overage_ri_tier3, type: metered, metric: resource_instances, limit: -1, timeFrame: month, unit: 1, price: custom, note: '"Need more than 500? Talk to us."'}
     elements:
-      - name: All Production Endpoints
-      - name: Email Support
-      - name: SLA Targets
-      - name: Webhook Subscriptions
-      - name: Facets
+      - {name: 20 Resource Instances included}
+      - {name: Facets-hosted control plane}
+      - {name: Blueprint-driven environments}
+      - {name: Contract-driven IaC}
+      - {name: Developer self-service portal}
+      - {name: Standard support}
+      - {name: 14-day free trial}
+      - {name: 24x7 Slack community support, source: https://www.facets.cloud/docs/support/support-model}
+      - {name: Basic RBAC, source: https://www.facets.cloud/docs/support/support-model}
+      - {name: 'Supports GCP, AWS, Azure', source: https://www.facets.cloud/docs/support/support-model}
   - id: facets-enterprise
     name: Enterprise
     type: enterprise
-    description: Custom-negotiated tier for Facets. Includes dedicated capacity, contractual SLAs, security
-      review, data residency options, and named technical account management.
+    price: custom
+    currency: USD
+    period: year
+    description: >-
+      Fixed annual pricing negotiated to the customer's needs. Self-hosted in the customer's
+      own VPC with unlimited Resource Instances. A proof-of-concept engagement is offered in
+      place of a free trial.
+    trial: {available: false, alternative: proof-of-concept engagement}
+    hosting: Self-hosted in the customer's VPC.
     entries:
-      - label: API Requests
-        description: Negotiated request volume; -1 indicates uncapped subject to fair use
-        name: api_requests
-        type: quota
-        metric: requests
-        limit: -1
-        timeFrame: month
-        geo: configurable
-        domains: []
-        unit: 1
-        price: custom
-        userMultiplied: false
-      - label: Rate Limit
-        description: Negotiated burst and steady-state rate
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 1000
-        timeFrame: minute
-        geo: configurable
-        domains: []
-        unit: 1
-        price: custom
-        userMultiplied: false
+      - {label: Resource Instances, name: ri, type: quota, metric: resource_instances, limit: -1, timeFrame: month, price: custom, note: Unlimited.}
     elements:
-      - name: Unlimited / Negotiated Volume
-      - name: 24/7 Dedicated Support
-      - name: Contractual SLA
-      - name: Security & Compliance Review
-      - name: Dedicated Account Manager
-      - name: Custom Data Residency
-      - name: Facets
+      - {name: Unlimited Resource Instances}
+      - {name: Self-hosted in your VPC}
+      - {name: Everything in SaaS}
+      - {name: Custom SLA guarantees}
+      - {name: Advanced security & compliance}
+      - {name: White-glove onboarding}
+      - {name: Dedicated success manager}
+      - {name: 24/7 priority support}
+      - {name: Comprehensive RBAC, source: https://www.facets.cloud/docs/support/support-model}
+      - {name: 'Supports GCP, AWS, Azure and Custom Clouds', source: https://www.facets.cloud/docs/support/support-model}
+marketplaces:
+  note: Facets is a transactable listing on all three major cloud marketplaces. Purchasing through one bills to the existing cloud account and draws down committed cloud spend. Private offers are available on all three.
+  listings:
+    - {name: AWS Marketplace, url: 'https://aws.amazon.com/marketplace/pp/prodview-wlf4f5xpyatzy'}
+    - {name: Azure Marketplace, url: 'https://azuremarketplace.microsoft.com/en/marketplace/apps/facetscloudinc1698559662064.facets_cloud_cp'}
+    - {name: Google Cloud Marketplace, url: 'https://console.cloud.google.com/marketplace/product/facetscloud-public/facets-cloud-cp'}
+excluded_costs:
+  - 'Cloud infrastructure costs (AWS, GCP, Azure) are billed directly by the cloud provider, not by Facets.'
+related_metering:
+  - name: Praxis AI credits
+    note: >-
+      Separate from RI pricing. Org admins set a per-user credit allocation for Praxis from
+      Billing & Team settings, capping an individual's share of the shared AI budget per
+      billing cycle, enforced on top of an org-wide monthly limit. Once a user hits the cap
+      Praxis blocks further usage until the next cycle. No public price per credit is
+      published.
+    source: https://www.facets.cloud/docs/changelog/release-notes-v092
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com

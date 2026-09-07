@@ -3,90 +3,51 @@ specificationVersion: '0.1'
 schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
 provider: Facets
 providerId: facets
+generated: '2026-09-07'
+method: searched
+source: >-
+  https://www.facets.cloud/docs (full docs sitemap of 282 URLs walked),
+  https://www.facets.cloud/docs/api, https://www.facets.cloud/pricing, and a scan of all 629
+  operations in openapi/_original/facets-control-plane-openapi.json.
 created: '2026-05-04'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-04'
-tags:
-  - Automation
-  - Infrastructure
-  - Orchestration
-  - Platform Engineering
-  - DevOps
-  - Rate Limiting
-  - Quotas
-  - Throttling
-description: Machine-readable rate limit definitions for the Facets API surface. Captures per-tier quotas,
-  burst behavior, response signaling, and recovery semantics. Defaults are scaffold values to be replaced
-  with published provider limits.
-headers:
-  limit: X-RateLimit-Limit
-  remaining: X-RateLimit-Remaining
-  reset: X-RateLimit-Reset
-  retryAfter: Retry-After
-  policy: RateLimit-Policy
-responseCodes:
-  throttled: 429
-  quotaExceeded: 429
-  serviceUnavailable: 503
-limits:
-  - tier: free
-    name: Free Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 10
-    burst: 20
-    timeFrame: minute
-    applies:
-      - Facets
-  - tier: free
-    name: Free Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 1000
-    timeFrame: month
-    applies:
-      - Facets
-  - tier: professional
-    name: Professional Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 100
-    burst: 200
-    timeFrame: minute
-    applies:
-      - Facets
-  - tier: professional
-    name: Professional Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 100000
-    timeFrame: month
-    applies:
-      - Facets
-  - tier: enterprise
-    name: Enterprise Negotiated Limit
-    scope: contract
-    metric: requests_per_minute
-    limit: 1000
-    burst: 5000
-    timeFrame: minute
-    applies:
-      - Facets
-policies:
-  - name: Backoff Strategy
-    description: Clients should implement exponential backoff with jitter, honoring the Retry-After header
-      when present.
-  - name: Burst Handling
-    description: Short bursts above the steady-state limit are tolerated up to the documented burst ceiling
-      before throttling engages.
-  - name: Quota Reset
-    description: Monthly quotas reset at the start of each calendar month in UTC. Per-minute and per-second
-      windows reset on a sliding-window basis.
-  - name: Fair Use
-    description: Even on uncapped enterprise tiers, sustained usage that materially impacts shared infrastructure
-      may be subject to fair-use throttling.
+modified: '2026-09-07'
+limit_count: 0
+note: >-
+  REPLACES A SCAFFOLD, AND THE HONEST ANSWER IS ZERO. Until 2026-09-07 this file asserted
+  invented limits (10 req/min free, 100 req/min professional, 429 on exhaustion, a full set
+  of X-RateLimit-* headers) written by the 2026-05-04 bulk sweep. None of it is published by
+  Facets. What we actually found:
+    - The OpenAPI document contains zero occurrences of "RateLimit", "X-RateLimit" or
+      "Retry-After", and declares no 429 response on any of its 629 operations. The only
+      statuses any operation declares are 200, 400, 403, 404, 405, 409 and 500.
+    - No page in the 282-URL docs sitemap documents an API rate limit, quota or throttle.
+    - Pricing (https://www.facets.cloud/pricing) meters Resource Instances, not API calls;
+      there is no request quota in any tier.
+  This is plausible rather than surprising for the deployment model: each customer gets their
+  own control plane (SaaS) or self-hosts it entirely (Enterprise), so there is no shared
+  multi-tenant API surface to protect with a published global limit. That explains the
+  absence; it does not remove the consequence, which is that an automation client has NO
+  published signal telling it when to back off, and no documented status code to key retry
+  logic on.
+headers: {}
+headers_observed: []
+responseCodes: {}
+limits: []
+policies: []
+related_quotas:
+  - name: Praxis per-user AI credit allocation
+    scope: per-user, within an org-wide monthly budget
+    window: billing cycle
+    enforcement: 'Praxis blocks further usage once a user hits their cap, until the next cycle or a higher allocation from an admin.'
+    source: https://www.facets.cloud/docs/changelog/release-notes-v092
+    note: >-
+      This is an AI SPEND cap on the Praxis agent layer, not an HTTP rate limit on the
+      Control Plane API. Recorded here because it is the only published usage ceiling of any
+      kind, and deliberately kept out of limits[] so it is not counted as an API rate limit.
+recommendation: >-
+  With nothing published, treat the API as unmetered but fragile: back off exponentially with
+  jitter on 500, and re-read state rather than blind-retrying on 409, because the API has no
+  idempotency mechanism (see conventions/facets-conventions.yml).
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com

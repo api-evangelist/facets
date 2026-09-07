@@ -1,0 +1,65 @@
+generated: '2026-09-07'
+method: probed
+source: live HTTPS probes of every host this record knows, 2026-09-07
+note: >-
+  NOTHING WAS FOUND. Facets serves no /.well-known/ discovery document on any host in this
+  record. Two distinct negative shapes were observed and are recorded honestly below.
+  (1) www.facets.cloud (and facets.cloud, which 307s to it, and readme.facets.cloud, which
+  308s to it) returns a hard HTTP 404 with the site's Next.js 404 shell for every path,
+  including the negative control - a clean, trustworthy absence. (2) The control plane
+  console host facetsdemo.console.facets.cloud is an SPA catch-all: it answers HTTP 301 ->
+  200 with its own 3,538-byte app shell for EVERY /.well-known/* path, including the
+  negative control that cannot exist. Its 200s are therefore NOT documents and are recorded
+  with hit: false. No WellKnown and no SecurityTxt pointer is emitted for this provider.
+hit_count: 0
+soft_404_control:
+  path: /.well-known/facets-negative-control-7f3ab91c.json
+  www.facets.cloud: {status: 404, bytes: 23145, verdict: passed}
+  facetsdemo.console.facets.cloud: {status: 200, bytes: 3538, verdict: failed, note: SPA catch-all - every /.well-known/* path returns the app shell}
+hosts:
+  - host: www.facets.cloud
+    documents:
+      - {path: /.well-known/security.txt, status: 404, file: null}
+      - {path: /.well-known/openid-configuration, status: 404, file: null}
+      - {path: /.well-known/oauth-authorization-server, status: 404, file: null}
+      - {path: /.well-known/api-catalog, status: 404, file: null}
+      - {path: /.well-known/ai-plugin.json, status: 404, file: null}
+      - {path: /.well-known/agent-card.json, status: 404, file: null}
+      - {path: /.well-known/agent.json, status: 404, file: null}
+  - host: facets.cloud
+    note: 307 redirect to www.facets.cloud for every path; final status recorded.
+    documents:
+      - {path: /.well-known/security.txt, status: 404, file: null}
+      - {path: /.well-known/openid-configuration, status: 404, file: null}
+      - {path: /.well-known/oauth-authorization-server, status: 404, file: null}
+      - {path: /.well-known/api-catalog, status: 404, file: null}
+      - {path: /.well-known/ai-plugin.json, status: 404, file: null}
+      - {path: /.well-known/agent-card.json, status: 404, file: null}
+      - {path: /.well-known/agent.json, status: 404, file: null}
+  - host: readme.facets.cloud
+    note: >-
+      308 redirect to www.facets.cloud for every path. This was the documentation host in
+      the previous round; Facets has since moved its docs to www.facets.cloud/docs.
+    documents:
+      - {path: /.well-known/security.txt, status: 404, file: null}
+      - {path: /.well-known/openid-configuration, status: 404, file: null}
+      - {path: /.well-known/oauth-authorization-server, status: 404, file: null}
+      - {path: /.well-known/api-catalog, status: 404, file: null}
+      - {path: /.well-known/ai-plugin.json, status: 404, file: null}
+      - {path: /.well-known/agent-card.json, status: 404, file: null}
+      - {path: /.well-known/agent.json, status: 404, file: null}
+  - host: facetsdemo.console.facets.cloud
+    note: >-
+      The OpenAPI servers[] host. SPA catch-all - the 200s below are the console app shell,
+      not documents, and the negative control returns the identical 200. hit: false on all.
+    documents:
+      - {path: /.well-known/security.txt, status: 200, file: null, hit: false}
+      - {path: /.well-known/openid-configuration, status: 200, file: null, hit: false}
+      - {path: /.well-known/oauth-authorization-server, status: 200, file: null, hit: false}
+      - {path: /.well-known/api-catalog, status: 200, file: null, hit: false}
+      - {path: /.well-known/ai-plugin.json, status: 200, file: null, hit: false}
+      - {path: /.well-known/agent-card.json, status: 200, file: null, hit: false}
+      - {path: /.well-known/agent.json, status: 200, file: null, hit: false}
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

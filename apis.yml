@@ -1,11 +1,15 @@
 aid: facets
 name: Facets
 description: >-
-  Facets is a platform engineering and infrastructure automation platform that
-  unifies provisioning, deployment, and configuration into a single declarative
-  model for governed, secure, and self-serve cloud operations. The Facets
-  Control Plane exposes a REST API for managing blueprints, environments,
-  releases, resources, and integrations across the platform.
+  Facets is an AI-native SDLC orchestrator and platform-engineering control plane that
+  unifies infrastructure provisioning, CI/CD and configuration management into a single
+  declarative blueprint model, so product teams get self-serve, drift-free cloud environments
+  without writing Terraform by hand. The Facets Control Plane exposes a 629-operation REST
+  API - published as OpenAPI 3.0.1 at /v3/api-docs on each customer's own control-plane host
+  - covering blueprints, projects, environments, releases, resources, artifacts, modules,
+  notifications and access control. Facets also ships two first-party CLIs (raptor and
+  praxis), three MCP servers, a Terraform provider, and Praxis, a set of AI agents that
+  automate platform operations across the SDLC.
 deliveryModel:
   model: saas
   open_source: false
@@ -18,22 +22,22 @@ deliveryModel:
   generated: '2026-08-28'
   method: derived
 accessModel:
-  pricing: freemium
-  onboarding: unknown
-  trial: false
+  pricing: paid
+  onboarding: self-service
+  trial: true
   try_now: false
   public: false
-  label: Freemium
-  confidence: medium
+  label: Paid with a 14-day free trial
+  confidence: high
   source:
   - plans
-  generated: '2026-07-22'
-  method: derived
+  generated: '2026-09-07'
+  method: searched
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/facets.png
 url: >-
   https://raw.githubusercontent.com/api-evangelist/facets/refs/heads/main/apis.yml
 created: '2025-02-08'
-modified: '2026-04-28'
+modified: '2026-09-07'
 specificationVersion: '0.23'
 kind: contract
 position: Consuming
@@ -44,19 +48,25 @@ tags:
   - Orchestration
   - Platform Engineering
   - DevOps
+  - Internal Developer Platform
+  - Terraform
+  - Kubernetes
+  - Continuous Delivery
+  - AI Agents
 apis:
   - aid: facets:facets
-    name: Facets
+    name: Facets Control Plane API
     description: >-
-      Facets is a platform engineering and infrastructure automation platform
-      that unifies provisioning, deployment, and configuration into a single
-      declarative model for governed, secure, and self-serve cloud operations.
-      The Facets API provides programmatic access to blueprints, projects,
-      environments, releases, resources, integrations, and access control,
-      enabling automation of platform engineering workflows across cloud
-      providers and Kubernetes.
+      The Facets Control Plane REST API. 519 paths and 629 operations across blueprints
+      (stacks), environments (clusters), releases, resources, overrides, artifacts and
+      builds, modules, variables and secrets, notifications, cloud and VCS accounts, and
+      RBAC. Authentication is HTTP Basic - your control-plane sign-in email plus a personal
+      access token. Each customer is served from their own control-plane host, so the base
+      URL is templated; the published OpenAPI names the Facets demo tenant because springdoc
+      generates servers[] from the host that served the document.
     image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    humanURL: https://www.facets.cloud/
+    humanURL: https://www.facets.cloud/docs/api
+    baseURL: https://{account-id}.console.facets.cloud
     tags:
       - Automation
       - Infrastructure
@@ -64,36 +74,95 @@ apis:
       - Platform Engineering
     properties:
       - type: Documentation
-        url: https://readme.facets.cloud/
+        url: https://www.facets.cloud/docs
       - type: APIReference
-        url: https://readme.facets.cloud/reference/getting-started-with-your-api
+        url: https://www.facets.cloud/docs/api
       - type: GettingStarted
-        url: https://readme.facets.cloud/docs/getting-started
+        url: https://www.facets.cloud/docs/quickstart
+      - type: Authentication
+        url: https://www.facets.cloud/docs/api/recipes/authentication-setup
       - type: ReleaseNotes
-        url: https://readme.facets.cloud/changelog
+        url: https://www.facets.cloud/docs/changelog
+      - type: OpenAPI
+        url: openapi/facets-control-plane-openapi.yml
+      - type: Overlay
+        url: overlays/facets-control-plane-overlay.yaml
+      - type: DataModel
+        url: data-model/facets-data-model.yml
+      - type: ErrorCatalog
+        url: errors/facets-problem-types.yml
+      - type: MCPServer
+        url: mcp/facets-mcp.yml
+      - type: ToolCrosswalk
+        url: mcp/facets-tool-crosswalk.yml
+      - type: Webhooks
+        url: asyncapi/facets-webhooks.yml
 common:
-  - type: DomainSecurity
-    url: security/facets-domain-security.yml
-  - type: LinkedIn
-    url: https://www.linkedin.com/company/facets-cloud
   - type: Website
     url: https://www.facets.cloud/
+  - type: DeveloperPortal
+    url: https://www.facets.cloud/docs
   - type: Documentation
-    url: https://readme.facets.cloud/
+    url: https://www.facets.cloud/docs
   - type: APIReference
-    url: https://readme.facets.cloud/reference
+    url: https://www.facets.cloud/docs/api
+  - type: GettingStarted
+    url: https://www.facets.cloud/docs/quickstart
+  - type: Support
+    url: https://www.facets.cloud/docs/support
   - type: Blog
     url: https://www.facets.cloud/blog
   - type: Pricing
     url: https://www.facets.cloud/pricing
-  - type: Signup
-    url: https://www.facets.cloud/get-started
+  - type: SignUp
+    url: https://www.facets.cloud/signup
+  - type: TermsOfService
+    url: https://www.facets.cloud/tos
+  - type: PrivacyPolicy
+    url: https://www.facets.cloud/privacy-policy
+  - type: GitHubOrganization
+    url: https://github.com/Facets-cloud
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/facets-cloud
   - type: Integrations
     url: https://www.facets.cloud/partners
-  - type: LlmsText
+  - type: LLMsTxt
     url: https://www.facets.cloud/llms.txt
+  - type: ChangeLog
+    url: https://www.facets.cloud/docs/changelog
+  - type: ChangeLog
+    url: changelog/facets-changelog.yml
+  - type: Compliance
+    url: https://www.facets.cloud/product/deployment
+  - type: Authentication
+    url: authentication/facets-authentication.yml
+  - type: Conventions
+    url: conventions/facets-conventions.yml
+  - type: Conformance
+    url: conformance/facets-conformance.yml
+  - type: Lifecycle
+    url: lifecycle/facets-lifecycle.yml
+  - type: Packages
+    url: packages/facets-packages.yml
+  - type: CLI
+    url: cli/facets-cli.yml
+  - type: Components
+    url: components/facets-components.yml
+  - type: RateLimits
+    url: rate-limits/facets-rate-limits.yml
+  - type: Plans
+    url: plans/facets-plans-pricing.yml
+  - type: AgentSkill
+    url: skills/_index.yml
+  - type: DomainSecurity
+    url: security/facets-domain-security.yml
 integrations:
   - name: Become a Partner
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
+x-enrichment:
+  date: '2026-09-07'
+  status: enriched
+  artifacts_added: 23
+  pass: local-v3
