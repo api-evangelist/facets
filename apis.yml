@@ -54,50 +54,1786 @@ tags:
   - Continuous Delivery
   - AI Agents
 apis:
-  - aid: facets:facets
-    name: Facets Control Plane API
-    description: >-
-      The Facets Control Plane REST API. 519 paths and 629 operations across blueprints
-      (stacks), environments (clusters), releases, resources, overrides, artifacts and
-      builds, modules, variables and secrets, notifications, cloud and VCS accounts, and
-      RBAC. Authentication is HTTP Basic - your control-plane sign-in email plus a personal
-      access token. Each customer is served from their own control-plane host, so the base
-      URL is templated; the published OpenAPI names the Facets demo tenant because springdoc
-      generates servers[] from the host that served the document.
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    humanURL: https://www.facets.cloud/docs/api
-    baseURL: https://{account-id}.console.facets.cloud
-    tags:
-      - Automation
-      - Infrastructure
-      - Orchestration
-      - Platform Engineering
-    properties:
-      - type: Documentation
-        url: https://www.facets.cloud/docs
-      - type: APIReference
-        url: https://www.facets.cloud/docs/api
-      - type: GettingStarted
-        url: https://www.facets.cloud/docs/quickstart
-      - type: Authentication
-        url: https://www.facets.cloud/docs/api/recipes/authentication-setup
-      - type: ReleaseNotes
-        url: https://www.facets.cloud/docs/changelog
-      - type: OpenAPI
-        url: openapi/facets-control-plane-openapi.yml
-      - type: Overlay
-        url: overlays/facets-control-plane-overlay.yaml
-      - type: DataModel
-        url: data-model/facets-data-model.yml
-      - type: ErrorCatalog
-        url: errors/facets-problem-types.yml
-      - type: MCPServer
-        url: mcp/facets-mcp.yml
-      - type: ToolCrosswalk
-        url: mcp/facets-tool-crosswalk.yml
-      - type: Webhooks
-        url: asyncapi/facets-webhooks.yml
+- aid: facets:facets-application-controller-api
+  name: Facets Application Controller API
+  description: The application-controller API from Facets — 6 operation(s) for application-controller.
+  humanURL: https://www.facets.cloud/docs/api
+  baseURL: https://{account-id}.console.facets.cloud
+  tags:
+  - application-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/facets-application-controller-api-openapi.yml
+  - type: Documentation
+    url: https://www.facets.cloud/docs
+  - type: APIReference
+    url: https://www.facets.cloud/docs/api
+  - type: GettingStarted
+    url: https://www.facets.cloud/docs/quickstart
+  - type: Authentication
+    url: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  - type: ReleaseNotes
+    url: https://www.facets.cloud/docs/changelog
+  - type: DataModel
+    url: data-model/facets-data-model.yml
+  - type: ErrorCatalog
+    url: errors/facets-problem-types.yml
+  - type: ToolCrosswalk
+    url: mcp/facets-tool-crosswalk.yml
+  - type: Webhooks
+    url: asyncapi/facets-webhooks.yml
+- aid: facets:facets-blueprint-designer-v2-api
+  name: Facets Blueprint Designer V2 API
+  description: V2 APIs for blueprint designer write operations
+  humanURL: https://www.facets.cloud/docs/api
+  baseURL: https://{account-id}.console.facets.cloud
+  tags:
+  - Blueprint Designer V2
+  properties:
+  - type: OpenAPI
+    url: openapi/facets-blueprint-designer-v2-api-openapi.yml
+  - type: Documentation
+    url: https://www.facets.cloud/docs
+  - type: APIReference
+    url: https://www.facets.cloud/docs/api
+  - type: GettingStarted
+    url: https://www.facets.cloud/docs/quickstart
+  - type: Authentication
+    url: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  - type: ReleaseNotes
+    url: https://www.facets.cloud/docs/changelog
+  - type: DataModel
+    url: data-model/facets-data-model.yml
+  - type: ErrorCatalog
+    url: errors/facets-problem-types.yml
+  - type: ToolCrosswalk
+    url: mcp/facets-tool-crosswalk.yml
+  - type: Webhooks
+    url: asyncapi/facets-webhooks.yml
+- aid: facets:facets-blueprint-diff-api
+  name: Facets Blueprint Diff API
+  description: The Blueprint Diff API from Facets — 1 operation(s) for blueprint diff.
+  humanURL: https://www.facets.cloud/docs/api
+  baseURL: https://{account-id}.console.facets.cloud
+  tags:
+  - Blueprint Diff
+  properties:
+  - type: OpenAPI
+    url: openapi/facets-blueprint-diff-api-openapi.yml
+  - type: Documentation
+    url: https://www.facets.cloud/docs
+  - type: APIReference
+    url: https://www.facets.cloud/docs/api
+  - type: GettingStarted
+    url: https://www.facets.cloud/docs/quickstart
+  - type: Authentication
+    url: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  - type: ReleaseNotes
+    url: https://www.facets.cloud/docs/changelog
+  - type: DataModel
+    url: data-model/facets-data-model.yml
+  - type: ErrorCatalog
+    url: errors/facets-problem-types.yml
+  - type: ToolCrosswalk
+    url: mcp/facets-tool-crosswalk.yml
+  - type: Webhooks
+    url: asyncapi/facets-webhooks.yml
+- aid: facets:facets-blueprint-hook-api
+  name: Facets Blueprint Hook API
+  description: Manage a blueprint hook (e.g. the pre-release approval hook)
+  humanURL: https://www.facets.cloud/docs/api
+  baseURL: https://{account-id}.console.facets.cloud
+  tags:
+  - Blueprint Hook
+  properties:
+  - type: OpenAPI
+    url: openapi/facets-blueprint-hook-api-openapi.yml
+  - type: Documentation
+    url: https://www.facets.cloud/docs
+  - type: APIReference
+    url: https://www.facets.cloud/docs/api
+  - type: GettingStarted
+    url: https://www.facets.cloud/docs/quickstart
+  - type: Authentication
+    url: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  - type: ReleaseNotes
+    url: https://www.facets.cloud/docs/changelog
+  - type: DataModel
+    url: data-model/facets-data-model.yml
+  - type: ErrorCatalog
+    url: errors/facets-problem-types.yml
+  - type: ToolCrosswalk
+    url: mcp/facets-tool-crosswalk.yml
+  - type: Webhooks
+    url: asyncapi/facets-webhooks.yml
+- aid: facets:facets-blueprint-pull-requests-api
+  name: Facets Blueprint Pull Requests API
+  description: Native Facets blueprint pull-request (branch) lifecycle APIs
+  humanURL: https://www.facets.cloud/docs/api
+  baseURL: https://{account-id}.console.facets.cloud
+  tags:
+  - Blueprint Pull Requests
+  properties:
+  - type: OpenAPI
+    url: openapi/facets-blueprint-pull-requests-api-openapi.yml
+  - type: Documentation
+    url: https://www.facets.cloud/docs
+  - type: APIReference
+    url: https://www.facets.cloud/docs/api
+  - type: GettingStarted
+    url: https://www.facets.cloud/docs/quickstart
+  - type: Authentication
+    url: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  - type: ReleaseNotes
+    url: https://www.facets.cloud/docs/changelog
+  - type: DataModel
+    url: data-model/facets-data-model.yml
+  - type: ErrorCatalog
+    url: errors/facets-problem-types.yml
+  - type: ToolCrosswalk
+    url: mcp/facets-tool-crosswalk.yml
+  - type: Webhooks
+    url: asyncapi/facets-webhooks.yml
+- aid: facets:facets-intent-management-api
+  name: Facets Intent Management API
+  description: The Intent Management API from Facets — 2 operation(s) for intent management.
+  humanURL: https://www.facets.cloud/docs/api
+  baseURL: https://{account-id}.console.facets.cloud
+  tags:
+  - Intent Management
+  properties:
+  - type: OpenAPI
+    url: openapi/facets-intent-management-api-openapi.yml
+  - type: Documentation
+    url: https://www.facets.cloud/docs
+  - type: APIReference
+    url: https://www.facets.cloud/docs/api
+  - type: GettingStarted
+    url: https://www.facets.cloud/docs/quickstart
+  - type: Authentication
+    url: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  - type: ReleaseNotes
+    url: https://www.facets.cloud/docs/changelog
+  - type: DataModel
+    url: data-model/facets-data-model.yml
+  - type: ErrorCatalog
+    url: errors/facets-problem-types.yml
+  - type: ToolCrosswalk
+    url: mcp/facets-tool-crosswalk.yml
+  - type: Webhooks
+    url: asyncapi/facets-webhooks.yml
+- aid: facets:facets-label-management-api
+  name: Facets Label Management API
+  description: APIs for managing labels
+  humanURL: https://www.facets.cloud/docs/api
+  baseURL: https://{account-id}.console.facets.cloud
+  tags:
+  - Label Management
+  properties:
+  - type: OpenAPI
+    url: openapi/facets-label-management-api-openapi.yml
+  - type: Documentation
+    url: https://www.facets.cloud/docs
+  - type: APIReference
+    url: https://www.facets.cloud/docs/api
+  - type: GettingStarted
+    url: https://www.facets.cloud/docs/quickstart
+  - type: Authentication
+    url: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  - type: ReleaseNotes
+    url: https://www.facets.cloud/docs/changelog
+  - type: DataModel
+    url: data-model/facets-data-model.yml
+  - type: ErrorCatalog
+    url: errors/facets-problem-types.yml
+  - type: ToolCrosswalk
+    url: mcp/facets-tool-crosswalk.yml
+  - type: Webhooks
+    url: asyncapi/facets-webhooks.yml
+- aid: facets:facets-module-management-api
+  name: Facets Module Management API
+  description: The Module Management API from Facets — 14 operation(s) for module management.
+  humanURL: https://www.facets.cloud/docs/api
+  baseURL: https://{account-id}.console.facets.cloud
+  tags:
+  - Module Management
+  properties:
+  - type: OpenAPI
+    url: openapi/facets-module-management-api-openapi.yml
+  - type: Documentation
+    url: https://www.facets.cloud/docs
+  - type: APIReference
+    url: https://www.facets.cloud/docs/api
+  - type: GettingStarted
+    url: https://www.facets.cloud/docs/quickstart
+  - type: Authentication
+    url: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  - type: ReleaseNotes
+    url: https://www.facets.cloud/docs/changelog
+  - type: DataModel
+    url: data-model/facets-data-model.yml
+  - type: ErrorCatalog
+    url: errors/facets-problem-types.yml
+  - type: ToolCrosswalk
+    url: mcp/facets-tool-crosswalk.yml
+  - type: Webhooks
+    url: asyncapi/facets-webhooks.yml
+- aid: facets:facets-modules-repo-api
+  name: Facets Modules Repo API
+  description: The Modules Repo API from Facets — 6 operation(s) for modules repo.
+  humanURL: https://www.facets.cloud/docs/api
+  baseURL: https://{account-id}.console.facets.cloud
+  tags:
+  - Modules Repo
+  properties:
+  - type: OpenAPI
+    url: openapi/facets-modules-repo-api-openapi.yml
+  - type: Documentation
+    url: https://www.facets.cloud/docs
+  - type: APIReference
+    url: https://www.facets.cloud/docs/api
+  - type: GettingStarted
+    url: https://www.facets.cloud/docs/quickstart
+  - type: Authentication
+    url: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  - type: ReleaseNotes
+    url: https://www.facets.cloud/docs/changelog
+  - type: DataModel
+    url: data-model/facets-data-model.yml
+  - type: ErrorCatalog
+    url: errors/facets-problem-types.yml
+  - type: ToolCrosswalk
+    url: mcp/facets-tool-crosswalk.yml
+  - type: Webhooks
+    url: asyncapi/facets-webhooks.yml
+- aid: facets:facets-public-ap-is-api
+  name: Facets Public Ap Is API
+  description: The public-ap-is API from Facets — 20 operation(s) for public-ap-is.
+  humanURL: https://www.facets.cloud/docs/api
+  baseURL: https://{account-id}.console.facets.cloud
+  tags:
+  - public-ap-is
+  properties:
+  - type: OpenAPI
+    url: openapi/facets-public-ap-is-api-openapi.yml
+  - type: Documentation
+    url: https://www.facets.cloud/docs
+  - type: APIReference
+    url: https://www.facets.cloud/docs/api
+  - type: GettingStarted
+    url: https://www.facets.cloud/docs/quickstart
+  - type: Authentication
+    url: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  - type: ReleaseNotes
+    url: https://www.facets.cloud/docs/changelog
+  - type: DataModel
+    url: data-model/facets-data-model.yml
+  - type: ErrorCatalog
+    url: errors/facets-problem-types.yml
+  - type: ToolCrosswalk
+    url: mcp/facets-tool-crosswalk.yml
+  - type: Webhooks
+    url: asyncapi/facets-webhooks.yml
+- aid: facets:facets-service-accounts-api
+  name: Facets Service Accounts API
+  description: The Service Accounts API from Facets — 3 operation(s) for service accounts.
+  humanURL: https://www.facets.cloud/docs/api
+  baseURL: https://{account-id}.console.facets.cloud
+  tags:
+  - Service Accounts
+  properties:
+  - type: OpenAPI
+    url: openapi/facets-service-accounts-api-openapi.yml
+  - type: Documentation
+    url: https://www.facets.cloud/docs
+  - type: APIReference
+    url: https://www.facets.cloud/docs/api
+  - type: GettingStarted
+    url: https://www.facets.cloud/docs/quickstart
+  - type: Authentication
+    url: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  - type: ReleaseNotes
+    url: https://www.facets.cloud/docs/changelog
+  - type: DataModel
+    url: data-model/facets-data-model.yml
+  - type: ErrorCatalog
+    url: errors/facets-problem-types.yml
+  - type: ToolCrosswalk
+    url: mcp/facets-tool-crosswalk.yml
+  - type: Webhooks
+    url: asyncapi/facets-webhooks.yml
+- aid: facets:facets-tf-output-management-api
+  name: Facets TF Output Management API
+  description: The TF Output Management API from Facets — 3 operation(s) for tf output management.
+  humanURL: https://www.facets.cloud/docs/api
+  baseURL: https://{account-id}.console.facets.cloud
+  tags:
+  - TF Output Management
+  properties:
+  - type: OpenAPI
+    url: openapi/facets-tf-output-management-api-openapi.yml
+  - type: Documentation
+    url: https://www.facets.cloud/docs
+  - type: APIReference
+    url: https://www.facets.cloud/docs/api
+  - type: GettingStarted
+    url: https://www.facets.cloud/docs/quickstart
+  - type: Authentication
+    url: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  - type: ReleaseNotes
+    url: https://www.facets.cloud/docs/changelog
+  - type: DataModel
+    url: data-model/facets-data-model.yml
+  - type: ErrorCatalog
+    url: errors/facets-problem-types.yml
+  - type: ToolCrosswalk
+    url: mcp/facets-tool-crosswalk.yml
+  - type: Webhooks
+    url: asyncapi/facets-webhooks.yml
+- aid: facets:facets-ui-accounts-controller-api
+  name: Facets UI Accounts Controller API
+  description: The ui-accounts-controller API from Facets — 38 operation(s) for ui-accounts-controller.
+  humanURL: https://www.facets.cloud/docs/api
+  baseURL: https://{account-id}.console.facets.cloud
+  tags:
+  - ui-accounts-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/facets-ui-accounts-controller-api-openapi.yml
+  - type: Documentation
+    url: https://www.facets.cloud/docs
+  - type: APIReference
+    url: https://www.facets.cloud/docs/api
+  - type: GettingStarted
+    url: https://www.facets.cloud/docs/quickstart
+  - type: Authentication
+    url: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  - type: ReleaseNotes
+    url: https://www.facets.cloud/docs/changelog
+  - type: DataModel
+    url: data-model/facets-data-model.yml
+  - type: ErrorCatalog
+    url: errors/facets-problem-types.yml
+  - type: ToolCrosswalk
+    url: mcp/facets-tool-crosswalk.yml
+  - type: Webhooks
+    url: asyncapi/facets-webhooks.yml
+- aid: facets:facets-ui-application-controller-api
+  name: Facets UI Application Controller API
+  description: >-
+    The ui-application-controller API from Facets — 20 operation(s) for ui-application-controller.
+  humanURL: https://www.facets.cloud/docs/api
+  baseURL: https://{account-id}.console.facets.cloud
+  tags:
+  - ui-application-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/facets-ui-application-controller-api-openapi.yml
+  - type: Documentation
+    url: https://www.facets.cloud/docs
+  - type: APIReference
+    url: https://www.facets.cloud/docs/api
+  - type: GettingStarted
+    url: https://www.facets.cloud/docs/quickstart
+  - type: Authentication
+    url: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  - type: ReleaseNotes
+    url: https://www.facets.cloud/docs/changelog
+  - type: DataModel
+    url: data-model/facets-data-model.yml
+  - type: ErrorCatalog
+    url: errors/facets-problem-types.yml
+  - type: ToolCrosswalk
+    url: mcp/facets-tool-crosswalk.yml
+  - type: Webhooks
+    url: asyncapi/facets-webhooks.yml
+- aid: facets:facets-ui-artifact-ci-controller-api
+  name: Facets UI Artifact Ci Controller API
+  description: >-
+    The ui-artifact-ci-controller API from Facets — 6 operation(s) for ui-artifact-ci-controller.
+  humanURL: https://www.facets.cloud/docs/api
+  baseURL: https://{account-id}.console.facets.cloud
+  tags:
+  - ui-artifact-ci-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/facets-ui-artifact-ci-controller-api-openapi.yml
+  - type: Documentation
+    url: https://www.facets.cloud/docs
+  - type: APIReference
+    url: https://www.facets.cloud/docs/api
+  - type: GettingStarted
+    url: https://www.facets.cloud/docs/quickstart
+  - type: Authentication
+    url: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  - type: ReleaseNotes
+    url: https://www.facets.cloud/docs/changelog
+  - type: DataModel
+    url: data-model/facets-data-model.yml
+  - type: ErrorCatalog
+    url: errors/facets-problem-types.yml
+  - type: ToolCrosswalk
+    url: mcp/facets-tool-crosswalk.yml
+  - type: Webhooks
+    url: asyncapi/facets-webhooks.yml
+- aid: facets:facets-ui-artifact-hub-controller-api
+  name: Facets UI Artifact Hub Controller API
+  description: >-
+    The ui-artifact-hub-controller API from Facets — 2 operation(s) for ui-artifact-hub-controller.
+  humanURL: https://www.facets.cloud/docs/api
+  baseURL: https://{account-id}.console.facets.cloud
+  tags:
+  - ui-artifact-hub-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/facets-ui-artifact-hub-controller-api-openapi.yml
+  - type: Documentation
+    url: https://www.facets.cloud/docs
+  - type: APIReference
+    url: https://www.facets.cloud/docs/api
+  - type: GettingStarted
+    url: https://www.facets.cloud/docs/quickstart
+  - type: Authentication
+    url: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  - type: ReleaseNotes
+    url: https://www.facets.cloud/docs/changelog
+  - type: DataModel
+    url: data-model/facets-data-model.yml
+  - type: ErrorCatalog
+    url: errors/facets-problem-types.yml
+  - type: ToolCrosswalk
+    url: mcp/facets-tool-crosswalk.yml
+  - type: Webhooks
+    url: asyncapi/facets-webhooks.yml
+- aid: facets:facets-ui-artifact-routing-rule-controller-api
+  name: Facets UI Artifact Routing Rule Controller API
+  description: >-
+    The ui-artifact-routing-rule-controller API from Facets — 4 operation(s) for ui-artifact-routing-rule-controller.
+  humanURL: https://www.facets.cloud/docs/api
+  baseURL: https://{account-id}.console.facets.cloud
+  tags:
+  - ui-artifact-routing-rule-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/facets-ui-artifact-routing-rule-controller-api-openapi.yml
+  - type: Documentation
+    url: https://www.facets.cloud/docs
+  - type: APIReference
+    url: https://www.facets.cloud/docs/api
+  - type: GettingStarted
+    url: https://www.facets.cloud/docs/quickstart
+  - type: Authentication
+    url: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  - type: ReleaseNotes
+    url: https://www.facets.cloud/docs/changelog
+  - type: DataModel
+    url: data-model/facets-data-model.yml
+  - type: ErrorCatalog
+    url: errors/facets-problem-types.yml
+  - type: ToolCrosswalk
+    url: mcp/facets-tool-crosswalk.yml
+  - type: Webhooks
+    url: asyncapi/facets-webhooks.yml
+- aid: facets:facets-ui-artifactory-controller-api
+  name: Facets UI Artifactory Controller API
+  description: >-
+    The ui-artifactory-controller API from Facets — 14 operation(s) for ui-artifactory-controller.
+  humanURL: https://www.facets.cloud/docs/api
+  baseURL: https://{account-id}.console.facets.cloud
+  tags:
+  - ui-artifactory-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/facets-ui-artifactory-controller-api-openapi.yml
+  - type: Documentation
+    url: https://www.facets.cloud/docs
+  - type: APIReference
+    url: https://www.facets.cloud/docs/api
+  - type: GettingStarted
+    url: https://www.facets.cloud/docs/quickstart
+  - type: Authentication
+    url: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  - type: ReleaseNotes
+    url: https://www.facets.cloud/docs/changelog
+  - type: DataModel
+    url: data-model/facets-data-model.yml
+  - type: ErrorCatalog
+    url: errors/facets-problem-types.yml
+  - type: ToolCrosswalk
+    url: mcp/facets-tool-crosswalk.yml
+  - type: Webhooks
+    url: asyncapi/facets-webhooks.yml
+- aid: facets:facets-ui-artifacts-controller-api
+  name: Facets UI Artifacts Controller API
+  description: >-
+    The ui-artifacts-controller API from Facets — 20 operation(s) for ui-artifacts-controller.
+  humanURL: https://www.facets.cloud/docs/api
+  baseURL: https://{account-id}.console.facets.cloud
+  tags:
+  - ui-artifacts-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/facets-ui-artifacts-controller-api-openapi.yml
+  - type: Documentation
+    url: https://www.facets.cloud/docs
+  - type: APIReference
+    url: https://www.facets.cloud/docs/api
+  - type: GettingStarted
+    url: https://www.facets.cloud/docs/quickstart
+  - type: Authentication
+    url: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  - type: ReleaseNotes
+    url: https://www.facets.cloud/docs/changelog
+  - type: DataModel
+    url: data-model/facets-data-model.yml
+  - type: ErrorCatalog
+    url: errors/facets-problem-types.yml
+  - type: ToolCrosswalk
+    url: mcp/facets-tool-crosswalk.yml
+  - type: Webhooks
+    url: asyncapi/facets-webhooks.yml
+- aid: facets:facets-ui-audit-logs-controller-api
+  name: Facets UI Audit Logs Controller API
+  description: >-
+    The ui-audit-logs-controller API from Facets — 3 operation(s) for ui-audit-logs-controller.
+  humanURL: https://www.facets.cloud/docs/api
+  baseURL: https://{account-id}.console.facets.cloud
+  tags:
+  - ui-audit-logs-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/facets-ui-audit-logs-controller-api-openapi.yml
+  - type: Documentation
+    url: https://www.facets.cloud/docs
+  - type: APIReference
+    url: https://www.facets.cloud/docs/api
+  - type: GettingStarted
+    url: https://www.facets.cloud/docs/quickstart
+  - type: Authentication
+    url: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  - type: ReleaseNotes
+    url: https://www.facets.cloud/docs/changelog
+  - type: DataModel
+    url: data-model/facets-data-model.yml
+  - type: ErrorCatalog
+    url: errors/facets-problem-types.yml
+  - type: ToolCrosswalk
+    url: mcp/facets-tool-crosswalk.yml
+  - type: Webhooks
+    url: asyncapi/facets-webhooks.yml
+- aid: facets:facets-ui-aws-cluster-controller-api
+  name: Facets UI Aws Cluster Controller API
+  description: >-
+    The ui-aws-cluster-controller API from Facets — 5 operation(s) for ui-aws-cluster-controller.
+  humanURL: https://www.facets.cloud/docs/api
+  baseURL: https://{account-id}.console.facets.cloud
+  tags:
+  - ui-aws-cluster-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/facets-ui-aws-cluster-controller-api-openapi.yml
+  - type: Documentation
+    url: https://www.facets.cloud/docs
+  - type: APIReference
+    url: https://www.facets.cloud/docs/api
+  - type: GettingStarted
+    url: https://www.facets.cloud/docs/quickstart
+  - type: Authentication
+    url: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  - type: ReleaseNotes
+    url: https://www.facets.cloud/docs/changelog
+  - type: DataModel
+    url: data-model/facets-data-model.yml
+  - type: ErrorCatalog
+    url: errors/facets-problem-types.yml
+  - type: ToolCrosswalk
+    url: mcp/facets-tool-crosswalk.yml
+  - type: Webhooks
+    url: asyncapi/facets-webhooks.yml
+- aid: facets:facets-ui-azure-cluster-controller-api
+  name: Facets UI Azure Cluster Controller API
+  description: >-
+    The ui-azure-cluster-controller API from Facets — 4 operation(s) for ui-azure-cluster-controller.
+  humanURL: https://www.facets.cloud/docs/api
+  baseURL: https://{account-id}.console.facets.cloud
+  tags:
+  - ui-azure-cluster-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/facets-ui-azure-cluster-controller-api-openapi.yml
+  - type: Documentation
+    url: https://www.facets.cloud/docs
+  - type: APIReference
+    url: https://www.facets.cloud/docs/api
+  - type: GettingStarted
+    url: https://www.facets.cloud/docs/quickstart
+  - type: Authentication
+    url: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  - type: ReleaseNotes
+    url: https://www.facets.cloud/docs/changelog
+  - type: DataModel
+    url: data-model/facets-data-model.yml
+  - type: ErrorCatalog
+    url: errors/facets-problem-types.yml
+  - type: ToolCrosswalk
+    url: mcp/facets-tool-crosswalk.yml
+  - type: Webhooks
+    url: asyncapi/facets-webhooks.yml
+- aid: facets:facets-ui-billing-controller-api
+  name: Facets UI Billing Controller API
+  description: The ui-billing-controller API from Facets — 4 operation(s) for ui-billing-controller.
+  humanURL: https://www.facets.cloud/docs/api
+  baseURL: https://{account-id}.console.facets.cloud
+  tags:
+  - ui-billing-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/facets-ui-billing-controller-api-openapi.yml
+  - type: Documentation
+    url: https://www.facets.cloud/docs
+  - type: APIReference
+    url: https://www.facets.cloud/docs/api
+  - type: GettingStarted
+    url: https://www.facets.cloud/docs/quickstart
+  - type: Authentication
+    url: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  - type: ReleaseNotes
+    url: https://www.facets.cloud/docs/changelog
+  - type: DataModel
+    url: data-model/facets-data-model.yml
+  - type: ErrorCatalog
+    url: errors/facets-problem-types.yml
+  - type: ToolCrosswalk
+    url: mcp/facets-tool-crosswalk.yml
+  - type: Webhooks
+    url: asyncapi/facets-webhooks.yml
+- aid: facets:facets-ui-blueprint-designer-controller-api
+  name: Facets UI Blueprint Designer Controller API
+  description: >-
+    The ui-blueprint-designer-controller API from Facets — 25 operation(s) for ui-blueprint-designer-controller.
+  humanURL: https://www.facets.cloud/docs/api
+  baseURL: https://{account-id}.console.facets.cloud
+  tags:
+  - ui-blueprint-designer-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/facets-ui-blueprint-designer-controller-api-openapi.yml
+  - type: Documentation
+    url: https://www.facets.cloud/docs
+  - type: APIReference
+    url: https://www.facets.cloud/docs/api
+  - type: GettingStarted
+    url: https://www.facets.cloud/docs/quickstart
+  - type: Authentication
+    url: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  - type: ReleaseNotes
+    url: https://www.facets.cloud/docs/changelog
+  - type: DataModel
+    url: data-model/facets-data-model.yml
+  - type: ErrorCatalog
+    url: errors/facets-problem-types.yml
+  - type: ToolCrosswalk
+    url: mcp/facets-tool-crosswalk.yml
+  - type: Webhooks
+    url: asyncapi/facets-webhooks.yml
+- aid: facets:facets-ui-ci-cd-controller-api
+  name: Facets UI Ci Cd Controller API
+  description: The ui-ci-cd-controller API from Facets — 9 operation(s) for ui-ci-cd-controller.
+  humanURL: https://www.facets.cloud/docs/api
+  baseURL: https://{account-id}.console.facets.cloud
+  tags:
+  - ui-ci-cd-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/facets-ui-ci-cd-controller-api-openapi.yml
+  - type: Documentation
+    url: https://www.facets.cloud/docs
+  - type: APIReference
+    url: https://www.facets.cloud/docs/api
+  - type: GettingStarted
+    url: https://www.facets.cloud/docs/quickstart
+  - type: Authentication
+    url: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  - type: ReleaseNotes
+    url: https://www.facets.cloud/docs/changelog
+  - type: DataModel
+    url: data-model/facets-data-model.yml
+  - type: ErrorCatalog
+    url: errors/facets-problem-types.yml
+  - type: ToolCrosswalk
+    url: mcp/facets-tool-crosswalk.yml
+  - type: Webhooks
+    url: asyncapi/facets-webhooks.yml
+- aid: facets:facets-ui-cloud-cost-explorer-controller-api
+  name: Facets UI Cloud Cost Explorer Controller API
+  description: >-
+    The ui-cloud-cost-explorer-controller API from Facets — 4 operation(s) for ui-cloud-cost-explorer-controller.
+  humanURL: https://www.facets.cloud/docs/api
+  baseURL: https://{account-id}.console.facets.cloud
+  tags:
+  - ui-cloud-cost-explorer-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/facets-ui-cloud-cost-explorer-controller-api-openapi.yml
+  - type: Documentation
+    url: https://www.facets.cloud/docs
+  - type: APIReference
+    url: https://www.facets.cloud/docs/api
+  - type: GettingStarted
+    url: https://www.facets.cloud/docs/quickstart
+  - type: Authentication
+    url: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  - type: ReleaseNotes
+    url: https://www.facets.cloud/docs/changelog
+  - type: DataModel
+    url: data-model/facets-data-model.yml
+  - type: ErrorCatalog
+    url: errors/facets-problem-types.yml
+  - type: ToolCrosswalk
+    url: mcp/facets-tool-crosswalk.yml
+  - type: Webhooks
+    url: asyncapi/facets-webhooks.yml
+- aid: facets:facets-ui-coder-controller-api
+  name: Facets UI Coder Controller API
+  description: The ui-coder-controller API from Facets — 7 operation(s) for ui-coder-controller.
+  humanURL: https://www.facets.cloud/docs/api
+  baseURL: https://{account-id}.console.facets.cloud
+  tags:
+  - ui-coder-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/facets-ui-coder-controller-api-openapi.yml
+  - type: Documentation
+    url: https://www.facets.cloud/docs
+  - type: APIReference
+    url: https://www.facets.cloud/docs/api
+  - type: GettingStarted
+    url: https://www.facets.cloud/docs/quickstart
+  - type: Authentication
+    url: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  - type: ReleaseNotes
+    url: https://www.facets.cloud/docs/changelog
+  - type: DataModel
+    url: data-model/facets-data-model.yml
+  - type: ErrorCatalog
+    url: errors/facets-problem-types.yml
+  - type: ToolCrosswalk
+    url: mcp/facets-tool-crosswalk.yml
+  - type: Webhooks
+    url: asyncapi/facets-webhooks.yml
+- aid: facets:facets-ui-common-cluster-controller-api
+  name: Facets UI Common Cluster Controller API
+  description: >-
+    The ui-common-cluster-controller API from Facets — 48 operation(s) for ui-common-cluster-controller.
+  humanURL: https://www.facets.cloud/docs/api
+  baseURL: https://{account-id}.console.facets.cloud
+  tags:
+  - ui-common-cluster-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/facets-ui-common-cluster-controller-api-openapi.yml
+  - type: Documentation
+    url: https://www.facets.cloud/docs
+  - type: APIReference
+    url: https://www.facets.cloud/docs/api
+  - type: GettingStarted
+    url: https://www.facets.cloud/docs/quickstart
+  - type: Authentication
+    url: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  - type: ReleaseNotes
+    url: https://www.facets.cloud/docs/changelog
+  - type: DataModel
+    url: data-model/facets-data-model.yml
+  - type: ErrorCatalog
+    url: errors/facets-problem-types.yml
+  - type: ToolCrosswalk
+    url: mcp/facets-tool-crosswalk.yml
+  - type: Webhooks
+    url: asyncapi/facets-webhooks.yml
+- aid: facets:facets-ui-custom-content-controller-api
+  name: Facets UI Custom Content Controller API
+  description: >-
+    The ui-custom-content-controller API from Facets — 4 operation(s) for ui-custom-content-controller.
+  humanURL: https://www.facets.cloud/docs/api
+  baseURL: https://{account-id}.console.facets.cloud
+  tags:
+  - ui-custom-content-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/facets-ui-custom-content-controller-api-openapi.yml
+  - type: Documentation
+    url: https://www.facets.cloud/docs
+  - type: APIReference
+    url: https://www.facets.cloud/docs/api
+  - type: GettingStarted
+    url: https://www.facets.cloud/docs/quickstart
+  - type: Authentication
+    url: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  - type: ReleaseNotes
+    url: https://www.facets.cloud/docs/changelog
+  - type: DataModel
+    url: data-model/facets-data-model.yml
+  - type: ErrorCatalog
+    url: errors/facets-problem-types.yml
+  - type: ToolCrosswalk
+    url: mcp/facets-tool-crosswalk.yml
+  - type: Webhooks
+    url: asyncapi/facets-webhooks.yml
+- aid: facets:facets-ui-custom-role-controller-api
+  name: Facets UI Custom Role Controller API
+  description: >-
+    The ui-custom-role-controller API from Facets — 3 operation(s) for ui-custom-role-controller.
+  humanURL: https://www.facets.cloud/docs/api
+  baseURL: https://{account-id}.console.facets.cloud
+  tags:
+  - ui-custom-role-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/facets-ui-custom-role-controller-api-openapi.yml
+  - type: Documentation
+    url: https://www.facets.cloud/docs
+  - type: APIReference
+    url: https://www.facets.cloud/docs/api
+  - type: GettingStarted
+    url: https://www.facets.cloud/docs/quickstart
+  - type: Authentication
+    url: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  - type: ReleaseNotes
+    url: https://www.facets.cloud/docs/changelog
+  - type: DataModel
+    url: data-model/facets-data-model.yml
+  - type: ErrorCatalog
+    url: errors/facets-problem-types.yml
+  - type: ToolCrosswalk
+    url: mcp/facets-tool-crosswalk.yml
+  - type: Webhooks
+    url: asyncapi/facets-webhooks.yml
+- aid: facets:facets-ui-delivery-pipeline-controller-api
+  name: Facets UI Delivery Pipeline Controller API
+  description: >-
+    The ui-delivery-pipeline-controller API from Facets — 1 operation(s) for ui-delivery-pipeline-controller.
+  humanURL: https://www.facets.cloud/docs/api
+  baseURL: https://{account-id}.console.facets.cloud
+  tags:
+  - ui-delivery-pipeline-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/facets-ui-delivery-pipeline-controller-api-openapi.yml
+  - type: Documentation
+    url: https://www.facets.cloud/docs
+  - type: APIReference
+    url: https://www.facets.cloud/docs/api
+  - type: GettingStarted
+    url: https://www.facets.cloud/docs/quickstart
+  - type: Authentication
+    url: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  - type: ReleaseNotes
+    url: https://www.facets.cloud/docs/changelog
+  - type: DataModel
+    url: data-model/facets-data-model.yml
+  - type: ErrorCatalog
+    url: errors/facets-problem-types.yml
+  - type: ToolCrosswalk
+    url: mcp/facets-tool-crosswalk.yml
+  - type: Webhooks
+    url: asyncapi/facets-webhooks.yml
+- aid: facets:facets-ui-deployment-controller-api
+  name: Facets UI Deployment Controller API
+  description: >-
+    The ui-deployment-controller API from Facets — 33 operation(s) for ui-deployment-controller.
+  humanURL: https://www.facets.cloud/docs/api
+  baseURL: https://{account-id}.console.facets.cloud
+  tags:
+  - ui-deployment-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/facets-ui-deployment-controller-api-openapi.yml
+  - type: Documentation
+    url: https://www.facets.cloud/docs
+  - type: APIReference
+    url: https://www.facets.cloud/docs/api
+  - type: GettingStarted
+    url: https://www.facets.cloud/docs/quickstart
+  - type: Authentication
+    url: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  - type: ReleaseNotes
+    url: https://www.facets.cloud/docs/changelog
+  - type: DataModel
+    url: data-model/facets-data-model.yml
+  - type: ErrorCatalog
+    url: errors/facets-problem-types.yml
+  - type: ToolCrosswalk
+    url: mcp/facets-tool-crosswalk.yml
+  - type: Webhooks
+    url: asyncapi/facets-webhooks.yml
+- aid: facets:facets-ui-domain-mapping-controller-api
+  name: Facets UI Domain Mapping Controller API
+  description: >-
+    The ui-domain-mapping-controller API from Facets — 1 operation(s) for ui-domain-mapping-controller.
+  humanURL: https://www.facets.cloud/docs/api
+  baseURL: https://{account-id}.console.facets.cloud
+  tags:
+  - ui-domain-mapping-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/facets-ui-domain-mapping-controller-api-openapi.yml
+  - type: Documentation
+    url: https://www.facets.cloud/docs
+  - type: APIReference
+    url: https://www.facets.cloud/docs/api
+  - type: GettingStarted
+    url: https://www.facets.cloud/docs/quickstart
+  - type: Authentication
+    url: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  - type: ReleaseNotes
+    url: https://www.facets.cloud/docs/changelog
+  - type: DataModel
+    url: data-model/facets-data-model.yml
+  - type: ErrorCatalog
+    url: errors/facets-problem-types.yml
+  - type: ToolCrosswalk
+    url: mcp/facets-tool-crosswalk.yml
+  - type: Webhooks
+    url: asyncapi/facets-webhooks.yml
+- aid: facets:facets-ui-dropdowns-controller-api
+  name: Facets UI Dropdowns Controller API
+  description: >-
+    The ui-dropdowns-controller API from Facets — 30 operation(s) for ui-dropdowns-controller.
+  humanURL: https://www.facets.cloud/docs/api
+  baseURL: https://{account-id}.console.facets.cloud
+  tags:
+  - ui-dropdowns-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/facets-ui-dropdowns-controller-api-openapi.yml
+  - type: Documentation
+    url: https://www.facets.cloud/docs
+  - type: APIReference
+    url: https://www.facets.cloud/docs/api
+  - type: GettingStarted
+    url: https://www.facets.cloud/docs/quickstart
+  - type: Authentication
+    url: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  - type: ReleaseNotes
+    url: https://www.facets.cloud/docs/changelog
+  - type: DataModel
+    url: data-model/facets-data-model.yml
+  - type: ErrorCatalog
+    url: errors/facets-problem-types.yml
+  - type: ToolCrosswalk
+    url: mcp/facets-tool-crosswalk.yml
+  - type: Webhooks
+    url: asyncapi/facets-webhooks.yml
+- aid: facets:facets-ui-environment-controller-api
+  name: Facets UI Environment Controller API
+  description: >-
+    The ui-environment-controller API from Facets — 3 operation(s) for ui-environment-controller.
+  humanURL: https://www.facets.cloud/docs/api
+  baseURL: https://{account-id}.console.facets.cloud
+  tags:
+  - ui-environment-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/facets-ui-environment-controller-api-openapi.yml
+  - type: Documentation
+    url: https://www.facets.cloud/docs
+  - type: APIReference
+    url: https://www.facets.cloud/docs/api
+  - type: GettingStarted
+    url: https://www.facets.cloud/docs/quickstart
+  - type: Authentication
+    url: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  - type: ReleaseNotes
+    url: https://www.facets.cloud/docs/changelog
+  - type: DataModel
+    url: data-model/facets-data-model.yml
+  - type: ErrorCatalog
+    url: errors/facets-problem-types.yml
+  - type: ToolCrosswalk
+    url: mcp/facets-tool-crosswalk.yml
+  - type: Webhooks
+    url: asyncapi/facets-webhooks.yml
+- aid: facets:facets-ui-gcp-cluster-controller-api
+  name: Facets UI Gcp Cluster Controller API
+  description: >-
+    The ui-gcp-cluster-controller API from Facets — 4 operation(s) for ui-gcp-cluster-controller.
+  humanURL: https://www.facets.cloud/docs/api
+  baseURL: https://{account-id}.console.facets.cloud
+  tags:
+  - ui-gcp-cluster-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/facets-ui-gcp-cluster-controller-api-openapi.yml
+  - type: Documentation
+    url: https://www.facets.cloud/docs
+  - type: APIReference
+    url: https://www.facets.cloud/docs/api
+  - type: GettingStarted
+    url: https://www.facets.cloud/docs/quickstart
+  - type: Authentication
+    url: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  - type: ReleaseNotes
+    url: https://www.facets.cloud/docs/changelog
+  - type: DataModel
+    url: data-model/facets-data-model.yml
+  - type: ErrorCatalog
+    url: errors/facets-problem-types.yml
+  - type: ToolCrosswalk
+    url: mcp/facets-tool-crosswalk.yml
+  - type: Webhooks
+    url: asyncapi/facets-webhooks.yml
+- aid: facets:facets-ui-k-8s-cluster-controller-api
+  name: Facets UI K 8s Cluster Controller API
+  description: >-
+    The ui-k-8s-cluster-controller API from Facets — 3 operation(s) for ui-k-8s-cluster-controller.
+  humanURL: https://www.facets.cloud/docs/api
+  baseURL: https://{account-id}.console.facets.cloud
+  tags:
+  - ui-k-8s-cluster-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/facets-ui-k-8s-cluster-controller-api-openapi.yml
+  - type: Documentation
+    url: https://www.facets.cloud/docs
+  - type: APIReference
+    url: https://www.facets.cloud/docs/api
+  - type: GettingStarted
+    url: https://www.facets.cloud/docs/quickstart
+  - type: Authentication
+    url: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  - type: ReleaseNotes
+    url: https://www.facets.cloud/docs/changelog
+  - type: DataModel
+    url: data-model/facets-data-model.yml
+  - type: ErrorCatalog
+    url: errors/facets-problem-types.yml
+  - type: ToolCrosswalk
+    url: mcp/facets-tool-crosswalk.yml
+  - type: Webhooks
+    url: asyncapi/facets-webhooks.yml
+- aid: facets:facets-ui-kubernetes-explorer-controller-api
+  name: Facets UI Kubernetes Explorer Controller API
+  description: >-
+    The ui-kubernetes-explorer-controller API from Facets — 23 operation(s) for ui-kubernetes-explorer-controller.
+  humanURL: https://www.facets.cloud/docs/api
+  baseURL: https://{account-id}.console.facets.cloud
+  tags:
+  - ui-kubernetes-explorer-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/facets-ui-kubernetes-explorer-controller-api-openapi.yml
+  - type: Documentation
+    url: https://www.facets.cloud/docs
+  - type: APIReference
+    url: https://www.facets.cloud/docs/api
+  - type: GettingStarted
+    url: https://www.facets.cloud/docs/quickstart
+  - type: Authentication
+    url: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  - type: ReleaseNotes
+    url: https://www.facets.cloud/docs/changelog
+  - type: DataModel
+    url: data-model/facets-data-model.yml
+  - type: ErrorCatalog
+    url: errors/facets-problem-types.yml
+  - type: ToolCrosswalk
+    url: mcp/facets-tool-crosswalk.yml
+  - type: Webhooks
+    url: asyncapi/facets-webhooks.yml
+- aid: facets:facets-ui-maintenance-window-controller-api
+  name: Facets UI Maintenance Window Controller API
+  description: >-
+    The ui-maintenance-window-controller API from Facets — 3 operation(s) for ui-maintenance-window-controller.
+  humanURL: https://www.facets.cloud/docs/api
+  baseURL: https://{account-id}.console.facets.cloud
+  tags:
+  - ui-maintenance-window-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/facets-ui-maintenance-window-controller-api-openapi.yml
+  - type: Documentation
+    url: https://www.facets.cloud/docs
+  - type: APIReference
+    url: https://www.facets.cloud/docs/api
+  - type: GettingStarted
+    url: https://www.facets.cloud/docs/quickstart
+  - type: Authentication
+    url: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  - type: ReleaseNotes
+    url: https://www.facets.cloud/docs/changelog
+  - type: DataModel
+    url: data-model/facets-data-model.yml
+  - type: ErrorCatalog
+    url: errors/facets-problem-types.yml
+  - type: ToolCrosswalk
+    url: mcp/facets-tool-crosswalk.yml
+  - type: Webhooks
+    url: asyncapi/facets-webhooks.yml
+- aid: facets:facets-ui-no-auth-user-controller-api
+  name: Facets UI No Auth User Controller API
+  description: >-
+    The ui-no-auth-user-controller API from Facets — 3 operation(s) for ui-no-auth-user-controller.
+  humanURL: https://www.facets.cloud/docs/api
+  baseURL: https://{account-id}.console.facets.cloud
+  tags:
+  - ui-no-auth-user-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/facets-ui-no-auth-user-controller-api-openapi.yml
+  - type: Documentation
+    url: https://www.facets.cloud/docs
+  - type: APIReference
+    url: https://www.facets.cloud/docs/api
+  - type: GettingStarted
+    url: https://www.facets.cloud/docs/quickstart
+  - type: Authentication
+    url: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  - type: ReleaseNotes
+    url: https://www.facets.cloud/docs/changelog
+  - type: DataModel
+    url: data-model/facets-data-model.yml
+  - type: ErrorCatalog
+    url: errors/facets-problem-types.yml
+  - type: ToolCrosswalk
+    url: mcp/facets-tool-crosswalk.yml
+  - type: Webhooks
+    url: asyncapi/facets-webhooks.yml
+- aid: facets:facets-ui-notification-controller-api
+  name: Facets UI Notification Controller API
+  description: >-
+    The ui-notification-controller API from Facets — 11 operation(s) for ui-notification-controller.
+  humanURL: https://www.facets.cloud/docs/api
+  baseURL: https://{account-id}.console.facets.cloud
+  tags:
+  - ui-notification-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/facets-ui-notification-controller-api-openapi.yml
+  - type: Documentation
+    url: https://www.facets.cloud/docs
+  - type: APIReference
+    url: https://www.facets.cloud/docs/api
+  - type: GettingStarted
+    url: https://www.facets.cloud/docs/quickstart
+  - type: Authentication
+    url: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  - type: ReleaseNotes
+    url: https://www.facets.cloud/docs/changelog
+  - type: DataModel
+    url: data-model/facets-data-model.yml
+  - type: ErrorCatalog
+    url: errors/facets-problem-types.yml
+  - type: ToolCrosswalk
+    url: mcp/facets-tool-crosswalk.yml
+  - type: Webhooks
+    url: asyncapi/facets-webhooks.yml
+- aid: facets:facets-ui-o-auth-controller-api
+  name: Facets UI O Auth Controller API
+  description: The ui-o-auth-controller API from Facets — 3 operation(s) for ui-o-auth-controller.
+  humanURL: https://www.facets.cloud/docs/api
+  baseURL: https://{account-id}.console.facets.cloud
+  tags:
+  - ui-o-auth-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/facets-ui-o-auth-controller-api-openapi.yml
+  - type: Documentation
+    url: https://www.facets.cloud/docs
+  - type: APIReference
+    url: https://www.facets.cloud/docs/api
+  - type: GettingStarted
+    url: https://www.facets.cloud/docs/quickstart
+  - type: Authentication
+    url: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  - type: ReleaseNotes
+    url: https://www.facets.cloud/docs/changelog
+  - type: DataModel
+    url: data-model/facets-data-model.yml
+  - type: ErrorCatalog
+    url: errors/facets-problem-types.yml
+  - type: ToolCrosswalk
+    url: mcp/facets-tool-crosswalk.yml
+  - type: Webhooks
+    url: asyncapi/facets-webhooks.yml
+- aid: facets:facets-ui-one-time-webhook-controller-api
+  name: Facets UI One Time Webhook Controller API
+  description: >-
+    The ui-one-time-webhook-controller API from Facets — 2 operation(s) for ui-one-time-webhook-controller.
+  humanURL: https://www.facets.cloud/docs/api
+  baseURL: https://{account-id}.console.facets.cloud
+  tags:
+  - ui-one-time-webhook-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/facets-ui-one-time-webhook-controller-api-openapi.yml
+  - type: Documentation
+    url: https://www.facets.cloud/docs
+  - type: APIReference
+    url: https://www.facets.cloud/docs/api
+  - type: GettingStarted
+    url: https://www.facets.cloud/docs/quickstart
+  - type: Authentication
+    url: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  - type: ReleaseNotes
+    url: https://www.facets.cloud/docs/changelog
+  - type: DataModel
+    url: data-model/facets-data-model.yml
+  - type: ErrorCatalog
+    url: errors/facets-problem-types.yml
+  - type: ToolCrosswalk
+    url: mcp/facets-tool-crosswalk.yml
+  - type: Webhooks
+    url: asyncapi/facets-webhooks.yml
+- aid: facets:facets-ui-opa-controller-api
+  name: Facets UI Opa Controller API
+  description: The ui-opa-controller API from Facets — 5 operation(s) for ui-opa-controller.
+  humanURL: https://www.facets.cloud/docs/api
+  baseURL: https://{account-id}.console.facets.cloud
+  tags:
+  - ui-opa-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/facets-ui-opa-controller-api-openapi.yml
+  - type: Documentation
+    url: https://www.facets.cloud/docs
+  - type: APIReference
+    url: https://www.facets.cloud/docs/api
+  - type: GettingStarted
+    url: https://www.facets.cloud/docs/quickstart
+  - type: Authentication
+    url: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  - type: ReleaseNotes
+    url: https://www.facets.cloud/docs/changelog
+  - type: DataModel
+    url: data-model/facets-data-model.yml
+  - type: ErrorCatalog
+    url: errors/facets-problem-types.yml
+  - type: ToolCrosswalk
+    url: mcp/facets-tool-crosswalk.yml
+  - type: Webhooks
+    url: asyncapi/facets-webhooks.yml
+- aid: facets:facets-ui-project-type-controller-api
+  name: Facets UI Project Type Controller API
+  description: >-
+    The ui-project-type-controller API from Facets — 2 operation(s) for ui-project-type-controller.
+  humanURL: https://www.facets.cloud/docs/api
+  baseURL: https://{account-id}.console.facets.cloud
+  tags:
+  - ui-project-type-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/facets-ui-project-type-controller-api-openapi.yml
+  - type: Documentation
+    url: https://www.facets.cloud/docs
+  - type: APIReference
+    url: https://www.facets.cloud/docs/api
+  - type: GettingStarted
+    url: https://www.facets.cloud/docs/quickstart
+  - type: Authentication
+    url: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  - type: ReleaseNotes
+    url: https://www.facets.cloud/docs/changelog
+  - type: DataModel
+    url: data-model/facets-data-model.yml
+  - type: ErrorCatalog
+    url: errors/facets-problem-types.yml
+  - type: ToolCrosswalk
+    url: mcp/facets-tool-crosswalk.yml
+  - type: Webhooks
+    url: asyncapi/facets-webhooks.yml
+- aid: facets:facets-ui-promotion-workflow-controller-api
+  name: Facets UI Promotion Workflow Controller API
+  description: >-
+    The ui-promotion-workflow-controller API from Facets — 5 operation(s) for ui-promotion-workflow-controller.
+  humanURL: https://www.facets.cloud/docs/api
+  baseURL: https://{account-id}.console.facets.cloud
+  tags:
+  - ui-promotion-workflow-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/facets-ui-promotion-workflow-controller-api-openapi.yml
+  - type: Documentation
+    url: https://www.facets.cloud/docs
+  - type: APIReference
+    url: https://www.facets.cloud/docs/api
+  - type: GettingStarted
+    url: https://www.facets.cloud/docs/quickstart
+  - type: Authentication
+    url: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  - type: ReleaseNotes
+    url: https://www.facets.cloud/docs/changelog
+  - type: DataModel
+    url: data-model/facets-data-model.yml
+  - type: ErrorCatalog
+    url: errors/facets-problem-types.yml
+  - type: ToolCrosswalk
+    url: mcp/facets-tool-crosswalk.yml
+  - type: Webhooks
+    url: asyncapi/facets-webhooks.yml
+- aid: facets:facets-ui-queued-release-controller-api
+  name: Facets UI Queued Release Controller API
+  description: >-
+    The ui-queued-release-controller API from Facets — 2 operation(s) for ui-queued-release-controller.
+  humanURL: https://www.facets.cloud/docs/api
+  baseURL: https://{account-id}.console.facets.cloud
+  tags:
+  - ui-queued-release-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/facets-ui-queued-release-controller-api-openapi.yml
+  - type: Documentation
+    url: https://www.facets.cloud/docs
+  - type: APIReference
+    url: https://www.facets.cloud/docs/api
+  - type: GettingStarted
+    url: https://www.facets.cloud/docs/quickstart
+  - type: Authentication
+    url: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  - type: ReleaseNotes
+    url: https://www.facets.cloud/docs/changelog
+  - type: DataModel
+    url: data-model/facets-data-model.yml
+  - type: ErrorCatalog
+    url: errors/facets-problem-types.yml
+  - type: ToolCrosswalk
+    url: mcp/facets-tool-crosswalk.yml
+  - type: Webhooks
+    url: asyncapi/facets-webhooks.yml
+- aid: facets:facets-ui-release-stream-controller-api
+  name: Facets UI Release Stream Controller API
+  description: >-
+    The ui-release-stream-controller API from Facets — 2 operation(s) for ui-release-stream-controller.
+  humanURL: https://www.facets.cloud/docs/api
+  baseURL: https://{account-id}.console.facets.cloud
+  tags:
+  - ui-release-stream-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/facets-ui-release-stream-controller-api-openapi.yml
+  - type: Documentation
+    url: https://www.facets.cloud/docs
+  - type: APIReference
+    url: https://www.facets.cloud/docs/api
+  - type: GettingStarted
+    url: https://www.facets.cloud/docs/quickstart
+  - type: Authentication
+    url: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  - type: ReleaseNotes
+    url: https://www.facets.cloud/docs/changelog
+  - type: DataModel
+    url: data-model/facets-data-model.yml
+  - type: ErrorCatalog
+    url: errors/facets-problem-types.yml
+  - type: ToolCrosswalk
+    url: mcp/facets-tool-crosswalk.yml
+  - type: Webhooks
+    url: asyncapi/facets-webhooks.yml
+- aid: facets:facets-ui-resource-group-controller-api
+  name: Facets UI Resource Group Controller API
+  description: >-
+    The ui-resource-group-controller API from Facets — 6 operation(s) for ui-resource-group-controller.
+  humanURL: https://www.facets.cloud/docs/api
+  baseURL: https://{account-id}.console.facets.cloud
+  tags:
+  - ui-resource-group-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/facets-ui-resource-group-controller-api-openapi.yml
+  - type: Documentation
+    url: https://www.facets.cloud/docs
+  - type: APIReference
+    url: https://www.facets.cloud/docs/api
+  - type: GettingStarted
+    url: https://www.facets.cloud/docs/quickstart
+  - type: Authentication
+    url: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  - type: ReleaseNotes
+    url: https://www.facets.cloud/docs/changelog
+  - type: DataModel
+    url: data-model/facets-data-model.yml
+  - type: ErrorCatalog
+    url: errors/facets-problem-types.yml
+  - type: ToolCrosswalk
+    url: mcp/facets-tool-crosswalk.yml
+  - type: Webhooks
+    url: asyncapi/facets-webhooks.yml
+- aid: facets:facets-ui-resource-status-controller-api
+  name: Facets UI Resource Status Controller API
+  description: >-
+    The ui-resource-status-controller API from Facets — 4 operation(s) for ui-resource-status-controller.
+  humanURL: https://www.facets.cloud/docs/api
+  baseURL: https://{account-id}.console.facets.cloud
+  tags:
+  - ui-resource-status-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/facets-ui-resource-status-controller-api-openapi.yml
+  - type: Documentation
+    url: https://www.facets.cloud/docs
+  - type: APIReference
+    url: https://www.facets.cloud/docs/api
+  - type: GettingStarted
+    url: https://www.facets.cloud/docs/quickstart
+  - type: Authentication
+    url: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  - type: ReleaseNotes
+    url: https://www.facets.cloud/docs/changelog
+  - type: DataModel
+    url: data-model/facets-data-model.yml
+  - type: ErrorCatalog
+    url: errors/facets-problem-types.yml
+  - type: ToolCrosswalk
+    url: mcp/facets-tool-crosswalk.yml
+  - type: Webhooks
+    url: asyncapi/facets-webhooks.yml
+- aid: facets:facets-ui-saml-controller-api
+  name: Facets UI Saml Controller API
+  description: The ui-saml-controller API from Facets — 2 operation(s) for ui-saml-controller.
+  humanURL: https://www.facets.cloud/docs/api
+  baseURL: https://{account-id}.console.facets.cloud
+  tags:
+  - ui-saml-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/facets-ui-saml-controller-api-openapi.yml
+  - type: Documentation
+    url: https://www.facets.cloud/docs
+  - type: APIReference
+    url: https://www.facets.cloud/docs/api
+  - type: GettingStarted
+    url: https://www.facets.cloud/docs/quickstart
+  - type: Authentication
+    url: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  - type: ReleaseNotes
+    url: https://www.facets.cloud/docs/changelog
+  - type: DataModel
+    url: data-model/facets-data-model.yml
+  - type: ErrorCatalog
+    url: errors/facets-problem-types.yml
+  - type: ToolCrosswalk
+    url: mcp/facets-tool-crosswalk.yml
+  - type: Webhooks
+    url: asyncapi/facets-webhooks.yml
+- aid: facets:facets-ui-settings-controller-api
+  name: Facets UI Settings Controller API
+  description: The ui-settings-controller API from Facets — 4 operation(s) for ui-settings-controller.
+  humanURL: https://www.facets.cloud/docs/api
+  baseURL: https://{account-id}.console.facets.cloud
+  tags:
+  - ui-settings-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/facets-ui-settings-controller-api-openapi.yml
+  - type: Documentation
+    url: https://www.facets.cloud/docs
+  - type: APIReference
+    url: https://www.facets.cloud/docs/api
+  - type: GettingStarted
+    url: https://www.facets.cloud/docs/quickstart
+  - type: Authentication
+    url: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  - type: ReleaseNotes
+    url: https://www.facets.cloud/docs/changelog
+  - type: DataModel
+    url: data-model/facets-data-model.yml
+  - type: ErrorCatalog
+    url: errors/facets-problem-types.yml
+  - type: ToolCrosswalk
+    url: mcp/facets-tool-crosswalk.yml
+  - type: Webhooks
+    url: asyncapi/facets-webhooks.yml
+- aid: facets:facets-ui-stack-controller-api
+  name: Facets UI Stack Controller API
+  description: The ui-stack-controller API from Facets — 35 operation(s) for ui-stack-controller.
+  humanURL: https://www.facets.cloud/docs/api
+  baseURL: https://{account-id}.console.facets.cloud
+  tags:
+  - ui-stack-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/facets-ui-stack-controller-api-openapi.yml
+  - type: Documentation
+    url: https://www.facets.cloud/docs
+  - type: APIReference
+    url: https://www.facets.cloud/docs/api
+  - type: GettingStarted
+    url: https://www.facets.cloud/docs/quickstart
+  - type: Authentication
+    url: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  - type: ReleaseNotes
+    url: https://www.facets.cloud/docs/changelog
+  - type: DataModel
+    url: data-model/facets-data-model.yml
+  - type: ErrorCatalog
+    url: errors/facets-problem-types.yml
+  - type: ToolCrosswalk
+    url: mcp/facets-tool-crosswalk.yml
+  - type: Webhooks
+    url: asyncapi/facets-webhooks.yml
+- aid: facets:facets-ui-tekton-action-controller-api
+  name: Facets UI Tekton Action Controller API
+  description: >-
+    The ui-tekton-action-controller API from Facets — 5 operation(s) for ui-tekton-action-controller.
+  humanURL: https://www.facets.cloud/docs/api
+  baseURL: https://{account-id}.console.facets.cloud
+  tags:
+  - ui-tekton-action-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/facets-ui-tekton-action-controller-api-openapi.yml
+  - type: Documentation
+    url: https://www.facets.cloud/docs
+  - type: APIReference
+    url: https://www.facets.cloud/docs/api
+  - type: GettingStarted
+    url: https://www.facets.cloud/docs/quickstart
+  - type: Authentication
+    url: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  - type: ReleaseNotes
+    url: https://www.facets.cloud/docs/changelog
+  - type: DataModel
+    url: data-model/facets-data-model.yml
+  - type: ErrorCatalog
+    url: errors/facets-problem-types.yml
+  - type: ToolCrosswalk
+    url: mcp/facets-tool-crosswalk.yml
+  - type: Webhooks
+    url: asyncapi/facets-webhooks.yml
+- aid: facets:facets-ui-tf-version-controller-api
+  name: Facets UI Tf Version Controller API
+  description: >-
+    The ui-tf-version-controller API from Facets — 6 operation(s) for ui-tf-version-controller.
+  humanURL: https://www.facets.cloud/docs/api
+  baseURL: https://{account-id}.console.facets.cloud
+  tags:
+  - ui-tf-version-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/facets-ui-tf-version-controller-api-openapi.yml
+  - type: Documentation
+    url: https://www.facets.cloud/docs
+  - type: APIReference
+    url: https://www.facets.cloud/docs/api
+  - type: GettingStarted
+    url: https://www.facets.cloud/docs/quickstart
+  - type: Authentication
+    url: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  - type: ReleaseNotes
+    url: https://www.facets.cloud/docs/changelog
+  - type: DataModel
+    url: data-model/facets-data-model.yml
+  - type: ErrorCatalog
+    url: errors/facets-problem-types.yml
+  - type: ToolCrosswalk
+    url: mcp/facets-tool-crosswalk.yml
+  - type: Webhooks
+    url: asyncapi/facets-webhooks.yml
+- aid: facets:facets-ui-theme-file-controller-api
+  name: Facets UI Theme File Controller API
+  description: >-
+    The ui-theme-file-controller API from Facets — 1 operation(s) for ui-theme-file-controller.
+  humanURL: https://www.facets.cloud/docs/api
+  baseURL: https://{account-id}.console.facets.cloud
+  tags:
+  - ui-theme-file-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/facets-ui-theme-file-controller-api-openapi.yml
+  - type: Documentation
+    url: https://www.facets.cloud/docs
+  - type: APIReference
+    url: https://www.facets.cloud/docs/api
+  - type: GettingStarted
+    url: https://www.facets.cloud/docs/quickstart
+  - type: Authentication
+    url: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  - type: ReleaseNotes
+    url: https://www.facets.cloud/docs/changelog
+  - type: DataModel
+    url: data-model/facets-data-model.yml
+  - type: ErrorCatalog
+    url: errors/facets-problem-types.yml
+  - type: ToolCrosswalk
+    url: mcp/facets-tool-crosswalk.yml
+  - type: Webhooks
+    url: asyncapi/facets-webhooks.yml
+- aid: facets:facets-ui-user-controller-api
+  name: Facets UI User Controller API
+  description: The ui-user-controller API from Facets — 12 operation(s) for ui-user-controller.
+  humanURL: https://www.facets.cloud/docs/api
+  baseURL: https://{account-id}.console.facets.cloud
+  tags:
+  - ui-user-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/facets-ui-user-controller-api-openapi.yml
+  - type: Documentation
+    url: https://www.facets.cloud/docs
+  - type: APIReference
+    url: https://www.facets.cloud/docs/api
+  - type: GettingStarted
+    url: https://www.facets.cloud/docs/quickstart
+  - type: Authentication
+    url: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  - type: ReleaseNotes
+    url: https://www.facets.cloud/docs/changelog
+  - type: DataModel
+    url: data-model/facets-data-model.yml
+  - type: ErrorCatalog
+    url: errors/facets-problem-types.yml
+  - type: ToolCrosswalk
+    url: mcp/facets-tool-crosswalk.yml
+  - type: Webhooks
+    url: asyncapi/facets-webhooks.yml
+- aid: facets:facets-ui-user-group-controller-api
+  name: Facets UI User Group Controller API
+  description: >-
+    The ui-user-group-controller API from Facets — 4 operation(s) for ui-user-group-controller.
+  humanURL: https://www.facets.cloud/docs/api
+  baseURL: https://{account-id}.console.facets.cloud
+  tags:
+  - ui-user-group-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/facets-ui-user-group-controller-api-openapi.yml
+  - type: Documentation
+    url: https://www.facets.cloud/docs
+  - type: APIReference
+    url: https://www.facets.cloud/docs/api
+  - type: GettingStarted
+    url: https://www.facets.cloud/docs/quickstart
+  - type: Authentication
+    url: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  - type: ReleaseNotes
+    url: https://www.facets.cloud/docs/changelog
+  - type: DataModel
+    url: data-model/facets-data-model.yml
+  - type: ErrorCatalog
+    url: errors/facets-problem-types.yml
+  - type: ToolCrosswalk
+    url: mcp/facets-tool-crosswalk.yml
+  - type: Webhooks
+    url: asyncapi/facets-webhooks.yml
+- aid: facets:facets-ui-user-vcs-token-controller-api
+  name: Facets UI User VCS Token Controller API
+  description: >-
+    The ui-user-vcs-token-controller API from Facets — 2 operation(s) for ui-user-vcs-token-controller.
+  humanURL: https://www.facets.cloud/docs/api
+  baseURL: https://{account-id}.console.facets.cloud
+  tags:
+  - ui-user-vcs-token-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/facets-ui-user-vcs-token-controller-api-openapi.yml
+  - type: Documentation
+    url: https://www.facets.cloud/docs
+  - type: APIReference
+    url: https://www.facets.cloud/docs/api
+  - type: GettingStarted
+    url: https://www.facets.cloud/docs/quickstart
+  - type: Authentication
+    url: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  - type: ReleaseNotes
+    url: https://www.facets.cloud/docs/changelog
+  - type: DataModel
+    url: data-model/facets-data-model.yml
+  - type: ErrorCatalog
+    url: errors/facets-problem-types.yml
+  - type: ToolCrosswalk
+    url: mcp/facets-tool-crosswalk.yml
+  - type: Webhooks
+    url: asyncapi/facets-webhooks.yml
+- aid: facets:facets-ui-versioning-controller-api
+  name: Facets UI Versioning Controller API
+  description: >-
+    The ui-versioning-controller API from Facets — 8 operation(s) for ui-versioning-controller.
+  humanURL: https://www.facets.cloud/docs/api
+  baseURL: https://{account-id}.console.facets.cloud
+  tags:
+  - ui-versioning-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/facets-ui-versioning-controller-api-openapi.yml
+  - type: Documentation
+    url: https://www.facets.cloud/docs
+  - type: APIReference
+    url: https://www.facets.cloud/docs/api
+  - type: GettingStarted
+    url: https://www.facets.cloud/docs/quickstart
+  - type: Authentication
+    url: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  - type: ReleaseNotes
+    url: https://www.facets.cloud/docs/changelog
+  - type: DataModel
+    url: data-model/facets-data-model.yml
+  - type: ErrorCatalog
+    url: errors/facets-problem-types.yml
+  - type: ToolCrosswalk
+    url: mcp/facets-tool-crosswalk.yml
+  - type: Webhooks
+    url: asyncapi/facets-webhooks.yml
+- aid: facets:facets-ui-web-component-controller-api
+  name: Facets UI Web Component Controller API
+  description: >-
+    The ui-web-component-controller API from Facets — 3 operation(s) for ui-web-component-controller.
+  humanURL: https://www.facets.cloud/docs/api
+  baseURL: https://{account-id}.console.facets.cloud
+  tags:
+  - ui-web-component-controller
+  properties:
+  - type: OpenAPI
+    url: openapi/facets-ui-web-component-controller-api-openapi.yml
+  - type: Documentation
+    url: https://www.facets.cloud/docs
+  - type: APIReference
+    url: https://www.facets.cloud/docs/api
+  - type: GettingStarted
+    url: https://www.facets.cloud/docs/quickstart
+  - type: Authentication
+    url: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  - type: ReleaseNotes
+    url: https://www.facets.cloud/docs/changelog
+  - type: DataModel
+    url: data-model/facets-data-model.yml
+  - type: ErrorCatalog
+    url: errors/facets-problem-types.yml
+  - type: ToolCrosswalk
+    url: mcp/facets-tool-crosswalk.yml
+  - type: Webhooks
+    url: asyncapi/facets-webhooks.yml
+- aid: facets:facets-variable-management-api
+  name: Facets Variable Management API
+  description: APIs for managing individual variables and secrets
+  humanURL: https://www.facets.cloud/docs/api
+  baseURL: https://{account-id}.console.facets.cloud
+  tags:
+  - Variable Management
+  properties:
+  - type: OpenAPI
+    url: openapi/facets-variable-management-api-openapi.yml
+  - type: Documentation
+    url: https://www.facets.cloud/docs
+  - type: APIReference
+    url: https://www.facets.cloud/docs/api
+  - type: GettingStarted
+    url: https://www.facets.cloud/docs/quickstart
+  - type: Authentication
+    url: https://www.facets.cloud/docs/api/recipes/authentication-setup
+  - type: ReleaseNotes
+    url: https://www.facets.cloud/docs/changelog
+  - type: DataModel
+    url: data-model/facets-data-model.yml
+  - type: ErrorCatalog
+    url: errors/facets-problem-types.yml
+  - type: ToolCrosswalk
+    url: mcp/facets-tool-crosswalk.yml
+  - type: Webhooks
+    url: asyncapi/facets-webhooks.yml
 common:
+  - type: Overlay
+    url: overlays/facets-control-plane-overlay.yaml
+  - type: MCPServer
+    url: mcp/facets-mcp.yml
   - type: Website
     url: https://www.facets.cloud/
   - type: DeveloperPortal
