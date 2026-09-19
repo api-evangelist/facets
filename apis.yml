@@ -312,6 +312,8 @@ apis:
   humanURL: https://www.facets.cloud/docs/api
   baseURL: https://{account-id}.console.facets.cloud
   tags:
+  - Public APIs
+  tags_raw:
   - public-ap-is
   properties:
   - type: OpenAPI
