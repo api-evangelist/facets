@@ -1,0 +1,272 @@
+openapi: 3.2.0
+info:
+  description: API Documentation
+  title: Control-plane UI Maintenance Window Controller API
+  version: '1.0'
+servers:
+- url: https://facetsdemo.console.facets.cloud
+  description: Generated server url
+security:
+- basicAuth: []
+tags:
+- name: ui-maintenance-window-controller
+paths:
+  /cc-ui/v1/maintenance-window:
+    put:
+      operationId: update_2
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MaintenanceWindowDTO'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MaintenanceWindowDTO'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-maintenance-window-controller
+      summary: Update 2
+      x-summary-source: derived
+  /cc-ui/v1/maintenance-window/{clusterId}:
+    get:
+      operationId: getByClusterId
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MaintenanceWindowDTO'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-maintenance-window-controller
+      summary: Get by cluster id
+      x-summary-source: derived
+  /cc-ui/v1/maintenance-window/{clusterId}/enable-disable:
+    put:
+      operationId: enableDisable
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: disabled
+        required: true
+        schema:
+          type: boolean
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MaintenanceWindowDTO'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-maintenance-window-controller
+      summary: Enable disable
+      x-summary-source: derived
+components:
+  schemas:
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    MaintenanceWindowDTO:
+      required:
+      - clusterId
+      - dayOfWeek
+      - endTime
+      - startTime
+      - timeZone
+      type: object
+      properties:
+        clusterId:
+          type: string
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        cron:
+          type: string
+        dayOfWeek:
+          type: string
+          enum:
+          - MON
+          - TUE
+          - WED
+          - THU
+          - FRI
+          - SAT
+          - SUN
+        disabled:
+          type: boolean
+        endTime:
+          type: string
+          format: time
+          example: '15:30'
+        id:
+          type: string
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        startTime:
+          type: string
+          format: time
+          example: '14:30'
+        timeZone:
+          type: string
+          example: Asia/Kolkata
+        triggered:
+          type: boolean
+          deprecated: true
+  securitySchemes:
+    basicAuth:
+      description: Basic Authentication
+      scheme: basic
+      type: http

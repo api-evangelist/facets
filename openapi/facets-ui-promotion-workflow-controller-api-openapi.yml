@@ -1,0 +1,569 @@
+openapi: 3.2.0
+info:
+  description: API Documentation
+  title: Control-plane UI Promotion Workflow Controller API
+  version: '1.0'
+servers:
+- url: https://facetsdemo.console.facets.cloud
+  description: Generated server url
+security:
+- basicAuth: []
+tags:
+- name: ui-promotion-workflow-controller
+paths:
+  /cc-ui/v1/workflow:
+    get:
+      operationId: getAllWorkflows
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PromotionWorkflow'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-promotion-workflow-controller
+      summary: Get all workflows
+      x-summary-source: derived
+    post:
+      operationId: createWorkflow
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PromotionWorkflow'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PromotionWorkflow'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-promotion-workflow-controller
+      summary: Create workflow
+      x-summary-source: derived
+  /cc-ui/v1/workflow/blueprint/{stackName}:
+    get:
+      operationId: getWorkflowsByStack
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PromotionWorkflow'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-promotion-workflow-controller
+      summary: Get workflows by stack
+      x-summary-source: derived
+  /cc-ui/v1/workflow/default-workflow/registration-type/{registrationType}:
+    get:
+      operationId: getDefaultWorkflow
+      parameters:
+      - in: path
+        name: registrationType
+        required: true
+        schema:
+          type: string
+          enum:
+          - ENVIRONMENT
+          - RELEASE_STREAM
+          - HYBRID
+      - in: query
+        name: stackName
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PromotionWorkflow'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-promotion-workflow-controller
+      summary: Get default workflow
+      x-summary-source: derived
+  /cc-ui/v1/workflow/registration-specific:
+    get:
+      operationId: getRegistrationSpecificWorkflows
+      parameters:
+      - in: query
+        name: registrationType
+        required: true
+        schema:
+          type: string
+          enum:
+          - ENVIRONMENT
+          - RELEASE_STREAM
+          - HYBRID
+      - in: query
+        name: stackName
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PromotionWorkflow'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-promotion-workflow-controller
+      summary: Get registration specific workflows
+      x-summary-source: derived
+  /cc-ui/v1/workflow/{workflowId}:
+    delete:
+      operationId: deleteWorkflow
+      parameters:
+      - in: path
+        name: workflowId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PromotionWorkflow'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-promotion-workflow-controller
+      summary: Delete workflow
+      x-summary-source: derived
+    get:
+      operationId: getWorkflow
+      parameters:
+      - in: path
+        name: workflowId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PromotionWorkflow'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-promotion-workflow-controller
+      summary: Get workflow
+      x-summary-source: derived
+    put:
+      operationId: updateWorkflow
+      parameters:
+      - in: path
+        name: workflowId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PromotionWorkflow'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PromotionWorkflow'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-promotion-workflow-controller
+      summary: Update workflow
+      x-summary-source: derived
+components:
+  schemas:
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    PromotionWorkflow:
+      required:
+      - registrationType
+      - workflowName
+      type: object
+      properties:
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        defaultWorkflow:
+          type: boolean
+        hierarchies:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkflowHierarchy'
+        id:
+          type: string
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        registrationType:
+          type: string
+          enum:
+          - ENVIRONMENT
+          - RELEASE_STREAM
+          - HYBRID
+        stackName:
+          type: string
+        workflowName:
+          type: string
+    WorkflowHierarchy:
+      type: object
+      properties:
+        registrationValue:
+          type: string
+        sequence:
+          type: integer
+          format: int32
+  securitySchemes:
+    basicAuth:
+      description: Basic Authentication
+      scheme: basic
+      type: http

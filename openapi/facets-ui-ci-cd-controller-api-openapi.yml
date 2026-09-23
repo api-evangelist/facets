@@ -1,0 +1,1020 @@
+openapi: 3.2.0
+info:
+  description: API Documentation
+  title: Control-plane UI Ci Cd Controller API
+  version: '1.0'
+servers:
+- url: https://facetsdemo.console.facets.cloud
+  description: Generated server url
+security:
+- basicAuth: []
+tags:
+- name: ui-ci-cd-controller
+paths:
+  /cc-ui/v1/ci-cd:
+    post:
+      description: '- **Description:** Saves CI/CD configuration details.
+
+        - **Restrictions:** Cannot change registration type after initial configuration.
+
+        - **Permissions:** Requires `CI_CD_CONFIGURE` permission.
+
+        - **Audit Logging:** This operation is logged for audit purposes.'
+      operationId: saveCiCdDetails
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CiCdDto'
+        required: true
+      responses:
+        '200':
+          description: Successfully saved CI/CD details.
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Invalid input provided.
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal server error.
+      summary: Save CI/CD Details
+      tags:
+      - ui-ci-cd-controller
+  /cc-ui/v1/ci-cd/attach:
+    put:
+      description: '- **Description:** Attaches a rule and workflow to an artifact CI.
+
+        - **Restrictions:** CI must exist or will be created for the project.
+
+        - **Permissions:** Requires `ARTIFACT_CI_WRITE` permission.
+
+        - **Audit Logging:** Not applicable.'
+      operationId: attachRuleAndWorkflow
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AttachDetachCiRequest'
+        required: true
+      responses:
+        '200':
+          description: Rule and workflow attached successfully.
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Invalid input.
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal server error.
+      summary: Attach Rule and Workflow
+      tags:
+      - ui-ci-cd-controller
+  /cc-ui/v1/ci-cd/ci-name/{ciName}/resources:
+    get:
+      description: '- **Description:** Returns all distinct resources (blueprint files) that reference the given CI name. A resource matches if its primary CI name or its ciNames set contains the given name. Results are deduplicated by (stackName, resourceType, resourceName).
+
+        - **Permissions:** None required.
+
+        - **Audit Logging:** Not applicable.'
+      operationId: getResourcesByCiName
+      parameters:
+      - in: path
+        name: ciName
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CiNameUsageDto'
+          description: Successfully retrieved resources.
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal server error.
+      summary: Get Resources by CI Name
+      tags:
+      - ui-ci-cd-controller
+  /cc-ui/v1/ci-cd/ci/{ciName}:
+    delete:
+      description: '- **Description:** Deletes a CI integration entirely. Cleans up orphaned custom rules and workflows.
+
+        - **Restrictions:** Cannot delete if artifacts are still registered.
+
+        - **Permissions:** Requires `ARTIFACT_CI_DELETE` permission.
+
+        - **Audit Logging:** This operation is logged for audit purposes.'
+      operationId: deleteCiIntegration
+      parameters:
+      - in: path
+        name: ciName
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: CI integration deleted.
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: 'Cannot delete: artifacts still registered.'
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: CI integration not found.
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal server error.
+      summary: Delete CI Integration
+      tags:
+      - ui-ci-cd-controller
+    get:
+      description: '- **Description:** Retrieves CI/CD configuration for a specific CI integration.
+
+        - **Restrictions:** CI integration must exist.
+
+        - **Permissions:** None required.
+
+        - **Audit Logging:** Not applicable.'
+      operationId: getCiLevelCiCdDetails
+      parameters:
+      - in: path
+        name: ciName
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CiCustomCiCdResponse'
+          description: Successfully retrieved CI-level CI/CD details.
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: CI integration not found.
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal server error.
+      summary: Get CI-level CI/CD Configuration
+      tags:
+      - ui-ci-cd-controller
+  /cc-ui/v1/ci-cd/ci/{ciName}/custom:
+    post:
+      description: '- **Description:** Sets custom routing rules and promotion workflow for a specific CI integration. Auto-creates the CI integration if it does not exist. Creates new custom rule and workflow if the CI has no configuration or inherited defaults. Updates in place if custom ones already exist.
+
+        - **Restrictions:** Cannot change registration type on an existing custom rule.
+
+        - **Permissions:** Requires `ARTIFACT_CI_WRITE` permission.
+
+        - **Audit Logging:** This operation is logged for audit purposes.'
+      operationId: saveCustomCiCd
+      parameters:
+      - in: path
+        name: ciName
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CiCustomCiCdRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CiCustomCiCdResponse'
+          description: Custom CI/CD configuration saved.
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Invalid input.
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Stack not found.
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal server error.
+      summary: Set Custom CI/CD Configuration
+      tags:
+      - ui-ci-cd-controller
+  /cc-ui/v1/ci-cd/detach:
+    put:
+      description: '- **Description:** Detaches a rule and workflow from an artifact CI.
+
+        - **Restrictions:** Existing CI registration required.
+
+        - **Permissions:** Requires `ARTIFACT_CI_WRITE` permission.
+
+        - **Audit Logging:** Not applicable.'
+      operationId: detachRuleAndWorkflow
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AttachDetachCiRequest'
+        required: true
+      responses:
+        '200':
+          description: Rule and workflow detached successfully.
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Invalid input.
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal server error.
+      summary: Detach Rule and Workflow
+      tags:
+      - ui-ci-cd-controller
+  /cc-ui/v1/ci-cd/pushCredentials:
+    post:
+      description: '- **Description:** Generates push credentials for an artifact.
+
+        - **Restrictions:** Only for supported artifactory types.
+
+        - **Permissions:** Requires `ARTIFACTS_WRITE` permission.
+
+        - **Audit Logging:** Not applicable.'
+      operationId: generateArtifactPushCredentials
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PushCredentialsRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PushCredentialsResponse'
+          description: Credentials generated successfully.
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Invalid request.
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal server error.
+      summary: Generate Artifact Push Credentials
+      tags:
+      - ui-ci-cd-controller
+  /cc-ui/v1/ci-cd/register:
+    post:
+      description: '- **Description:** Registers a new artifact within the system for SaaS.
+
+        - **Restrictions:** Valid artifactory name and consistent registration type required. Blueprint must be CI/CD configured.
+
+        - **Permissions:** Requires `ARTIFACTS_WRITE` permission.
+
+        - **Audit Logging:** Not applicable.'
+      operationId: registerArtifactSaas
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SaasArtifactRequest'
+        required: true
+      responses:
+        '200':
+          description: Artifact registered successfully.
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Invalid input.
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Stack not found.
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal server error.
+      summary: Register Artifact SaaS
+      tags:
+      - ui-ci-cd-controller
+  /cc-ui/v1/ci-cd/{stackName}:
+    delete:
+      description: '- **Description:** Resets CI/CD configuration for a specified project by deleting the default artifact routing rule and promotion workflow. CI integrations referencing them will have their rule and workflow IDs cleared.
+
+        - **Restrictions:** None.
+
+        - **Permissions:** Requires `CI_CD_CONFIGURE` permission.
+
+        - **Audit Logging:** This operation is logged for audit purposes.'
+      operationId: resetCiCdDetails
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully reset CI/CD details.
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal server error.
+      summary: Reset CI/CD Details
+      tags:
+      - ui-ci-cd-controller
+    get:
+      description: '- **Description:** Retrieves CI/CD details for a specified project name.
+
+        - **Restrictions:** Requires existing default artifact routing rule or promotion workflow.
+
+        - **Permissions:** None required.
+
+        - **Audit Logging:** Not applicable.'
+      operationId: getCiCdDetails
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CiCdDto'
+          description: Successfully retrieved CI/CD details.
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Project not found.
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal server error.
+      summary: Get CI/CD Details
+      tags:
+      - ui-ci-cd-controller
+components:
+  schemas:
+    CiCustomCiCdRequest:
+      required:
+      - promotionHierarchies
+      - registrationType
+      - routingRules
+      - stackName
+      type: object
+      properties:
+        ciSystem:
+          type: string
+          description: CI system used.
+          example: JENKINS
+          enum:
+          - BRANCH_PER_ENVIRONMENT
+          - SINGLE_BRANCH_PROMOTION
+          - ADVANCED
+        promotionHierarchies:
+          type: array
+          description: Promotion workflow hierarchies.
+          items:
+            $ref: '#/components/schemas/WorkflowHierarchy'
+        registrationType:
+          type: string
+          description: Registration type for the CI/CD setup.
+          example: GIT_REF
+          enum:
+          - ENVIRONMENT
+          - RELEASE_STREAM
+          - HYBRID
+        routingRules:
+          type: array
+          description: Routing rules for artifact promotion.
+          items:
+            $ref: '#/components/schemas/Criterion'
+        stackName:
+          type: string
+          description: Name of the project.
+          example: my-project
+      description: Request for configuring custom CI/CD for a specific CI integration.
+    CiCdDto:
+      required:
+      - promotionHierarchies
+      - registrationType
+      - routingRules
+      - stackName
+      type: object
+      properties:
+        ciSystem:
+          type: string
+          description: CI system used.
+          example: JENKINS
+          enum:
+          - BRANCH_PER_ENVIRONMENT
+          - SINGLE_BRANCH_PROMOTION
+          - ADVANCED
+        mapToAllCis:
+          type: boolean
+          description: Indicate whether to map to all CI systems.
+        promotionHierarchies:
+          type: array
+          description: Promotion workflow hierarchies.
+          items:
+            $ref: '#/components/schemas/WorkflowHierarchy'
+        promotionWorkflowId:
+          type: string
+          description: ID of the promotion workflow.
+        registrationType:
+          type: string
+          description: Registration type for the CI/CD setup.
+          example: GIT_REF
+          enum:
+          - ENVIRONMENT
+          - RELEASE_STREAM
+          - HYBRID
+        routingRules:
+          type: array
+          description: Routing rules for artifact promotion.
+          items:
+            $ref: '#/components/schemas/Criterion'
+        ruleId:
+          type: string
+          description: ID of the routing rule.
+        stackName:
+          type: string
+          description: Name of the project.
+          example: my-project
+      description: Details required for configuring CI/CD for a project.
+    SaasArtifactRequest:
+      required:
+      - artifactRegisterType
+      - artifactRegisterValue
+      - artifactUri
+      - artifactory
+      - blueprintName
+      type: object
+      properties:
+        applicationName:
+          type: string
+          description: Application name of the artifact.
+          example: my-app
+        artifactRegisterType:
+          type: string
+          description: Type of artifact registration.
+          example: ENVIRONMENT
+          enum:
+          - GIT_REF
+          - ENVIRONMENT
+          - RELEASE_STREAM
+        artifactRegisterValue:
+          type: string
+          description: Artifact register value dependent on register type.
+          example: release-1.0
+        artifactUri:
+          type: string
+          description: URI of the artifact.
+          example: docker.io/project/image:tag
+        artifactory:
+          type: string
+          description: Name of the artifactory.
+          example: DOCKER
+        blueprintName:
+          type: string
+          description: Blueprint name associated with the artifact.
+          example: blueprint-1
+        ciName:
+          type: string
+          description: Custom CI name if applicationName is not used.
+          example: ci-my-app
+        externalId:
+          type: string
+          description: External identifier for the artifact.
+          example: '12345'
+        repositoryName:
+          type: string
+          description: Repository name in the artifactory.
+          example: repo-name
+        tag:
+          type: string
+          description: The tag of the artifact.
+          example: v1.0
+      description: Request details for registering a SaaS artifact.
+    PushCredentialsRequest:
+      required:
+      - applicationName
+      - artifactory
+      - blueprintName
+      type: object
+      properties:
+        applicationName:
+          type: string
+          description: Application name associated with the request.
+          example: my-app
+        artifactory:
+          type: string
+          description: Name of the artifactory.
+          example: DOCKER
+        blueprintName:
+          type: string
+          description: Blueprint name for which credentials are requested.
+          example: blueprint-1
+      description: Request details for generating push credentials for an artifact.
+    CiNameUsageDto:
+      type: object
+      properties:
+        environments:
+          type: array
+          items:
+            type: string
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+        stackName:
+          type: string
+    PushCredentialsResponse:
+      type: object
+      properties:
+        artifactoryUri:
+          type: string
+        password:
+          type: string
+        repositoryUri:
+          type: string
+        username:
+          type: string
+    CiCustomCiCdResponse:
+      type: object
+      properties:
+        ciName:
+          type: string
+          description: Name of the CI integration.
+          example: my-service-ci
+        ciSystem:
+          type: string
+          description: CI system used.
+          example: JENKINS
+          enum:
+          - BRANCH_PER_ENVIRONMENT
+          - SINGLE_BRANCH_PROMOTION
+          - ADVANCED
+        mode:
+          type: string
+          description: CI/CD configuration mode.
+          enum:
+          - NONE
+          - INHERITED
+          - CUSTOM
+        promotionHierarchies:
+          type: array
+          description: Promotion workflow hierarchies.
+          items:
+            $ref: '#/components/schemas/WorkflowHierarchy'
+        promotionWorkflowId:
+          type: string
+          description: ID of the promotion workflow.
+          example: workflow-123
+        registrationType:
+          type: string
+          description: Registration type for the CI/CD setup.
+          example: GIT_REF
+          enum:
+          - ENVIRONMENT
+          - RELEASE_STREAM
+          - HYBRID
+        routingRules:
+          type: array
+          description: Routing rules for artifact promotion.
+          items:
+            $ref: '#/components/schemas/Criterion'
+        ruleId:
+          type: string
+          description: ID of the routing rule.
+          example: rule-123
+        stackName:
+          type: string
+          description: Name of the project.
+          example: my-project
+      description: Response containing CI-level CI/CD configuration details.
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    Criterion:
+      required:
+      - metadataKey
+      - operator
+      - routeTo
+      - value
+      type: object
+      properties:
+        metadataKey:
+          type: string
+        operator:
+          type: string
+          enum:
+          - EQUALS
+          - STARTS_WITH
+          - ENDS_WITH
+          - CONTAINS
+        priority:
+          type: integer
+          format: int32
+        routeTo:
+          type: string
+        value:
+          type: string
+    AttachDetachCiRequest:
+      required:
+      - blueprintName
+      - ciName
+      - registrationType
+      type: object
+      properties:
+        blueprintName:
+          type: string
+          description: Blueprint name related to the CI.
+          example: blueprint-1
+        ciName:
+          type: string
+          description: CI name to which the operation is applied.
+          example: ci-my-app
+        registrationType:
+          type: string
+          description: Registration type for the operation.
+          example: GIT_REF
+          enum:
+          - ENVIRONMENT
+          - RELEASE_STREAM
+          - HYBRID
+      description: Request details for attaching or detaching a rule and workflow to/from a CI.
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    WorkflowHierarchy:
+      type: object
+      properties:
+        registrationValue:
+          type: string
+        sequence:
+          type: integer
+          format: int32
+  securitySchemes:
+    basicAuth:
+      description: Basic Authentication
+      scheme: basic
+      type: http

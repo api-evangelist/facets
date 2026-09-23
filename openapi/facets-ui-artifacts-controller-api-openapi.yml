@@ -1,0 +1,1522 @@
+openapi: 3.2.0
+info:
+  description: API Documentation
+  title: Control-plane UI Artifacts Controller API
+  version: '1.0'
+servers:
+- url: https://facetsdemo.console.facets.cloud
+  description: Generated server url
+security:
+- basicAuth: []
+tags:
+- name: ui-artifacts-controller
+paths:
+  /cc-ui/v1/artifacts/attach-image-via-register:
+    post:
+      operationId: attachImageViaRegister
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ImageOverrideRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-artifacts-controller
+      summary: Attach image via register
+      x-summary-source: derived
+  /cc-ui/v1/artifacts/cluster/{clusterId}/application/{applicationName}:
+    get:
+      operationId: getArtifactByApplicationName
+      parameters:
+      - in: path
+        name: applicationName
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Artifact'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-artifacts-controller
+      summary: Get artifact by application name
+      x-summary-source: derived
+  /cc-ui/v1/artifacts/cluster/{clusterId}/resourceType/{resourceType}/resourceName/{resourceName}:
+    get:
+      operationId: getArtifactsByResourceNameAndResourceType
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: resourceType
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: resourceName
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Artifact'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-artifacts-controller
+      summary: Get artifacts by resource name and resource type
+      x-summary-source: derived
+  ? /cc-ui/v1/artifacts/clusterId/{clusterId}/currentReleaseStream/{currentReleaseStream}/updatedReleaseStream/{updatedReleaseStream}/updateStream
+  : post:
+      operationId: updateReleaseStream
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: currentReleaseStream
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: updatedReleaseStream
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: includeApps
+        required: true
+        schema:
+          type: array
+          items:
+            type: string
+      - in: query
+        name: excludeApps
+        required: true
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-artifacts-controller
+      summary: Update release stream
+      x-summary-source: derived
+  /cc-ui/v1/artifacts/metadata/keys:
+    get:
+      operationId: getMetadataKeys
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-artifacts-controller
+      summary: Get metadata keys
+      x-summary-source: derived
+  /cc-ui/v1/artifacts/promote:
+    post:
+      operationId: promoteArtifactByArtifactCiName
+      parameters:
+      - in: query
+        name: ciName
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: artifactId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Artifact'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-artifacts-controller
+      summary: Promote artifact by artifact ci name
+      x-summary-source: derived
+  /cc-ui/v1/artifacts/push:
+    post:
+      operationId: pushArtifact
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ArtifactRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-artifacts-controller
+      summary: Push artifact
+      x-summary-source: derived
+  /cc-ui/v1/artifacts/pushCredentials/{stackName}/{appName}:
+    post:
+      operationId: generateArtifactPushCredentials_1
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: appName
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ECRAuthorizationData'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-artifacts-controller
+      summary: Generate artifact push credentials 1
+      x-summary-source: derived
+  ? /cc-ui/v1/artifacts/pushCredentialsV2/artifactName/{artifactName}/registrationType/{registrationType}/value/{registrationValue}
+  : post:
+      operationId: generateArtifactPushCredentialsV2
+      parameters:
+      - in: path
+        name: artifactName
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: registrationType
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: registrationValue
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ECRAuthorizationData'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-artifacts-controller
+      summary: Generate artifact push credentials V2
+      x-summary-source: derived
+  /cc-ui/v1/artifacts/pushCredentialsV3/artifactName/{artifactName}:
+    post:
+      operationId: generateArtifactPushCredentialsV3
+      parameters:
+      - in: path
+        name: artifactName
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: metadata
+        required: true
+        schema:
+          type: object
+          additionalProperties:
+            type: string
+        style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ECRAuthorizationData'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-artifacts-controller
+      summary: Generate artifact push credentials V3
+      x-summary-source: derived
+  /cc-ui/v1/artifacts/reclassify:
+    put:
+      operationId: reclassifyArtifacts
+      parameters:
+      - in: query
+        name: artifactCiId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-artifacts-controller
+      summary: Reclassify artifacts
+      x-summary-source: derived
+  /cc-ui/v1/artifacts/register:
+    post:
+      deprecated: true
+      operationId: registerArtifact
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Artifact'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Artifact'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-artifacts-controller
+      summary: Register artifact
+      x-summary-source: derived
+  /cc-ui/v1/artifacts/register-by-env:
+    post:
+      operationId: registerArtifactByEnv
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ArtifactByEnvironmentRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-artifacts-controller
+      summary: Register artifact by env
+      x-summary-source: derived
+  /cc-ui/v1/artifacts/register-by-release-stream:
+    post:
+      operationId: registerArtifactByReleaseStream
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ArtifactByReleaseStreamRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-artifacts-controller
+      summary: Register artifact by release stream
+      x-summary-source: derived
+  /cc-ui/v1/artifacts/register-saas:
+    post:
+      operationId: registerArtifactSaas_1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SaasArtifactRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-artifacts-controller
+      summary: Register artifact saas 1
+      x-summary-source: derived
+  /cc-ui/v1/artifacts/registerV2:
+    post:
+      operationId: registerArtifactV2
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ArtifactRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-artifacts-controller
+      summary: Register artifact V2
+      x-summary-source: derived
+  /cc-ui/v1/artifacts/upload:
+    post:
+      operationId: uploadArtifactsZip
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                artifactRequest:
+                  type: string
+                file:
+                  type: string
+                  format: binary
+              required:
+              - artifactRequest
+              - file
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-artifacts-controller
+      summary: Upload artifacts zip
+      x-summary-source: derived
+  /cc-ui/v1/artifacts/{artifactId}:
+    delete:
+      operationId: deleteArtifact
+      parameters:
+      - in: path
+        name: artifactId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-artifacts-controller
+      summary: Delete artifact
+      x-summary-source: derived
+  /cc-ui/v1/artifacts/{ciId}/promote/{artifactId}:
+    post:
+      operationId: promoteArtifact
+      parameters:
+      - in: path
+        name: ciId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: artifactId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Artifact'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-artifacts-controller
+      summary: Promote artifact
+      x-summary-source: derived
+  /cc-ui/v1/artifacts/{clusterId}:
+    get:
+      operationId: getArtifactByClusterId
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: object
+                  additionalProperties:
+                    $ref: '#/components/schemas/Artifact'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-artifacts-controller
+      summary: Get artifact by cluster id
+      x-summary-source: derived
+components:
+  schemas:
+    Artifact:
+      type: object
+      properties:
+        applicationName:
+          type: string
+        appliedRuleId:
+          type: string
+        appliedRuleName:
+          type: string
+        appliedRuleVersionId:
+          type: string
+        artifactUri:
+          type: string
+        artifactory:
+          type: string
+        buildDescription:
+          type: string
+        buildId:
+          type: string
+        changeLog:
+          type: string
+          writeOnly: true
+        classified:
+          type: boolean
+        clusterId:
+          type: string
+        createdBy:
+          type: string
+        createdOn:
+          type: string
+          format: date-time
+        creationDate:
+          type: string
+          format: date-time
+        id:
+          type: string
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+        promoted:
+          type: boolean
+        registrationType:
+          type: string
+          enum:
+          - ENVIRONMENT
+          - RELEASE_STREAM
+          - HYBRID
+        registrationValue:
+          type: string
+        releaseStream:
+          type: string
+        releaseType:
+          type: string
+          enum:
+          - HOTFIX
+          - RELEASE
+          - LAUNCH
+          - DESTROY
+          - CUSTOM
+          - UNLOCK_STATE
+          - PLAN
+          - HOTFIX_PLAN
+          - APPLY_PLAN
+          - APPLY_HOTFIX_PLAN
+          - SCALE_UP
+          - SCALE_DOWN
+          - MAINTENANCE
+          - TERRAFORM_EXPORT
+          - ROLLBACK_PLAN
+          - APPLY_ROLLBACK_PLAN
+          - PLAN_AND_APPLY
+          - HOTFIX_PLAN_AND_APPLY
+          - IMPORT_RELEASE
+        repositoryName:
+          type: string
+        tag:
+          type: string
+        versioningKey:
+          type: string
+    ArtifactByEnvironmentRequest:
+      required:
+      - applicationName
+      - artifactUri
+      - clusterName
+      - stackName
+      type: object
+      properties:
+        applicationName:
+          type: string
+        artifactUri:
+          type: string
+        artifactory:
+          type: string
+        clusterName:
+          type: string
+        description:
+          type: string
+        externalId:
+          type: string
+        stackName:
+          type: string
+    SaasArtifactRequest:
+      required:
+      - artifactRegisterType
+      - artifactRegisterValue
+      - artifactUri
+      - artifactory
+      - blueprintName
+      type: object
+      properties:
+        applicationName:
+          type: string
+          description: Application name of the artifact.
+          example: my-app
+        artifactRegisterType:
+          type: string
+          description: Type of artifact registration.
+          example: ENVIRONMENT
+          enum:
+          - GIT_REF
+          - ENVIRONMENT
+          - RELEASE_STREAM
+        artifactRegisterValue:
+          type: string
+          description: Artifact register value dependent on register type.
+          example: release-1.0
+        artifactUri:
+          type: string
+          description: URI of the artifact.
+          example: docker.io/project/image:tag
+        artifactory:
+          type: string
+          description: Name of the artifactory.
+          example: DOCKER
+        blueprintName:
+          type: string
+          description: Blueprint name associated with the artifact.
+          example: blueprint-1
+        ciName:
+          type: string
+          description: Custom CI name if applicationName is not used.
+          example: ci-my-app
+        externalId:
+          type: string
+          description: External identifier for the artifact.
+          example: '12345'
+        repositoryName:
+          type: string
+          description: Repository name in the artifactory.
+          example: repo-name
+        tag:
+          type: string
+          description: The tag of the artifact.
+          example: v1.0
+      description: Request details for registering a SaaS artifact.
+    ECRAuthorizationData:
+      type: object
+      properties:
+        authorizationToken:
+          type: string
+        proxyEndpoint:
+          type: string
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    ArtifactRequest:
+      required:
+      - applicationName
+      - artifactUri
+      type: object
+      properties:
+        applicationName:
+          type: string
+        artifactUri:
+          type: string
+        artifactory:
+          type: string
+        clusterId:
+          type: string
+        description:
+          type: string
+        externalId:
+          type: string
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+        promoted:
+          type: boolean
+        registeredFor:
+          type: string
+          enum:
+          - CLUSTER
+          - RELEASE_STREAM
+        registrationType:
+          type: string
+          enum:
+          - ENVIRONMENT
+          - RELEASE_STREAM
+          - HYBRID
+        releaseStream:
+          type: string
+        ruleId:
+          type: string
+        ruleName:
+          type: string
+        ruleVersionId:
+          type: string
+        stackName:
+          type: string
+        tag:
+          type: string
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    ArtifactByReleaseStreamRequest:
+      required:
+      - applicationName
+      - artifactUri
+      - releaseStream
+      type: object
+      properties:
+        applicationName:
+          type: string
+        artifactUri:
+          type: string
+        artifactory:
+          type: string
+        description:
+          type: string
+        externalId:
+          type: string
+        releaseStream:
+          type: string
+        stackName:
+          type: string
+    ImageOverrideRequest:
+      required:
+      - resourceName
+      - resourceType
+      type: object
+      properties:
+        artifactType:
+          type: string
+          enum:
+          - docker_image
+          - freestyle
+        artifactUri:
+          type: string
+        artifactory:
+          type: string
+        blueprintName:
+          type: string
+        ciName:
+          type: string
+        externalId:
+          type: string
+        registrationType:
+          type: string
+          enum:
+          - GIT_REF
+          - ENVIRONMENT
+          - RELEASE_STREAM
+        registrationValue:
+          type: string
+        repositoryName:
+          type: string
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+        tag:
+          type: string
+  securitySchemes:
+    basicAuth:
+      description: Basic Authentication
+      scheme: basic
+      type: http

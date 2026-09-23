@@ -1,0 +1,417 @@
+openapi: 3.2.0
+info:
+  description: API Documentation
+  title: Control-plane UI Custom Content Controller API
+  version: '1.0'
+servers:
+- url: https://facetsdemo.console.facets.cloud
+  description: Generated server url
+security:
+- basicAuth: []
+tags:
+- name: ui-custom-content-controller
+paths:
+  /cc-ui/v1/content/files:
+    post:
+      operationId: createContentFile
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContentFile'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContentFile'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-custom-content-controller
+      summary: Create content file
+      x-summary-source: derived
+  /cc-ui/v1/content/files/selectors/{contentType}:
+    get:
+      operationId: getContentFilesBySelectors
+      parameters:
+      - in: query
+        name: resourceType
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: resourceName
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: displayType
+        required: false
+        schema:
+          type: string
+          enum:
+          - INLINE
+          - TAB
+          - PAGE
+      - in: query
+        name: subType
+        required: false
+        schema:
+          type: string
+      - in: path
+        name: contentType
+        required: true
+        schema:
+          type: string
+          enum:
+          - CI
+          - DOCUMENTATION
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ContentFile'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-custom-content-controller
+      summary: Get content files by selectors
+      x-summary-source: derived
+  /cc-ui/v1/content/files/{contentId}:
+    delete:
+      operationId: deleteContentFile
+      parameters:
+      - in: path
+        name: contentId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-custom-content-controller
+      summary: Delete content file
+      x-summary-source: derived
+    put:
+      operationId: updateContentFile
+      parameters:
+      - in: path
+        name: contentId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContentFile'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContentFile'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-custom-content-controller
+      summary: Update content file
+      x-summary-source: derived
+  /cc-ui/v1/content/files/{contentId}/render:
+    post:
+      operationId: renderContent
+      parameters:
+      - in: path
+        name: contentId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties:
+                type: string
+        required: true
+      responses:
+        '200':
+          content:
+            text/plain:
+              schema:
+                type: string
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-custom-content-controller
+      summary: Render content
+      x-summary-source: derived
+components:
+  schemas:
+    ContentFile:
+      type: object
+      properties:
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        id:
+          type: string
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        mdContent:
+          type: string
+        requiredPayload:
+          type: array
+          readOnly: true
+          items:
+            type: string
+            readOnly: true
+        selectors:
+          $ref: '#/components/schemas/Selectors'
+        title:
+          type: string
+        type:
+          type: string
+          enum:
+          - CI
+          - DOCUMENTATION
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    Selectors:
+      type: object
+      properties:
+        displayType:
+          type: string
+          enum:
+          - INLINE
+          - TAB
+          - PAGE
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+        subType:
+          type: string
+  securitySchemes:
+    basicAuth:
+      description: Basic Authentication
+      scheme: basic
+      type: http

@@ -1,0 +1,567 @@
+openapi: 3.2.0
+info:
+  description: API Documentation
+  title: Control-plane UI Tf Version Controller API
+  version: '1.0'
+servers:
+- url: https://facetsdemo.console.facets.cloud
+  description: Generated server url
+security:
+- basicAuth: []
+tags:
+- name: ui-tf-version-controller
+paths:
+  /cc-ui/v1/terraform/cluster/{clusterId}:
+    delete:
+      operationId: deleteTfStreamForCluster
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: boolean
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-tf-version-controller
+      summary: Delete tf stream for cluster
+      x-summary-source: derived
+    get:
+      operationId: getTfStreamForCluster
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterTfVersionMapping'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-tf-version-controller
+      summary: Get tf stream for cluster
+      x-summary-source: derived
+    put:
+      operationId: setTfVersionForCluster
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TfVersion'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterTfVersionMapping'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-tf-version-controller
+      summary: Set tf version for cluster
+      x-summary-source: derived
+  /cc-ui/v1/terraform/cluster/{clusterId}/pending-migration-scripts:
+    get:
+      operationId: getPendingMigrationScriptsByClusterId
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PendingMigrationDetails'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-tf-version-controller
+      summary: Get pending migration scripts by cluster id
+      x-summary-source: derived
+  /cc-ui/v1/terraform/stream/versions:
+    get:
+      operationId: getTfVersionsByStream
+      parameters:
+      - in: query
+        name: tfStream
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TfVersion'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-tf-version-controller
+      summary: Get tf versions by stream
+      x-summary-source: derived
+  /cc-ui/v1/terraform/stream/{tfStream}/versions:
+    get:
+      deprecated: true
+      operationId: getTfVersionsForStream
+      parameters:
+      - in: path
+        name: tfStream
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TfVersion'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-tf-version-controller
+      summary: Get tf versions for stream
+      x-summary-source: derived
+  /cc-ui/v1/terraform/sync-release-stream-mapping:
+    post:
+      operationId: populateReleaseStreamTfVersionMapping
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-tf-version-controller
+      summary: Populate release stream tf version mapping
+      x-summary-source: derived
+  /cc-ui/v1/terraform/versions:
+    get:
+      operationId: getAllVersions
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TfVersion'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-tf-version-controller
+      summary: Get all versions
+      x-summary-source: derived
+components:
+  schemas:
+    ClusterTfVersionMapping:
+      required:
+      - clusterId
+      - version
+      type: object
+      properties:
+        clusterId:
+          type: string
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        id:
+          type: string
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        version:
+          $ref: '#/components/schemas/TfVersion'
+    PendingMigrationDetails:
+      type: object
+      properties:
+        blockReleases:
+          type: boolean
+        migrationStatusAvailable:
+          type: boolean
+        pendingMigrations:
+          type: array
+          items:
+            $ref: '#/components/schemas/MigrationScriptMetadata'
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    TfVersion:
+      required:
+      - majorVersion
+      - minorVersion
+      - tfStream
+      type: object
+      properties:
+        lastModified:
+          type: string
+          format: date-time
+        majorVersion:
+          type: integer
+          format: int32
+        minorVersion:
+          type: string
+          description: LATEST
+          example: LATEST
+        tfStream:
+          type: string
+    MigrationScriptMetadata:
+      type: object
+      properties:
+        clouds:
+          type: array
+          items:
+            type: string
+        description:
+          type: string
+        downtime:
+          type: boolean
+        sequenceNumber:
+          type: integer
+          format: int32
+  securitySchemes:
+    basicAuth:
+      description: Basic Authentication
+      scheme: basic
+      type: http

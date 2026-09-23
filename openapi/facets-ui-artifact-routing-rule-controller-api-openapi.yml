@@ -1,0 +1,552 @@
+openapi: 3.2.0
+info:
+  description: API Documentation
+  title: Control-plane UI Artifact Routing Rule Controller API
+  version: '1.0'
+servers:
+- url: https://facetsdemo.console.facets.cloud
+  description: Generated server url
+security:
+- basicAuth: []
+tags:
+- name: ui-artifact-routing-rule-controller
+paths:
+  /cc-ui/v1/artifact-routing-rule:
+    get:
+      operationId: getAllArtifactRoutingRules
+      parameters:
+      - in: query
+        name: stackName
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: registrationType
+        required: false
+        schema:
+          type: string
+          enum:
+          - ENVIRONMENT
+          - RELEASE_STREAM
+          - HYBRID
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ArtifactRoutingRuleResponse'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-artifact-routing-rule-controller
+      summary: Get all artifact routing rules
+      x-summary-source: derived
+    post:
+      operationId: addArtifactRoutingRule
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ArtifactRoutingRuleRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArtifactRoutingRuleResponse'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-artifact-routing-rule-controller
+      summary: Add artifact routing rule
+      x-summary-source: derived
+    put:
+      operationId: updateArtifactRoutingRule
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ArtifactRoutingRuleRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArtifactRoutingRuleResponse'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-artifact-routing-rule-controller
+      summary: Update artifact routing rule
+      x-summary-source: derived
+  /cc-ui/v1/artifact-routing-rule/operators:
+    get:
+      operationId: getAllOperators
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                uniqueItems: true
+                type: array
+                items:
+                  type: string
+                  enum:
+                  - EQUALS
+                  - STARTS_WITH
+                  - ENDS_WITH
+                  - CONTAINS
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-artifact-routing-rule-controller
+      summary: Get all operators
+      x-summary-source: derived
+  /cc-ui/v1/artifact-routing-rule/test:
+    post:
+      operationId: testRuleForBranchName
+      parameters:
+      - in: query
+        name: metadata
+        required: true
+        schema:
+          type: object
+          additionalProperties:
+            type: string
+        style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Criterion'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestRuleResponse'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-artifact-routing-rule-controller
+      summary: Test rule for branch name
+      x-summary-source: derived
+  /cc-ui/v1/artifact-routing-rule/{ruleId}:
+    delete:
+      operationId: deleteArtifactRoutingRule
+      parameters:
+      - in: path
+        name: ruleId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-artifact-routing-rule-controller
+      summary: Delete artifact routing rule
+      x-summary-source: derived
+    get:
+      operationId: getArtifactRoutingRule
+      parameters:
+      - in: path
+        name: ruleId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArtifactRoutingRuleResponse'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-artifact-routing-rule-controller
+      summary: Get artifact routing rule
+      x-summary-source: derived
+components:
+  schemas:
+    TestRuleResponse:
+      type: object
+      properties:
+        routeTo:
+          type: string
+    ArtifactRoutingRuleResponse:
+      type: object
+      properties:
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        criteria:
+          type: array
+          items:
+            $ref: '#/components/schemas/Criterion'
+        default:
+          type: boolean
+        id:
+          type: string
+        registrationType:
+          type: string
+          enum:
+          - ENVIRONMENT
+          - RELEASE_STREAM
+          - HYBRID
+        ruleName:
+          type: string
+        stackName:
+          type: string
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    ArtifactRoutingRuleRequest:
+      required:
+      - criteria
+      - registrationType
+      - ruleName
+      - stackName
+      type: object
+      properties:
+        ciSystem:
+          type: string
+          enum:
+          - BRANCH_PER_ENVIRONMENT
+          - SINGLE_BRANCH_PROMOTION
+          - ADVANCED
+        criteria:
+          type: array
+          items:
+            $ref: '#/components/schemas/Criterion'
+        id:
+          type: string
+        isDefault:
+          type: boolean
+        registrationType:
+          type: string
+          enum:
+          - ENVIRONMENT
+          - RELEASE_STREAM
+          - HYBRID
+        ruleName:
+          type: string
+        stackName:
+          type: string
+    Criterion:
+      required:
+      - metadataKey
+      - operator
+      - routeTo
+      - value
+      type: object
+      properties:
+        metadataKey:
+          type: string
+        operator:
+          type: string
+          enum:
+          - EQUALS
+          - STARTS_WITH
+          - ENDS_WITH
+          - CONTAINS
+        priority:
+          type: integer
+          format: int32
+        routeTo:
+          type: string
+        value:
+          type: string
+  securitySchemes:
+    basicAuth:
+      description: Basic Authentication
+      scheme: basic
+      type: http

@@ -1,0 +1,774 @@
+openapi: 3.2.0
+info:
+  description: API Documentation
+  title: Control-plane UI Custom Role Controller API
+  version: '1.0'
+servers:
+- url: https://facetsdemo.console.facets.cloud
+  description: Generated server url
+security:
+- basicAuth: []
+tags:
+- name: ui-custom-role-controller
+paths:
+  /cc-ui/v1/custom-role:
+    get:
+      operationId: getAllCustomRoles
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RoleMapping'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-custom-role-controller
+      summary: Get all custom roles
+      x-summary-source: derived
+    post:
+      operationId: createCustomRole
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomRoleRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoleMapping'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-custom-role-controller
+      summary: Create custom role
+      x-summary-source: derived
+  /cc-ui/v1/custom-role/roles:
+    get:
+      operationId: getAllRoles
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RoleMapping'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-custom-role-controller
+      summary: Get all roles
+      x-summary-source: derived
+  /cc-ui/v1/custom-role/{roleName}:
+    delete:
+      operationId: deleteCustomRole
+      parameters:
+      - in: path
+        name: roleName
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-custom-role-controller
+      summary: Delete custom role
+      x-summary-source: derived
+    get:
+      operationId: getCustomRole
+      parameters:
+      - in: path
+        name: roleName
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoleMapping'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-custom-role-controller
+      summary: Get custom role
+      x-summary-source: derived
+    put:
+      operationId: updateCustomRole
+      parameters:
+      - in: path
+        name: roleName
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomRoleRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoleMapping'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-custom-role-controller
+      summary: Update custom role
+      x-summary-source: derived
+components:
+  schemas:
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    CustomRoleRequest:
+      required:
+      - permissions
+      type: object
+      properties:
+        description:
+          type: string
+        k8sClusterRole:
+          type: string
+        k8sRole:
+          type: string
+        permissions:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        raptorMode:
+          type: string
+          description: How raptor resolves this role's permissions. INHERIT uses the default permissions; CUSTOM uses raptorPermissions plus Kubernetes permissions from the default role.
+          enum:
+          - INHERIT
+          - CUSTOM
+        raptorPermissions:
+          uniqueItems: true
+          type: array
+          description: Raptor-only non-Kubernetes permissions. Valid only when raptorMode is CUSTOM and must be a subset of permissions.
+          items:
+            type: string
+            description: Raptor-only non-Kubernetes permissions. Valid only when raptorMode is CUSTOM and must be a subset of permissions.
+        roleName:
+          type: string
+    RoleMapping:
+      type: object
+      properties:
+        baseRole:
+          type: boolean
+        description:
+          type: string
+        editable:
+          type: boolean
+        effectiveRaptorEntities:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+            enum:
+            - ACCOUNTS_WRITE
+            - ACCOUNTS_DELETE
+            - ALERTS_CONFIGURE
+            - ARTIFACTORY_WRITE
+            - ARTIFACTORY_DELETE
+            - ARTIFACTS_DELETE
+            - ARTIFACTS_WRITE
+            - ARTIFACT_ROUTING_RULE_WRITE
+            - ARTIFACT_ROUTING_RULE_DELETE
+            - APPLICATION_ROLLING_RESTART
+            - RUN_ACTION
+            - RUN_CLOUD_ACTION
+            - APPLICATION_DEPLOYMENT_PROMOTE
+            - APPLICATION_DEPLOYMENT_ABORT
+            - BILLING_MANAGE
+            - CHANNEL_WRITE
+            - CHANNEL_DELETE
+            - ENVIRONMENT_CONFIGURE
+            - ENVIRONMENT_DELETE
+            - ENVIRONMENT_WRITE
+            - ENVIRONMENT_DESTROY
+            - ENVIRONMENT_LAUNCH
+            - OAUTH_INTEGRATION_DELETE
+            - OAUTH_INTEGRATION_WRITE
+            - RESOURCE_OVERRIDE
+            - RESOURCE_WRITE
+            - RESOURCE_DELETE
+            - CRITICAL_RESOURCE_WRITE
+            - RESOURCE_GROUP_READ
+            - RESOURCE_GROUP_WRITE
+            - RESOURCE_GROUP_DELETE
+            - RELEASE_APPROVAL_AUTHORITY
+            - RELEASE_FULL
+            - RELEASE_PLAN
+            - RELEASE_APPLY_PLAN
+            - RELEASE_SELECTIVE
+            - RELEASE_CUSTOM
+            - RELEASE_IMPORT
+            - RELEASE_MAINTENANCE
+            - RELEASE_TERRAFORM_EXPORT
+            - RELEASE_SCALE_UP
+            - RELEASE_SCALE_DOWN
+            - RELEASE_FULL_ALLOW_DESTROY
+            - RELEASE_SELECTIVE_ALLOW_DESTROY
+            - RELEASE_CUSTOM_ALLOW_DESTROY
+            - RELEASE_PAUSE
+            - RELEASE_ABORT
+            - STACK_CONFIGURE
+            - STACK_WRITE
+            - STACK_DELETE
+            - BLUEPRINT_PR_CREATE
+            - BLUEPRINT_PR_MERGE
+            - BLUEPRINT_PR_CLOSE
+            - SUBSCRIPTION_WRITE
+            - SUBSCRIPTION_DELETE
+            - SETTINGS_WRITE
+            - USER_READ
+            - USER_WRITE
+            - USER_DELETE
+            - CI_USER_TOKEN_MANAGE
+            - TEMPLATE_WRITE
+            - TEMPLATE_DELETE
+            - TRASH_RESTORE
+            - TRASH_DELETE
+            - USER_GROUP_READ
+            - USER_GROUP_WRITE
+            - USER_GROUP_DELETE
+            - CUSTOM_ROLE_READ
+            - CUSTOM_ROLE_WRITE
+            - CUSTOM_ROLE_DELETE
+            - K8S_READER
+            - K8S_DEBUGGER
+            - K8S_CUSTOM
+            - K8S_ADMIN
+            - K8S_CREDENTIALS
+            - CLI_ARTIFACT_PUSH
+            - K8S_PERMISSION
+            - PIPELINE_WRITE
+            - ARTIFACT_CI_WRITE
+            - ARTIFACT_CI_DELETE
+            - PROMOTIONAL_WORKFLOW_WRITE
+            - PROMOTIONAL_WORKFLOW_DELETE
+            - VIEW_RESOURCE_SECRETS
+            - COST_EXPLORER_VIEW
+            - RELEASE_STREAM_WRITE
+            - RELEASE_STREAM_DELETE
+            - BLUEPRINT_TEMPLATE_WRITE
+            - BLUEPRINT_TEMPLATE_DELETE
+            - VPN_CONNECT
+            - OPA_WRITE
+            - OPA_EXECUTE
+            - OPA_DELETE
+            - AUDIT_LOGS_VIEW
+            - CI_CD_CONFIGURE
+            - VIEW_SECRETS
+            - MAINTENANCE_WINDOW_EDIT
+            - MODULE_READ
+            - MODULE_WRITE
+            - MODULE_DELETE
+            - MODULE_REPO_MANAGE
+            - PROJECT_TYPE_WRITE
+            - PROJECT_TYPE_DELETE
+            - WEB_COMPONENT_WRITE
+            - WEB_COMPONENT_DELETE
+        entities:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+            enum:
+            - ACCOUNTS_WRITE
+            - ACCOUNTS_DELETE
+            - ALERTS_CONFIGURE
+            - ARTIFACTORY_WRITE
+            - ARTIFACTORY_DELETE
+            - ARTIFACTS_DELETE
+            - ARTIFACTS_WRITE
+            - ARTIFACT_ROUTING_RULE_WRITE
+            - ARTIFACT_ROUTING_RULE_DELETE
+            - APPLICATION_ROLLING_RESTART
+            - RUN_ACTION
+            - RUN_CLOUD_ACTION
+            - APPLICATION_DEPLOYMENT_PROMOTE
+            - APPLICATION_DEPLOYMENT_ABORT
+            - BILLING_MANAGE
+            - CHANNEL_WRITE
+            - CHANNEL_DELETE
+            - ENVIRONMENT_CONFIGURE
+            - ENVIRONMENT_DELETE
+            - ENVIRONMENT_WRITE
+            - ENVIRONMENT_DESTROY
+            - ENVIRONMENT_LAUNCH
+            - OAUTH_INTEGRATION_DELETE
+            - OAUTH_INTEGRATION_WRITE
+            - RESOURCE_OVERRIDE
+            - RESOURCE_WRITE
+            - RESOURCE_DELETE
+            - CRITICAL_RESOURCE_WRITE
+            - RESOURCE_GROUP_READ
+            - RESOURCE_GROUP_WRITE
+            - RESOURCE_GROUP_DELETE
+            - RELEASE_APPROVAL_AUTHORITY
+            - RELEASE_FULL
+            - RELEASE_PLAN
+            - RELEASE_APPLY_PLAN
+            - RELEASE_SELECTIVE
+            - RELEASE_CUSTOM
+            - RELEASE_IMPORT
+            - RELEASE_MAINTENANCE
+            - RELEASE_TERRAFORM_EXPORT
+            - RELEASE_SCALE_UP
+            - RELEASE_SCALE_DOWN
+            - RELEASE_FULL_ALLOW_DESTROY
+            - RELEASE_SELECTIVE_ALLOW_DESTROY
+            - RELEASE_CUSTOM_ALLOW_DESTROY
+            - RELEASE_PAUSE
+            - RELEASE_ABORT
+            - STACK_CONFIGURE
+            - STACK_WRITE
+            - STACK_DELETE
+            - BLUEPRINT_PR_CREATE
+            - BLUEPRINT_PR_MERGE
+            - BLUEPRINT_PR_CLOSE
+            - SUBSCRIPTION_WRITE
+            - SUBSCRIPTION_DELETE
+            - SETTINGS_WRITE
+            - USER_READ
+            - USER_WRITE
+            - USER_DELETE
+            - CI_USER_TOKEN_MANAGE
+            - TEMPLATE_WRITE
+            - TEMPLATE_DELETE
+            - TRASH_RESTORE
+            - TRASH_DELETE
+            - USER_GROUP_READ
+            - USER_GROUP_WRITE
+            - USER_GROUP_DELETE
+            - CUSTOM_ROLE_READ
+            - CUSTOM_ROLE_WRITE
+            - CUSTOM_ROLE_DELETE
+            - K8S_READER
+            - K8S_DEBUGGER
+            - K8S_CUSTOM
+            - K8S_ADMIN
+            - K8S_CREDENTIALS
+            - CLI_ARTIFACT_PUSH
+            - K8S_PERMISSION
+            - PIPELINE_WRITE
+            - ARTIFACT_CI_WRITE
+            - ARTIFACT_CI_DELETE
+            - PROMOTIONAL_WORKFLOW_WRITE
+            - PROMOTIONAL_WORKFLOW_DELETE
+            - VIEW_RESOURCE_SECRETS
+            - COST_EXPLORER_VIEW
+            - RELEASE_STREAM_WRITE
+            - RELEASE_STREAM_DELETE
+            - BLUEPRINT_TEMPLATE_WRITE
+            - BLUEPRINT_TEMPLATE_DELETE
+            - VPN_CONNECT
+            - OPA_WRITE
+            - OPA_EXECUTE
+            - OPA_DELETE
+            - AUDIT_LOGS_VIEW
+            - CI_CD_CONFIGURE
+            - VIEW_SECRETS
+            - MAINTENANCE_WINDOW_EDIT
+            - MODULE_READ
+            - MODULE_WRITE
+            - MODULE_DELETE
+            - MODULE_REPO_MANAGE
+            - PROJECT_TYPE_WRITE
+            - PROJECT_TYPE_DELETE
+            - WEB_COMPONENT_WRITE
+            - WEB_COMPONENT_DELETE
+        k8sClusterRole:
+          type: string
+        k8sRole:
+          type: string
+        label:
+          type: string
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        raptorEntities:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+            enum:
+            - ACCOUNTS_WRITE
+            - ACCOUNTS_DELETE
+            - ALERTS_CONFIGURE
+            - ARTIFACTORY_WRITE
+            - ARTIFACTORY_DELETE
+            - ARTIFACTS_DELETE
+            - ARTIFACTS_WRITE
+            - ARTIFACT_ROUTING_RULE_WRITE
+            - ARTIFACT_ROUTING_RULE_DELETE
+            - APPLICATION_ROLLING_RESTART
+            - RUN_ACTION
+            - RUN_CLOUD_ACTION
+            - APPLICATION_DEPLOYMENT_PROMOTE
+            - APPLICATION_DEPLOYMENT_ABORT
+            - BILLING_MANAGE
+            - CHANNEL_WRITE
+            - CHANNEL_DELETE
+            - ENVIRONMENT_CONFIGURE
+            - ENVIRONMENT_DELETE
+            - ENVIRONMENT_WRITE
+            - ENVIRONMENT_DESTROY
+            - ENVIRONMENT_LAUNCH
+            - OAUTH_INTEGRATION_DELETE
+            - OAUTH_INTEGRATION_WRITE
+            - RESOURCE_OVERRIDE
+            - RESOURCE_WRITE
+            - RESOURCE_DELETE
+            - CRITICAL_RESOURCE_WRITE
+            - RESOURCE_GROUP_READ
+            - RESOURCE_GROUP_WRITE
+            - RESOURCE_GROUP_DELETE
+            - RELEASE_APPROVAL_AUTHORITY
+            - RELEASE_FULL
+            - RELEASE_PLAN
+            - RELEASE_APPLY_PLAN
+            - RELEASE_SELECTIVE
+            - RELEASE_CUSTOM
+            - RELEASE_IMPORT
+            - RELEASE_MAINTENANCE
+            - RELEASE_TERRAFORM_EXPORT
+            - RELEASE_SCALE_UP
+            - RELEASE_SCALE_DOWN
+            - RELEASE_FULL_ALLOW_DESTROY
+            - RELEASE_SELECTIVE_ALLOW_DESTROY
+            - RELEASE_CUSTOM_ALLOW_DESTROY
+            - RELEASE_PAUSE
+            - RELEASE_ABORT
+            - STACK_CONFIGURE
+            - STACK_WRITE
+            - STACK_DELETE
+            - BLUEPRINT_PR_CREATE
+            - BLUEPRINT_PR_MERGE
+            - BLUEPRINT_PR_CLOSE
+            - SUBSCRIPTION_WRITE
+            - SUBSCRIPTION_DELETE
+            - SETTINGS_WRITE
+            - USER_READ
+            - USER_WRITE
+            - USER_DELETE
+            - CI_USER_TOKEN_MANAGE
+            - TEMPLATE_WRITE
+            - TEMPLATE_DELETE
+            - TRASH_RESTORE
+            - TRASH_DELETE
+            - USER_GROUP_READ
+            - USER_GROUP_WRITE
+            - USER_GROUP_DELETE
+            - CUSTOM_ROLE_READ
+            - CUSTOM_ROLE_WRITE
+            - CUSTOM_ROLE_DELETE
+            - K8S_READER
+            - K8S_DEBUGGER
+            - K8S_CUSTOM
+            - K8S_ADMIN
+            - K8S_CREDENTIALS
+            - CLI_ARTIFACT_PUSH
+            - K8S_PERMISSION
+            - PIPELINE_WRITE
+            - ARTIFACT_CI_WRITE
+            - ARTIFACT_CI_DELETE
+            - PROMOTIONAL_WORKFLOW_WRITE
+            - PROMOTIONAL_WORKFLOW_DELETE
+            - VIEW_RESOURCE_SECRETS
+            - COST_EXPLORER_VIEW
+            - RELEASE_STREAM_WRITE
+            - RELEASE_STREAM_DELETE
+            - BLUEPRINT_TEMPLATE_WRITE
+            - BLUEPRINT_TEMPLATE_DELETE
+            - VPN_CONNECT
+            - OPA_WRITE
+            - OPA_EXECUTE
+            - OPA_DELETE
+            - AUDIT_LOGS_VIEW
+            - CI_CD_CONFIGURE
+            - VIEW_SECRETS
+            - MAINTENANCE_WINDOW_EDIT
+            - MODULE_READ
+            - MODULE_WRITE
+            - MODULE_DELETE
+            - MODULE_REPO_MANAGE
+            - PROJECT_TYPE_WRITE
+            - PROJECT_TYPE_DELETE
+            - WEB_COMPONENT_WRITE
+            - WEB_COMPONENT_DELETE
+        raptorMode:
+          type: string
+          enum:
+          - INHERIT
+          - CUSTOM
+        roleName:
+          type: string
+        roleType:
+          type: string
+          enum:
+          - SYSTEM_DEFINED
+          - USER_DEFINED
+  securitySchemes:
+    basicAuth:
+      description: Basic Authentication
+      scheme: basic
+      type: http

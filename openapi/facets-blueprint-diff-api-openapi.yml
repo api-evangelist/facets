@@ -1,0 +1,128 @@
+openapi: 3.2.0
+info:
+  description: API Documentation
+  title: Control-plane Blueprint Diff API
+  version: '1.0'
+servers:
+- url: https://facetsdemo.console.facets.cloud
+  description: Generated server url
+security:
+- basicAuth: []
+tags:
+- name: Blueprint Diff
+paths:
+  /cc-ui/v1/clusters/{clusterId}/blueprint/content:
+    get:
+      operationId: getBlueprintContent
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: resourceType
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: resourceName
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: commit
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlueprintFileContent'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: Get blueprint resource file content at a specific commit
+      tags:
+      - Blueprint Diff
+components:
+  schemas:
+    BlueprintFileContent:
+      type: object
+      properties:
+        commitId:
+          type: string
+        content:
+          type: string
+        path:
+          type: string
+        status:
+          type: string
+          enum:
+          - FOUND
+          - NOT_FOUND
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+  securitySchemes:
+    basicAuth:
+      description: Basic Authentication
+      scheme: basic
+      type: http

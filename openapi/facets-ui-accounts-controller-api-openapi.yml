@@ -1,0 +1,3125 @@
+openapi: 3.2.0
+info:
+  description: API Documentation
+  title: Control-plane UI Accounts Controller API
+  version: '1.0'
+servers:
+- url: https://facetsdemo.console.facets.cloud
+  description: Generated server url
+security:
+- basicAuth: []
+tags:
+- name: ui-accounts-controller
+paths:
+  /cc-ui/v1/accounts/:
+    get:
+      operationId: getAllAccounts
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Account'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-accounts-controller
+      summary: Get all accounts
+      x-summary-source: derived
+  /cc-ui/v1/accounts/aws/:
+    post:
+      operationId: createAwsAccount
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AwsAccount'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AwsAccount'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-accounts-controller
+      summary: Create aws account
+      x-summary-source: derived
+  /cc-ui/v1/accounts/aws/validate:
+    post:
+      operationId: validateAwsAccount
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AwsAccount'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-accounts-controller
+      summary: Validate aws account
+      x-summary-source: derived
+  /cc-ui/v1/accounts/aws/{id}:
+    put:
+      operationId: updateAwsAccount
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AwsAccount'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AwsAccount'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-accounts-controller
+      summary: Update aws account
+      x-summary-source: derived
+  /cc-ui/v1/accounts/azure/:
+    post:
+      operationId: createAzureAccount
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AzureAccount'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AzureAccount'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-accounts-controller
+      summary: Create azure account
+      x-summary-source: derived
+  /cc-ui/v1/accounts/azure/validate:
+    post:
+      operationId: validateAzureAccount
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AzureAccount'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-accounts-controller
+      summary: Validate azure account
+      x-summary-source: derived
+  /cc-ui/v1/accounts/azure/{id}:
+    put:
+      operationId: updateAzureAccount
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AzureAccount'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AzureAccount'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-accounts-controller
+      summary: Update azure account
+      x-summary-source: derived
+  /cc-ui/v1/accounts/bitbucket/:
+    post:
+      operationId: createBitBucketAccount
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BitBucketAccount'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BitBucketAccount'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-accounts-controller
+      summary: Create bit bucket account
+      x-summary-source: derived
+  /cc-ui/v1/accounts/bitbucket/validate:
+    post:
+      operationId: validateBitbucketAccount
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BitBucketAccount'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-accounts-controller
+      summary: Validate bitbucket account
+      x-summary-source: derived
+  /cc-ui/v1/accounts/bitbucket/{id}:
+    put:
+      operationId: updateBitBucketAccount
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BitBucketAccount'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BitBucketAccount'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-accounts-controller
+      summary: Update bit bucket account
+      x-summary-source: derived
+  /cc-ui/v1/accounts/coder/:
+    post:
+      operationId: createCoderAccount
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CoderAccount'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CoderAccount'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-accounts-controller
+      summary: Create coder account
+      x-summary-source: derived
+  /cc-ui/v1/accounts/coder/{id}:
+    put:
+      operationId: updateCoderAccount
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CoderAccount'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CoderAccount'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-accounts-controller
+      summary: Update coder account
+      x-summary-source: derived
+  /cc-ui/v1/accounts/gcp/:
+    post:
+      operationId: createGcpAccount
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GcpAccount'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GcpAccount'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-accounts-controller
+      summary: Create gcp account
+      x-summary-source: derived
+  /cc-ui/v1/accounts/gcp/validate:
+    post:
+      operationId: validateGcpAccount
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GcpAccount'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-accounts-controller
+      summary: Validate gcp account
+      x-summary-source: derived
+  /cc-ui/v1/accounts/gcp/{id}:
+    put:
+      operationId: updateGcpAccount
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GcpAccount'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GcpAccount'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-accounts-controller
+      summary: Update gcp account
+      x-summary-source: derived
+  /cc-ui/v1/accounts/get-organisations:
+    post:
+      operationId: getVCSOrganisations
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VCSOrganizationsRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-accounts-controller
+      summary: Get VCS organisations
+      x-summary-source: derived
+  /cc-ui/v1/accounts/github/:
+    post:
+      operationId: createGitHubAccount
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GitHubAccount'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GitHubAccount'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-accounts-controller
+      summary: Create git hub account
+      x-summary-source: derived
+  /cc-ui/v1/accounts/github/validate:
+    post:
+      operationId: validateGithubAccount
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GitHubAccount'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-accounts-controller
+      summary: Validate github account
+      x-summary-source: derived
+  /cc-ui/v1/accounts/github/{id}:
+    put:
+      operationId: updateGitHubAccount
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GitHubAccount'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GitHubAccount'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-accounts-controller
+      summary: Update git hub account
+      x-summary-source: derived
+  /cc-ui/v1/accounts/gitlab/:
+    post:
+      operationId: createGitLabAccount
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GitLabAccount'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GitLabAccount'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-accounts-controller
+      summary: Create git lab account
+      x-summary-source: derived
+  /cc-ui/v1/accounts/gitlab/validate:
+    post:
+      operationId: validateGitlabAccount
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GitLabAccount'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-accounts-controller
+      summary: Validate gitlab account
+      x-summary-source: derived
+  /cc-ui/v1/accounts/gitlab/{id}:
+    put:
+      operationId: updateGitLabAccount
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GitLabAccount'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GitLabAccount'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-accounts-controller
+      summary: Update git lab account
+      x-summary-source: derived
+  /cc-ui/v1/accounts/kubernetes/:
+    post:
+      operationId: createKubernetesAccount
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KubernetesAccount'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KubernetesAccount'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-accounts-controller
+      summary: Create kubernetes account
+      x-summary-source: derived
+  /cc-ui/v1/accounts/kubernetes/validate:
+    post:
+      operationId: validateKubernetesAccount
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KubernetesAccount'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-accounts-controller
+      summary: Validate kubernetes account
+      x-summary-source: derived
+  /cc-ui/v1/accounts/kubernetes/{id}:
+    put:
+      operationId: updateKubernetesAccount
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KubernetesAccount'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KubernetesAccount'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-accounts-controller
+      summary: Update kubernetes account
+      x-summary-source: derived
+  /cc-ui/v1/accounts/link-cloud:
+    post:
+      operationId: requestCloudAccountLinking
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CloudLinkingRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OneTimeWebhook'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-accounts-controller
+      summary: Request cloud account linking
+      x-summary-source: derived
+  /cc-ui/v1/accounts/link-vcs:
+    post:
+      operationId: requestVCSLinking
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VCSLinkingRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VCSLinkingResponse'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-accounts-controller
+      summary: Request VCS linking
+      x-summary-source: derived
+  /cc-ui/v1/accounts/name/{name}:
+    get:
+      operationId: getAccountByName
+      parameters:
+      - in: path
+        name: name
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-accounts-controller
+      summary: Get account by name
+      x-summary-source: derived
+  /cc-ui/v1/accounts/stack/{stackName}/token-details:
+    get:
+      operationId: getVCSTokenDetailsByStackName
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VCSTokenDetailsResponse'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-accounts-controller
+      summary: Get VCS token details by stack name
+      x-summary-source: derived
+  /cc-ui/v1/accounts/token-details:
+    get:
+      operationId: getAllVCSTokenDetails
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/VCSTokenDetailsResponse'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-accounts-controller
+      summary: Get all VCS token details
+      x-summary-source: derived
+  /cc-ui/v1/accounts/token-details/refresh:
+    post:
+      operationId: refreshAllVCSTokenDetails
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-accounts-controller
+      summary: Refresh all VCS token details
+      x-summary-source: derived
+  /cc-ui/v1/accounts/type/{type}:
+    get:
+      operationId: getAccountsByType
+      parameters:
+      - in: path
+        name: type
+        required: true
+        schema:
+          type: string
+          enum:
+          - VERSION_CONTROL
+          - CLOUD
+          - CODER
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Account'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-accounts-controller
+      summary: Get accounts by type
+      x-summary-source: derived
+  /cc-ui/v1/accounts/vcs-orgs/{accountId}:
+    get:
+      operationId: getVcsOrganizationsByAccountId
+      parameters:
+      - in: path
+        name: accountId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-accounts-controller
+      summary: Get vcs organizations by account id
+      x-summary-source: derived
+  /cc-ui/v1/accounts/vcs/{id}:
+    patch:
+      operationId: updateVCSAccount
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VCSAccountUpdateRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-accounts-controller
+      summary: Update VCS account
+      x-summary-source: derived
+  /cc-ui/v1/accounts/{accountId}/workspaces/{workspace}/projects:
+    get:
+      operationId: getBitbucketProjectsForWorkspace
+      parameters:
+      - in: path
+        name: accountId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: workspace
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-accounts-controller
+      summary: Get bitbucket projects for workspace
+      x-summary-source: derived
+  /cc-ui/v1/accounts/{id}:
+    delete:
+      operationId: deleteAccount
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: boolean
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-accounts-controller
+      summary: Delete account
+      x-summary-source: derived
+    get:
+      operationId: getAccount
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-accounts-controller
+      summary: Get account
+      x-summary-source: derived
+  /cc-ui/v1/accounts/{id}/github-app/permission-status:
+    get:
+      operationId: getGithubAppPermissionStatus
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: feature
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GithubAppPermissionStatus'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-accounts-controller
+      summary: Get github app permission status
+      x-summary-source: derived
+  /cc-ui/v1/accounts/{id}/labels:
+    put:
+      description: Replaces the account's labels with the supplied list. Send an empty list to clear them. Unlike the account update endpoints this does not replace the whole account and does not re-validate credentials with the provider, so it is safe to call from a list row. Returns 400 if an id is unknown or is not an ACCOUNT-scoped label, 404 if the account does not exist.
+      operationId: setAccountLabels
+      parameters:
+      - description: Account ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AttachLabelsRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: Set an account's tags
+      tags:
+      - ui-accounts-controller
+components:
+  schemas:
+    CloudLinkingRequest:
+      type: object
+      properties:
+        accountName:
+          type: string
+        description:
+          type: string
+        labelIds:
+          type: array
+          items:
+            type: string
+        webhook:
+          $ref: '#/components/schemas/OneTimeWebhook'
+    AttachLabelsRequest:
+      required:
+      - labelIds
+      type: object
+      properties:
+        labelIds:
+          type: array
+          description: List of label IDs to assign to the deployment. Replaces existing labels. Use empty list to clear all labels. Labels must be created beforehand using label management APIs.
+          items:
+            type: string
+            description: List of label IDs to assign to the deployment. Replaces existing labels. Use empty list to clear all labels. Labels must be created beforehand using label management APIs.
+      description: Request to attach labels to a deployment log
+    VCSLinkingRequest:
+      type: object
+      properties:
+        accountName:
+          type: string
+        description:
+          type: string
+        enterpriseHostName:
+          type: string
+        labelIds:
+          type: array
+          items:
+            type: string
+        webhook:
+          $ref: '#/components/schemas/OneTimeWebhook'
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    VCSTokenDetailsResponse:
+      type: object
+      properties:
+        accountId:
+          type: string
+        accountName:
+          type: string
+        expired:
+          type: boolean
+        expiryDate:
+          type: string
+          format: date-time
+        id:
+          type: string
+    AwsAccount:
+      type: object
+      properties:
+        accountType:
+          type: string
+          enum:
+          - VERSION_CONTROL
+          - CLOUD
+          - CODER
+        associatedTo:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountAssociationInfo'
+        changeLog:
+          type: string
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        description:
+          type: string
+        externalId:
+          type: string
+        iamRole:
+          type: string
+        id:
+          type: string
+        inUse:
+          type: boolean
+        labelIds:
+          type: array
+          items:
+            type: string
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        name:
+          type: string
+        provider:
+          type: string
+          enum:
+          - GITHUB
+          - BITBUCKET
+          - GITLAB
+          - AWS
+          - AZURE
+          - GCP
+          - KUBERNETES
+          - CODER
+        providerDescription:
+          type: string
+        providerTags:
+          type: object
+          additionalProperties:
+            type: string
+        systemDefined:
+          type: boolean
+        versioningKey:
+          type: string
+    BitBucketAccount:
+      type: object
+      properties:
+        accessToken:
+          type: string
+          writeOnly: true
+        accountType:
+          type: string
+          enum:
+          - VERSION_CONTROL
+          - CLOUD
+          - CODER
+        app:
+          type: boolean
+        associatedTo:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountAssociationInfo'
+        changeLog:
+          type: string
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        description:
+          type: string
+        host:
+          type: string
+        id:
+          type: string
+        inUse:
+          type: boolean
+        labelIds:
+          type: array
+          items:
+            type: string
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        name:
+          type: string
+        orgName:
+          type: string
+        projectKey:
+          type: string
+        provider:
+          type: string
+          enum:
+          - GITHUB
+          - BITBUCKET
+          - GITLAB
+          - AWS
+          - AZURE
+          - GCP
+          - KUBERNETES
+          - CODER
+        systemDefined:
+          type: boolean
+        userEmail:
+          type: string
+        userName:
+          type: string
+        versioningKey:
+          type: string
+    GithubAppPermissionStatus:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        grantedPermissions:
+          type: object
+          additionalProperties:
+            type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+        repositorySelection:
+          type: string
+        state:
+          type: string
+          enum:
+          - UP_TO_DATE
+          - APPROVAL_PENDING
+          - NOT_INSTALLED
+    ClusterInfo:
+      type: object
+      properties:
+        clusterId:
+          type: string
+        clusterName:
+          type: string
+    VCSAccountUpdateRequest:
+      type: object
+      properties:
+        organisationName:
+          type: string
+        projectKey:
+          type: string
+    GcpAccount:
+      type: object
+      properties:
+        accountType:
+          type: string
+          enum:
+          - VERSION_CONTROL
+          - CLOUD
+          - CODER
+        associatedTo:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountAssociationInfo'
+        changeLog:
+          type: string
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        description:
+          type: string
+        id:
+          type: string
+        inUse:
+          type: boolean
+        labelIds:
+          type: array
+          items:
+            type: string
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        name:
+          type: string
+        project:
+          type: string
+        provider:
+          type: string
+          enum:
+          - GITHUB
+          - BITBUCKET
+          - GITLAB
+          - AWS
+          - AZURE
+          - GCP
+          - KUBERNETES
+          - CODER
+        providerDescription:
+          type: string
+        providerTags:
+          type: object
+          additionalProperties:
+            type: string
+        serviceAccountKey:
+          type: string
+          writeOnly: true
+        systemDefined:
+          type: boolean
+        versioningKey:
+          type: string
+    GitLabAccount:
+      type: object
+      properties:
+        accessToken:
+          type: string
+          writeOnly: true
+        accountType:
+          type: string
+          enum:
+          - VERSION_CONTROL
+          - CLOUD
+          - CODER
+        apiBaseUrl:
+          type: string
+        app:
+          type: boolean
+        associatedTo:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountAssociationInfo'
+        changeLog:
+          type: string
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        description:
+          type: string
+        enterpriseHostName:
+          type: string
+        host:
+          type: string
+        id:
+          type: string
+        inUse:
+          type: boolean
+        labelIds:
+          type: array
+          items:
+            type: string
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        name:
+          type: string
+        orgName:
+          type: string
+        provider:
+          type: string
+          enum:
+          - GITHUB
+          - BITBUCKET
+          - GITLAB
+          - AWS
+          - AZURE
+          - GCP
+          - KUBERNETES
+          - CODER
+        systemDefined:
+          type: boolean
+        userName:
+          type: string
+        versioningKey:
+          type: string
+    GitHubAccount:
+      type: object
+      properties:
+        accessToken:
+          type: string
+          writeOnly: true
+        accountType:
+          type: string
+          enum:
+          - VERSION_CONTROL
+          - CLOUD
+          - CODER
+        apiBaseUrl:
+          type: string
+        app:
+          type: boolean
+        associatedTo:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountAssociationInfo'
+        changeLog:
+          type: string
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        description:
+          type: string
+        enterpriseHostName:
+          type: string
+        host:
+          type: string
+        id:
+          type: string
+        inUse:
+          type: boolean
+        labelIds:
+          type: array
+          items:
+            type: string
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        name:
+          type: string
+        orgName:
+          type: string
+        provider:
+          type: string
+          enum:
+          - GITHUB
+          - BITBUCKET
+          - GITLAB
+          - AWS
+          - AZURE
+          - GCP
+          - KUBERNETES
+          - CODER
+        systemDefined:
+          type: boolean
+        userName:
+          type: string
+        versioningKey:
+          type: string
+    KubernetesAccount:
+      type: object
+      properties:
+        accountType:
+          type: string
+          enum:
+          - VERSION_CONTROL
+          - CLOUD
+          - CODER
+        associatedTo:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountAssociationInfo'
+        certificateAuthority:
+          type: string
+          writeOnly: true
+        changeLog:
+          type: string
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        description:
+          type: string
+        host:
+          type: string
+        id:
+          type: string
+        inUse:
+          type: boolean
+        labelIds:
+          type: array
+          items:
+            type: string
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        name:
+          type: string
+        provider:
+          type: string
+          enum:
+          - GITHUB
+          - BITBUCKET
+          - GITLAB
+          - AWS
+          - AZURE
+          - GCP
+          - KUBERNETES
+          - CODER
+        providerDescription:
+          type: string
+        providerTags:
+          type: object
+          additionalProperties:
+            type: string
+        systemDefined:
+          type: boolean
+        token:
+          type: string
+          writeOnly: true
+        versioningKey:
+          type: string
+    CoderAccount:
+      type: object
+      properties:
+        accountType:
+          type: string
+          enum:
+          - VERSION_CONTROL
+          - CLOUD
+          - CODER
+        apiToken:
+          type: string
+          writeOnly: true
+        associatedTo:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountAssociationInfo'
+        changeLog:
+          type: string
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        default:
+          type: boolean
+        description:
+          type: string
+        id:
+          type: string
+        inUse:
+          type: boolean
+        labelIds:
+          type: array
+          items:
+            type: string
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        name:
+          type: string
+        organizationId:
+          type: string
+        provider:
+          type: string
+          enum:
+          - GITHUB
+          - BITBUCKET
+          - GITLAB
+          - AWS
+          - AZURE
+          - GCP
+          - KUBERNETES
+          - CODER
+        systemDefined:
+          type: boolean
+        templateId:
+          type: string
+        url:
+          type: string
+        versioningKey:
+          type: string
+    AccountLinkingDetails:
+      type: object
+      properties:
+        description:
+          type: string
+        labelIds:
+          type: array
+          items:
+            type: string
+    Response:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    Account:
+      type: object
+      properties:
+        accountType:
+          type: string
+          enum:
+          - VERSION_CONTROL
+          - CLOUD
+          - CODER
+        associatedTo:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountAssociationInfo'
+        changeLog:
+          type: string
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        description:
+          type: string
+        id:
+          type: string
+        inUse:
+          type: boolean
+        labelIds:
+          type: array
+          items:
+            type: string
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        name:
+          type: string
+        provider:
+          type: string
+          enum:
+          - GITHUB
+          - BITBUCKET
+          - GITLAB
+          - AWS
+          - AZURE
+          - GCP
+          - KUBERNETES
+          - CODER
+        systemDefined:
+          type: boolean
+        versioningKey:
+          type: string
+    OneTimeWebhook:
+      type: object
+      properties:
+        accountLinkingDetails:
+          $ref: '#/components/schemas/AccountLinkingDetails'
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        deleteAt:
+          type: string
+          format: date-time
+          readOnly: true
+        errorMessage:
+          type: string
+        expiresAt:
+          type: string
+          format: date-time
+          readOnly: true
+        id:
+          type: string
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        status:
+          type: string
+          readOnly: true
+          enum:
+          - WAITING
+          - SUCCESS
+          - FAILED
+          - EXPIRED
+        type:
+          type: string
+          enum:
+          - AZURE
+          - GCP
+          - AWS
+          - KUBERNETES
+          - ECR
+          - OTHER_DOCKER_REGISTRY
+          - GITHUB
+          - GITLAB
+          - BITBUCKET
+    VCSLinkingResponse:
+      type: object
+      properties:
+        redirectUrl:
+          type: string
+        webhook:
+          $ref: '#/components/schemas/OneTimeWebhook'
+    AccountAssociationInfo:
+      type: object
+      properties:
+        clusters:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClusterInfo'
+        projectTypeName:
+          type: string
+        stackName:
+          type: string
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    AzureAccount:
+      type: object
+      properties:
+        accountType:
+          type: string
+          enum:
+          - VERSION_CONTROL
+          - CLOUD
+          - CODER
+        associatedTo:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountAssociationInfo'
+        changeLog:
+          type: string
+        clientId:
+          type: string
+        clientSecret:
+          type: string
+          writeOnly: true
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        description:
+          type: string
+        id:
+          type: string
+        inUse:
+          type: boolean
+        labelIds:
+          type: array
+          items:
+            type: string
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        name:
+          type: string
+        provider:
+          type: string
+          enum:
+          - GITHUB
+          - BITBUCKET
+          - GITLAB
+          - AWS
+          - AZURE
+          - GCP
+          - KUBERNETES
+          - CODER
+        providerDescription:
+          type: string
+        providerTags:
+          type: object
+          additionalProperties:
+            type: string
+        subscriptionId:
+          type: string
+        systemDefined:
+          type: boolean
+        tenantId:
+          type: string
+        versioningKey:
+          type: string
+    VCSOrganizationsRequest:
+      type: object
+      properties:
+        accessToken:
+          type: string
+        enterpriseHostName:
+          type: string
+        userEmail:
+          type: string
+        username:
+          type: string
+        vcsType:
+          type: string
+          enum:
+          - GITHUB
+          - BITBUCKET
+          - GITLAB
+  securitySchemes:
+    basicAuth:
+      description: Basic Authentication
+      scheme: basic
+      type: http

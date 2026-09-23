@@ -1,0 +1,1053 @@
+openapi: 3.2.0
+info:
+  description: API Documentation
+  title: Control-plane Blueprint Designer V2 API
+  version: '1.0'
+servers:
+- url: https://facetsdemo.console.facets.cloud
+  description: Generated server url
+security:
+- basicAuth: []
+tags:
+- description: V2 APIs for blueprint designer write operations
+  name: Blueprint Designer V2
+paths:
+  /cc-ui/v1/designer/v2/templates/{templateName}/sync:
+    post:
+      description: Syncs specified blueprints with the template's resources.
+      operationId: syncSpecifiedBlueprintsWithTemplates_1
+      parameters:
+      - description: Template name
+        in: path
+        name: templateName
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              uniqueItems: true
+              type: array
+              items:
+                type: string
+        required: true
+      responses:
+        '200':
+          description: Sync completed successfully
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: Sync blueprints with template
+      tags:
+      - Blueprint Designer V2
+  /cc-ui/v1/designer/v2/{stackName}/resources:
+    delete:
+      description: Deletes one or more resources. Automatically deletes add-on children and updates references in other resources.
+      operationId: deleteResources_1
+      parameters:
+      - description: Blueprint name
+        in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteResourcesRequest'
+        required: true
+      responses:
+        '200':
+          description: Resources deleted successfully
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Invalid request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Blueprint or resource not found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: Delete resources
+      tags:
+      - Blueprint Designer V2
+    post:
+      description: Creates one or more resources in the blueprint. Branch defaults to stack's branch if not specified.
+      operationId: createResources_1
+      parameters:
+      - description: Blueprint name
+        in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateResourcesRequest'
+        required: true
+      responses:
+        '200':
+          description: Resources created successfully
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Invalid request or resource already exists
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Blueprint not found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: Create resources
+      tags:
+      - Blueprint Designer V2
+    put:
+      description: Updates one or more resources. Supports both JSON and mustache content. If rawContent is set on a resource item, it is treated as mustache. Affected resources (enable/disable) are committed atomically in the same commit.
+      operationId: updateResources_1
+      parameters:
+      - description: Blueprint name
+        in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateResourcesRequest'
+        required: true
+      responses:
+        '200':
+          description: Resources updated successfully
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Invalid request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Blueprint or resource not found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: Update resources
+      tags:
+      - Blueprint Designer V2
+  /cc-ui/v1/designer/v2/{stackName}/resources/inherit-from-base:
+    put:
+      description: Sets the inherit_from_base flag for multiple resources.
+      operationId: bulkInheritFromBase
+      parameters:
+      - description: Blueprint name
+        in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkInheritFromBaseRequest'
+        required: true
+      responses:
+        '200':
+          description: Inherit-from-base updated successfully
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: Bulk set inherit-from-base
+      tags:
+      - Blueprint Designer V2
+  /cc-ui/v1/designer/v2/{stackName}/resources/rename:
+    put:
+      description: Renames a resource and updates all references in other resources. All changes are committed atomically in a single commit.
+      operationId: renameResource_1
+      parameters:
+      - description: Blueprint name
+        in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RenameResourceRequest'
+        required: true
+      responses:
+        '200':
+          description: Resource renamed successfully
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Invalid new name or resource not found
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: Rename a resource
+      tags:
+      - Blueprint Designer V2
+  /cc-ui/v1/designer/v2/{stackName}/resources/toggle:
+    put:
+      description: Enables or disables multiple resources. Child resources are included automatically.
+      operationId: bulkToggleResources
+      parameters:
+      - description: Blueprint name
+        in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkToggleResourcesRequest'
+        required: true
+      responses:
+        '200':
+          description: Resources toggled successfully
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: Bulk enable/disable resources
+      tags:
+      - Blueprint Designer V2
+  /cc-ui/v1/designer/v2/{stackName}/templates/{templateName}/apply:
+    post:
+      description: Applies a template to the blueprint. Resources and variables are committed atomically in a single commit.
+      operationId: applyTemplate_1
+      parameters:
+      - description: Blueprint name
+        in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      - description: Template name
+        in: path
+        name: templateName
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApplyTemplateRequest'
+      responses:
+        '200':
+          description: Template applied successfully
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: Apply template
+      tags:
+      - Blueprint Designer V2
+  /cc-ui/v1/designer/v2/{stackName}/variables:
+    delete:
+      description: Deletes variables from stack.json's clusterVariablesMeta.
+      operationId: deleteVariables_1
+      parameters:
+      - description: Blueprint name
+        in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteVariablesRequest'
+        required: true
+      responses:
+        '200':
+          description: Variables deleted successfully
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Variable not found
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: Delete variables
+      tags:
+      - Blueprint Designer V2
+    post:
+      description: Adds variables to stack.json's clusterVariablesMeta.
+      operationId: addVariables_1
+      parameters:
+      - description: Blueprint name
+        in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddVariablesRequest'
+        required: true
+      responses:
+        '200':
+          description: Variables added successfully
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Variable already exists
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: Add variables
+      tags:
+      - Blueprint Designer V2
+    put:
+      description: Updates existing variables in stack.json's clusterVariablesMeta.
+      operationId: updateVariables_1
+      parameters:
+      - description: Blueprint name
+        in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateVariablesRequest'
+        required: true
+      responses:
+        '200':
+          description: Variables updated successfully
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Variable not found
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: Update variables
+      tags:
+      - Blueprint Designer V2
+components:
+  schemas:
+    BulkInheritFromBaseRequest:
+      required:
+      - resources
+      type: object
+      properties:
+        branch:
+          type: string
+          description: Optional branch name. If not provided, uses the stack's default branch.
+          example: feature/my-branch
+        commitMessage:
+          type: string
+          description: Optional custom commit message. If not provided, auto-generated.
+          example: Added redis cache resource
+        resources:
+          type: array
+          items:
+            $ref: '#/components/schemas/InheritFromBaseItem'
+      description: Request to bulk set inherit-from-base for resources in the blueprint
+    RenameResourceRequest:
+      required:
+      - newResourceName
+      - oldResourceName
+      - resourceType
+      type: object
+      properties:
+        branch:
+          type: string
+          description: Optional branch name. If not provided, uses the stack's default branch.
+          example: feature/my-branch
+        commitMessage:
+          type: string
+          description: Optional custom commit message. If not provided, auto-generated.
+          example: Added redis cache resource
+        newResourceName:
+          type: string
+          description: New resource name
+          example: new-db
+        oldResourceName:
+          type: string
+          description: Current resource name
+          example: old-db
+        resourceType:
+          type: string
+          description: The resource type (intent)
+          example: mysql
+      description: Request to rename a resource
+    ResourceToggleItem:
+      required:
+      - resourceName
+      - resourceType
+      type: object
+      properties:
+        disabled:
+          type: boolean
+          description: Whether the resource should be disabled
+          example: true
+        resourceName:
+          type: string
+          description: The resource name
+          example: main-db
+        resourceType:
+          type: string
+          description: The resource type (intent)
+          example: mysql
+      description: Optional list of resources to enable/disable as a side-effect of this update. All changes are committed atomically in a single commit.
+    AddVariablesRequest:
+      required:
+      - variables
+      type: object
+      properties:
+        branch:
+          type: string
+          description: Optional branch name. If not provided, uses the stack's default branch.
+          example: feature/my-branch
+        commitMessage:
+          type: string
+          description: Optional custom commit message. If not provided, auto-generated.
+          example: Added redis cache resource
+        variables:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/VariableItem'
+          description: Map of variable name to variable details
+      description: Request to add variables to the blueprint
+    CreateResourceItem:
+      required:
+      - resourceName
+      - resourceType
+      type: object
+      properties:
+        content:
+          type: object
+          additionalProperties:
+            type: object
+            description: Optional JSON content. If not provided, defaults from module template.
+          description: Optional JSON content. If not provided, defaults from module template.
+        flavor:
+          type: string
+          description: Optional flavor for module template lookup
+          example: default
+        mergeContent:
+          type: object
+          additionalProperties:
+            type: object
+            description: Optional content to merge with module template. Only used when content is not provided.
+          description: Optional content to merge with module template. Only used when content is not provided.
+        resourceGroupIds:
+          type: array
+          description: Optional resource group IDs to attach this resource to
+          items:
+            type: string
+            description: Optional resource group IDs to attach this resource to
+        resourceName:
+          type: string
+          description: The name for the new resource
+          example: main-db
+        resourceType:
+          type: string
+          description: The resource type (intent)
+          example: mysql
+    VariableItem:
+      type: object
+      properties:
+        description:
+          type: string
+          description: Human-readable description
+          example: Database connection string
+        global:
+          type: boolean
+          description: Whether this is a global variable
+          example: false
+        secret:
+          type: boolean
+          description: Whether this is a secret variable
+          example: false
+        value:
+          type: string
+          description: The variable value. Null means the variable is required but has no default.
+          example: my-value
+      description: Map of variable name to updated variable details
+    ApplyTemplateRequest:
+      type: object
+      properties:
+        branch:
+          type: string
+          description: Optional branch name. If not provided, uses the stack's default branch.
+          example: feature/my-branch
+        commitMessage:
+          type: string
+          description: Optional custom commit message. If not provided, auto-generated.
+          example: Added redis cache resource
+        prefix:
+          type: string
+          description: Optional prefix to add to resource and variable names
+          example: prod-
+        suffix:
+          type: string
+          description: Optional suffix to add to resource and variable names
+          example: -v2
+      description: Request to apply a template to a blueprint
+    UpdateResourcesRequest:
+      required:
+      - resources
+      type: object
+      properties:
+        affectedResources:
+          type: array
+          description: Optional list of resources to enable/disable as a side-effect of this update. All changes are committed atomically in a single commit.
+          items:
+            $ref: '#/components/schemas/ResourceToggleItem'
+        branch:
+          type: string
+          description: Optional branch name. If not provided, uses the stack's default branch.
+          example: feature/my-branch
+        commitMessage:
+          type: string
+          description: Optional custom commit message. If not provided, auto-generated.
+          example: Added redis cache resource
+        resources:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/UpdateResourceItem'
+      description: Request to update resources in the blueprint
+    BulkToggleResourcesRequest:
+      required:
+      - resources
+      type: object
+      properties:
+        branch:
+          type: string
+          description: Optional branch name. If not provided, uses the stack's default branch.
+          example: feature/my-branch
+        commitMessage:
+          type: string
+          description: Optional custom commit message. If not provided, auto-generated.
+          example: Added redis cache resource
+        resources:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceToggleItem'
+      description: Request to bulk enable/disable resources in the blueprint
+    DeleteVariablesRequest:
+      required:
+      - variableNames
+      type: object
+      properties:
+        branch:
+          type: string
+          description: Optional branch name. If not provided, uses the stack's default branch.
+          example: feature/my-branch
+        commitMessage:
+          type: string
+          description: Optional custom commit message. If not provided, auto-generated.
+          example: Added redis cache resource
+        variableNames:
+          uniqueItems: true
+          type: array
+          description: Set of variable names to delete
+          items:
+            type: string
+            description: Set of variable names to delete
+      description: Request to delete variables from the blueprint
+    DeleteResourcesRequest:
+      required:
+      - resources
+      type: object
+      properties:
+        branch:
+          type: string
+          description: Optional branch name. If not provided, uses the stack's default branch.
+          example: feature/my-branch
+        commitMessage:
+          type: string
+          description: Optional custom commit message. If not provided, auto-generated.
+          example: Added redis cache resource
+        resources:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceIdentifier'
+      description: Request to delete resources from the blueprint
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    ResourceIdentifier:
+      required:
+      - resourceName
+      - resourceType
+      type: object
+      properties:
+        resourceName:
+          type: string
+          description: The resource name
+          example: main-db
+        resourceType:
+          type: string
+          description: The resource type (intent)
+          example: mysql
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    CreateResourcesRequest:
+      required:
+      - resources
+      type: object
+      properties:
+        branch:
+          type: string
+          description: Optional branch name. If not provided, uses the stack's default branch.
+          example: feature/my-branch
+        commitMessage:
+          type: string
+          description: Optional custom commit message. If not provided, auto-generated.
+          example: Added redis cache resource
+        resources:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateResourceItem'
+      description: Request to create resources in the blueprint
+    UpdateVariablesRequest:
+      required:
+      - variables
+      type: object
+      properties:
+        branch:
+          type: string
+          description: Optional branch name. If not provided, uses the stack's default branch.
+          example: feature/my-branch
+        commitMessage:
+          type: string
+          description: Optional custom commit message. If not provided, auto-generated.
+          example: Added redis cache resource
+        variables:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/VariableItem'
+          description: Map of variable name to updated variable details
+      description: Request to update variables in the blueprint
+    InheritFromBaseItem:
+      required:
+      - resourceName
+      - resourceType
+      type: object
+      properties:
+        inheritFromBase:
+          type: boolean
+          description: Whether the resource should inherit from base
+          example: true
+        resourceName:
+          type: string
+          description: The resource name
+          example: main-db
+        resourceType:
+          type: string
+          description: The resource type (intent)
+          example: mysql
+    UpdateResourceItem:
+      required:
+      - resourceName
+      - resourceType
+      type: object
+      properties:
+        content:
+          type: object
+          additionalProperties:
+            type: object
+            description: JSON content for the resource. Mutually exclusive with rawContent.
+          description: JSON content for the resource. Mutually exclusive with rawContent.
+        rawContent:
+          type: string
+          description: Raw string content for mustache templates. If set, content is ignored and this is written as-is.
+        resourceName:
+          type: string
+          description: The resource name
+          example: main-db
+        resourceType:
+          type: string
+          description: The resource type (intent)
+          example: mysql
+  securitySchemes:
+    basicAuth:
+      description: Basic Authentication
+      scheme: basic
+      type: http

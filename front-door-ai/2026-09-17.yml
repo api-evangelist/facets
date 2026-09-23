@@ -1,0 +1,32 @@
+# Front Door AI Index — facets — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: facets
+  lexicon_version: '1.0'
+  probed_at: '2026-09-17'
+  host: www.facets.cloud
+  final_host: www.facets.cloud
+  ownership: own
+  owner: facets
+  shares_host_with: null
+  inherited_from: null
+  verdict: scored
+  score: 21
+  host_score: 21
+  density: 16.76
+  words: 1253
+  tiers:
+    agentic: 4
+    core: 16
+    model: 1
+  ambiguous: 9
+  top_terms:
+    AI: 15
+    automation: 4
+    AI assistant: 3
+    agent: 3
+    intelligence: 2
+    Claude: 1
+    agentic: 1
+    generative ai: 1

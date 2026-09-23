@@ -1,0 +1,4443 @@
+openapi: 3.2.0
+info:
+  description: API Documentation
+  title: Control-plane UI Stack Controller API
+  version: '1.0'
+servers:
+- url: https://facetsdemo.console.facets.cloud
+  description: Generated server url
+security:
+- basicAuth: []
+tags:
+- name: ui-stack-controller
+paths:
+  /cc-ui/v1/stacks/:
+    get:
+      operationId: getStacks
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Stack'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-stack-controller
+      summary: Get stacks
+      x-summary-source: derived
+    post:
+      operationId: createStack
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Stack'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Stack'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-stack-controller
+      summary: Create stack
+      x-summary-source: derived
+  /cc-ui/v1/stacks/clusters:
+    get:
+      operationId: getAllClusters
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      - in: query
+        name: perPage
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 50
+      - in: query
+        name: sortBy
+        required: false
+        schema:
+          type: string
+          default: LAST_MODIFIED_DATE
+          enum:
+          - ID
+          - CREATION_DATE
+          - CREATED_BY
+          - LAST_MODIFIED_DATE
+          - LAST_MODIFIED_BY
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageAbstractCluster'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-stack-controller
+      summary: Get all clusters
+      x-summary-source: derived
+  /cc-ui/v1/stacks/migrate-overrides:
+    get:
+      operationId: migrateOverridesToGit
+      parameters:
+      - in: query
+        name: stackName
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-stack-controller
+      summary: Migrate overrides to git
+      x-summary-source: derived
+  /cc-ui/v1/stacks/migrate-overrides-v2:
+    post:
+      operationId: migrateOverridesToGitV2
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MigrateOverridesRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-stack-controller
+      summary: Migrate overrides to git V2
+      x-summary-source: derived
+  /cc-ui/v1/stacks/project:
+    post:
+      operationId: createProject
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateProjectRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Stack'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-stack-controller
+      summary: Create project
+      x-summary-source: derived
+  /cc-ui/v1/stacks/projects-with-running-environments:
+    get:
+      description: Returns all non-template projects that have at least one running environment, with the list of running environments nested under each project
+      operationId: getProjectsWithRunningEnvironments
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProjectWithRunningEnvironmentsResponse'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: Get projects with running environments
+      tags:
+      - ui-stack-controller
+  /cc-ui/v1/stacks/running-base-clusters:
+    get:
+      operationId: getRunningBaseClusters
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AbstractCluster'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-stack-controller
+      summary: Get running base clusters
+      x-summary-source: derived
+  /cc-ui/v1/stacks/running-clusters-with-kubedebugger:
+    get:
+      operationId: getRunningClustersWithKubedebugger
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ClusterResponse'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-stack-controller
+      summary: Get running clusters with kubedebugger
+      x-summary-source: derived
+  /cc-ui/v1/stacks/substack/{substackName}:
+    post:
+      operationId: createSubStack
+      parameters:
+      - in: path
+        name: substackName
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubstackRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Substack'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-stack-controller
+      summary: Create sub stack
+      x-summary-source: derived
+  /cc-ui/v1/stacks/templates:
+    get:
+      operationId: getStackTemplates
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StackTemplate'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-stack-controller
+      summary: Get stack templates
+      x-summary-source: derived
+  /cc-ui/v1/stacks/v2:
+    post:
+      operationId: createStackV2
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateBlueprintRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Stack'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-stack-controller
+      summary: Create stack V2
+      x-summary-source: derived
+  /cc-ui/v1/stacks/{stackName}:
+    delete:
+      operationId: deleteStack
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Stack'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-stack-controller
+      summary: Delete stack
+      x-summary-source: derived
+    get:
+      operationId: getStack
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Stack'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-stack-controller
+      summary: Get stack
+      x-summary-source: derived
+    put:
+      operationId: updateStack
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Stack'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Stack'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-stack-controller
+      summary: Update stack
+      x-summary-source: derived
+  /cc-ui/v1/stacks/{stackName}/clusters:
+    get:
+      operationId: getClusters
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AbstractCluster'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-stack-controller
+      summary: Get clusters
+      x-summary-source: derived
+  /cc-ui/v1/stacks/{stackName}/clusters-metadata:
+    get:
+      operationId: getClusterMetadataByStack
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ClusterMetadata'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-stack-controller
+      summary: Get cluster metadata by stack
+      x-summary-source: derived
+  /cc-ui/v1/stacks/{stackName}/clusters-overview:
+    get:
+      operationId: getClustersOverview
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ClusterOverview'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-stack-controller
+      summary: Get clusters overview
+      x-summary-source: derived
+  /cc-ui/v1/stacks/{stackName}/clustersWithStatus:
+    get:
+      deprecated: true
+      operationId: getClustersWithStatus
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AbstractCluster'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-stack-controller
+      summary: Get clusters with status
+      x-summary-source: derived
+  /cc-ui/v1/stacks/{stackName}/enable-git-ops:
+    put:
+      operationId: enableGitOps
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EnableGitOpsRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Stack'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-stack-controller
+      summary: Enable git ops
+      x-summary-source: derived
+  /cc-ui/v1/stacks/{stackName}/localDeploymentContext:
+    get:
+      operationId: getLocalDeploymentContext
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentContext'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-stack-controller
+      summary: Get local deployment context
+      x-summary-source: derived
+  /cc-ui/v1/stacks/{stackName}/notification/subscriptions:
+    get:
+      operationId: getAllSubscriptions
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Subscription'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-stack-controller
+      summary: Get all subscriptions
+      x-summary-source: derived
+    post:
+      operationId: createSubscription
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Subscription'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subscription'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-stack-controller
+      summary: Create subscription
+      x-summary-source: derived
+  /cc-ui/v1/stacks/{stackName}/overrides-fields:
+    delete:
+      operationId: deleteOverridesFields
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OverrideDeleteRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OverrideObject'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-stack-controller
+      summary: Delete overrides fields
+      x-summary-source: derived
+  /cc-ui/v1/stacks/{stackName}/project-overview:
+    get:
+      description: Returns project details, environment overview and blueprint resources in a single response
+      operationId: getProjectOverview
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StackOverviewResponse'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: Get project overview
+      tags:
+      - ui-stack-controller
+  /cc-ui/v1/stacks/{stackName}/reload:
+    get:
+      operationId: reloadStack
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Stack'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-stack-controller
+      summary: Reload stack
+      x-summary-source: derived
+  /cc-ui/v1/stacks/{stackName}/resourceType/{resourceType}/resourceName/{resourceName}/overrides:
+    get:
+      operationId: getOverrides
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: resourceType
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: resourceName
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ClusterOverrideResponse'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-stack-controller
+      summary: Get overrides
+      x-summary-source: derived
+  /cc-ui/v1/stacks/{stackName}/suggestions/resourceType:
+    get:
+      deprecated: true
+      operationId: getResourceTypes
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                uniqueItems: true
+                type: array
+                items:
+                  type: string
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-stack-controller
+      summary: Get resource types
+      x-summary-source: derived
+  /cc-ui/v1/stacks/{stackName}/suggestions/resourceType/{resourceType}:
+    get:
+      deprecated: true
+      operationId: getResourcesByTypes
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: resourceType
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                uniqueItems: true
+                type: array
+                items:
+                  type: string
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-stack-controller
+      summary: Get resources by types
+      x-summary-source: derived
+  /cc-ui/v1/stacks/{stackName}/sync-resources:
+    get:
+      operationId: syncResources
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-stack-controller
+      summary: Sync resources
+      x-summary-source: derived
+  /cc-ui/v1/stacks/{stackName}/sync-with-git:
+    get:
+      deprecated: true
+      operationId: syncStackWithGit
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-stack-controller
+      summary: Sync stack with git
+      x-summary-source: derived
+  /cc-ui/v1/stacks/{stackName}/sync-with-git/v2:
+    get:
+      description: Use this to sync stack with git. Runs synchronously for the stack, and then does a non-force sync of all clusters in async
+      operationId: stackSyncWithGit
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: Sync stack with git
+      tags:
+      - ui-stack-controller
+  /cc-ui/v1/stacks/{stackName}/template:
+    post:
+      operationId: saveAsTemplate
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTemplateRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Stack'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-stack-controller
+      summary: Save as template
+      x-summary-source: derived
+  /cc-ui/v1/stacks/{stackName}/template-v2:
+    post:
+      operationId: saveAsTemplateV2
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SaveAsTemplateRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Stack'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-stack-controller
+      summary: Save as template V2
+      x-summary-source: derived
+  /cc-ui/v1/stacks/{stackName}/templateInputs/meta:
+    get:
+      operationId: getAllTemplateInputsMeta
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: object
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-stack-controller
+      summary: Get all template inputs meta
+      x-summary-source: derived
+  /cc-ui/v1/stacks/{stackName}/toggleRelease:
+    post:
+      operationId: toggleRelease
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ToggleRelease'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ToggleRelease'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-stack-controller
+      summary: Toggle release
+      x-summary-source: derived
+  /cc-ui/v1/stacks/{stackName}/withAccount:
+    get:
+      operationId: getStackWithAccount
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Stack'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-stack-controller
+      summary: Get stack with account
+      x-summary-source: derived
+  /cc-ui/v1/stacks/{stackName}/{resourceType}/:
+    get:
+      deprecated: true
+      operationId: getApplicationList
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: resourceType
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                uniqueItems: true
+                type: array
+                items:
+                  type: string
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-stack-controller
+      summary: Get application list
+      x-summary-source: derived
+  /cc-ui/v1/stacks/{stackName}/{resourceType}/{appName}:
+    get:
+      operationId: getApplication
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: appName
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: resourceType
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: object
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-stack-controller
+      summary: Get application
+      x-summary-source: derived
+components:
+  schemas:
+    ValidationResponse:
+      type: object
+      properties:
+        directory:
+          type: string
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/BlueprintValidationError'
+        filename:
+          type: string
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+    RefExpression:
+      type: object
+      properties:
+        expression:
+          type: string
+    ProvidedUnauthenticatedResource:
+      type: object
+      properties:
+        endpoint:
+          type: string
+        port:
+          type: string
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+    EnableGitOpsRequest:
+      type: object
+      properties:
+        branch:
+          type: string
+        relativePath:
+          type: string
+        vcsAccountId:
+          type: string
+        vcsUrl:
+          type: string
+    AppDeployment:
+      type: object
+      properties:
+        appName:
+          type: string
+        artifact:
+          $ref: '#/components/schemas/Artifact'
+    SaveAsTemplateRequest:
+      required:
+      - accountId
+      - name
+      type: object
+      properties:
+        accountId:
+          type: string
+        clouds:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+            enum:
+            - AWS
+            - AZURE
+            - LOCAL
+            - GCP
+            - KUBERNETES
+            - NO_CLOUD
+        description:
+          type: string
+        gitRef:
+          type: string
+        gitUrl:
+          type: string
+        group:
+          type: string
+        name:
+          type: string
+        organisationName:
+          type: string
+        relativePath:
+          type: string
+        type:
+          type: string
+          enum:
+          - MULTI_INSTANCE
+          - SINGLE_INSTANCE
+          - AUTO_INJECT
+    ProjectTypeMappedResource:
+      required:
+      - flavor
+      - intent
+      - intentType
+      type: object
+      properties:
+        flavor:
+          type: string
+        intent:
+          type: string
+        intentType:
+          type: string
+      description: Allowed modules for the project
+    ModuleDTO:
+      type: object
+      properties:
+        facetsYaml:
+          type: object
+          additionalProperties:
+            type: object
+        tfModulePath:
+          $ref: '#/components/schemas/TFModulePath'
+    ProvidedShardedService:
+      type: object
+      properties:
+        shards:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProvidedAuthenticatedResource'
+    SecretsContextDTO:
+      type: object
+      properties:
+        cloudAccountSecretsId:
+          type: string
+        cpCloud:
+          type: string
+        gcpSecretManagerEnabled:
+          type: boolean
+        gcpSecretManagerMode:
+          type: string
+          enum:
+          - AUTOMATIC_REPLICATION
+          - USER_MANAGED_REPLICATION
+          - REGIONAL
+        gcpSecretManagerProjectId:
+          type: string
+        providedSecretsId:
+          type: string
+        secretManagerRegion:
+          type: string
+    ValidationError:
+      type: object
+      properties:
+        directory:
+          type: string
+        error:
+          type: string
+        filename:
+          type: string
+        syntaxError:
+          type: boolean
+        type:
+          type: string
+          enum:
+          - Syntax Error
+          - Missing File Error
+          - Reference Error
+          - Invalid Filename
+    StackTemplateInput:
+      required:
+      - clusterId
+      - data
+      - inputType
+      - uid
+      type: object
+      properties:
+        clusterId:
+          type: string
+        data:
+          type: object
+          additionalProperties:
+            type: string
+        inputType:
+          type: string
+        uid:
+          type: string
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    ClusterOverview:
+      type: object
+      properties:
+        baseCluster:
+          $ref: '#/components/schemas/ClusterLite'
+        cluster:
+          $ref: '#/components/schemas/AbstractCluster'
+        clusterState:
+          type: string
+          enum:
+          - STOPPED
+          - RUNNING
+          - LAUNCHING
+          - DESTROYING
+          - LAUNCH_FAILED
+          - DESTROY_FAILED
+          - UNKNOWN
+          - SCALE_DOWN
+          - SCALING_DOWN
+          - SCALE_DOWN_FAILED
+          - SCALING_UP
+          - SCALE_UP_FAILED
+        id:
+          type: string
+        lastRelease:
+          $ref: '#/components/schemas/DeploymentLog'
+        timeToNextRelease:
+          type: string
+    ProjectType:
+      type: object
+      properties:
+        allowedClouds:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+            enum:
+            - AWS
+            - AZURE
+            - LOCAL
+            - GCP
+            - KUBERNETES
+            - NO_CLOUD
+        baseProjectName:
+          type: string
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        description:
+          type: string
+        dynamicLaunch:
+          type: boolean
+        enableNoCloudEnvironment:
+          type: boolean
+        iacTool:
+          type: string
+          enum:
+          - TERRAFORM
+          - OPENTOFU
+        iacToolVersion:
+          type: string
+        id:
+          type: string
+        includeCpK8sProvider:
+          type: boolean
+        includeToolingProvider:
+          type: boolean
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        legacy:
+          type: boolean
+        mappedResources:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/ProjectTypeMappedResource'
+        name:
+          type: string
+        templateGitDetails:
+          $ref: '#/components/schemas/TemplateGitDetails'
+        useCrdDrivenReleases:
+          type: boolean
+    ValidationResult:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationError'
+        valid:
+          type: boolean
+    CreateBlueprintRequest:
+      type: object
+      properties:
+        allowedClouds:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+            enum:
+            - AWS
+            - AZURE
+            - LOCAL
+            - GCP
+            - KUBERNETES
+            - NO_CLOUD
+        branch:
+          type: string
+        coderAccountId:
+          type: string
+        description:
+          type: string
+        gitOpsEnabled:
+          type: boolean
+        githubAccountId:
+          type: string
+        githubOrganisationName:
+          type: string
+        isImportedProject:
+          type: boolean
+        monoRepo:
+          type: boolean
+        name:
+          type: string
+        primaryCloud:
+          type: string
+          enum:
+          - AWS
+          - AZURE
+          - LOCAL
+          - GCP
+          - KUBERNETES
+          - NO_CLOUD
+        projectTypeId:
+          type: string
+        relativePath:
+          type: string
+        repoName:
+          type: string
+        template:
+          type: boolean
+        templateId:
+          type: string
+        templateName:
+          type: string
+        vcsUrl:
+          type: string
+    ClusterMetadata:
+      type: object
+      properties:
+        cloud:
+          type: string
+          enum:
+          - AWS
+          - AZURE
+          - LOCAL
+          - GCP
+          - KUBERNETES
+          - NO_CLOUD
+        clusterId:
+          type: string
+        clusterName:
+          type: string
+        clusterState:
+          type: string
+          enum:
+          - STOPPED
+          - RUNNING
+          - LAUNCHING
+          - DESTROYING
+          - LAUNCH_FAILED
+          - DESTROY_FAILED
+          - UNKNOWN
+          - SCALE_DOWN
+          - SCALING_DOWN
+          - SCALE_DOWN_FAILED
+          - SCALING_UP
+          - SCALE_UP_FAILED
+        id:
+          type: string
+        stackName:
+          type: string
+    ClusterLite:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        stackName:
+          type: string
+    BlueprintFile:
+      type: object
+      properties:
+        alpha:
+          type: boolean
+        childrenResourceIds:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        ciNames:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        clusterId:
+          type: string
+        content:
+          type: string
+        directory:
+          type: string
+        edges:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/Edge'
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/BlueprintValidationError'
+        expressions:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/RefExpression'
+        filename:
+          type: string
+        iconUrl:
+          type: string
+        info:
+          $ref: '#/components/schemas/Info'
+        overridden:
+          type: boolean
+        override:
+          type: object
+          additionalProperties:
+            type: object
+        parentResourceId:
+          type: string
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+        secrets:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        stackName:
+          type: string
+        substack:
+          type: boolean
+        syncCtxMd5:
+          type: string
+        syncId:
+          type: string
+        templatedResource:
+          type: boolean
+        variables:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        version:
+          type: string
+    VariableDetails:
+      type: object
+      properties:
+        description:
+          type: string
+        global:
+          type: boolean
+        required:
+          type: boolean
+        secret:
+          type: boolean
+        value:
+          type: string
+    ToggleRelease:
+      type: object
+      properties:
+        pauseReleases:
+          type: boolean
+        stackName:
+          type: string
+    ProvidedAuthenticatedResource:
+      type: object
+      properties:
+        endpoint:
+          type: string
+        password:
+          type: string
+        port:
+          type: string
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+        username:
+          type: string
+    MigrateOverridesRequest:
+      type: object
+      properties:
+        branchName:
+          type: string
+        gitOverrideUrl:
+          type: string
+        stackName:
+          type: string
+    CrdDeploymentDetails:
+      type: object
+      properties:
+        phases:
+          type: array
+          items:
+            type: string
+        releaseNamespace:
+          type: string
+        releaseTemplateName:
+          type: string
+    OverrideDeleteRequest:
+      type: object
+      properties:
+        clusterIds:
+          type: array
+          items:
+            type: string
+        deletions:
+          type: array
+          items:
+            $ref: '#/components/schemas/OverrideDelete'
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+    MaintenanceWindowDTO:
+      required:
+      - clusterId
+      - dayOfWeek
+      - endTime
+      - startTime
+      - timeZone
+      type: object
+      properties:
+        clusterId:
+          type: string
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        cron:
+          type: string
+        dayOfWeek:
+          type: string
+          enum:
+          - MON
+          - TUE
+          - WED
+          - THU
+          - FRI
+          - SAT
+          - SUN
+        disabled:
+          type: boolean
+        endTime:
+          type: string
+          format: time
+          example: '15:30'
+        id:
+          type: string
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        startTime:
+          type: string
+          format: time
+          example: '14:30'
+        timeZone:
+          type: string
+          example: Asia/Kolkata
+        triggered:
+          type: boolean
+          deprecated: true
+    OverrideDelete:
+      type: object
+      properties:
+        clusterId:
+          type: string
+        paths:
+          type: array
+          items:
+            type: string
+    AbstractCluster:
+      required:
+      - name
+      - releaseStream
+      - stackName
+      - tz
+      type: object
+      properties:
+        autoSignOffSchedule:
+          type: string
+        baseClusterId:
+          type: string
+        baseClusterName:
+          type: string
+        branch:
+          type: string
+        cdPipelineParent:
+          type: string
+        changeLog:
+          type: string
+          writeOnly: true
+        cloud:
+          type: string
+          enum:
+          - AWS
+          - AZURE
+          - LOCAL
+          - GCP
+          - KUBERNETES
+          - NO_CLOUD
+        cloudAccountId:
+          type: string
+        cloudAccountSecretId:
+          type: string
+        clusterCode:
+          type: string
+          readOnly: true
+        clusterState:
+          type: string
+          enum:
+          - STOPPED
+          - RUNNING
+          - LAUNCHING
+          - DESTROYING
+          - LAUNCH_FAILED
+          - DESTROY_FAILED
+          - UNKNOWN
+          - SCALE_DOWN
+          - SCALING_DOWN
+          - SCALE_DOWN_FAILED
+          - SCALING_UP
+          - SCALE_UP_FAILED
+        commonEnvironmentVariables:
+          type: object
+          additionalProperties:
+            type: string
+        componentVersions:
+          type: object
+          additionalProperties:
+            type: string
+        configured:
+          type: boolean
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        deleted:
+          type: boolean
+        description:
+          type: string
+        enableAutoSignOff:
+          type: boolean
+        globalVariables:
+          type: object
+          additionalProperties:
+            type: string
+        hasK8sCredentials:
+          type: boolean
+        id:
+          type: string
+        isEphemeral:
+          type: boolean
+        k8sRequestsToLimitsRatio:
+          type: number
+          format: double
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        name:
+          type: string
+        namespace:
+          type: string
+        pauseReleases:
+          type: boolean
+        releaseStream:
+          type: string
+        requireSignOff:
+          type: boolean
+        secrets:
+          type: object
+          additionalProperties:
+            type: string
+        stackName:
+          type: string
+        tz:
+          type: string
+        variables:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Variables'
+        versioningKey:
+          type: string
+    Variables:
+      type: object
+      properties:
+        description:
+          type: string
+        global:
+          type: boolean
+        secret:
+          type: boolean
+        status:
+          type: string
+          enum:
+          - DEFAULT
+          - OVERRIDDEN
+        value:
+          type: string
+    MigrationScriptMetadata:
+      type: object
+      properties:
+        clouds:
+          type: array
+          items:
+            type: string
+        description:
+          type: string
+        downtime:
+          type: boolean
+        sequenceNumber:
+          type: integer
+          format: int32
+    FacetsResource:
+      type: object
+      properties:
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+    Info:
+      type: object
+      properties:
+        artifactType:
+          type: string
+          enum:
+          - docker_image
+          - freestyle
+        artifactory:
+          type: string
+        ciName:
+          type: string
+        criticalResource:
+          type: boolean
+        description:
+          type: string
+        disabled:
+          type: boolean
+        enableKubernetesExplorer:
+          type: boolean
+        flavour:
+          type: string
+        githubRepositoryUrl:
+          type: string
+        inheritFromBase:
+          type: boolean
+        namespace:
+          type: string
+        overriddenName:
+          type: string
+        provided:
+          type: boolean
+        repository:
+          type: string
+        repositoryPath:
+          type: string
+        staticImage:
+          type: string
+        strategy:
+          type: string
+          enum:
+          - RollingUpdate
+          - BlueGreen
+          - Canary
+        tag:
+          type: string
+        tfModuleId:
+          type: string
+        ui:
+          type: object
+          additionalProperties:
+            type: object
+        version:
+          type: string
+    TemplateGitDetails:
+      required:
+      - accountId
+      - gitRef
+      - gitUrl
+      - path
+      type: object
+      properties:
+        accountId:
+          type: string
+          description: Account ID associated with the Git repository
+          example: acct123
+        gitRef:
+          type: string
+          description: Git reference (branch or tag)
+          example: main
+        gitUrl:
+          type: string
+          description: Git repository URL
+          example: https://github.com/example/repo.git
+        path:
+          type: string
+          description: Path within the Git repository
+          example: /templates/project
+      description: Git details for the template used in Project Type
+    ProvidedCloudResource:
+      type: object
+      properties:
+        name:
+          type: string
+        region:
+          type: string
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+    OverrideObject:
+      type: object
+      properties:
+        changeLog:
+          type: string
+        commitId:
+          type: string
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        id:
+          type: string
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        overrides:
+          type: object
+          additionalProperties:
+            type: object
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+        versioningKey:
+          type: string
+    TFModulePath:
+      type: object
+      properties:
+        etag:
+          type: string
+        path:
+          type: string
+        pathType:
+          type: string
+          enum:
+          - S3
+          - FACETS_S3
+      description: Path information related to TF Module
+    Artifactory:
+      required:
+      - name
+      type: object
+      properties:
+        artifactoryType:
+          type: string
+          enum:
+          - ECR
+          - AZURE_CONTAINER_REGISTRY
+          - GOOGLE_ARTIFACT_REGISTRY
+          - GOOGLE_CONTAINER_REGISTRY
+          - NEXUS
+          - DOCKER_HUB
+          - JFROG
+          - HARBOR
+          - OTHERS
+        changeLog:
+          type: string
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        description:
+          maxLength: 200
+          minLength: 0
+          type: string
+        id:
+          type: string
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        name:
+          type: string
+        stacksAssociated:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        systemDefined:
+          type: boolean
+        uri:
+          type: string
+        versioningKey:
+          type: string
+    ProjectWithRunningEnvironmentsResponse:
+      type: object
+      properties:
+        runningEnvironments:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClusterMetadata'
+        stack:
+          $ref: '#/components/schemas/Stack'
+    ResourceMetadata:
+      type: object
+      properties:
+        artifactUrl:
+          type: string
+        commitId:
+          type: string
+        moduleVersion:
+          type: string
+        overrideVersion:
+          type: integer
+          format: int64
+        overrideVersionId:
+          type: string
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+    BlueprintValidationError:
+      type: object
+      properties:
+        blueprintErrorLines:
+          type: array
+          items:
+            type: integer
+            format: int32
+        category:
+          type: string
+          enum:
+          - Syntax Error
+          - Non-Existent Resource Reference
+          - Disabled Resource References
+          - Invalid Reference Expression
+          - Schema Compliance Error
+          - GuardRails Compliance Issues
+          - Overrides Syntax Error
+          - Invalid Filename Error
+          - Input Validation Error
+          - Missing Environment Override
+        message:
+          type: string
+        overrideErrorLines:
+          type: array
+          items:
+            type: integer
+            format: int32
+        severity:
+          type: string
+          enum:
+          - ERROR
+          - WARNING
+    MatchedResourceDTO:
+      type: object
+      properties:
+        content:
+          type: string
+        matched:
+          type: boolean
+        moduleRef:
+          type: string
+    ClusterOverrideResponse:
+      type: object
+      properties:
+        clusterId:
+          type: string
+        clusterName:
+          type: string
+        overrideObject:
+          $ref: '#/components/schemas/OverrideObject'
+    Stack:
+      type: object
+      properties:
+        accountId:
+          type: string
+        allowedClouds:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+            enum:
+            - AWS
+            - AZURE
+            - LOCAL
+            - GCP
+            - KUBERNETES
+            - NO_CLOUD
+        alphaBlueprint:
+          type: boolean
+        appPassword:
+          type: string
+        artifactories:
+          type: array
+          items:
+            type: string
+        autoEnabledSubStacks:
+          type: array
+          items:
+            type: string
+        branch:
+          type: string
+        changeLog:
+          type: string
+        childStacks:
+          type: array
+          items:
+            type: string
+        clusterVariablesMeta:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/VariableDetails'
+        coderAccountId:
+          type: string
+        componentVersions:
+          type: object
+          additionalProperties:
+            type: string
+        configModulesDisabled:
+          type: boolean
+        description:
+          type: string
+        gitOpsEnabled:
+          type: boolean
+        gitOverridesEnabled:
+          type: boolean
+        githubOrganizationName:
+          type: string
+        id:
+          type: string
+        importedProject:
+          type: boolean
+        inheritFromBaseByDefault:
+          type: boolean
+        label:
+          type: string
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        monoRepo:
+          type: boolean
+        name:
+          type: string
+        overrideConfig:
+          $ref: '#/components/schemas/OverrideConfig'
+        pauseReleases:
+          type: boolean
+        previewModulesAllowed:
+          type: boolean
+          description: Alternatively called isTestProject
+        primaryCloud:
+          type: string
+          enum:
+          - AWS
+          - AZURE
+          - LOCAL
+          - GCP
+          - KUBERNETES
+          - NO_CLOUD
+        projectTypeId:
+          type: string
+        providedResources:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/FacetsResource'
+        relativePath:
+          type: string
+        stackVars:
+          type: object
+          additionalProperties:
+            type: string
+        template:
+          type: boolean
+        templateId:
+          type: string
+        templateName:
+          type: string
+        user:
+          type: string
+        vcs:
+          type: string
+          enum:
+          - GITHUB
+          - BITBUCKET
+          - GITLAB
+        vcsUrl:
+          type: string
+        versionControlAccountId:
+          type: string
+        versioningKey:
+          type: string
+    Subscription:
+      required:
+      - channelId
+      type: object
+      properties:
+        channelAddress:
+          type: string
+          deprecated: true
+        channelId:
+          type: string
+        channelType:
+          type: string
+          deprecated: true
+          enum:
+          - SLACK
+          - CAPILLARY_VALIDATOR
+          - WEBHOOK
+          - PAGER_DUTY
+          - ZEN_DUTY
+          - EMAIL
+          - MS_TEAMS
+          - MS_TEAMS_WORKFLOW
+        description:
+          maxLength: 200
+          minLength: 0
+          type: string
+        filters:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        id:
+          type: string
+        name:
+          type: string
+        notificationSubject:
+          type: string
+        notificationType:
+          type: string
+          enum:
+          - DEPLOYMENT_STATUS_UPDATE
+          - APP_DEPLOYMENT
+          - QASUITE_SANITY
+          - DR_RESULT
+          - STACK_SIGNOFF
+          - ALERT
+          - TEST
+          - APPLICATION_DEPLOYMENT_COMPLETE
+          - ENVIRONMENT_CREATE
+          - ENVIRONMENT_DELETE
+          - ENVIRONMENT_LAUNCH
+          - ENVIRONMENT_DESTROY
+          - SHORT_LIVED_ENVIRONMENT_TEARDOWN
+          - ENVIRONMENT_CONFIGURE
+          - AUDIT_LOG
+        payloadJson:
+          type: string
+        stackName:
+          type: string
+        test:
+          type: boolean
+    PageableObject:
+      type: object
+      properties:
+        offset:
+          type: integer
+          format: int64
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        paged:
+          type: boolean
+        sort:
+          $ref: '#/components/schemas/SortObject'
+        unpaged:
+          type: boolean
+    PageAbstractCluster:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/AbstractCluster'
+        empty:
+          type: boolean
+        first:
+          type: boolean
+        last:
+          type: boolean
+        number:
+          type: integer
+          format: int32
+        numberOfElements:
+          type: integer
+          format: int32
+        pageable:
+          $ref: '#/components/schemas/PageableObject'
+        size:
+          type: integer
+          format: int32
+        sort:
+          $ref: '#/components/schemas/SortObject'
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int32
+    TerraformChange:
+      type: object
+      properties:
+        resourceKey:
+          type: string
+        resourcePath:
+          type: string
+        type:
+          type: string
+          enum:
+          - Destruction
+          - Creation
+          - Modifications
+    Substack:
+      type: object
+      properties:
+        accountId:
+          type: string
+        allowedClouds:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+            enum:
+            - AWS
+            - AZURE
+            - LOCAL
+            - GCP
+            - KUBERNETES
+            - NO_CLOUD
+        alphaBlueprint:
+          type: boolean
+        appPassword:
+          type: string
+        artifactPath:
+          type: string
+        artifactories:
+          type: array
+          items:
+            type: string
+        autoEnabledSubStacks:
+          type: array
+          items:
+            type: string
+        branch:
+          type: string
+        changeLog:
+          type: string
+        childStacks:
+          type: array
+          items:
+            type: string
+        clusterVariablesMeta:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/VariableDetails'
+        coderAccountId:
+          type: string
+        componentVersions:
+          type: object
+          additionalProperties:
+            type: string
+        configModulesDisabled:
+          type: boolean
+        description:
+          type: string
+        gitOpsEnabled:
+          type: boolean
+        gitOverridesEnabled:
+          type: boolean
+        githubOrganizationName:
+          type: string
+        id:
+          type: string
+        importedProject:
+          type: boolean
+        inheritFromBaseByDefault:
+          type: boolean
+        label:
+          type: string
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        monoRepo:
+          type: boolean
+        name:
+          type: string
+        overrideConfig:
+          $ref: '#/components/schemas/OverrideConfig'
+        pauseReleases:
+          type: boolean
+        previewModulesAllowed:
+          type: boolean
+          description: Alternatively called isTestProject
+        primaryCloud:
+          type: string
+          enum:
+          - AWS
+          - AZURE
+          - LOCAL
+          - GCP
+          - KUBERNETES
+          - NO_CLOUD
+        projectTypeId:
+          type: string
+        providedResources:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/FacetsResource'
+        relativePath:
+          type: string
+        stackVars:
+          type: object
+          additionalProperties:
+            type: string
+        template:
+          type: boolean
+        templateId:
+          type: string
+        templateName:
+          type: string
+        user:
+          type: string
+        vcs:
+          type: string
+          enum:
+          - GITHUB
+          - BITBUCKET
+          - GITLAB
+        vcsUrl:
+          type: string
+        versionControlAccountId:
+          type: string
+        versioningKey:
+          type: string
+    DraftClusterRequest:
+      required:
+      - clusterName
+      type: object
+      properties:
+        autoSignOffSchedule:
+          type: string
+        baseClusterId:
+          type: string
+        cdPipelineParent:
+          type: string
+        cloud:
+          type: string
+          enum:
+          - AWS
+          - AZURE
+          - LOCAL
+          - GCP
+          - KUBERNETES
+          - NO_CLOUD
+        cloudAccountId:
+          type: string
+        clusterName:
+          maxLength: 40
+          minLength: 0
+          pattern: ^[a-z][a-z0-9-]*$
+          type: string
+        componentVersions:
+          type: object
+          additionalProperties:
+            type: string
+        description:
+          maxLength: 200
+          minLength: 0
+          type: string
+        enableAutoSignOff:
+          type: boolean
+        isEphemeral:
+          type: boolean
+        k8sRequestsToLimitsRatio:
+          type: number
+          format: double
+        namespace:
+          type: string
+        releaseStream:
+          type: string
+        requireSignOff:
+          type: boolean
+        stackName:
+          type: string
+        tz:
+          type: object
+          properties:
+            displayName:
+              type: string
+            dstsavings:
+              type: integer
+              format: int32
+            id:
+              type: string
+            rawOffset:
+              type: integer
+              format: int32
+    SortObject:
+      type: object
+      properties:
+        empty:
+          type: boolean
+        sorted:
+          type: boolean
+        unsorted:
+          type: boolean
+    ClusterResponse:
+      type: object
+      properties:
+        autoSignOffSchedule:
+          type: string
+        baseCluster:
+          $ref: '#/components/schemas/ClusterLite'
+        branch:
+          type: string
+        cdPipelineParent:
+          type: string
+        cloud:
+          type: string
+          enum:
+          - AWS
+          - AZURE
+          - LOCAL
+          - GCP
+          - KUBERNETES
+          - NO_CLOUD
+        cloudAccountId:
+          type: string
+        cloudAccountName:
+          type: string
+        clusterCode:
+          type: string
+        clusterState:
+          type: string
+          enum:
+          - STOPPED
+          - RUNNING
+          - LAUNCHING
+          - DESTROYING
+          - LAUNCH_FAILED
+          - DESTROY_FAILED
+          - UNKNOWN
+          - SCALE_DOWN
+          - SCALING_DOWN
+          - SCALE_DOWN_FAILED
+          - SCALING_UP
+          - SCALE_UP_FAILED
+        configured:
+          type: boolean
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        dependentClusters:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClusterLite'
+        description:
+          type: string
+        dynamicLaunch:
+          type: boolean
+        enableAutoSignOff:
+          type: boolean
+        hasK8sCredentials:
+          type: boolean
+        id:
+          type: string
+        isEphemeral:
+          type: boolean
+        k8sRequestsToLimitsRatio:
+          type: number
+          format: double
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        name:
+          type: string
+        namespace:
+          type: string
+        pauseReleases:
+          type: boolean
+        releaseStream:
+          type: string
+        requireSignOff:
+          type: boolean
+        showKubedebugger:
+          type: boolean
+        stackName:
+          type: string
+        tz:
+          type: string
+    CreateProjectRequest:
+      type: object
+      properties:
+        allowedClouds:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+            enum:
+            - AWS
+            - AZURE
+            - LOCAL
+            - GCP
+            - KUBERNETES
+            - NO_CLOUD
+        bitbucketProjectKey:
+          type: string
+        blueprintName:
+          type: string
+        cloud:
+          type: string
+          enum:
+          - AWS
+          - AZURE
+          - LOCAL
+          - GCP
+          - KUBERNETES
+          - NO_CLOUD
+        description:
+          type: string
+        draftClusters:
+          type: array
+          items:
+            $ref: '#/components/schemas/DraftClusterRequest'
+        gitOpsRequest:
+          $ref: '#/components/schemas/EnableGitOpsRequest'
+        orgName:
+          type: string
+        projectTypeId:
+          type: string
+        templateId:
+          type: string
+        vcsAccountId:
+          type: string
+    Artifact:
+      type: object
+      properties:
+        applicationName:
+          type: string
+        appliedRuleId:
+          type: string
+        appliedRuleName:
+          type: string
+        appliedRuleVersionId:
+          type: string
+        artifactUri:
+          type: string
+        artifactory:
+          type: string
+        buildDescription:
+          type: string
+        buildId:
+          type: string
+        changeLog:
+          type: string
+          writeOnly: true
+        classified:
+          type: boolean
+        clusterId:
+          type: string
+        createdBy:
+          type: string
+        createdOn:
+          type: string
+          format: date-time
+        creationDate:
+          type: string
+          format: date-time
+        id:
+          type: string
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+        promoted:
+          type: boolean
+        registrationType:
+          type: string
+          enum:
+          - ENVIRONMENT
+          - RELEASE_STREAM
+          - HYBRID
+        registrationValue:
+          type: string
+        releaseStream:
+          type: string
+        releaseType:
+          type: string
+          enum:
+          - HOTFIX
+          - RELEASE
+          - LAUNCH
+          - DESTROY
+          - CUSTOM
+          - UNLOCK_STATE
+          - PLAN
+          - HOTFIX_PLAN
+          - APPLY_PLAN
+          - APPLY_HOTFIX_PLAN
+          - SCALE_UP
+          - SCALE_DOWN
+          - MAINTENANCE
+          - TERRAFORM_EXPORT
+          - ROLLBACK_PLAN
+          - APPLY_ROLLBACK_PLAN
+          - PLAN_AND_APPLY
+          - HOTFIX_PLAN_AND_APPLY
+          - IMPORT_RELEASE
+        repositoryName:
+          type: string
+        tag:
+          type: string
+        versioningKey:
+          type: string
+    ProvidedResources:
+      type: object
+      properties:
+        clusterId:
+          type: string
+        id:
+          type: string
+        providedAuthenticatedResources:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/ProvidedAuthenticatedResource'
+        providedCloudResources:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/ProvidedCloudResource'
+        providedShardedResources:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/ProvidedShardedService'
+        providedUnauthenticatedResources:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/ProvidedUnauthenticatedResource'
+    RawError:
+      type: object
+      properties:
+        description:
+          type: string
+        errorMessage:
+          type: string
+        resolution:
+          type: string
+        stackTrace:
+          type: string
+    DeploymentContext:
+      type: object
+      properties:
+        artifactoryDetails:
+          type: array
+          items:
+            $ref: '#/components/schemas/Artifactory'
+        artifacts:
+          type: object
+          additionalProperties:
+            type: object
+            additionalProperties:
+              $ref: '#/components/schemas/Artifact'
+        canSkipApproval:
+          type: boolean
+        cluster:
+          $ref: '#/components/schemas/AbstractCluster'
+        extraEnv:
+          type: object
+          additionalProperties:
+            type: string
+        maintenanceWindow:
+          $ref: '#/components/schemas/MaintenanceWindowDTO'
+        modules:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ModuleDTO'
+        overrides:
+          type: array
+          items:
+            $ref: '#/components/schemas/OverrideObject'
+        parallelRelease:
+          type: boolean
+        projectType:
+          $ref: '#/components/schemas/ProjectType'
+        providedResources:
+          $ref: '#/components/schemas/ProvidedResources'
+        providedSecretsId:
+          type: string
+        resourceMetadata:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/ResourceMetadata'
+        resources:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/MatchedResourceDTO'
+        secretsContext:
+          $ref: '#/components/schemas/SecretsContextDTO'
+        settings:
+          type: object
+          additionalProperties:
+            type: object
+            additionalProperties:
+              type: object
+        snapshots:
+          type: object
+          additionalProperties:
+            type: object
+            additionalProperties:
+              $ref: '#/components/schemas/SnapshotInfo'
+        stackSourceVersion:
+          type: string
+        templateInputs:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/StackTemplateInput'
+        tfVersion:
+          $ref: '#/components/schemas/TfVersion'
+    DeploymentLog:
+      type: object
+      properties:
+        allowDestroy:
+          type: boolean
+        allowPreviewModules:
+          type: boolean
+        appDeployments:
+          type: array
+          items:
+            $ref: '#/components/schemas/AppDeployment'
+        approvedReleaseId:
+          type: string
+        changesApplied:
+          type: array
+          items:
+            $ref: '#/components/schemas/TerraformChange'
+        codebuildId:
+          type: string
+        crdDeploymentDetails:
+          $ref: '#/components/schemas/CrdDeploymentDetails'
+        createdOn:
+          type: string
+          format: date-time
+        currentPhase:
+          type: string
+        deploymentContextFilePath:
+          type: string
+        deploymentContextVersion:
+          type: string
+        deploymentJobType:
+          type: string
+          enum:
+          - CODEBUILD
+          - KUBERNETES_POD
+          - KUBERNETES_CRD
+        deploymentType:
+          type: string
+          enum:
+          - REGULAR
+          - CUSTOM
+          - ROLLBACK
+        description:
+          type: string
+        errorLogs:
+          type: array
+          items:
+            $ref: '#/components/schemas/RawError'
+        finishedOn:
+          type: string
+          format: date-time
+        forceRelease:
+          type: boolean
+        hotfixResources:
+          type: array
+          items:
+            $ref: '#/components/schemas/FacetsResource'
+        id:
+          type: string
+        integrationTest:
+          type: boolean
+        isDestroy:
+          type: boolean
+        labelIds:
+          type: array
+          items:
+            type: string
+        migrationScriptsRun:
+          type: array
+          items:
+            $ref: '#/components/schemas/MigrationScriptMetadata'
+        overrideBuildSteps:
+          type: array
+          items:
+            type: string
+        parallelRelease:
+          type: boolean
+        phaseLogs:
+          type: object
+          additionalProperties:
+            type: string
+        releaseComment:
+          type: string
+        releaseReviewedBy:
+          type: string
+        releaseTraceId:
+          type: string
+        releaseType:
+          type: string
+          enum:
+          - HOTFIX
+          - RELEASE
+          - LAUNCH
+          - DESTROY
+          - CUSTOM
+          - UNLOCK_STATE
+          - PLAN
+          - HOTFIX_PLAN
+          - APPLY_PLAN
+          - APPLY_HOTFIX_PLAN
+          - SCALE_UP
+          - SCALE_DOWN
+          - MAINTENANCE
+          - TERRAFORM_EXPORT
+          - ROLLBACK_PLAN
+          - APPLY_ROLLBACK_PLAN
+          - PLAN_AND_APPLY
+          - HOTFIX_PLAN_AND_APPLY
+          - IMPORT_RELEASE
+        rollbackDeploymentId:
+          type: string
+        signedOff:
+          type: boolean
+        stackVersion:
+          type: string
+        status:
+          type: string
+          enum:
+          - SUCCEEDED
+          - FAILED
+          - FAULT
+          - TIMED_OUT
+          - IN_PROGRESS
+          - STOPPED
+          - INVALID
+          - STARTED
+          - UNKNOWN
+          - QUEUED
+          - PENDING_APPROVAL
+          - APPROVED
+          - ABORTED
+          - REJECTED
+          - SUPERSEDED
+        tfVersion:
+          type: string
+        timeTakenInSeconds:
+          type: integer
+          format: int64
+        triggeredBy:
+          type: string
+        validationResponses:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationResponse'
+        validationResult:
+          $ref: '#/components/schemas/ValidationResult'
+        withRefresh:
+          type: boolean
+    SnapshotInfo:
+      type: object
+      properties:
+        cloudSpecificId:
+          type: string
+        clusterId:
+          type: string
+        endTime:
+          type: string
+          format: date-time
+        instanceName:
+          type: string
+        name:
+          type: string
+        pinned:
+          type: boolean
+        resourceType:
+          type: string
+        source:
+          type: string
+        startTime:
+          type: string
+          format: date-time
+        storageSize:
+          type: integer
+          format: int32
+    CreateTemplateRequest:
+      type: object
+      properties:
+        coderAccountId:
+          type: string
+        description:
+          type: string
+        monoRepo:
+          type: boolean
+        name:
+          type: string
+        relativePath:
+          type: string
+    StackTemplate:
+      type: object
+      properties:
+        description:
+          type: string
+        gitUrl:
+          type: string
+        id:
+          type: string
+        monoRepo:
+          type: boolean
+        name:
+          type: string
+        relativePath:
+          type: string
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    StackOverviewResponse:
+      type: object
+      properties:
+        blueprintResources:
+          type: array
+          items:
+            $ref: '#/components/schemas/BlueprintFile'
+        clustersOverview:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClusterOverview'
+        stack:
+          $ref: '#/components/schemas/Stack'
+    OverrideConfig:
+      type: object
+      properties:
+        branchName:
+          type: string
+        gitOrgName:
+          type: string
+        gitOverrideUrl:
+          type: string
+        migrationFailureMessage:
+          type: string
+        overridesMigrationStatus:
+          type: string
+          enum:
+          - IN_PROGRESS
+          - PENDING
+          - COMPLETED
+          - FAILED
+        overridesRepoName:
+          type: string
+        uiOverridesEnabled:
+          type: boolean
+    SubstackRequest:
+      type: object
+      properties:
+        branch:
+          type: string
+        name:
+          type: string
+        relativePath:
+          type: string
+        vcs:
+          type: string
+          enum:
+          - GITHUB
+          - BITBUCKET
+          - GITLAB
+        vcsUrl:
+          type: string
+        versionControlAccountId:
+          type: string
+    TfVersion:
+      required:
+      - majorVersion
+      - minorVersion
+      - tfStream
+      type: object
+      properties:
+        lastModified:
+          type: string
+          format: date-time
+        majorVersion:
+          type: integer
+          format: int32
+        minorVersion:
+          type: string
+          description: LATEST
+          example: LATEST
+        tfStream:
+          type: string
+    Edge:
+      type: object
+      properties:
+        blockEdits:
+          type: boolean
+        id:
+          type: string
+        inputName:
+          type: string
+        isInput:
+          type: boolean
+        outputName:
+          type: string
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+  securitySchemes:
+    basicAuth:
+      description: Basic Authentication
+      scheme: basic
+      type: http

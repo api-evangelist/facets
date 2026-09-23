@@ -1,0 +1,2601 @@
+openapi: 3.2.0
+info:
+  description: API Documentation
+  title: Control-plane UI Blueprint Designer Controller API
+  version: '1.0'
+servers:
+- url: https://facetsdemo.console.facets.cloud
+  description: Generated server url
+security:
+- basicAuth: []
+tags:
+- name: ui-blueprint-designer-controller
+paths:
+  /cc-ui/v1/designer/{stackName}/branch-list:
+    get:
+      operationId: listBranches_1
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BranchDTO'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-blueprint-designer-controller
+      summary: List branches 1
+      x-summary-source: derived
+  /cc-ui/v1/designer/{stackName}/branch/{branch}:
+    delete:
+      operationId: deleteResources
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: branch
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              uniqueItems: true
+              type: array
+              items:
+                $ref: '#/components/schemas/ResourceFileRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-blueprint-designer-controller
+      summary: Delete resources
+      x-summary-source: derived
+    post:
+      operationId: createResources
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: branch
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              uniqueItems: true
+              type: array
+              items:
+                $ref: '#/components/schemas/ResourceFileRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-blueprint-designer-controller
+      summary: Create resources
+      x-summary-source: derived
+    put:
+      operationId: updateResources
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: branch
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: changeAffectedResources
+        required: false
+        schema:
+          type: boolean
+          default: false
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateBlueprintRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-blueprint-designer-controller
+      summary: Update resources
+      x-summary-source: derived
+  /cc-ui/v1/designer/{stackName}/branch/{branch}/mustache:
+    put:
+      description: Updates resource files with mustache template content. Replaces .json files with .mustache files.
+      operationId: updateMustacheResources
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: branch
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateBlueprintRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: Update resources with mustache templates
+      tags:
+      - ui-blueprint-designer-controller
+  /cc-ui/v1/designer/{stackName}/branch/{branch}/rename:
+    put:
+      operationId: renameResource
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: branch
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResourceRenameRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-blueprint-designer-controller
+      summary: Rename resource
+      x-summary-source: derived
+  /cc-ui/v1/designer/{stackName}/branch/{branch}/resource-enable-disable:
+    put:
+      operationId: bulkEditDisabledForResources_1
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: branch
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/ResourceEnableDisableRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-blueprint-designer-controller
+      summary: Bulk edit disabled for resources 1
+      x-summary-source: derived
+  /cc-ui/v1/designer/{stackName}/branch/{branch}/resource-inherit-from-base:
+    put:
+      operationId: bulkEditInheritFromBaseForResources
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: branch
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/ResourceInheritFromBaseRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-blueprint-designer-controller
+      summary: Bulk edit inherit from base for resources
+      x-summary-source: derived
+  /cc-ui/v1/designer/{stackName}/intent/{intent}/flavor/{flavor}/input:
+    get:
+      operationId: getModuleInputs
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: intent
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: flavor
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: version
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  $ref: '#/components/schemas/ModuleInputDTO'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-blueprint-designer-controller
+      summary: Get module inputs
+      x-summary-source: derived
+  /cc-ui/v1/designer/{stackName}/intent/{intent}/flavor/{flavor}/output-providers:
+    get:
+      operationId: listProvidersExposedByModule
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: intent
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: flavor
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                uniqueItems: true
+                type: array
+                items:
+                  $ref: '#/components/schemas/TFProvider'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-blueprint-designer-controller
+      summary: List providers exposed by module
+      x-summary-source: derived
+  /cc-ui/v1/designer/{stackName}/pulls:
+    get:
+      operationId: getPullRequests_1
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: state
+        required: false
+        schema:
+          type: string
+          default: OPEN
+          enum:
+          - OPEN
+          - CLOSED
+          - ALL
+      - in: query
+        name: pageSize
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 10
+      - in: query
+        name: pageNumber
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 1
+      - in: query
+        name: createdDate
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: query
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListPullRequestResponse'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-blueprint-designer-controller
+      summary: Get pull requests 1
+      x-summary-source: derived
+  /cc-ui/v1/designer/{stackName}/ref-autocomplete-data-v2:
+    get:
+      description: Returns module-specific output trees for each resource with automatic fallback to intent-level outputs
+      operationId: getAutocompleteDataV2
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AutocompleteResponseV2'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: Get autocomplete data with module-specific output trees
+      tags:
+      - ui-blueprint-designer-controller
+  /cc-ui/v1/designer/{stackName}/resource-enable-disable:
+    put:
+      operationId: bulkEditDisabledForResources
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/ResourceEnableDisableRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-blueprint-designer-controller
+      summary: Bulk edit disabled for resources
+      x-summary-source: derived
+  /cc-ui/v1/designer/{stackName}/resourceType/{resourceType}/resourceName/{resourceName}/add-ons:
+    get:
+      operationId: getAddOnModules
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: resourceType
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: resourceName
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: cloud
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AddOnDTO'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: Get add ons for this resource
+      tags:
+      - ui-blueprint-designer-controller
+  /cc-ui/v1/designer/{stackName}/resourceType/{resourceType}/resourceName/{resourceName}/branch-list:
+    get:
+      operationId: listBranches
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: resourceType
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: resourceName
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-blueprint-designer-controller
+      summary: List branches
+      x-summary-source: derived
+  /cc-ui/v1/designer/{stackName}/resourceType/{resourceType}/resourceName/{resourceName}/pulls:
+    get:
+      operationId: getPullRequests
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: resourceType
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: resourceName
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: state
+        required: false
+        schema:
+          type: string
+          default: OPEN
+          enum:
+          - OPEN
+          - CLOSED
+          - ALL
+      - in: query
+        name: pageSize
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 10
+      - in: query
+        name: pageNumber
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 1
+      - in: query
+        name: createdDate
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: query
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListPullRequestResponse'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-blueprint-designer-controller
+      summary: Get pull requests
+      x-summary-source: derived
+  /cc-ui/v1/designer/{stackName}/resourceType/{resourceType}/resourceName/{resourceName}/workflow-runs:
+    get:
+      operationId: getWorkflowRuns_1
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: resourceType
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: resourceName
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: pageSize
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 10
+      - in: query
+        name: pageNumber
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 1
+      - in: query
+        name: workflowId
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: event
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: status
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: branch
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: actor
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListWorkflowRunsResponse'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-blueprint-designer-controller
+      summary: Get workflow runs 1
+      x-summary-source: derived
+  /cc-ui/v1/designer/{stackName}/resourceType/{resourceType}/resourceName/{resourceName}/workflows:
+    get:
+      operationId: getWorkflows_1
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: resourceType
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: resourceName
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Workflow'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-blueprint-designer-controller
+      summary: Get workflows 1
+      x-summary-source: derived
+  /cc-ui/v1/designer/{stackName}/variables:
+    delete:
+      operationId: deleteVariables
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              uniqueItems: true
+              type: array
+              items:
+                type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-blueprint-designer-controller
+      summary: Delete variables
+      x-summary-source: derived
+    post:
+      operationId: addVariables
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties:
+                $ref: '#/components/schemas/VariableDetails'
+        required: true
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-blueprint-designer-controller
+      summary: Add variables
+      x-summary-source: derived
+    put:
+      operationId: updateVariables
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties:
+                $ref: '#/components/schemas/VariableDetails'
+        required: true
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-blueprint-designer-controller
+      summary: Update variables
+      x-summary-source: derived
+  /cc-ui/v1/designer/{stackName}/variables/usages:
+    get:
+      description: Returns which resources reference each secret and variable defined in the stack
+      operationId: getAllVariableUsages
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/VariableUsageResponse'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: Get usages of all secrets and variables for a stack
+      tags:
+      - ui-blueprint-designer-controller
+  /cc-ui/v1/designer/{stackName}/variables/{variableName}/usages:
+    get:
+      description: Returns which resources reference the given secret or variable at stack and environment level
+      operationId: getVariableUsages
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: variableName
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VariableUsageResponse'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: Get usages of a specific secret or variable
+      tags:
+      - ui-blueprint-designer-controller
+  /cc-ui/v1/designer/{stackName}/workflow-runs:
+    get:
+      operationId: getWorkflowRuns
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: pageSize
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 10
+      - in: query
+        name: pageNumber
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 1
+      - in: query
+        name: workflowId
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: event
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: status
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: branch
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: actor
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListWorkflowRunsResponse'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-blueprint-designer-controller
+      summary: Get workflow runs
+      x-summary-source: derived
+  /cc-ui/v1/designer/{stackName}/workflows:
+    get:
+      operationId: getWorkflows
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Workflow'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-blueprint-designer-controller
+      summary: Get workflows
+      x-summary-source: derived
+  /cc-ui/v1/designer/{stackName}/{branchName}/files:
+    get:
+      operationId: getDesignerResources
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: branchName
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BlueprintFile'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-blueprint-designer-controller
+      summary: Get designer resources
+      x-summary-source: derived
+  /cc-ui/v1/designer/{stackName}/{branch}/create-branch:
+    post:
+      operationId: createBranch
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: branch
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-blueprint-designer-controller
+      summary: Create branch
+      x-summary-source: derived
+  /cc-ui/v1/designer/{stackName}/{templateName}/apply:
+    post:
+      operationId: applyTemplate
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: templateName
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: prefix
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: suffix
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-blueprint-designer-controller
+      summary: Apply template
+      x-summary-source: derived
+  /cc-ui/v1/designer/{templateName}/sync:
+    post:
+      operationId: syncSpecifiedBlueprintsWithTemplates
+      parameters:
+      - in: path
+        name: templateName
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              uniqueItems: true
+              type: array
+              items:
+                type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-blueprint-designer-controller
+      summary: Sync specified blueprints with templates
+      x-summary-source: derived
+components:
+  schemas:
+    InputOutputResource:
+      type: object
+      properties:
+        default:
+          type: boolean
+        outputName:
+          type: string
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+    RefExpression:
+      type: object
+      properties:
+        expression:
+          type: string
+    GithubLabel:
+      type: object
+      properties:
+        color:
+          type: string
+        description:
+          type: string
+        name:
+          type: string
+    WorkflowRun:
+      type: object
+      properties:
+        actor:
+          $ref: '#/components/schemas/GithubUser'
+        conclusion:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        displayTitle:
+          type: string
+        headBranch:
+          type: string
+        headCommit:
+          $ref: '#/components/schemas/Commit'
+        htmlUrl:
+          type: string
+        name:
+          type: string
+        runNumber:
+          type: integer
+          format: int64
+        runStartedAt:
+          type: string
+          format: date-time
+        status:
+          type: string
+        triggeringActor:
+          $ref: '#/components/schemas/GithubUser'
+        updatedAt:
+          type: string
+          format: date-time
+        workflowId:
+          type: integer
+          format: int64
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    ResourceEnableDisableRequest:
+      type: object
+      properties:
+        directory:
+          type: string
+        disabled:
+          type: boolean
+        filename:
+          type: string
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+    Commit:
+      type: object
+      properties:
+        id:
+          type: string
+    ListWorkflowRunsResponse:
+      type: object
+      properties:
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        totalCount:
+          type: integer
+          format: int32
+        totalPages:
+          type: integer
+          format: int32
+        workflowRuns:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkflowRun'
+    ModuleInputDTO:
+      type: object
+      properties:
+        compatibleResources:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/InputOutputResource'
+        description:
+          type: string
+        displayName:
+          type: string
+        optional:
+          type: boolean
+        type:
+          type: string
+    BlueprintFile:
+      type: object
+      properties:
+        alpha:
+          type: boolean
+        childrenResourceIds:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        ciNames:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        clusterId:
+          type: string
+        content:
+          type: string
+        directory:
+          type: string
+        edges:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/Edge'
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/BlueprintValidationError'
+        expressions:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/RefExpression'
+        filename:
+          type: string
+        iconUrl:
+          type: string
+        info:
+          $ref: '#/components/schemas/Info'
+        overridden:
+          type: boolean
+        override:
+          type: object
+          additionalProperties:
+            type: object
+        parentResourceId:
+          type: string
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+        secrets:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        stackName:
+          type: string
+        substack:
+          type: boolean
+        syncCtxMd5:
+          type: string
+        syncId:
+          type: string
+        templatedResource:
+          type: boolean
+        variables:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        version:
+          type: string
+    ResourceInheritFromBaseRequest:
+      type: object
+      properties:
+        directory:
+          type: string
+        filename:
+          type: string
+        inheritFromBase:
+          type: boolean
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+    VariableDetails:
+      type: object
+      properties:
+        description:
+          type: string
+        global:
+          type: boolean
+        required:
+          type: boolean
+        secret:
+          type: boolean
+        value:
+          type: string
+    JsonNode:
+      type: object
+    ResourceFileRequest:
+      required:
+      - resourceName
+      - resourceType
+      type: object
+      properties:
+        content:
+          type: object
+          additionalProperties:
+            type: object
+        directory:
+          type: string
+        filename:
+          type: string
+        flavor:
+          type: string
+        mergeContent:
+          type: object
+          additionalProperties:
+            type: object
+        rawContent:
+          type: string
+        resourceGroupIds:
+          type: array
+          items:
+            type: string
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+    GithubUser:
+      type: object
+      properties:
+        htmlUrl:
+          type: string
+        login:
+          type: string
+    AutocompleteResponseV2:
+      type: object
+      properties:
+        resourceOutputTrees:
+          type: object
+          additionalProperties:
+            type: object
+            additionalProperties:
+              $ref: '#/components/schemas/JsonNode'
+    Info:
+      type: object
+      properties:
+        artifactType:
+          type: string
+          enum:
+          - docker_image
+          - freestyle
+        artifactory:
+          type: string
+        ciName:
+          type: string
+        criticalResource:
+          type: boolean
+        description:
+          type: string
+        disabled:
+          type: boolean
+        enableKubernetesExplorer:
+          type: boolean
+        flavour:
+          type: string
+        githubRepositoryUrl:
+          type: string
+        inheritFromBase:
+          type: boolean
+        namespace:
+          type: string
+        overriddenName:
+          type: string
+        provided:
+          type: boolean
+        repository:
+          type: string
+        repositoryPath:
+          type: string
+        staticImage:
+          type: string
+        strategy:
+          type: string
+          enum:
+          - RollingUpdate
+          - BlueGreen
+          - Canary
+        tag:
+          type: string
+        tfModuleId:
+          type: string
+        ui:
+          type: object
+          additionalProperties:
+            type: object
+        version:
+          type: string
+    VariableUsageDTO:
+      type: object
+      properties:
+        clusterId:
+          type: string
+        clusterName:
+          type: string
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+    ResourceRenameRequest:
+      required:
+      - newResourceName
+      - oldResourceName
+      - resourceType
+      type: object
+      properties:
+        directory:
+          type: string
+        newResourceName:
+          type: string
+        oldFileName:
+          type: string
+        oldResourceName:
+          type: string
+        resourceType:
+          type: string
+    BlueprintValidationError:
+      type: object
+      properties:
+        blueprintErrorLines:
+          type: array
+          items:
+            type: integer
+            format: int32
+        category:
+          type: string
+          enum:
+          - Syntax Error
+          - Non-Existent Resource Reference
+          - Disabled Resource References
+          - Invalid Reference Expression
+          - Schema Compliance Error
+          - GuardRails Compliance Issues
+          - Overrides Syntax Error
+          - Invalid Filename Error
+          - Input Validation Error
+          - Missing Environment Override
+        message:
+          type: string
+        overrideErrorLines:
+          type: array
+          items:
+            type: integer
+            format: int32
+        severity:
+          type: string
+          enum:
+          - ERROR
+          - WARNING
+    BranchDTO:
+      type: object
+      properties:
+        branches:
+          type: array
+          items:
+            type: string
+        defaultBranch:
+          type: string
+    UpdateBlueprintRequest:
+      type: object
+      properties:
+        affectedFiles:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceEnableDisableRequest'
+        files:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceFileRequest'
+    VariableUsageResponse:
+      type: object
+      properties:
+        clusterLevelUsages:
+          type: array
+          items:
+            $ref: '#/components/schemas/VariableUsageDTO'
+        secret:
+          type: boolean
+        stackLevelUsages:
+          type: array
+          items:
+            $ref: '#/components/schemas/VariableUsageDTO'
+        variableName:
+          type: string
+    Input:
+      type: object
+      properties:
+        addsCapability:
+          type: boolean
+        blockEdits:
+          type: boolean
+        defaultResource:
+          $ref: '#/components/schemas/InputOutputResource'
+        description:
+          type: string
+        displayName:
+          type: string
+        optional:
+          type: boolean
+        providers:
+          type: array
+          items:
+            type: string
+        type:
+          type: string
+      description: Input parameters for this module
+    TFProvider:
+      type: object
+      properties:
+        attributes:
+          type: object
+          additionalProperties:
+            type: object
+        name:
+          type: string
+        source:
+          type: string
+        version:
+          type: string
+    AddOnDTO:
+      type: object
+      properties:
+        added:
+          type: boolean
+        flavor:
+          type: string
+        inputs:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Input'
+        intent:
+          type: string
+        resourceName:
+          type: string
+    PullRequestResponse:
+      type: object
+      properties:
+        createdAt:
+          type: string
+          format: date-time
+        htmlUrl:
+          type: string
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/GithubLabel'
+        mergedAt:
+          type: string
+          format: date-time
+        number:
+          type: string
+        state:
+          type: string
+        title:
+          type: string
+        user:
+          $ref: '#/components/schemas/GithubUser'
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    ListPullRequestResponse:
+      type: object
+      properties:
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        pullRequests:
+          type: array
+          items:
+            $ref: '#/components/schemas/PullRequestResponse'
+        totalCount:
+          type: integer
+          format: int32
+        totalPages:
+          type: integer
+          format: int32
+    Edge:
+      type: object
+      properties:
+        blockEdits:
+          type: boolean
+        id:
+          type: string
+        inputName:
+          type: string
+        isInput:
+          type: boolean
+        outputName:
+          type: string
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+    Workflow:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+  securitySchemes:
+    basicAuth:
+      description: Basic Authentication
+      scheme: basic
+      type: http

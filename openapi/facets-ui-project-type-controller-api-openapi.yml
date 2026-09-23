@@ -1,0 +1,547 @@
+openapi: 3.2.0
+info:
+  description: API Documentation
+  title: Control-plane UI Project Type Controller API
+  version: '1.0'
+servers:
+- url: https://facetsdemo.console.facets.cloud
+  description: Generated server url
+security:
+- basicAuth: []
+tags:
+- name: ui-project-type-controller
+paths:
+  /cc-ui/v1/project-types:
+    get:
+      description: '- **Description:** Retrieve a list of all existing project types. Supports filtering by legacy status and searching by name.
+
+        - **Restrictions:** None.
+
+        - **Permissions:** No specific permissions required.
+
+        - **Audit Logging:** Not applicable.'
+      operationId: getAllProjectTypes
+      parameters:
+      - in: query
+        name: filter
+        required: true
+        schema:
+          $ref: '#/components/schemas/ProjectTypeFilter'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProjectTypeResponse'
+          description: Success
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: Get all project types
+      tags:
+      - ui-project-type-controller
+    post:
+      description: '- **Description:** Creates a new project type from the provided request details.
+
+        - **Restrictions:** Only users with the appropriate permissions can add project types.
+
+        - **Permissions:** Requires `PROJECT_TYPE_WRITE` permission.
+
+        - **Audit Logging:** This operation is logged for audit purposes.'
+      operationId: addProjectType
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectTypeRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectTypeResponse'
+          description: Project type created successfully
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Invalid request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal server error
+      summary: Add a new project type
+      tags:
+      - ui-project-type-controller
+  /cc-ui/v1/project-types/{id}:
+    delete:
+      description: '- **Description:** Deletes an existing project type based on its ID.
+
+        - **Restrictions:** Only users with the correct RBAC permission can delete a project type.
+
+        - **Permissions:** Requires `PROJECT_TYPE_DELETE` permission.
+
+        - **Audit Logging:** This operation is logged for audit purposes.'
+      operationId: deleteProjectType
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Project type deleted successfully
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Project type not found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal server error
+      summary: Delete a project type
+      tags:
+      - ui-project-type-controller
+    get:
+      description: '- **Description:** Retrieve a specific project type by its ID.
+
+        - **Restrictions:** None.
+
+        - **Permissions:** No specific permissions required.
+
+        - **Audit Logging:** Not applicable.'
+      operationId: getProjectTypeById
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectTypeResponse'
+          description: Success
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Project type not found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: Get project type by ID
+      tags:
+      - ui-project-type-controller
+    put:
+      description: '- **Description:** Updates details of a specified project type by its ID.
+
+        - **Restrictions:** Only users with the correct permissions can update project types.
+
+        - **Permissions:** Requires `PROJECT_TYPE_WRITE` permission.
+
+        - **Audit Logging:** This operation is logged for audit purposes.'
+      operationId: updateProjectType
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectTypeRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectTypeResponse'
+          description: Project type updated successfully
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Invalid request or project ID
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Project type not found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal server error
+      summary: Update an existing project type
+      tags:
+      - ui-project-type-controller
+components:
+  schemas:
+    ProjectTypeMappedResource:
+      required:
+      - flavor
+      - intent
+      - intentType
+      type: object
+      properties:
+        flavor:
+          type: string
+        intent:
+          type: string
+        intentType:
+          type: string
+      description: Allowed modules for the project
+    ProjectTypeFilter:
+      type: object
+      properties:
+        legacy:
+          type: boolean
+        name:
+          type: string
+    ProjectTypeRequest:
+      required:
+      - iacTool
+      - name
+      - templateGitDetails
+      type: object
+      properties:
+        allowedClouds:
+          uniqueItems: true
+          type: array
+          description: Set of allowed clouds
+          items:
+            type: string
+            description: Set of allowed clouds
+            enum:
+            - AWS
+            - AZURE
+            - LOCAL
+            - GCP
+            - KUBERNETES
+            - NO_CLOUD
+        baseProjectName:
+          type: string
+          description: Base project name
+          example: base-project
+        description:
+          type: string
+          description: Description of the project type
+          example: This is a sample project type
+        dynamicLaunch:
+          type: boolean
+        enableNoCloudEnvironment:
+          type: boolean
+        iacTool:
+          type: string
+          description: IAC tool used for the project
+          enum:
+          - TERRAFORM
+          - OPENTOFU
+        iacToolVersion:
+          type: string
+        includeCpK8sProvider:
+          type: boolean
+          description: Whether to include CPK8s provider
+          example: false
+        includeToolingProvider:
+          type: boolean
+          description: Whether to include tooling provider
+          example: false
+        legacy:
+          type: boolean
+          description: Whether this is a legacy project type
+          example: false
+        mappedResources:
+          uniqueItems: true
+          type: array
+          description: Allowed modules for the project
+          items:
+            $ref: '#/components/schemas/ProjectTypeMappedResource'
+        name:
+          type: string
+          description: Name of the project type
+          example: Cloud Project
+        templateGitDetails:
+          $ref: '#/components/schemas/TemplateGitDetails'
+        useBranch:
+          type: boolean
+          description: Use branch flag
+          example: true
+        useCrdDrivenReleases:
+          type: boolean
+          description: Whether to use CRD-driven releases
+          example: false
+      description: Request model for Project Type operations.
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    ProjectTypeResponse:
+      type: object
+      properties:
+        allowedClouds:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+            enum:
+            - AWS
+            - AZURE
+            - LOCAL
+            - GCP
+            - KUBERNETES
+            - NO_CLOUD
+        associatedBlueprints:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        baseProjectName:
+          type: string
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        description:
+          type: string
+        dynamicLaunch:
+          type: boolean
+        enableNoCloudEnvironment:
+          type: boolean
+        iacTool:
+          type: string
+          enum:
+          - TERRAFORM
+          - OPENTOFU
+        iacToolVersion:
+          type: string
+        id:
+          type: string
+        includeCpK8sProvider:
+          type: boolean
+        includeToolingProvider:
+          type: boolean
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        legacy:
+          type: boolean
+        mappedResources:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/ProjectTypeMappedResource'
+        name:
+          type: string
+        templateGitDetails:
+          $ref: '#/components/schemas/TemplateGitDetails'
+        useCrdDrivenReleases:
+          type: boolean
+    TemplateGitDetails:
+      required:
+      - accountId
+      - gitRef
+      - gitUrl
+      - path
+      type: object
+      properties:
+        accountId:
+          type: string
+          description: Account ID associated with the Git repository
+          example: acct123
+        gitRef:
+          type: string
+          description: Git reference (branch or tag)
+          example: main
+        gitUrl:
+          type: string
+          description: Git repository URL
+          example: https://github.com/example/repo.git
+        path:
+          type: string
+          description: Path within the Git repository
+          example: /templates/project
+      description: Git details for the template used in Project Type
+  securitySchemes:
+    basicAuth:
+      description: Basic Authentication
+      scheme: basic
+      type: http

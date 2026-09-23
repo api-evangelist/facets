@@ -1,0 +1,485 @@
+openapi: 3.2.0
+info:
+  description: API Documentation
+  title: Control-plane UI K 8s Cluster Controller API
+  version: '1.0'
+servers:
+- url: https://facetsdemo.console.facets.cloud
+  description: Generated server url
+security:
+- basicAuth: []
+tags:
+- name: ui-k-8s-cluster-controller
+paths:
+  /cc-ui/v1/kubernetes/clusters:
+    post:
+      operationId: createK8sCluster
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KubernetesClusterRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KubernetesCluster'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-k-8s-cluster-controller
+      summary: Create k8s cluster
+      x-summary-source: derived
+  /cc-ui/v1/kubernetes/clusters/configure/{clusterId}:
+    post:
+      operationId: createDraftCluster
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KubernetesClusterRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KubernetesCluster'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-k-8s-cluster-controller
+      summary: Create draft cluster
+      x-summary-source: derived
+  /cc-ui/v1/kubernetes/clusters/{clusterId}:
+    get:
+      operationId: getK8sCluster
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KubernetesCluster'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-k-8s-cluster-controller
+      summary: Get k8s cluster
+      x-summary-source: derived
+    put:
+      operationId: updateK8sCluster
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KubernetesClusterRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KubernetesCluster'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-k-8s-cluster-controller
+      summary: Update k8s cluster
+      x-summary-source: derived
+components:
+  schemas:
+    KubernetesClusterRequest:
+      required:
+      - clusterName
+      type: object
+      properties:
+        autoSignOffSchedule:
+          type: string
+        baseClusterId:
+          type: string
+        cdPipelineParent:
+          type: string
+        cloud:
+          type: string
+          enum:
+          - AWS
+          - AZURE
+          - LOCAL
+          - GCP
+          - KUBERNETES
+          - NO_CLOUD
+        cloudAccountId:
+          type: string
+        clusterName:
+          maxLength: 40
+          minLength: 0
+          pattern: ^[a-z][a-z0-9-]*$
+          type: string
+        componentVersions:
+          type: object
+          additionalProperties:
+            type: string
+        description:
+          maxLength: 200
+          minLength: 0
+          type: string
+        enableAutoSignOff:
+          type: boolean
+        isEphemeral:
+          type: boolean
+        k8sRequestsToLimitsRatio:
+          type: number
+          format: double
+        namespace:
+          type: string
+        releaseStream:
+          type: string
+        requireSignOff:
+          type: boolean
+        stackName:
+          type: string
+        tz:
+          type: object
+          properties:
+            displayName:
+              type: string
+            dstsavings:
+              type: integer
+              format: int32
+            id:
+              type: string
+            rawOffset:
+              type: integer
+              format: int32
+    KubernetesCluster:
+      required:
+      - name
+      - releaseStream
+      - stackName
+      - tz
+      type: object
+      properties:
+        autoSignOffSchedule:
+          type: string
+        baseClusterId:
+          type: string
+        baseClusterName:
+          type: string
+        branch:
+          type: string
+        cdPipelineParent:
+          type: string
+        certificateAuthority:
+          type: string
+        changeLog:
+          type: string
+          writeOnly: true
+        cloud:
+          type: string
+          enum:
+          - AWS
+          - AZURE
+          - LOCAL
+          - GCP
+          - KUBERNETES
+          - NO_CLOUD
+        cloudAccountId:
+          type: string
+        cloudAccountSecretId:
+          type: string
+        clusterCode:
+          type: string
+          readOnly: true
+        clusterState:
+          type: string
+          enum:
+          - STOPPED
+          - RUNNING
+          - LAUNCHING
+          - DESTROYING
+          - LAUNCH_FAILED
+          - DESTROY_FAILED
+          - UNKNOWN
+          - SCALE_DOWN
+          - SCALING_DOWN
+          - SCALE_DOWN_FAILED
+          - SCALING_UP
+          - SCALE_UP_FAILED
+        commonEnvironmentVariables:
+          type: object
+          additionalProperties:
+            type: string
+        componentVersions:
+          type: object
+          additionalProperties:
+            type: string
+        configured:
+          type: boolean
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        deleted:
+          type: boolean
+        description:
+          type: string
+        enableAutoSignOff:
+          type: boolean
+        globalVariables:
+          type: object
+          additionalProperties:
+            type: string
+        hasK8sCredentials:
+          type: boolean
+        host:
+          type: string
+        id:
+          type: string
+        isEphemeral:
+          type: boolean
+        k8sRequestsToLimitsRatio:
+          type: number
+          format: double
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        name:
+          type: string
+        namespace:
+          type: string
+        pauseReleases:
+          type: boolean
+        releaseStream:
+          type: string
+        requireSignOff:
+          type: boolean
+        secrets:
+          type: object
+          additionalProperties:
+            type: string
+        stackName:
+          type: string
+        token:
+          type: string
+        tz:
+          type: string
+        variables:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Variables'
+        versioningKey:
+          type: string
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    Variables:
+      type: object
+      properties:
+        description:
+          type: string
+        global:
+          type: boolean
+        secret:
+          type: boolean
+        status:
+          type: string
+          enum:
+          - DEFAULT
+          - OVERRIDDEN
+        value:
+          type: string
+  securitySchemes:
+    basicAuth:
+      description: Basic Authentication
+      scheme: basic
+      type: http

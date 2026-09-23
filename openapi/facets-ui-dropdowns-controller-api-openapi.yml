@@ -1,0 +1,2724 @@
+openapi: 3.2.0
+info:
+  description: API Documentation
+  title: Control-plane UI Dropdowns Controller API
+  version: '1.0'
+servers:
+- url: https://facetsdemo.console.facets.cloud
+  description: Generated server url
+security:
+- basicAuth: []
+tags:
+- name: ui-dropdowns-controller
+paths:
+  /cc-ui/v1/dropdown/cluster-resources-lite:
+    get:
+      description: 'Cluster-scoped variant of stack-resources-lite: same trimmed projection, but read from the cluster''s blueprint, so version is the environment-resolved value and substack resources are included. Same RBAC semantics as /cluster/{clusterId}/resources-info.'
+      operationId: getAllResourcesByClusterLite
+      parameters:
+      - in: query
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StackResourceLite'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: List cluster resources (lite)
+      tags:
+      - ui-dropdowns-controller
+  /cc-ui/v1/dropdown/cluster/{clusterId}/affected-resources:
+    post:
+      operationId: getAffectedResourcesByCluster
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AffectedResourcesRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceAffectedResponse'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-dropdowns-controller
+      summary: Get affected resources by cluster
+      x-summary-source: derived
+  /cc-ui/v1/dropdown/cluster/{clusterId}/resources:
+    get:
+      operationId: getAllResources
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: excludeSubstackResources
+        required: false
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  uniqueItems: true
+                  type: array
+                  items:
+                    type: string
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-dropdowns-controller
+      summary: Get all resources
+      x-summary-source: derived
+  /cc-ui/v1/dropdown/cluster/{clusterId}/resources-info:
+    get:
+      operationId: getAllResourcesByCluster
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: includeContent
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - in: query
+        name: includeSubstack
+        required: false
+        schema:
+          type: boolean
+          default: true
+      - in: query
+        name: excludeAddOns
+        required: false
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BlueprintFile'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-dropdowns-controller
+      summary: Get all resources by cluster
+      x-summary-source: derived
+  /cc-ui/v1/dropdown/cluster/{clusterId}/{resourceType}/{resourceName}/resource-info:
+    get:
+      operationId: getResourceByClusterId
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: resourceType
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: resourceName
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: includeContent
+        required: false
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlueprintFile'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-dropdowns-controller
+      summary: Get resource by cluster id
+      x-summary-source: derived
+  /cc-ui/v1/dropdown/file:
+    get:
+      operationId: getFileFromFacetsModules
+      parameters:
+      - in: query
+        name: path
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: fileName
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JsonNode'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-dropdowns-controller
+      summary: Get file from facets modules
+      x-summary-source: derived
+  /cc-ui/v1/dropdown/getAllPermissions:
+    get:
+      operationId: getAllPermissions
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                  enum:
+                  - ACCOUNTS_WRITE
+                  - ACCOUNTS_DELETE
+                  - ALERTS_CONFIGURE
+                  - ARTIFACTORY_WRITE
+                  - ARTIFACTORY_DELETE
+                  - ARTIFACTS_DELETE
+                  - ARTIFACTS_WRITE
+                  - ARTIFACT_ROUTING_RULE_WRITE
+                  - ARTIFACT_ROUTING_RULE_DELETE
+                  - APPLICATION_ROLLING_RESTART
+                  - RUN_ACTION
+                  - RUN_CLOUD_ACTION
+                  - APPLICATION_DEPLOYMENT_PROMOTE
+                  - APPLICATION_DEPLOYMENT_ABORT
+                  - BILLING_MANAGE
+                  - CHANNEL_WRITE
+                  - CHANNEL_DELETE
+                  - ENVIRONMENT_CONFIGURE
+                  - ENVIRONMENT_DELETE
+                  - ENVIRONMENT_WRITE
+                  - ENVIRONMENT_DESTROY
+                  - ENVIRONMENT_LAUNCH
+                  - OAUTH_INTEGRATION_DELETE
+                  - OAUTH_INTEGRATION_WRITE
+                  - RESOURCE_OVERRIDE
+                  - RESOURCE_WRITE
+                  - RESOURCE_DELETE
+                  - CRITICAL_RESOURCE_WRITE
+                  - RESOURCE_GROUP_READ
+                  - RESOURCE_GROUP_WRITE
+                  - RESOURCE_GROUP_DELETE
+                  - RELEASE_APPROVAL_AUTHORITY
+                  - RELEASE_FULL
+                  - RELEASE_PLAN
+                  - RELEASE_APPLY_PLAN
+                  - RELEASE_SELECTIVE
+                  - RELEASE_CUSTOM
+                  - RELEASE_IMPORT
+                  - RELEASE_MAINTENANCE
+                  - RELEASE_TERRAFORM_EXPORT
+                  - RELEASE_SCALE_UP
+                  - RELEASE_SCALE_DOWN
+                  - RELEASE_FULL_ALLOW_DESTROY
+                  - RELEASE_SELECTIVE_ALLOW_DESTROY
+                  - RELEASE_CUSTOM_ALLOW_DESTROY
+                  - RELEASE_PAUSE
+                  - RELEASE_ABORT
+                  - STACK_CONFIGURE
+                  - STACK_WRITE
+                  - STACK_DELETE
+                  - BLUEPRINT_PR_CREATE
+                  - BLUEPRINT_PR_MERGE
+                  - BLUEPRINT_PR_CLOSE
+                  - SUBSCRIPTION_WRITE
+                  - SUBSCRIPTION_DELETE
+                  - SETTINGS_WRITE
+                  - USER_READ
+                  - USER_WRITE
+                  - USER_DELETE
+                  - CI_USER_TOKEN_MANAGE
+                  - TEMPLATE_WRITE
+                  - TEMPLATE_DELETE
+                  - TRASH_RESTORE
+                  - TRASH_DELETE
+                  - USER_GROUP_READ
+                  - USER_GROUP_WRITE
+                  - USER_GROUP_DELETE
+                  - CUSTOM_ROLE_READ
+                  - CUSTOM_ROLE_WRITE
+                  - CUSTOM_ROLE_DELETE
+                  - K8S_READER
+                  - K8S_DEBUGGER
+                  - K8S_CUSTOM
+                  - K8S_ADMIN
+                  - K8S_CREDENTIALS
+                  - CLI_ARTIFACT_PUSH
+                  - K8S_PERMISSION
+                  - PIPELINE_WRITE
+                  - ARTIFACT_CI_WRITE
+                  - ARTIFACT_CI_DELETE
+                  - PROMOTIONAL_WORKFLOW_WRITE
+                  - PROMOTIONAL_WORKFLOW_DELETE
+                  - VIEW_RESOURCE_SECRETS
+                  - COST_EXPLORER_VIEW
+                  - RELEASE_STREAM_WRITE
+                  - RELEASE_STREAM_DELETE
+                  - BLUEPRINT_TEMPLATE_WRITE
+                  - BLUEPRINT_TEMPLATE_DELETE
+                  - VPN_CONNECT
+                  - OPA_WRITE
+                  - OPA_EXECUTE
+                  - OPA_DELETE
+                  - AUDIT_LOGS_VIEW
+                  - CI_CD_CONFIGURE
+                  - VIEW_SECRETS
+                  - MAINTENANCE_WINDOW_EDIT
+                  - MODULE_READ
+                  - MODULE_WRITE
+                  - MODULE_DELETE
+                  - MODULE_REPO_MANAGE
+                  - PROJECT_TYPE_WRITE
+                  - PROJECT_TYPE_DELETE
+                  - WEB_COMPONENT_WRITE
+                  - WEB_COMPONENT_DELETE
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-dropdowns-controller
+      summary: Get all permissions
+      x-summary-source: derived
+  /cc-ui/v1/dropdown/logs/cluster/{clusterId}:
+    post:
+      operationId: syncClusterHistory
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: force
+        required: false
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-dropdowns-controller
+      summary: Sync cluster history
+      x-summary-source: derived
+  /cc-ui/v1/dropdown/logs/cluster/{clusterId}/resourceName/{resourceName}/resourceType/{resourceType}:
+    get:
+      operationId: getGitHistoryForResource
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: resourceName
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: resourceType
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StackGitLog'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-dropdowns-controller
+      summary: Get git history for resource
+      x-summary-source: derived
+  /cc-ui/v1/dropdown/logs/substack:
+    post:
+      operationId: syncSubstackGitHistory
+      parameters:
+      - in: query
+        name: substackName
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: forceSync
+        required: true
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-dropdowns-controller
+      summary: Sync substack git history
+      x-summary-source: derived
+  /cc-ui/v1/dropdown/releaseStreams:
+    get:
+      operationId: getReleaseStreams
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-dropdowns-controller
+      summary: Get release streams
+      x-summary-source: derived
+  /cc-ui/v1/dropdown/rolePermissions/{role}:
+    get:
+      operationId: getRolePermissions
+      parameters:
+      - in: path
+        name: role
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                uniqueItems: true
+                type: array
+                items:
+                  type: string
+                  enum:
+                  - ACCOUNTS_WRITE
+                  - ACCOUNTS_DELETE
+                  - ALERTS_CONFIGURE
+                  - ARTIFACTORY_WRITE
+                  - ARTIFACTORY_DELETE
+                  - ARTIFACTS_DELETE
+                  - ARTIFACTS_WRITE
+                  - ARTIFACT_ROUTING_RULE_WRITE
+                  - ARTIFACT_ROUTING_RULE_DELETE
+                  - APPLICATION_ROLLING_RESTART
+                  - RUN_ACTION
+                  - RUN_CLOUD_ACTION
+                  - APPLICATION_DEPLOYMENT_PROMOTE
+                  - APPLICATION_DEPLOYMENT_ABORT
+                  - BILLING_MANAGE
+                  - CHANNEL_WRITE
+                  - CHANNEL_DELETE
+                  - ENVIRONMENT_CONFIGURE
+                  - ENVIRONMENT_DELETE
+                  - ENVIRONMENT_WRITE
+                  - ENVIRONMENT_DESTROY
+                  - ENVIRONMENT_LAUNCH
+                  - OAUTH_INTEGRATION_DELETE
+                  - OAUTH_INTEGRATION_WRITE
+                  - RESOURCE_OVERRIDE
+                  - RESOURCE_WRITE
+                  - RESOURCE_DELETE
+                  - CRITICAL_RESOURCE_WRITE
+                  - RESOURCE_GROUP_READ
+                  - RESOURCE_GROUP_WRITE
+                  - RESOURCE_GROUP_DELETE
+                  - RELEASE_APPROVAL_AUTHORITY
+                  - RELEASE_FULL
+                  - RELEASE_PLAN
+                  - RELEASE_APPLY_PLAN
+                  - RELEASE_SELECTIVE
+                  - RELEASE_CUSTOM
+                  - RELEASE_IMPORT
+                  - RELEASE_MAINTENANCE
+                  - RELEASE_TERRAFORM_EXPORT
+                  - RELEASE_SCALE_UP
+                  - RELEASE_SCALE_DOWN
+                  - RELEASE_FULL_ALLOW_DESTROY
+                  - RELEASE_SELECTIVE_ALLOW_DESTROY
+                  - RELEASE_CUSTOM_ALLOW_DESTROY
+                  - RELEASE_PAUSE
+                  - RELEASE_ABORT
+                  - STACK_CONFIGURE
+                  - STACK_WRITE
+                  - STACK_DELETE
+                  - BLUEPRINT_PR_CREATE
+                  - BLUEPRINT_PR_MERGE
+                  - BLUEPRINT_PR_CLOSE
+                  - SUBSCRIPTION_WRITE
+                  - SUBSCRIPTION_DELETE
+                  - SETTINGS_WRITE
+                  - USER_READ
+                  - USER_WRITE
+                  - USER_DELETE
+                  - CI_USER_TOKEN_MANAGE
+                  - TEMPLATE_WRITE
+                  - TEMPLATE_DELETE
+                  - TRASH_RESTORE
+                  - TRASH_DELETE
+                  - USER_GROUP_READ
+                  - USER_GROUP_WRITE
+                  - USER_GROUP_DELETE
+                  - CUSTOM_ROLE_READ
+                  - CUSTOM_ROLE_WRITE
+                  - CUSTOM_ROLE_DELETE
+                  - K8S_READER
+                  - K8S_DEBUGGER
+                  - K8S_CUSTOM
+                  - K8S_ADMIN
+                  - K8S_CREDENTIALS
+                  - CLI_ARTIFACT_PUSH
+                  - K8S_PERMISSION
+                  - PIPELINE_WRITE
+                  - ARTIFACT_CI_WRITE
+                  - ARTIFACT_CI_DELETE
+                  - PROMOTIONAL_WORKFLOW_WRITE
+                  - PROMOTIONAL_WORKFLOW_DELETE
+                  - VIEW_RESOURCE_SECRETS
+                  - COST_EXPLORER_VIEW
+                  - RELEASE_STREAM_WRITE
+                  - RELEASE_STREAM_DELETE
+                  - BLUEPRINT_TEMPLATE_WRITE
+                  - BLUEPRINT_TEMPLATE_DELETE
+                  - VPN_CONNECT
+                  - OPA_WRITE
+                  - OPA_EXECUTE
+                  - OPA_DELETE
+                  - AUDIT_LOGS_VIEW
+                  - CI_CD_CONFIGURE
+                  - VIEW_SECRETS
+                  - MAINTENANCE_WINDOW_EDIT
+                  - MODULE_READ
+                  - MODULE_WRITE
+                  - MODULE_DELETE
+                  - MODULE_REPO_MANAGE
+                  - PROJECT_TYPE_WRITE
+                  - PROJECT_TYPE_DELETE
+                  - WEB_COMPONENT_WRITE
+                  - WEB_COMPONENT_DELETE
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-dropdowns-controller
+      summary: Get role permissions
+      x-summary-source: derived
+  /cc-ui/v1/dropdown/stack-resources-lite:
+    get:
+      description: 'Returns a trimmed projection of a stack''s blueprint resources for list-style UIs: resourceName, displayName (server-resolved from info.overriddenName with a fallback to resourceName), resourceType, flavour, version, iconUrl, and templatedResource. Same RBAC semantics as /stack/{stackName}/resources-info (stack-level permission + resource-group trim) with a smaller payload, projected at the Mongo layer.'
+      operationId: getAllResourcesByStackLite
+      parameters:
+      - in: query
+        name: stackName
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StackResourceLite'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: List stack resources (lite)
+      tags:
+      - ui-dropdowns-controller
+  /cc-ui/v1/dropdown/stack/{stackName}/affected-resources:
+    post:
+      operationId: getAffectedResourcesByStack
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AffectedResourcesRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceAffectedResponse'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-dropdowns-controller
+      summary: Get affected resources by stack
+      x-summary-source: derived
+  /cc-ui/v1/dropdown/stack/{stackName}/all-cluster-resources:
+    get:
+      operationId: getAllResourcesForAllClusterOfStack
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: excludeAddOns
+        required: false
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ClusterResourcesResponse'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-dropdowns-controller
+      summary: Get all resources for all cluster of stack
+      x-summary-source: derived
+  /cc-ui/v1/dropdown/stack/{stackName}/resources-info:
+    get:
+      operationId: getAllResourcesByStack
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: includeContent
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - in: query
+        name: branch
+        required: false
+        schema:
+          type: string
+          default: ''
+      - in: query
+        name: excludeAddOns
+        required: false
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BlueprintFile'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-dropdowns-controller
+      summary: Get all resources by stack
+      x-summary-source: derived
+  /cc-ui/v1/dropdown/stack/{stackName}/service/{serviceName}/overview:
+    get:
+      operationId: getServiceOverview
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: serviceName
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceOverview'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-dropdowns-controller
+      summary: Get service overview
+      x-summary-source: derived
+  /cc-ui/v1/dropdown/stack/{stackName}/{resourceType}/{resourceName}/cluster-resources-info:
+    get:
+      operationId: getAllClusterResourcesByStack
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: resourceType
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: resourceName
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BlueprintFile'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-dropdowns-controller
+      summary: Get all cluster resources by stack
+      x-summary-source: derived
+  /cc-ui/v1/dropdown/stack/{stackName}/{resourceType}/{resourceName}/resource-info:
+    get:
+      operationId: getResourceByStack
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: resourceType
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: resourceName
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: branch
+        required: false
+        schema:
+          type: string
+          default: ''
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlueprintFile'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-dropdowns-controller
+      summary: Get resource by stack
+      x-summary-source: derived
+  /cc-ui/v1/dropdown/vcs:
+    get:
+      operationId: getAllVCS
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-dropdowns-controller
+      summary: Get all VCS
+      x-summary-source: derived
+  /cc-ui/v1/dropdown/{cloud}/region/{region}/availability-zones:
+    get:
+      operationId: getAzForRegionByCloud
+      parameters:
+      - in: path
+        name: cloud
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: region
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-dropdowns-controller
+      summary: Get az for region by cloud
+      x-summary-source: derived
+  /cc-ui/v1/dropdown/{cloud}/regions:
+    get:
+      deprecated: true
+      operationId: getRegions
+      parameters:
+      - in: path
+        name: cloud
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AllRegionsAndAZ'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-dropdowns-controller
+      summary: Get regions
+      x-summary-source: derived
+  /cc-ui/v1/dropdown/{cloud}/regions-v2:
+    get:
+      operationId: getRegionsV2
+      parameters:
+      - in: path
+        name: cloud
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AllRegionsAndAZ'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-dropdowns-controller
+      summary: Get regions V2
+      x-summary-source: derived
+  /cc-ui/v1/dropdown/{clusterId}/cloud/{cloud}/launch-dag:
+    get:
+      operationId: getLaunchDAG
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: cloud
+        required: true
+        schema:
+          type: string
+          enum:
+          - AWS
+          - AZURE
+          - LOCAL
+          - GCP
+          - KUBERNETES
+          - NO_CLOUD
+      - in: query
+        name: isProvidedK8s
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - in: query
+        name: isDependent
+        required: false
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BlueprintFile'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-dropdowns-controller
+      summary: Get launch DAG
+      x-summary-source: derived
+  /cc-ui/v1/dropdown/{clusterId}/resource-type/{resourceType}/connection-strings:
+    get:
+      operationId: getConnectionStringsByResourceType
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: resourceType
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ResourceConnectionStringResponse'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-dropdowns-controller
+      summary: Get connection strings by resource type
+      x-summary-source: derived
+  /cc-ui/v1/dropdown/{clusterId}/{resourceType}:
+    get:
+      operationId: getApplicationListByClusterIdAndResourceName
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: resourceType
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                uniqueItems: true
+                type: array
+                items:
+                  type: string
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-dropdowns-controller
+      summary: Get application list by cluster id and resource name
+      x-summary-source: derived
+  /cc-ui/v1/dropdown/{stackName}/output-references:
+    get:
+      operationId: getOutputReferencesByType
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: outputType
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: resourceType
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: resourceName
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OutputReference'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-dropdowns-controller
+      summary: Get output references by type
+      x-summary-source: derived
+  /cc-ui/v1/dropdown/{stackName}/output/{outputType}/references:
+    get:
+      deprecated: true
+      operationId: getOutputReferences
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: outputType
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: resourceType
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: resourceName
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OutputReference'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-dropdowns-controller
+      summary: Get output references
+      x-summary-source: derived
+  /cc-ui/v1/dropdown/{stackName}/resourceType/{resourceType}/resourceName/{resourceName}/resource-history:
+    get:
+      deprecated: true
+      operationId: getResourceHistoriesByStack
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: resourceType
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: resourceName
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ResourceHistory'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-dropdowns-controller
+      summary: Get resource histories by stack
+      x-summary-source: derived
+  /cc-ui/v1/dropdown/{stackName}/resourceType/{resourceType}/resourceName/{resourceName}/resource-history-overview:
+    get:
+      operationId: getResourceHistoryOverviewByStack
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: resourceType
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: resourceName
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ResourceHistoryOverview'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-dropdowns-controller
+      summary: Get resource history overview by stack
+      x-summary-source: derived
+components:
+  schemas:
+    RefExpression:
+      type: object
+      properties:
+        expression:
+          type: string
+    TargetResource:
+      type: object
+      properties:
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+    ResourceAffectedResponse:
+      type: object
+      properties:
+        affectedResources:
+          type: array
+          items:
+            $ref: '#/components/schemas/AffectedResource'
+        clusterId:
+          type: string
+        referencedResources:
+          type: array
+          items:
+            $ref: '#/components/schemas/AffectedResource'
+        targetResources:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/TargetResource'
+    ResourceHistory:
+      type: object
+      properties:
+        alpha:
+          type: boolean
+        artifactVersion:
+          $ref: '#/components/schemas/HistoryMetadata'
+        blueprintVersion:
+          $ref: '#/components/schemas/HistoryMetadata'
+        clusterId:
+          type: string
+        clusterName:
+          type: string
+        disabled:
+          type: boolean
+        overridden:
+          type: boolean
+        overrideVersion:
+          $ref: '#/components/schemas/HistoryMetadata'
+        resourceName:
+          type: string
+        resourceStatus:
+          type: string
+          enum:
+          - RUNNING
+          - STOPPED
+        resourceType:
+          type: string
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    AllRegionsAndAZ:
+      type: object
+      properties:
+        cloud:
+          type: string
+        regions:
+          type: array
+          items:
+            $ref: '#/components/schemas/RegionAndZone'
+    OutputReference:
+      type: object
+      properties:
+        outputDescription:
+          type: string
+        outputName:
+          type: string
+        outputTitle:
+          type: string
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+    StackResourceLite:
+      type: object
+      properties:
+        description:
+          type: string
+        displayName:
+          type: string
+        flavour:
+          type: string
+        iconUrl:
+          type: string
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+        templatedResource:
+          type: boolean
+        version:
+          type: string
+    BlueprintFile:
+      type: object
+      properties:
+        alpha:
+          type: boolean
+        childrenResourceIds:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        ciNames:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        clusterId:
+          type: string
+        content:
+          type: string
+        directory:
+          type: string
+        edges:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/Edge'
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/BlueprintValidationError'
+        expressions:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/RefExpression'
+        filename:
+          type: string
+        iconUrl:
+          type: string
+        info:
+          $ref: '#/components/schemas/Info'
+        overridden:
+          type: boolean
+        override:
+          type: object
+          additionalProperties:
+            type: object
+        parentResourceId:
+          type: string
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+        secrets:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        stackName:
+          type: string
+        substack:
+          type: boolean
+        syncCtxMd5:
+          type: string
+        syncId:
+          type: string
+        templatedResource:
+          type: boolean
+        variables:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        version:
+          type: string
+    JsonNode:
+      type: object
+    ResourceHistoryOverview:
+      type: object
+      properties:
+        artifactVersion:
+          $ref: '#/components/schemas/ResourceStatusMetadata'
+        blueprintVersion:
+          $ref: '#/components/schemas/ResourceStatusMetadata'
+        clusterId:
+          type: string
+        clusterName:
+          type: string
+        disabled:
+          type: boolean
+        overridden:
+          type: boolean
+        overrideVersion:
+          $ref: '#/components/schemas/ResourceStatusMetadata'
+        releaseButtonStatus:
+          $ref: '#/components/schemas/ReleaseButtonStatus'
+        resourceName:
+          type: string
+        resourceStatus:
+          type: string
+          enum:
+          - RUNNING
+          - STOPPED
+        resourceType:
+          type: string
+    Info:
+      type: object
+      properties:
+        artifactType:
+          type: string
+          enum:
+          - docker_image
+          - freestyle
+        artifactory:
+          type: string
+        ciName:
+          type: string
+        criticalResource:
+          type: boolean
+        description:
+          type: string
+        disabled:
+          type: boolean
+        enableKubernetesExplorer:
+          type: boolean
+        flavour:
+          type: string
+        githubRepositoryUrl:
+          type: string
+        inheritFromBase:
+          type: boolean
+        namespace:
+          type: string
+        overriddenName:
+          type: string
+        provided:
+          type: boolean
+        repository:
+          type: string
+        repositoryPath:
+          type: string
+        staticImage:
+          type: string
+        strategy:
+          type: string
+          enum:
+          - RollingUpdate
+          - BlueGreen
+          - Canary
+        tag:
+          type: string
+        tfModuleId:
+          type: string
+        ui:
+          type: object
+          additionalProperties:
+            type: object
+        version:
+          type: string
+    PortInfo:
+      type: object
+      properties:
+        port:
+          type: string
+    StackGitLog:
+      type: object
+      properties:
+        changeLog:
+          type: string
+          writeOnly: true
+        clusterId:
+          type: string
+        commitLog:
+          $ref: '#/components/schemas/CommitLog'
+        directory:
+          type: string
+        filename:
+          type: string
+        id:
+          type: string
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+        stackName:
+          type: string
+        versioningKey:
+          type: string
+    ResourceStatusMetadata:
+      type: object
+      properties:
+        liveVersion:
+          type: string
+        pendingVersion:
+          type: string
+        previewVersion:
+          type: string
+    BlueprintValidationError:
+      type: object
+      properties:
+        blueprintErrorLines:
+          type: array
+          items:
+            type: integer
+            format: int32
+        category:
+          type: string
+          enum:
+          - Syntax Error
+          - Non-Existent Resource Reference
+          - Disabled Resource References
+          - Invalid Reference Expression
+          - Schema Compliance Error
+          - GuardRails Compliance Issues
+          - Overrides Syntax Error
+          - Invalid Filename Error
+          - Input Validation Error
+          - Missing Environment Override
+        message:
+          type: string
+        overrideErrorLines:
+          type: array
+          items:
+            type: integer
+            format: int32
+        severity:
+          type: string
+          enum:
+          - ERROR
+          - WARNING
+    ResourceConnectionStringResponse:
+      type: object
+      properties:
+        clusterId:
+          type: string
+          description: Cluster ID this resource belongs to
+        connectionString:
+          type: string
+          description: Connection string for this interface. May be null if masked.
+          example: mysql://user:pass@host:3306/db
+        interfaceName:
+          type: string
+          description: Name of the interface (e.g., reader, writer, cluster)
+          example: writer
+        path:
+          type: string
+          description: Path component of the ingress rule, when the interface exposes one. Null for non-ingress resources
+          example: /api
+        resourceName:
+          type: string
+          description: Name of the resource
+          example: my-database
+        resourceType:
+          type: string
+          description: Type of the resource
+          example: mysql
+        secret:
+          type: boolean
+      description: Connection string information for a resource interface
+    ReleaseButtonStatus:
+      type: object
+      properties:
+        disabled:
+          type: boolean
+        nbTooltip:
+          type: string
+    AffectedResource:
+      type: object
+      properties:
+        blueprintFile:
+          $ref: '#/components/schemas/BlueprintFile'
+        parent:
+          type: boolean
+    HistoryMetadata:
+      type: object
+      properties:
+        liveVersionId:
+          type: string
+        previewVersionId:
+          type: string
+        versions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Version'
+    AffectedResourcesRequest:
+      required:
+      - targetResources
+      type: object
+      properties:
+        targetResources:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/TargetResource'
+    ClusterResourcesResponse.FacetsResource:
+      type: object
+      properties:
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+    Versioned:
+      type: object
+      properties:
+        changeLog:
+          type: string
+          writeOnly: true
+        versioningKey:
+          type: string
+    RegionAndZone:
+      type: object
+      properties:
+        availabilityZones:
+          type: array
+          items:
+            type: string
+        region:
+          type: string
+    Version:
+      type: object
+      properties:
+        archiveDate:
+          type: string
+          format: date-time
+        entity:
+          $ref: '#/components/schemas/Versioned'
+        id:
+          type: string
+        sequence:
+          type: integer
+          format: int64
+          writeOnly: true
+        sequenceKey:
+          type: string
+        version:
+          type: integer
+          format: int64
+        versioningKey:
+          type: string
+    CommitLog:
+      type: object
+      properties:
+        authorEmail:
+          type: string
+        authorName:
+          type: string
+        commitDate:
+          type: string
+          format: date-time
+        commitId:
+          type: string
+        commitMessage:
+          type: string
+    ClusterResourcesResponse:
+      type: object
+      properties:
+        clusterId:
+          type: string
+        clusterName:
+          type: string
+        resources:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClusterResourcesResponse.FacetsResource'
+    ServiceOverview:
+      type: object
+      properties:
+        ports:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/PortInfo'
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    Edge:
+      type: object
+      properties:
+        blockEdits:
+          type: boolean
+        id:
+          type: string
+        inputName:
+          type: string
+        isInput:
+          type: boolean
+        outputName:
+          type: string
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+  securitySchemes:
+    basicAuth:
+      description: Basic Authentication
+      scheme: basic
+      type: http

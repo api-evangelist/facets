@@ -1,0 +1,384 @@
+openapi: 3.2.0
+info:
+  description: API Documentation
+  title: Control-plane Variable Management API
+  version: '1.0'
+servers:
+- url: https://facetsdemo.console.facets.cloud
+  description: Generated server url
+security:
+- basicAuth: []
+tags:
+- description: APIs for managing individual variables and secrets
+  name: Variable Management
+paths:
+  /cc-ui/v1/stacks/{stackName}/variables:
+    post:
+      description: Adds a new variable/secret with project-level default and optional environment-specific values
+      operationId: addVariable
+      parameters:
+      - description: Project name
+        example: my-stack
+        in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VariableRequest'
+        required: true
+      responses:
+        '200':
+          description: Variable added successfully
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Invalid request or variable already exists
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Access denied
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Project not found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: Add new variable/secret
+      tags:
+      - Variable Management
+    put:
+      description: Updates an existing variable/secret with project-level default and optional environment-specific values
+      operationId: updateVariable
+      parameters:
+      - description: Project name
+        example: my-stack
+        in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VariableRequest'
+        required: true
+      responses:
+        '200':
+          description: Variable updated successfully
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Invalid request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Access denied
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Project or variable not found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: Update variable/secret
+      tags:
+      - Variable Management
+  /cc-ui/v1/stacks/{stackName}/variables/bulk:
+    post:
+      description: Adds multiple new variables/secrets with project-level defaults and optional environment-specific values
+      operationId: addVariablesBulk
+      parameters:
+      - description: Project name
+        example: my-stack
+        in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              description: List of variable requests with project defaults and environment values
+              items:
+                $ref: '#/components/schemas/VariableRequest'
+        required: true
+      responses:
+        '200':
+          description: Variables added successfully
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Invalid request or variables already exist
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Access denied
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Project not found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: Add multiple new variables/secrets
+      tags:
+      - Variable Management
+  /cc-ui/v1/stacks/{stackName}/variables/{variableName}/environments:
+    get:
+      description: Retrieves values of a specific variable/secret across all environments in a project
+      operationId: getVariableAcrossEnvironments
+      parameters:
+      - description: Project name
+        example: my-stack
+        in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      - description: Variable name
+        example: database_password
+        in: path
+        name: variableName
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VariableEnvironmentResponse'
+          description: Variable values retrieved successfully
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Access denied
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Project or variable not found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: Get variable/secret across environments
+      tags:
+      - Variable Management
+components:
+  schemas:
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    VariableEnvironmentResponse:
+      type: object
+      properties:
+        description:
+          type: string
+          description: Description of the variable/secret
+          example: Database connection password
+        environmentValues:
+          type: array
+          description: Values across different environments
+          items:
+            $ref: '#/components/schemas/EnvironmentVariableValue'
+        global:
+          type: boolean
+          description: Whether this is a global variable
+          example: false
+        isSecret:
+          type: boolean
+          description: Whether this is a secret or regular variable
+          example: true
+        stackDefault:
+          type: string
+          description: Default value defined at stack level
+          example: default_password
+        variableName:
+          type: string
+          description: Name of the variable/secret
+          example: database_password
+      description: Variable/secret values across environments
+    VariableRequest:
+      required:
+      - variableName
+      type: object
+      properties:
+        clusterIdToValueMap:
+          type: object
+          additionalProperties:
+            type: string
+            description: Environment-specific values
+            example: '{"clusterid1":"prod_password","clusterid2":"staging_password"}'
+          description: Environment-specific values
+          example:
+            clusterid1: prod_password
+            clusterid2: staging_password
+        description:
+          type: string
+          description: Description of the variable/secret
+          example: Database connection password
+        global:
+          type: boolean
+          description: Whether this is a global variable
+          example: false
+        secret:
+          type: boolean
+        stackDefault:
+          type: string
+          description: Default value at stack level
+          example: default_password
+        variableName:
+          type: string
+          description: Name of the variable/secret
+          example: database_password
+      description: Variable request with project default and environment values
+    EnvironmentVariableValue:
+      type: object
+      properties:
+        clusterId:
+          type: string
+          description: Environment ID
+          example: prod-env-123
+        environmentName:
+          type: string
+          description: Environment name
+          example: production
+        status:
+          type: string
+          description: Status indicating if value is overridden, default, or not set
+          enum:
+          - NOT_SET
+          - OVERRIDDEN
+          - NO_ACCESS
+        value:
+          type: string
+          description: Value of the variable/secret
+          example: actual_password
+      description: Variable/secret value in a specific environment
+  securitySchemes:
+    basicAuth:
+      description: Basic Authentication
+      scheme: basic
+      type: http

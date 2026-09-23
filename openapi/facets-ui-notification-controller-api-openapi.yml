@@ -1,0 +1,1358 @@
+openapi: 3.2.0
+info:
+  description: API Documentation
+  title: Control-plane UI Notification Controller API
+  version: '1.0'
+servers:
+- url: https://facetsdemo.console.facets.cloud
+  description: Generated server url
+security:
+- basicAuth: []
+tags:
+- name: ui-notification-controller
+paths:
+  /cc-ui/v1/notification/channelTypes:
+    get:
+      operationId: getAllChannelTypes
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ChannelTypePayload'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-notification-controller
+      summary: Get all channel types
+      x-summary-source: derived
+  /cc-ui/v1/notification/channels:
+    get:
+      operationId: getAllChannels
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NotificationChannel'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-notification-controller
+      summary: Get all channels
+      x-summary-source: derived
+    post:
+      operationId: createNotificationChannel
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NotificationChannel'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NotificationChannel'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-notification-controller
+      summary: Create notification channel
+      x-summary-source: derived
+  /cc-ui/v1/notification/channels/test:
+    post:
+      operationId: testNotificationChannel
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TestNotificationRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: boolean
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-notification-controller
+      summary: Test notification channel
+      x-summary-source: derived
+  /cc-ui/v1/notification/channels/{channelId}:
+    delete:
+      operationId: deleteNotificationChannel
+      parameters:
+      - in: path
+        name: channelId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NotificationChannel'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-notification-controller
+      summary: Delete notification channel
+      x-summary-source: derived
+    get:
+      operationId: getChannel
+      parameters:
+      - in: path
+        name: channelId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationChannel'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-notification-controller
+      summary: Get channel
+      x-summary-source: derived
+    put:
+      operationId: editNotificationChannel
+      parameters:
+      - in: path
+        name: channelId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NotificationChannel'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NotificationChannel'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-notification-controller
+      summary: Edit notification channel
+      x-summary-source: derived
+  /cc-ui/v1/notification/notificationTags:
+    get:
+      operationId: getAllNotificationTags
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NotificationTagPayload'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-notification-controller
+      summary: Get all notification tags
+      x-summary-source: derived
+  /cc-ui/v1/notification/notificationType/{notificationType}/attributes:
+    get:
+      operationId: getSubscriptionAttributes
+      parameters:
+      - in: path
+        name: notificationType
+        required: true
+        schema:
+          type: string
+          enum:
+          - DEPLOYMENT_STATUS_UPDATE
+          - APP_DEPLOYMENT
+          - QASUITE_SANITY
+          - DR_RESULT
+          - STACK_SIGNOFF
+          - ALERT
+          - TEST
+          - APPLICATION_DEPLOYMENT_COMPLETE
+          - ENVIRONMENT_CREATE
+          - ENVIRONMENT_DELETE
+          - ENVIRONMENT_LAUNCH
+          - ENVIRONMENT_DESTROY
+          - SHORT_LIVED_ENVIRONMENT_TEARDOWN
+          - ENVIRONMENT_CONFIGURE
+          - AUDIT_LOG
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-notification-controller
+      summary: Get subscription attributes
+      x-summary-source: derived
+  /cc-ui/v1/notification/notificationTypes:
+    get:
+      operationId: getAllNotificationTypes
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NotificationTypeResponse'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-notification-controller
+      summary: Get all notification types
+      x-summary-source: derived
+  /cc-ui/v1/notification/subscriptions:
+    get:
+      operationId: getAllSubscriptions_1
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Subscription'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-notification-controller
+      summary: Get all subscriptions 1
+      x-summary-source: derived
+    post:
+      operationId: createSubscription_1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Subscription'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Subscription'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-notification-controller
+      summary: Create subscription 1
+      x-summary-source: derived
+  /cc-ui/v1/notification/subscriptions/{subscriptionId}:
+    delete:
+      operationId: deleteSubscription
+      parameters:
+      - in: path
+        name: subscriptionId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Subscription'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-notification-controller
+      summary: Delete subscription
+      x-summary-source: derived
+    get:
+      operationId: getSubscription
+      parameters:
+      - in: path
+        name: subscriptionId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subscription'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-notification-controller
+      summary: Get subscription
+      x-summary-source: derived
+    put:
+      operationId: editSubscription
+      parameters:
+      - in: path
+        name: subscriptionId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Subscription'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Subscription'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-notification-controller
+      summary: Edit subscription
+      x-summary-source: derived
+  /cc-ui/v1/notification/{notificationType}/tag/{tagName}/values/:
+    post:
+      operationId: getFiltersForSubscriptions
+      parameters:
+      - in: path
+        name: notificationType
+        required: true
+        schema:
+          type: string
+          enum:
+          - DEPLOYMENT_STATUS_UPDATE
+          - APP_DEPLOYMENT
+          - QASUITE_SANITY
+          - DR_RESULT
+          - STACK_SIGNOFF
+          - ALERT
+          - TEST
+          - APPLICATION_DEPLOYMENT_COMPLETE
+          - ENVIRONMENT_CREATE
+          - ENVIRONMENT_DELETE
+          - ENVIRONMENT_LAUNCH
+          - ENVIRONMENT_DESTROY
+          - SHORT_LIVED_ENVIRONMENT_TEARDOWN
+          - ENVIRONMENT_CONFIGURE
+          - AUDIT_LOG
+      - in: path
+        name: tagName
+        required: true
+        schema:
+          type: string
+          enum:
+          - CLUSTER_NAME
+          - CLUSTER_TYPE
+          - QASUITE_RESULT
+          - DR_ACTION
+          - DR_STATUS
+          - STACK_NAME
+          - SEVERITY
+          - ALERT_NAME
+          - DEPLOYMENT_STATUS
+          - APPLICATION_NAME
+          - SEND_RESOLVED
+          - RELEASE_TYPE
+          - ENVIRONMENT_TEARDOWN_NOTIFY_BEFORE
+          - AUDIT_ENTITY
+          - AUDIT_ACTION
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties:
+                type: array
+                items:
+                  type: string
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TagDataModel'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-notification-controller
+      summary: Get filters for subscriptions
+      x-summary-source: derived
+  /cc-ui/v1/notification/{notificationType}/tags:
+    get:
+      operationId: getNotificationTagsForNotificationType
+      parameters:
+      - in: path
+        name: notificationType
+        required: true
+        schema:
+          type: string
+          enum:
+          - DEPLOYMENT_STATUS_UPDATE
+          - APP_DEPLOYMENT
+          - QASUITE_SANITY
+          - DR_RESULT
+          - STACK_SIGNOFF
+          - ALERT
+          - TEST
+          - APPLICATION_DEPLOYMENT_COMPLETE
+          - ENVIRONMENT_CREATE
+          - ENVIRONMENT_DELETE
+          - ENVIRONMENT_LAUNCH
+          - ENVIRONMENT_DESTROY
+          - SHORT_LIVED_ENVIRONMENT_TEARDOWN
+          - ENVIRONMENT_CONFIGURE
+          - AUDIT_LOG
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NotificationTagsForTypeResult'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-notification-controller
+      summary: Get notification tags for notification type
+      x-summary-source: derived
+components:
+  schemas:
+    NotificationTagPayload:
+      type: object
+      properties:
+        name:
+          type: string
+        notificationTag:
+          type: string
+          enum:
+          - CLUSTER_NAME
+          - CLUSTER_TYPE
+          - QASUITE_RESULT
+          - DR_ACTION
+          - DR_STATUS
+          - STACK_NAME
+          - SEVERITY
+          - ALERT_NAME
+          - DEPLOYMENT_STATUS
+          - APPLICATION_NAME
+          - SEND_RESOLVED
+          - RELEASE_TYPE
+          - ENVIRONMENT_TEARDOWN_NOTIFY_BEFORE
+          - AUDIT_ENTITY
+          - AUDIT_ACTION
+    TagDataModel:
+      type: object
+    ChannelTypePayload:
+      type: object
+      properties:
+        label:
+          type: string
+        type:
+          type: string
+          enum:
+          - SLACK
+          - CAPILLARY_VALIDATOR
+          - WEBHOOK
+          - PAGER_DUTY
+          - ZEN_DUTY
+          - EMAIL
+          - MS_TEAMS
+          - MS_TEAMS_WORKFLOW
+    TestNotificationRequest:
+      type: object
+      properties:
+        authorizationHeader:
+          type: string
+        channelAddress:
+          type: string
+        channelType:
+          type: string
+          enum:
+          - SLACK
+          - CAPILLARY_VALIDATOR
+          - WEBHOOK
+          - PAGER_DUTY
+          - ZEN_DUTY
+          - EMAIL
+          - MS_TEAMS
+          - MS_TEAMS_WORKFLOW
+        emailAddresses:
+          type: array
+          items:
+            type: string
+        integrationKey:
+          type: string
+        notificationType:
+          type: string
+          enum:
+          - DEPLOYMENT_STATUS_UPDATE
+          - APP_DEPLOYMENT
+          - QASUITE_SANITY
+          - DR_RESULT
+          - STACK_SIGNOFF
+          - ALERT
+          - TEST
+          - APPLICATION_DEPLOYMENT_COMPLETE
+          - ENVIRONMENT_CREATE
+          - ENVIRONMENT_DELETE
+          - ENVIRONMENT_LAUNCH
+          - ENVIRONMENT_DESTROY
+          - SHORT_LIVED_ENVIRONMENT_TEARDOWN
+          - ENVIRONMENT_CONFIGURE
+          - AUDIT_LOG
+        payload:
+          type: string
+    NotificationChannel:
+      type: object
+      properties:
+        authorizationHeader:
+          type: string
+        channelAddress:
+          type: string
+        channelType:
+          type: string
+          enum:
+          - SLACK
+          - CAPILLARY_VALIDATOR
+          - WEBHOOK
+          - PAGER_DUTY
+          - ZEN_DUTY
+          - EMAIL
+          - MS_TEAMS
+          - MS_TEAMS_WORKFLOW
+        description:
+          maxLength: 200
+          minLength: 0
+          type: string
+        emailAddresses:
+          type: array
+          items:
+            type: string
+        id:
+          type: string
+        integrationKey:
+          type: string
+        name:
+          type: string
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    Subscription:
+      required:
+      - channelId
+      type: object
+      properties:
+        channelAddress:
+          type: string
+          deprecated: true
+        channelId:
+          type: string
+        channelType:
+          type: string
+          deprecated: true
+          enum:
+          - SLACK
+          - CAPILLARY_VALIDATOR
+          - WEBHOOK
+          - PAGER_DUTY
+          - ZEN_DUTY
+          - EMAIL
+          - MS_TEAMS
+          - MS_TEAMS_WORKFLOW
+        description:
+          maxLength: 200
+          minLength: 0
+          type: string
+        filters:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        id:
+          type: string
+        name:
+          type: string
+        notificationSubject:
+          type: string
+        notificationType:
+          type: string
+          enum:
+          - DEPLOYMENT_STATUS_UPDATE
+          - APP_DEPLOYMENT
+          - QASUITE_SANITY
+          - DR_RESULT
+          - STACK_SIGNOFF
+          - ALERT
+          - TEST
+          - APPLICATION_DEPLOYMENT_COMPLETE
+          - ENVIRONMENT_CREATE
+          - ENVIRONMENT_DELETE
+          - ENVIRONMENT_LAUNCH
+          - ENVIRONMENT_DESTROY
+          - SHORT_LIVED_ENVIRONMENT_TEARDOWN
+          - ENVIRONMENT_CONFIGURE
+          - AUDIT_LOG
+        payloadJson:
+          type: string
+        stackName:
+          type: string
+        test:
+          type: boolean
+    NotificationTagsForTypeResult:
+      type: object
+      properties:
+        id:
+          type: string
+          enum:
+          - CLUSTER_NAME
+          - CLUSTER_TYPE
+          - QASUITE_RESULT
+          - DR_ACTION
+          - DR_STATUS
+          - STACK_NAME
+          - SEVERITY
+          - ALERT_NAME
+          - DEPLOYMENT_STATUS
+          - APPLICATION_NAME
+          - SEND_RESOLVED
+          - RELEASE_TYPE
+          - ENVIRONMENT_TEARDOWN_NOTIFY_BEFORE
+          - AUDIT_ENTITY
+          - AUDIT_ACTION
+        label:
+          type: string
+        tooltip:
+          type: string
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    NotificationTypeResponse:
+      type: object
+      properties:
+        key:
+          type: string
+        notificationName:
+          type: string
+        notificationType:
+          type: string
+          enum:
+          - DEPLOYMENT_STATUS_UPDATE
+          - APP_DEPLOYMENT
+          - QASUITE_SANITY
+          - DR_RESULT
+          - STACK_SIGNOFF
+          - ALERT
+          - TEST
+          - APPLICATION_DEPLOYMENT_COMPLETE
+          - ENVIRONMENT_CREATE
+          - ENVIRONMENT_DELETE
+          - ENVIRONMENT_LAUNCH
+          - ENVIRONMENT_DESTROY
+          - SHORT_LIVED_ENVIRONMENT_TEARDOWN
+          - ENVIRONMENT_CONFIGURE
+          - AUDIT_LOG
+        supportedTags:
+          type: array
+          items:
+            type: string
+            enum:
+            - CLUSTER_NAME
+            - CLUSTER_TYPE
+            - QASUITE_RESULT
+            - DR_ACTION
+            - DR_STATUS
+            - STACK_NAME
+            - SEVERITY
+            - ALERT_NAME
+            - DEPLOYMENT_STATUS
+            - APPLICATION_NAME
+            - SEND_RESOLVED
+            - RELEASE_TYPE
+            - ENVIRONMENT_TEARDOWN_NOTIFY_BEFORE
+            - AUDIT_ENTITY
+            - AUDIT_ACTION
+  securitySchemes:
+    basicAuth:
+      description: Basic Authentication
+      scheme: basic
+      type: http

@@ -1,0 +1,3538 @@
+openapi: 3.2.0
+info:
+  description: API Documentation
+  title: Control-plane UI Deployment Controller API
+  version: '1.0'
+servers:
+- url: https://facetsdemo.console.facets.cloud
+  description: Generated server url
+security:
+- basicAuth: []
+tags:
+- name: ui-deployment-controller
+paths:
+  /cc-ui/v1/clusters/{clusterId}/deployments:
+    get:
+      operationId: getDeployments
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListDeploymentsWrapper'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-deployment-controller
+      summary: Get deployments
+      x-summary-source: derived
+    post:
+      operationId: createDeployment
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeploymentRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentLog'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-deployment-controller
+      summary: Create deployment
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/deployments/destroy:
+    delete:
+      operationId: destroyCluster
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentLog'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-deployment-controller
+      summary: Destroy cluster
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/deployments/latest-successful-release:
+    get:
+      operationId: getLatestRelease
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentLog'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-deployment-controller
+      summary: Get latest release
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/deployments/latest-successful-release/{application}:
+    get:
+      operationId: getLatestReleaseByApplication
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: application
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentLog'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-deployment-controller
+      summary: Get latest release by application
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/deployments/launch:
+    put:
+      operationId: launchCluster
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentLog'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-deployment-controller
+      summary: Launch cluster
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/deployments/maintenance:
+    post:
+      operationId: triggerMaintenanceRelease
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentLog'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-deployment-controller
+      summary: Trigger maintenance release
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/deployments/overview:
+    get:
+      operationId: getDeploymentsOverview
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentOverview'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-deployment-controller
+      summary: Get deployments overview
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/deployments/qa/{executionId}/abortSuite:
+    delete:
+      operationId: abortAutomationSuite
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: executionId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-deployment-controller
+      summary: Abort automation suite
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/deployments/recipes/deployment/hotfix:
+    post:
+      operationId: runHotfixDeploymentRecipe
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: allowDestroy
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - in: query
+        name: withRefresh
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - in: query
+        name: forceRelease
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - in: query
+        name: comment
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: isPlan
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - in: query
+        name: canQueue
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - description: Unique identifier of the release that you can search it with
+        in: query
+        name: releaseTraceId
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: skipStateCheck
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - in: query
+        name: allowPreviewModules
+        required: false
+        schema:
+          type: boolean
+          default: false
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HotfixDeploymentRecipe'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentLog'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-deployment-controller
+      summary: Run hotfix deployment recipe
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/deployments/release:
+    put:
+      operationId: release
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: withRefresh
+        required: false
+        schema:
+          type: boolean
+          default: true
+      - in: query
+        name: forceRelease
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - in: query
+        name: allowDestroy
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - in: query
+        name: comment
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: canQueue
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - description: Unique identifier of the release that you can search it with
+        in: query
+        name: releaseTraceId
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentLog'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-deployment-controller
+      summary: Release
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/deployments/release-changes/bulk:
+    post:
+      operationId: getReleaseChangesBulk
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkReleaseChangesRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ReleaseChanges'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-deployment-controller
+      summary: Get release changes bulk
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/deployments/releaseV2/{releaseType}:
+    put:
+      operationId: releaseV2
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: releaseType
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: withRefresh
+        required: false
+        schema:
+          type: boolean
+          default: true
+      - in: query
+        name: forceRelease
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - in: query
+        name: allowDestroy
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - in: query
+        name: comment
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: canQueue
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - in: query
+        name: allowPreviewModules
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - description: Unique identifier of the release that you can search it with
+        in: query
+        name: releaseTraceId
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentLog'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-deployment-controller
+      summary: Release V2
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/deployments/search:
+    get:
+      operationId: searchDeployments
+      parameters:
+      - in: query
+        name: pageNumber
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      - in: query
+        name: pageSize
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 50
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: releaseType
+        required: false
+        schema:
+          type: string
+          enum:
+          - HOTFIX
+          - RELEASE
+          - LAUNCH
+          - DESTROY
+          - CUSTOM
+          - UNLOCK_STATE
+          - PLAN
+          - HOTFIX_PLAN
+          - APPLY_PLAN
+          - APPLY_HOTFIX_PLAN
+          - SCALE_UP
+          - SCALE_DOWN
+          - MAINTENANCE
+          - TERRAFORM_EXPORT
+          - ROLLBACK_PLAN
+          - APPLY_ROLLBACK_PLAN
+          - PLAN_AND_APPLY
+          - HOTFIX_PLAN_AND_APPLY
+          - IMPORT_RELEASE
+      - in: query
+        name: signedOff
+        required: false
+        schema:
+          type: boolean
+      - in: query
+        name: status
+        required: false
+        schema:
+          type: string
+          enum:
+          - SUCCEEDED
+          - FAILED
+          - FAULT
+          - TIMED_OUT
+          - IN_PROGRESS
+          - STOPPED
+          - INVALID
+          - STARTED
+          - UNKNOWN
+          - QUEUED
+          - PENDING_APPROVAL
+          - APPROVED
+          - ABORTED
+          - REJECTED
+          - SUPERSEDED
+      - in: query
+        name: excludeStatus
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - SUCCEEDED
+            - FAILED
+            - FAULT
+            - TIMED_OUT
+            - IN_PROGRESS
+            - STOPPED
+            - INVALID
+            - STARTED
+            - UNKNOWN
+            - QUEUED
+            - PENDING_APPROVAL
+            - APPROVED
+            - ABORTED
+            - REJECTED
+            - SUPERSEDED
+      - in: query
+        name: triggeredBy
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: start
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: end
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: tfVersion
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageDeploymentLog'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-deployment-controller
+      summary: Search deployments
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/deployments/simulate:
+    get:
+      operationId: simulate
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ChangeRepresentationObject'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-deployment-controller
+      summary: Simulate
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/deployments/state:
+    get:
+      operationId: getClusterState
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: string
+                enum:
+                - STOPPED
+                - RUNNING
+                - LAUNCHING
+                - DESTROYING
+                - LAUNCH_FAILED
+                - DESTROY_FAILED
+                - UNKNOWN
+                - SCALE_DOWN
+                - SCALING_DOWN
+                - SCALE_DOWN_FAILED
+                - SCALING_UP
+                - SCALE_UP_FAILED
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-deployment-controller
+      summary: Get cluster state
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/deployments/stats:
+    get:
+      operationId: getDeploymentStats
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: days
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 30
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentStatsDto'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-deployment-controller
+      summary: Get deployment stats
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/deployments/terraform-export:
+    post:
+      operationId: triggerTerraformExport
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentLog'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-deployment-controller
+      summary: Trigger terraform export
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/deployments/trace-id/{releaseTraceId}:
+    get:
+      operationId: getDeploymentByReleaseTraceId
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: releaseTraceId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentLog'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-deployment-controller
+      summary: Get deployment by release trace id
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/deployments/unlock:
+    put:
+      operationId: stateUnlock
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: lockId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentLog'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-deployment-controller
+      summary: State unlock
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/deployments/{deploymentId}:
+    get:
+      operationId: getDeployment
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: deploymentId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentLog'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-deployment-controller
+      summary: Get deployment
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/deployments/{deploymentId}/abort:
+    post:
+      operationId: abortRelease
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: deploymentId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-deployment-controller
+      summary: Abort release
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/deployments/{deploymentId}/approveRelease:
+    post:
+      operationId: approveRelease
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: deploymentId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentLog'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-deployment-controller
+      summary: Approve release
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/deployments/{deploymentId}/attach-labels:
+    put:
+      operationId: attachLabels
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: deploymentId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AttachLabelsRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentLog'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-deployment-controller
+      summary: Attach labels
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/deployments/{deploymentId}/download-plan:
+    get:
+      operationId: downloadPlan
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: deploymentId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: string
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-deployment-controller
+      summary: Download plan
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/deployments/{deploymentId}/download-terraform-export:
+    get:
+      operationId: downloadTerraformExport
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: deploymentId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-deployment-controller
+      summary: Download terraform export
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/deployments/{deploymentId}/logs:
+    get:
+      operationId: getDeploymentLogs
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: deploymentId
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: phase
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: nextToken
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenPaginatedResponseLogEvent'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-deployment-controller
+      summary: Get deployment logs
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/deployments/{deploymentId}/logs/stream:
+    get:
+      operationId: streamDeploymentLogs
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: deploymentId
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: phase
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StreamingResponseBody'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-deployment-controller
+      summary: Stream deployment logs
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/deployments/{deploymentId}/rejectRelease:
+    post:
+      operationId: rejectRelease
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: deploymentId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentLog'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-deployment-controller
+      summary: Reject release
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/deployments/{deploymentId}/release-changes:
+    get:
+      operationId: getReleaseChanges
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: deploymentId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReleaseChanges'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-deployment-controller
+      summary: Get release changes
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/deployments/{deploymentId}/release-metadata:
+    get:
+      operationId: getReleaseMetadata
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: deploymentId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-deployment-controller
+      summary: Get release metadata
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/deployments/{deploymentId}/signoff:
+    put:
+      operationId: signOffDeployment
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: deploymentId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentLog'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-deployment-controller
+      summary: Sign off deployment
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/deployments/{deploymentId}/upload-release-metadata:
+    post:
+      operationId: uploadReleaseMetadata
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: deploymentId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+              required:
+              - file
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-deployment-controller
+      summary: Upload release metadata
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/deployments/{deploymentId}/{resourceType}/{resourceName}/rollback-plan:
+    post:
+      operationId: triggerRollbackPlanRelease
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: deploymentId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: resourceType
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: resourceName
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentLog'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-deployment-controller
+      summary: Trigger rollback plan release
+      x-summary-source: derived
+components:
+  schemas:
+    ValidationResponse:
+      type: object
+      properties:
+        directory:
+          type: string
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/BlueprintValidationError'
+        filename:
+          type: string
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+    AttachLabelsRequest:
+      required:
+      - labelIds
+      type: object
+      properties:
+        labelIds:
+          type: array
+          description: List of label IDs to assign to the deployment. Replaces existing labels. Use empty list to clear all labels. Labels must be created beforehand using label management APIs.
+          items:
+            type: string
+            description: List of label IDs to assign to the deployment. Replaces existing labels. Use empty list to clear all labels. Labels must be created beforehand using label management APIs.
+      description: Request to attach labels to a deployment log
+    AppDeployment:
+      type: object
+      properties:
+        appName:
+          type: string
+        artifact:
+          $ref: '#/components/schemas/Artifact'
+    DeploymentsStats:
+      type: object
+      properties:
+        failedReleases:
+          type: integer
+          format: int32
+        isFirstRelease:
+          type: boolean
+        noChangeReleases:
+          type: integer
+          format: int32
+        successReleases:
+          type: integer
+          format: int32
+    ResourceChange:
+      type: object
+      properties:
+        changeType:
+          type: string
+          enum:
+          - ADDED
+          - MODIFIED
+          - REMOVED
+        changedAttributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChangedAttribute'
+        flavor:
+          type: string
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+    ValidationError:
+      type: object
+      properties:
+        directory:
+          type: string
+        error:
+          type: string
+        filename:
+          type: string
+        syntaxError:
+          type: boolean
+        type:
+          type: string
+          enum:
+          - Syntax Error
+          - Missing File Error
+          - Reference Error
+          - Invalid Filename
+    ReleaseChanges:
+      type: object
+      properties:
+        changes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceChange'
+        deploymentId:
+          type: string
+        id:
+          type: string
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    LogEvent:
+      type: object
+      properties:
+        message:
+          type: string
+        timestamp:
+          type: integer
+          format: int64
+    BulkReleaseChangesRequest:
+      required:
+      - deploymentIds
+      type: object
+      properties:
+        deploymentIds:
+          type: array
+          items:
+            type: string
+    DeploymentRequest:
+      required:
+      - overrideBuildSteps
+      type: object
+      properties:
+        allowDestroy:
+          type: boolean
+          description: 'false'
+          example: false
+        allowPreviewModules:
+          type: boolean
+          description: Use preview-stage modules for this release even if the project does not allow preview modules. Only valid for plan release types (PLAN, HOTFIX_PLAN).
+          example: false
+        alpha:
+          type: boolean
+        approvedRelease:
+          type: boolean
+        canQueue:
+          type: boolean
+        extraEnv:
+          type: object
+          additionalProperties:
+            type: string
+            example: '{}'
+          example: {}
+        forceRelease:
+          type: boolean
+          description: 'true'
+          example: true
+        hotfixResources:
+          type: array
+          items:
+            $ref: '#/components/schemas/FacetsResource'
+        importsTf:
+          type: string
+          description: Contents of the imports.tf for an IMPORT_RELEASE. Must contain only terraform import blocks, each targeting one of the selected resources; anything else is rejected. Ignored - and refused - for every other release type.
+        lockId:
+          type: string
+        overrideBuildSteps:
+          type: array
+          example:
+          - Command 1
+          - Command 2
+          items:
+            type: string
+            example: '["Command 1","Command 2"]'
+        planCodeBuildId:
+          type: string
+        queuedReleaseId:
+          type: string
+        releaseComment:
+          type: string
+        releaseTraceId:
+          type: string
+        releaseType:
+          type: string
+          description: CUSTOM
+          example: CUSTOM
+          enum:
+          - HOTFIX
+          - RELEASE
+          - LAUNCH
+          - DESTROY
+          - CUSTOM
+          - UNLOCK_STATE
+          - PLAN
+          - HOTFIX_PLAN
+          - APPLY_PLAN
+          - APPLY_HOTFIX_PLAN
+          - SCALE_UP
+          - SCALE_DOWN
+          - MAINTENANCE
+          - TERRAFORM_EXPORT
+          - ROLLBACK_PLAN
+          - APPLY_ROLLBACK_PLAN
+          - PLAN_AND_APPLY
+          - HOTFIX_PLAN_AND_APPLY
+          - IMPORT_RELEASE
+        rollbackDeploymentId:
+          type: string
+        skipStateCheck:
+          type: boolean
+        tfVersion:
+          $ref: '#/components/schemas/TfVersion'
+        withRefresh:
+          type: boolean
+          description: 'false'
+          example: false
+    TokenPaginatedResponseLogEvent:
+      type: object
+      properties:
+        logEventList:
+          type: array
+          items:
+            $ref: '#/components/schemas/LogEvent'
+        nextToken:
+          type: string
+    ValidationResult:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationError'
+        valid:
+          type: boolean
+    ChangeRepresentationObject:
+      type: object
+      properties:
+        action:
+          type: string
+          enum:
+          - ADDED
+          - CHANGED
+          - REMOVED
+        changeType:
+          type: string
+          enum:
+          - BLUEPRINT_CHANGES
+          - IAC_CHANGES
+          - OVERRIDE_CHANGES
+          - ARTIFACT_CHANGES
+        newValue:
+          type: object
+        oldValue:
+          type: object
+    VariableDetails:
+      type: object
+      properties:
+        description:
+          type: string
+        global:
+          type: boolean
+        required:
+          type: boolean
+        secret:
+          type: boolean
+        value:
+          type: string
+    CrdDeploymentDetails:
+      type: object
+      properties:
+        phases:
+          type: array
+          items:
+            type: string
+        releaseNamespace:
+          type: string
+        releaseTemplateName:
+          type: string
+    QueuedRelease:
+      type: object
+      properties:
+        allowDestroy:
+          type: boolean
+        allowPreviewModules:
+          type: boolean
+        canQueue:
+          type: boolean
+        clusterId:
+          type: string
+        comment:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        forceRelease:
+          type: boolean
+        hotfixResources:
+          type: array
+          items:
+            $ref: '#/components/schemas/FacetsResource'
+        id:
+          type: string
+        importsTf:
+          type: string
+        overrideBuildSteps:
+          type: array
+          items:
+            type: string
+        parallelRelease:
+          type: boolean
+        releaseTraceId:
+          type: string
+        releaseType:
+          type: string
+          enum:
+          - HOTFIX
+          - RELEASE
+          - LAUNCH
+          - DESTROY
+          - CUSTOM
+          - UNLOCK_STATE
+          - PLAN
+          - HOTFIX_PLAN
+          - APPLY_PLAN
+          - APPLY_HOTFIX_PLAN
+          - SCALE_UP
+          - SCALE_DOWN
+          - MAINTENANCE
+          - TERRAFORM_EXPORT
+          - ROLLBACK_PLAN
+          - APPLY_ROLLBACK_PLAN
+          - PLAN_AND_APPLY
+          - HOTFIX_PLAN_AND_APPLY
+          - IMPORT_RELEASE
+        skipStateCheck:
+          type: boolean
+        tfVersion:
+          $ref: '#/components/schemas/TfVersion'
+        triggeredBy:
+          type: string
+        withRefresh:
+          type: boolean
+    AbstractCluster:
+      required:
+      - name
+      - releaseStream
+      - stackName
+      - tz
+      type: object
+      properties:
+        autoSignOffSchedule:
+          type: string
+        baseClusterId:
+          type: string
+        baseClusterName:
+          type: string
+        branch:
+          type: string
+        cdPipelineParent:
+          type: string
+        changeLog:
+          type: string
+          writeOnly: true
+        cloud:
+          type: string
+          enum:
+          - AWS
+          - AZURE
+          - LOCAL
+          - GCP
+          - KUBERNETES
+          - NO_CLOUD
+        cloudAccountId:
+          type: string
+        cloudAccountSecretId:
+          type: string
+        clusterCode:
+          type: string
+          readOnly: true
+        clusterState:
+          type: string
+          enum:
+          - STOPPED
+          - RUNNING
+          - LAUNCHING
+          - DESTROYING
+          - LAUNCH_FAILED
+          - DESTROY_FAILED
+          - UNKNOWN
+          - SCALE_DOWN
+          - SCALING_DOWN
+          - SCALE_DOWN_FAILED
+          - SCALING_UP
+          - SCALE_UP_FAILED
+        commonEnvironmentVariables:
+          type: object
+          additionalProperties:
+            type: string
+        componentVersions:
+          type: object
+          additionalProperties:
+            type: string
+        configured:
+          type: boolean
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        deleted:
+          type: boolean
+        description:
+          type: string
+        enableAutoSignOff:
+          type: boolean
+        globalVariables:
+          type: object
+          additionalProperties:
+            type: string
+        hasK8sCredentials:
+          type: boolean
+        id:
+          type: string
+        isEphemeral:
+          type: boolean
+        k8sRequestsToLimitsRatio:
+          type: number
+          format: double
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        name:
+          type: string
+        namespace:
+          type: string
+        pauseReleases:
+          type: boolean
+        releaseStream:
+          type: string
+        requireSignOff:
+          type: boolean
+        secrets:
+          type: object
+          additionalProperties:
+            type: string
+        stackName:
+          type: string
+        tz:
+          type: string
+        variables:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Variables'
+        versioningKey:
+          type: string
+    MigrationScriptMetadata:
+      type: object
+      properties:
+        clouds:
+          type: array
+          items:
+            type: string
+        description:
+          type: string
+        downtime:
+          type: boolean
+        sequenceNumber:
+          type: integer
+          format: int32
+    Variables:
+      type: object
+      properties:
+        description:
+          type: string
+        global:
+          type: boolean
+        secret:
+          type: boolean
+        status:
+          type: string
+          enum:
+          - DEFAULT
+          - OVERRIDDEN
+        value:
+          type: string
+    FacetsResource:
+      type: object
+      properties:
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+    StreamingResponseBody:
+      type: object
+    BlueprintValidationError:
+      type: object
+      properties:
+        blueprintErrorLines:
+          type: array
+          items:
+            type: integer
+            format: int32
+        category:
+          type: string
+          enum:
+          - Syntax Error
+          - Non-Existent Resource Reference
+          - Disabled Resource References
+          - Invalid Reference Expression
+          - Schema Compliance Error
+          - GuardRails Compliance Issues
+          - Overrides Syntax Error
+          - Invalid Filename Error
+          - Input Validation Error
+          - Missing Environment Override
+        message:
+          type: string
+        overrideErrorLines:
+          type: array
+          items:
+            type: integer
+            format: int32
+        severity:
+          type: string
+          enum:
+          - ERROR
+          - WARNING
+    DeploymentStatusCountDto:
+      type: object
+      properties:
+        count:
+          type: integer
+          format: int64
+        date:
+          type: string
+          format: date
+        status:
+          type: string
+          enum:
+          - SUCCEEDED
+          - FAILED
+          - FAULT
+          - TIMED_OUT
+          - IN_PROGRESS
+          - STOPPED
+          - INVALID
+          - STARTED
+          - UNKNOWN
+          - QUEUED
+          - PENDING_APPROVAL
+          - APPROVED
+          - ABORTED
+          - REJECTED
+          - SUPERSEDED
+    Stack:
+      type: object
+      properties:
+        accountId:
+          type: string
+        allowedClouds:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+            enum:
+            - AWS
+            - AZURE
+            - LOCAL
+            - GCP
+            - KUBERNETES
+            - NO_CLOUD
+        alphaBlueprint:
+          type: boolean
+        appPassword:
+          type: string
+        artifactories:
+          type: array
+          items:
+            type: string
+        autoEnabledSubStacks:
+          type: array
+          items:
+            type: string
+        branch:
+          type: string
+        changeLog:
+          type: string
+        childStacks:
+          type: array
+          items:
+            type: string
+        clusterVariablesMeta:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/VariableDetails'
+        coderAccountId:
+          type: string
+        componentVersions:
+          type: object
+          additionalProperties:
+            type: string
+        configModulesDisabled:
+          type: boolean
+        description:
+          type: string
+        gitOpsEnabled:
+          type: boolean
+        gitOverridesEnabled:
+          type: boolean
+        githubOrganizationName:
+          type: string
+        id:
+          type: string
+        importedProject:
+          type: boolean
+        inheritFromBaseByDefault:
+          type: boolean
+        label:
+          type: string
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        monoRepo:
+          type: boolean
+        name:
+          type: string
+        overrideConfig:
+          $ref: '#/components/schemas/OverrideConfig'
+        pauseReleases:
+          type: boolean
+        previewModulesAllowed:
+          type: boolean
+          description: Alternatively called isTestProject
+        primaryCloud:
+          type: string
+          enum:
+          - AWS
+          - AZURE
+          - LOCAL
+          - GCP
+          - KUBERNETES
+          - NO_CLOUD
+        projectTypeId:
+          type: string
+        providedResources:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/FacetsResource'
+        relativePath:
+          type: string
+        stackVars:
+          type: object
+          additionalProperties:
+            type: string
+        template:
+          type: boolean
+        templateId:
+          type: string
+        templateName:
+          type: string
+        user:
+          type: string
+        vcs:
+          type: string
+          enum:
+          - GITHUB
+          - BITBUCKET
+          - GITLAB
+        vcsUrl:
+          type: string
+        versionControlAccountId:
+          type: string
+        versioningKey:
+          type: string
+    PageableObject:
+      type: object
+      properties:
+        offset:
+          type: integer
+          format: int64
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        paged:
+          type: boolean
+        sort:
+          $ref: '#/components/schemas/SortObject'
+        unpaged:
+          type: boolean
+    DeploymentOverview:
+      type: object
+      properties:
+        cluster:
+          $ref: '#/components/schemas/AbstractCluster'
+        clusterId:
+          type: string
+        currentSignedOffDeployment:
+          $ref: '#/components/schemas/DeploymentLog'
+        deploymentsStats:
+          $ref: '#/components/schemas/DeploymentsStats'
+        downStreamClusterNames:
+          type: array
+          items:
+            type: string
+        executionTime:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ExecutionTime'
+        inProgressDeployments:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeploymentLog'
+        isScheduledReleasesPaused:
+          type: boolean
+        latestDeployment:
+          $ref: '#/components/schemas/DeploymentLog'
+        nextExecutionTime:
+          type: string
+          deprecated: true
+        queuedReleases:
+          type: array
+          items:
+            $ref: '#/components/schemas/QueuedRelease'
+        stack:
+          $ref: '#/components/schemas/Stack'
+        timeToNextExecution:
+          type: string
+          deprecated: true
+    TerraformChange:
+      type: object
+      properties:
+        resourceKey:
+          type: string
+        resourcePath:
+          type: string
+        type:
+          type: string
+          enum:
+          - Destruction
+          - Creation
+          - Modifications
+    SortObject:
+      type: object
+      properties:
+        empty:
+          type: boolean
+        sorted:
+          type: boolean
+        unsorted:
+          type: boolean
+    PageDeploymentLog:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeploymentLog'
+        empty:
+          type: boolean
+        first:
+          type: boolean
+        last:
+          type: boolean
+        number:
+          type: integer
+          format: int32
+        numberOfElements:
+          type: integer
+          format: int32
+        pageable:
+          $ref: '#/components/schemas/PageableObject'
+        size:
+          type: integer
+          format: int32
+        sort:
+          $ref: '#/components/schemas/SortObject'
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int32
+    Artifact:
+      type: object
+      properties:
+        applicationName:
+          type: string
+        appliedRuleId:
+          type: string
+        appliedRuleName:
+          type: string
+        appliedRuleVersionId:
+          type: string
+        artifactUri:
+          type: string
+        artifactory:
+          type: string
+        buildDescription:
+          type: string
+        buildId:
+          type: string
+        changeLog:
+          type: string
+          writeOnly: true
+        classified:
+          type: boolean
+        clusterId:
+          type: string
+        createdBy:
+          type: string
+        createdOn:
+          type: string
+          format: date-time
+        creationDate:
+          type: string
+          format: date-time
+        id:
+          type: string
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+        promoted:
+          type: boolean
+        registrationType:
+          type: string
+          enum:
+          - ENVIRONMENT
+          - RELEASE_STREAM
+          - HYBRID
+        registrationValue:
+          type: string
+        releaseStream:
+          type: string
+        releaseType:
+          type: string
+          enum:
+          - HOTFIX
+          - RELEASE
+          - LAUNCH
+          - DESTROY
+          - CUSTOM
+          - UNLOCK_STATE
+          - PLAN
+          - HOTFIX_PLAN
+          - APPLY_PLAN
+          - APPLY_HOTFIX_PLAN
+          - SCALE_UP
+          - SCALE_DOWN
+          - MAINTENANCE
+          - TERRAFORM_EXPORT
+          - ROLLBACK_PLAN
+          - APPLY_ROLLBACK_PLAN
+          - PLAN_AND_APPLY
+          - HOTFIX_PLAN_AND_APPLY
+          - IMPORT_RELEASE
+        repositoryName:
+          type: string
+        tag:
+          type: string
+        versioningKey:
+          type: string
+    RawError:
+      type: object
+      properties:
+        description:
+          type: string
+        errorMessage:
+          type: string
+        resolution:
+          type: string
+        stackTrace:
+          type: string
+    DeploymentLog:
+      type: object
+      properties:
+        allowDestroy:
+          type: boolean
+        allowPreviewModules:
+          type: boolean
+        appDeployments:
+          type: array
+          items:
+            $ref: '#/components/schemas/AppDeployment'
+        approvedReleaseId:
+          type: string
+        changesApplied:
+          type: array
+          items:
+            $ref: '#/components/schemas/TerraformChange'
+        codebuildId:
+          type: string
+        crdDeploymentDetails:
+          $ref: '#/components/schemas/CrdDeploymentDetails'
+        createdOn:
+          type: string
+          format: date-time
+        currentPhase:
+          type: string
+        deploymentContextFilePath:
+          type: string
+        deploymentContextVersion:
+          type: string
+        deploymentJobType:
+          type: string
+          enum:
+          - CODEBUILD
+          - KUBERNETES_POD
+          - KUBERNETES_CRD
+        deploymentType:
+          type: string
+          enum:
+          - REGULAR
+          - CUSTOM
+          - ROLLBACK
+        description:
+          type: string
+        errorLogs:
+          type: array
+          items:
+            $ref: '#/components/schemas/RawError'
+        finishedOn:
+          type: string
+          format: date-time
+        forceRelease:
+          type: boolean
+        hotfixResources:
+          type: array
+          items:
+            $ref: '#/components/schemas/FacetsResource'
+        id:
+          type: string
+        integrationTest:
+          type: boolean
+        isDestroy:
+          type: boolean
+        labelIds:
+          type: array
+          items:
+            type: string
+        migrationScriptsRun:
+          type: array
+          items:
+            $ref: '#/components/schemas/MigrationScriptMetadata'
+        overrideBuildSteps:
+          type: array
+          items:
+            type: string
+        parallelRelease:
+          type: boolean
+        phaseLogs:
+          type: object
+          additionalProperties:
+            type: string
+        releaseComment:
+          type: string
+        releaseReviewedBy:
+          type: string
+        releaseTraceId:
+          type: string
+        releaseType:
+          type: string
+          enum:
+          - HOTFIX
+          - RELEASE
+          - LAUNCH
+          - DESTROY
+          - CUSTOM
+          - UNLOCK_STATE
+          - PLAN
+          - HOTFIX_PLAN
+          - APPLY_PLAN
+          - APPLY_HOTFIX_PLAN
+          - SCALE_UP
+          - SCALE_DOWN
+          - MAINTENANCE
+          - TERRAFORM_EXPORT
+          - ROLLBACK_PLAN
+          - APPLY_ROLLBACK_PLAN
+          - PLAN_AND_APPLY
+          - HOTFIX_PLAN_AND_APPLY
+          - IMPORT_RELEASE
+        rollbackDeploymentId:
+          type: string
+        signedOff:
+          type: boolean
+        stackVersion:
+          type: string
+        status:
+          type: string
+          enum:
+          - SUCCEEDED
+          - FAILED
+          - FAULT
+          - TIMED_OUT
+          - IN_PROGRESS
+          - STOPPED
+          - INVALID
+          - STARTED
+          - UNKNOWN
+          - QUEUED
+          - PENDING_APPROVAL
+          - APPROVED
+          - ABORTED
+          - REJECTED
+          - SUPERSEDED
+        tfVersion:
+          type: string
+        timeTakenInSeconds:
+          type: integer
+          format: int64
+        triggeredBy:
+          type: string
+        validationResponses:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationResponse'
+        validationResult:
+          $ref: '#/components/schemas/ValidationResult'
+        withRefresh:
+          type: boolean
+    ChangedAttribute:
+      type: object
+      properties:
+        attribute:
+          type: string
+        newValue:
+          type: string
+        oldValue:
+          type: string
+    DeploymentStatsDto:
+      type: object
+      properties:
+        dateWiseCounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeploymentStatusCountDto'
+        stats:
+          $ref: '#/components/schemas/DeploymentsStats'
+    OverrideConfig:
+      type: object
+      properties:
+        branchName:
+          type: string
+        gitOrgName:
+          type: string
+        gitOverrideUrl:
+          type: string
+        migrationFailureMessage:
+          type: string
+        overridesMigrationStatus:
+          type: string
+          enum:
+          - IN_PROGRESS
+          - PENDING
+          - COMPLETED
+          - FAILED
+        overridesRepoName:
+          type: string
+        uiOverridesEnabled:
+          type: boolean
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    ListDeploymentsWrapper:
+      type: object
+      properties:
+        clusterId:
+          type: string
+        currentSignedOffDeployment:
+          $ref: '#/components/schemas/DeploymentLog'
+        deployments:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeploymentLog'
+        deploymentsFull:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeploymentLog'
+        deploymentsStats:
+          $ref: '#/components/schemas/DeploymentsStats'
+        downStreamClusterNames:
+          type: array
+          items:
+            type: string
+        nextExecutionTime:
+          type: string
+          deprecated: true
+        stack:
+          $ref: '#/components/schemas/Stack'
+        timeToNextExecution:
+          type: string
+          deprecated: true
+    HotfixDeploymentRecipe:
+      type: object
+      properties:
+        resourceList:
+          type: array
+          items:
+            $ref: '#/components/schemas/FacetsResource'
+    TfVersion:
+      required:
+      - majorVersion
+      - minorVersion
+      - tfStream
+      type: object
+      properties:
+        lastModified:
+          type: string
+          format: date-time
+        majorVersion:
+          type: integer
+          format: int32
+        minorVersion:
+          type: string
+          description: LATEST
+          example: LATEST
+        tfStream:
+          type: string
+    ExecutionTime:
+      type: object
+      properties:
+        nextReleaseTime:
+          type: string
+        timeToNextRelease:
+          type: string
+  securitySchemes:
+    basicAuth:
+      description: Basic Authentication
+      scheme: basic
+      type: http

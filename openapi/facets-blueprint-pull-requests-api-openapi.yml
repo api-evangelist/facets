@@ -1,0 +1,432 @@
+openapi: 3.2.0
+info:
+  description: API Documentation
+  title: Control-plane Blueprint Pull Requests API
+  version: '1.0'
+servers:
+- url: https://facetsdemo.console.facets.cloud
+  description: Generated server url
+security:
+- basicAuth: []
+tags:
+- description: Native Facets blueprint pull-request (branch) lifecycle APIs
+  name: Blueprint Pull Requests
+paths:
+  /cc-ui/v1/blueprint-pull-requests/{stackName}:
+    get:
+      description: Returns all pull requests for the blueprint, newest first.
+      operationId: listPullRequests
+      parameters:
+      - description: Blueprint name
+        in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BlueprintPullRequest'
+          description: Pull requests listed
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: List blueprint pull requests
+      tags:
+      - Blueprint Pull Requests
+    post:
+      description: 'Opens an OPEN pull request for the given source branch. Branch intent is explicit: with importExisting=false (default) a NEW branch is created off the blueprint default branch and the call is rejected if the branch already exists; with importExisting=true the PR is opened on an existing branch (rejected if missing). The PR''s target branch is always the blueprint default branch.'
+      operationId: createPullRequest
+      parameters:
+      - description: Blueprint name
+        in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePullRequestRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlueprintPullRequest'
+          description: Pull request created
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Non-git-backed blueprint, invalid branch, or importExisting on a missing branch
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Blueprint not found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: A PR is already open for the branch, or the branch already exists without importExisting
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: Create a blueprint pull request
+      tags:
+      - Blueprint Pull Requests
+  /cc-ui/v1/blueprint-pull-requests/{stackName}/{branch}:
+    get:
+      description: Returns the OPEN pull request for the given source branch, or the most recently created one if none is OPEN.
+      operationId: getPullRequest
+      parameters:
+      - description: Blueprint name
+        in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      - description: Source branch (path-encoded)
+        in: path
+        name: branch
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlueprintPullRequest'
+          description: Pull request returned
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: No pull request exists for the branch
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: Get the pull request for a branch
+      tags:
+      - Blueprint Pull Requests
+  /cc-ui/v1/blueprint-pull-requests/{stackName}/{branch}/close:
+    post:
+      description: Closes the pull request without merging. Idempotent for an already-CLOSED PR.
+      operationId: closePullRequest
+      parameters:
+      - description: Blueprint name
+        in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      - description: Source branch (path-encoded)
+        in: path
+        name: branch
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlueprintPullRequest'
+          description: Pull request closed
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: No pull request exists for the branch
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: Close a blueprint pull request
+      tags:
+      - Blueprint Pull Requests
+  /cc-ui/v1/blueprint-pull-requests/{stackName}/{branch}/merge:
+    post:
+      description: Merges the PR's source branch into the blueprint default branch via a fresh-clone git merge. On a merge conflict or an exhausted non-fast-forward retry the PR is set to CANNOT_MERGE and HTTP 409 is returned — the user must create a fresh PR.
+      operationId: mergePullRequest
+      parameters:
+      - description: Blueprint name
+        in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      - description: Source branch (path-encoded)
+        in: path
+        name: branch
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlueprintPullRequest'
+          description: Pull request merged
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: PR not OPEN, merge conflict, or non-fast-forward — status CANNOT_MERGE
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: Merge a blueprint pull request
+      tags:
+      - Blueprint Pull Requests
+components:
+  schemas:
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    CreatePullRequestRequest:
+      required:
+      - sourceBranch
+      type: object
+      properties:
+        description:
+          type: string
+          description: PR description
+        importExisting:
+          type: boolean
+          description: When false (default) a NEW branch is created off the default branch (rejected if it already exists). When true the PR opens on an EXISTING branch (rejected if missing).
+          default: false
+        sourceBranch:
+          type: string
+          description: The git branch carrying the staged changes
+          example: my-feature
+        title:
+          type: string
+          description: PR title (defaults to the source branch name when blank)
+      description: Request to create a blueprint pull request (branch)
+    BlueprintPullRequest:
+      type: object
+      properties:
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        description:
+          type: string
+        headSha:
+          type: string
+        id:
+          type: string
+        imported:
+          type: boolean
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        mergeCommitSha:
+          type: string
+        mergedAt:
+          type: string
+          format: date-time
+        mergedBy:
+          type: string
+        reason:
+          type: string
+        sourceBranch:
+          type: string
+        stackName:
+          type: string
+        status:
+          type: string
+          enum:
+          - OPEN
+          - MERGING
+          - MERGED
+          - CANNOT_MERGE
+          - CLOSED
+        targetBranch:
+          type: string
+        title:
+          type: string
+        version:
+          type: integer
+          format: int64
+  securitySchemes:
+    basicAuth:
+      description: Basic Authentication
+      scheme: basic
+      type: http

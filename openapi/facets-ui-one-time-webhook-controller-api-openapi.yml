@@ -1,0 +1,215 @@
+openapi: 3.2.0
+info:
+  description: API Documentation
+  title: Control-plane UI One Time Webhook Controller API
+  version: '1.0'
+servers:
+- url: https://facetsdemo.console.facets.cloud
+  description: Generated server url
+security:
+- basicAuth: []
+tags:
+- name: ui-one-time-webhook-controller
+paths:
+  /cc-ui/v1/onetime-webhook/poll/{webhookId}:
+    get:
+      operationId: pollWebhook
+      parameters:
+      - in: path
+        name: webhookId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OneTimeWebhook'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-one-time-webhook-controller
+      summary: Poll webhook
+      x-summary-source: derived
+  /cc-ui/v1/onetime-webhook/register:
+    post:
+      deprecated: true
+      operationId: registerWebhook
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OneTimeWebhook'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OneTimeWebhook'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-one-time-webhook-controller
+      summary: Register webhook
+      x-summary-source: derived
+components:
+  schemas:
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    AccountLinkingDetails:
+      type: object
+      properties:
+        description:
+          type: string
+        labelIds:
+          type: array
+          items:
+            type: string
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    OneTimeWebhook:
+      type: object
+      properties:
+        accountLinkingDetails:
+          $ref: '#/components/schemas/AccountLinkingDetails'
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        deleteAt:
+          type: string
+          format: date-time
+          readOnly: true
+        errorMessage:
+          type: string
+        expiresAt:
+          type: string
+          format: date-time
+          readOnly: true
+        id:
+          type: string
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        status:
+          type: string
+          readOnly: true
+          enum:
+          - WAITING
+          - SUCCESS
+          - FAILED
+          - EXPIRED
+        type:
+          type: string
+          enum:
+          - AZURE
+          - GCP
+          - AWS
+          - KUBERNETES
+          - ECR
+          - OTHER_DOCKER_REGISTRY
+          - GITHUB
+          - GITLAB
+          - BITBUCKET
+  securitySchemes:
+    basicAuth:
+      description: Basic Authentication
+      scheme: basic
+      type: http

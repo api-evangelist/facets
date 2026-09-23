@@ -1,0 +1,667 @@
+openapi: 3.2.0
+info:
+  description: API Documentation
+  title: Control-plane UI Aws Cluster Controller API
+  version: '1.0'
+servers:
+- url: https://facetsdemo.console.facets.cloud
+  description: Generated server url
+security:
+- basicAuth: []
+tags:
+- name: ui-aws-cluster-controller
+paths:
+  /cc-ui/v1/aws/clusters:
+    post:
+      operationId: createClusterUsingPOST2
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AwsClusterRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AwsCluster'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: Create a new Environment for a blueprint
+      tags:
+      - ui-aws-cluster-controller
+  /cc-ui/v1/aws/clusters/configure/{clusterId}:
+    post:
+      operationId: configureDraftCluster_2
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AwsClusterRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AwsCluster'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-aws-cluster-controller
+      summary: Configure draft cluster 2
+      x-summary-source: derived
+  /cc-ui/v1/aws/clusters/onboard-customer:
+    post:
+      operationId: onboardCustomer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerOnboardRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-aws-cluster-controller
+      summary: Onboard customer
+      x-summary-source: derived
+  /cc-ui/v1/aws/clusters/validate-vpcId:
+    get:
+      operationId: validateVpcId_1
+      parameters:
+      - in: query
+        name: vpcId
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: region
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: accountId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: boolean
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-aws-cluster-controller
+      summary: Validate vpc id 1
+      x-summary-source: derived
+  /cc-ui/v1/aws/clusters/{clusterId}:
+    get:
+      operationId: getClusterUsingGET2
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AwsCluster'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-aws-cluster-controller
+      summary: Get cluster using GET2
+      x-summary-source: derived
+    put:
+      operationId: updateClusterUsingPUT2
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AwsClusterRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AwsCluster'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-aws-cluster-controller
+      summary: Update cluster using PUT2
+      x-summary-source: derived
+components:
+  schemas:
+    AwsCluster:
+      required:
+      - name
+      - releaseStream
+      - stackName
+      - tz
+      type: object
+      properties:
+        accessKeyId:
+          type: string
+        autoSignOffSchedule:
+          type: string
+        awsRegion:
+          type: string
+        azs:
+          type: array
+          items:
+            type: string
+        baseClusterId:
+          type: string
+        baseClusterName:
+          type: string
+        branch:
+          type: string
+        cdPipelineParent:
+          type: string
+        changeLog:
+          type: string
+          writeOnly: true
+        cloud:
+          type: string
+          enum:
+          - AWS
+          - AZURE
+          - LOCAL
+          - GCP
+          - KUBERNETES
+          - NO_CLOUD
+        cloudAccountId:
+          type: string
+        cloudAccountSecretId:
+          type: string
+        clusterCode:
+          type: string
+          readOnly: true
+        clusterState:
+          type: string
+          enum:
+          - STOPPED
+          - RUNNING
+          - LAUNCHING
+          - DESTROYING
+          - LAUNCH_FAILED
+          - DESTROY_FAILED
+          - UNKNOWN
+          - SCALE_DOWN
+          - SCALING_DOWN
+          - SCALE_DOWN_FAILED
+          - SCALING_UP
+          - SCALE_UP_FAILED
+        commonEnvironmentVariables:
+          type: object
+          additionalProperties:
+            type: string
+        componentVersions:
+          type: object
+          additionalProperties:
+            type: string
+        configured:
+          type: boolean
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        deleted:
+          type: boolean
+        description:
+          type: string
+        enableAutoSignOff:
+          type: boolean
+        externalId:
+          type: string
+        globalVariables:
+          type: object
+          additionalProperties:
+            type: string
+        hasK8sCredentials:
+          type: boolean
+        id:
+          type: string
+        instanceTypes:
+          type: array
+          items:
+            type: string
+        isEphemeral:
+          type: boolean
+        k8sRequestsToLimitsRatio:
+          type: number
+          format: double
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        name:
+          type: string
+        namespace:
+          type: string
+        pauseReleases:
+          type: boolean
+        providedVPCId:
+          type: string
+        releaseStream:
+          type: string
+        requireSignOff:
+          type: boolean
+        roleARN:
+          type: string
+        secretAccessKey:
+          type: string
+        secrets:
+          type: object
+          additionalProperties:
+            type: string
+        stackName:
+          type: string
+        tz:
+          type: string
+        variables:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Variables'
+        versioningKey:
+          type: string
+        vpcCIDR:
+          type: string
+    Variables:
+      type: object
+      properties:
+        description:
+          type: string
+        global:
+          type: boolean
+        secret:
+          type: boolean
+        status:
+          type: string
+          enum:
+          - DEFAULT
+          - OVERRIDDEN
+        value:
+          type: string
+    AwsClusterRequest:
+      required:
+      - clusterName
+      type: object
+      properties:
+        accessKeyId:
+          type: string
+        autoSignOffSchedule:
+          type: string
+        azs:
+          type: array
+          items:
+            type: string
+        baseClusterId:
+          type: string
+        cdPipelineParent:
+          type: string
+        cloud:
+          type: string
+          enum:
+          - AWS
+          - AZURE
+          - LOCAL
+          - GCP
+          - KUBERNETES
+          - NO_CLOUD
+        cloudAccountId:
+          type: string
+        clusterName:
+          maxLength: 40
+          minLength: 0
+          pattern: ^[a-z][a-z0-9-]*$
+          type: string
+        componentVersions:
+          type: object
+          additionalProperties:
+            type: string
+        description:
+          maxLength: 200
+          minLength: 0
+          type: string
+        enableAutoSignOff:
+          type: boolean
+        instanceTypes:
+          type: array
+          items:
+            type: string
+        isEphemeral:
+          type: boolean
+        k8sRequestsToLimitsRatio:
+          type: number
+          format: double
+        namespace:
+          type: string
+        providedVPCId:
+          type: string
+        region:
+          type: string
+        releaseStream:
+          type: string
+        requireSignOff:
+          type: boolean
+        secretAccessKey:
+          type: string
+        stackName:
+          type: string
+        tz:
+          type: object
+          properties:
+            displayName:
+              type: string
+            dstsavings:
+              type: integer
+              format: int32
+            id:
+              type: string
+            rawOffset:
+              type: integer
+              format: int32
+        vpcCIDR:
+          type: string
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    CustomerOnboardRequest:
+      required:
+      - customerName
+      - externalId
+      - region
+      - releaseStream
+      - roleARN
+      type: object
+      properties:
+        azs:
+          type: array
+          items:
+            type: string
+        customerName:
+          maxLength: 50
+          minLength: 3
+          type: string
+        externalId:
+          type: string
+        region:
+          type: string
+        releaseStream:
+          type: string
+        roleARN:
+          type: string
+        timezone:
+          type: string
+  securitySchemes:
+    basicAuth:
+      description: Basic Authentication
+      scheme: basic
+      type: http

@@ -1,0 +1,381 @@
+openapi: 3.2.0
+info:
+  description: API Documentation
+  title: Control-plane UI Cloud Cost Explorer Controller API
+  version: '1.0'
+servers:
+- url: https://facetsdemo.console.facets.cloud
+  description: Generated server url
+security:
+- basicAuth: []
+tags:
+- name: ui-cloud-cost-explorer-controller
+paths:
+  /cc-ui/v1/cost-explorer/aws/enabled:
+    get:
+      operationId: isAwsCostExplorerEnabled
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: boolean
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-cloud-cost-explorer-controller
+      summary: Is aws cost explorer enabled
+      x-summary-source: derived
+  /cc-ui/v1/cost-explorer/service-wise-cost/{clusterId}:
+    get:
+      operationId: getServiceWiseCost
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: start
+        required: true
+        schema:
+          type: string
+          format: date
+      - in: query
+        name: end
+        required: true
+        schema:
+          type: string
+          format: date
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DailyCost'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-cloud-cost-explorer-controller
+      summary: Get service wise cost
+      x-summary-source: derived
+  /cc-ui/v1/cost-explorer/stack/{stackName}/daily-cost:
+    get:
+      operationId: getDailyCloudCost
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: start
+        required: true
+        schema:
+          type: string
+          format: date
+      - in: query
+        name: end
+        required: true
+        schema:
+          type: string
+          format: date
+      - in: query
+        name: clusterIds
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DailyCloudCostDTO'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-cloud-cost-explorer-controller
+      summary: Get daily cloud cost
+      x-summary-source: derived
+  /cc-ui/v1/cost-explorer/sync-cost:
+    get:
+      operationId: syncCloudCost
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-cloud-cost-explorer-controller
+      summary: Sync cloud cost
+      x-summary-source: derived
+components:
+  schemas:
+    DailyCloudCostDTO:
+      type: object
+      properties:
+        dailyCost:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClusterCostDTO'
+        lastSync:
+          type: string
+          format: date-time
+        previousPeriodTotal:
+          type: number
+          format: double
+        serviceCost:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceCostDTO'
+        stackName:
+          type: string
+        total:
+          type: number
+          format: double
+        unit:
+          type: string
+    ClusterCostDTO:
+      type: object
+      properties:
+        clusterId:
+          type: string
+        clusterName:
+          type: string
+        costs:
+          type: array
+          items:
+            $ref: '#/components/schemas/CostDTO'
+        total:
+          type: number
+          format: double
+    DailyCost:
+      type: object
+      properties:
+        amount:
+          type: number
+          format: double
+        date:
+          type: string
+          format: date
+        perServiceCost:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceCost'
+        unit:
+          type: string
+    ServiceCostDTO:
+      type: object
+      properties:
+        cost:
+          type: number
+          format: double
+        previousCost:
+          type: number
+          format: double
+        serviceName:
+          type: string
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    CostDTO:
+      type: object
+      properties:
+        amount:
+          type: number
+          format: double
+        date:
+          type: string
+          format: date-time
+        serviceCost:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceCostDTO'
+    ServiceCost:
+      type: object
+      properties:
+        cost:
+          type: number
+          format: double
+        currency:
+          type: string
+        date:
+          type: string
+          format: date
+        serviceName:
+          type: string
+  securitySchemes:
+    basicAuth:
+      description: Basic Authentication
+      scheme: basic
+      type: http

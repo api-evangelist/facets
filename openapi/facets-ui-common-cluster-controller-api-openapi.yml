@@ -1,0 +1,4870 @@
+openapi: 3.2.0
+info:
+  description: API Documentation
+  title: Control-plane UI Common Cluster Controller API
+  version: '1.0'
+servers:
+- url: https://facetsdemo.console.facets.cloud
+  description: Generated server url
+security:
+- basicAuth: []
+tags:
+- name: ui-common-cluster-controller
+paths:
+  /cc-ui/v1/clusters/draft-cluster:
+    post:
+      operationId: createDraftCluster_1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DraftClusterRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AbstractCluster'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-common-cluster-controller
+      summary: Create draft cluster 1
+      x-summary-source: derived
+  /cc-ui/v1/clusters/draft-cluster/{clusterId}:
+    put:
+      operationId: updateDraftCluster
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DraftClusterRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AbstractCluster'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-common-cluster-controller
+      summary: Update draft cluster
+      x-summary-source: derived
+  /cc-ui/v1/clusters/stack/{stackName}/cluster/{clusterName}/info:
+    get:
+      operationId: getClusterInfoByName
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: clusterName
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterResponse'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: Get cluster info by stack name and cluster name
+      tags:
+      - ui-common-cluster-controller
+  /cc-ui/v1/clusters/{baseClusterId}/base-env-in-use-namespaces:
+    get:
+      operationId: getNamespacesInUseByDependentClusters_1
+      parameters:
+      - in: path
+        name: baseClusterId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: string
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-common-cluster-controller
+      summary: Get namespaces in use by dependent clusters 1
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}:
+    delete:
+      operationId: deleteCluster
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: boolean
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-common-cluster-controller
+      summary: Delete cluster
+      x-summary-source: derived
+    get:
+      operationId: getClusterCommon
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AbstractCluster'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-common-cluster-controller
+      summary: Get cluster common
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/alerts:
+    get:
+      operationId: getAlerts
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: object
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-common-cluster-controller
+      summary: Get alerts
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/alerts/silence/{silenceId}:
+    delete:
+      operationId: removeSilence
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: silenceId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: object
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-common-cluster-controller
+      summary: Remove silence
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/attach-image:
+    post:
+      operationId: attachImage
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ImageOverrideRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-common-cluster-controller
+      summary: Attach image
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/availability-schedule:
+    get:
+      operationId: getAvailabilitySchedules
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AvailabilitySchedule'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-common-cluster-controller
+      summary: Get availability schedules
+      x-summary-source: derived
+    post:
+      operationId: createAvailabilitySchedule
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/ScheduleRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-common-cluster-controller
+      summary: Create availability schedule
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/availability-schedule/{availabilityScheduleId}:
+    delete:
+      operationId: deleteAvailabilitySchedule
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: availabilityScheduleId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-common-cluster-controller
+      summary: Delete availability schedule
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/availability-schedule/{scheduleId}:
+    put:
+      operationId: updateAvailabilitySchedules
+      parameters:
+      - in: path
+        name: scheduleId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/ScheduleRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-common-cluster-controller
+      summary: Update availability schedules
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/branch:
+    patch:
+      operationId: updateClusterBranch
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BranchUpdateRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AbstractCluster'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-common-cluster-controller
+      summary: Update cluster branch
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/cluster-metadata:
+    get:
+      operationId: getClusterMetadata
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterMetadata'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-common-cluster-controller
+      summary: Get cluster metadata
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/copy-configurations-selective:
+    put:
+      description: 'Copies configurations from the source cluster to the target cluster. When mode is INCLUDE: Only specified configuration types are copied. When mode is EXCLUDE: All configuration types are copied except the specified ones.'
+      operationId: copyConfigurationsSelective
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CopyConfigurationsRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AbstractCluster'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: Copy configurations from one cluster to another selectively
+      tags:
+      - ui-common-cluster-controller
+  /cc-ui/v1/clusters/{clusterId}/detachImage:
+    delete:
+      operationId: detachImage
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ImageOverrideRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-common-cluster-controller
+      summary: Detach image
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/force:
+    delete:
+      operationId: deleteClusterForce
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: boolean
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-common-cluster-controller
+      summary: Delete cluster force
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/info:
+    get:
+      operationId: getClusterInfo
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterResponse'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-common-cluster-controller
+      summary: Get cluster info
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/intent/{intent}/flavor/{flavor}/input:
+    get:
+      operationId: getModuleInputs_1
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: intent
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: flavor
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: version
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  $ref: '#/components/schemas/ModuleInputDTO'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: Get module inputs for a cluster
+      tags:
+      - ui-common-cluster-controller
+  /cc-ui/v1/clusters/{clusterId}/k8sCredentials:
+    get:
+      operationId: getK8sCredentials
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: refreshPermissions
+        required: false
+        schema:
+          type: boolean
+          default: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KubernetesCredential'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-common-cluster-controller
+      summary: Get k8s credentials
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/kubeconfig:
+    get:
+      operationId: getKubeConfig
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-common-cluster-controller
+      summary: Get kube config
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/kubeconfig/refresh:
+    get:
+      operationId: refreshKubeConfig
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: boolean
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-common-cluster-controller
+      summary: Refresh kube config
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/match-modules:
+    get:
+      operationId: getMatchedModules
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MatchedModuleDTO'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-common-cluster-controller
+      summary: Get matched modules
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/open-alerts:
+    get:
+      operationId: getOpenAlerts
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: object
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-common-cluster-controller
+      summary: Get open alerts
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/overrides:
+    get:
+      operationId: getOverrides_1
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OverrideObject'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-common-cluster-controller
+      summary: Get overrides 1
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/overrides/{resourceType}/{resourceName}:
+    delete:
+      deprecated: true
+      operationId: deleteOverrides
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: resourceType
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: resourceName
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OverrideObject'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-common-cluster-controller
+      summary: Delete overrides
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/pause-release:
+    post:
+      operationId: pauseRelease
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PauseReleaseRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-common-cluster-controller
+      summary: Pause release
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/providedResources:
+    get:
+      operationId: getProvidedResources
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProvidedResources'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-common-cluster-controller
+      summary: Get provided resources
+      x-summary-source: derived
+    post:
+      operationId: upsertProvidedResources
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProvidedResources'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProvidedResources'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-common-cluster-controller
+      summary: Upsert provided resources
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/resource-enable-disable:
+    put:
+      operationId: bulkEnableDisableResources
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/ResourceEnableDisableRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-common-cluster-controller
+      summary: Bulk enable disable resources
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/resource-inherit-from-base:
+    put:
+      operationId: bulkEditInheritFromBaseForResources_1
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/ResourceInheritFromBaseRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-common-cluster-controller
+      summary: Bulk edit inherit from base for resources 1
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/resource-stats:
+    get:
+      operationId: getResourceStats
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlueprintFileSummaryDto'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-common-cluster-controller
+      summary: Get resource stats
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/resourceDetails:
+    get:
+      operationId: resourceDetails
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ResourceDetails'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-common-cluster-controller
+      summary: Resource details
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/resourceType/{resourceType}/resourceName/{resourceName}/add-ons:
+    get:
+      operationId: getAddOnModules_1
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: resourceType
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: resourceName
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: cloud
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AddOnDTO'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: Get add-ons for a resource in a cluster
+      tags:
+      - ui-common-cluster-controller
+  /cc-ui/v1/clusters/{clusterId}/resourceType/{resourceType}/resourceName/{resourceName}/release-impacts:
+    get:
+      operationId: getReleaseImpacts
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: resourceType
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: resourceName
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: triggeredBy
+        required: false
+        schema:
+          type: string
+      - example: '2023-10-31T01:30:00.000+05:30'
+        in: query
+        name: start
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - example: '2023-10-31T01:30:00.000+05:30'
+        in: query
+        name: end
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: releaseType
+        required: false
+        schema:
+          type: string
+          enum:
+          - HOTFIX
+          - RELEASE
+          - LAUNCH
+          - DESTROY
+          - CUSTOM
+          - UNLOCK_STATE
+          - PLAN
+          - HOTFIX_PLAN
+          - APPLY_PLAN
+          - APPLY_HOTFIX_PLAN
+          - SCALE_UP
+          - SCALE_DOWN
+          - MAINTENANCE
+          - TERRAFORM_EXPORT
+          - ROLLBACK_PLAN
+          - APPLY_ROLLBACK_PLAN
+          - PLAN_AND_APPLY
+          - HOTFIX_PLAN_AND_APPLY
+          - IMPORT_RELEASE
+      - in: query
+        name: attribute
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: attributeValue
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: changeType
+        required: false
+        schema:
+          type: string
+          enum:
+          - ADDED
+          - MODIFIED
+          - REMOVED
+      - in: query
+        name: pageNumber
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      - in: query
+        name: pageSize
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 50
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageResourceReleaseImpact'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-common-cluster-controller
+      summary: Get release impacts
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/schedule:
+    get:
+      operationId: getClusterSchedules
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ClusterSchedule'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-common-cluster-controller
+      summary: Get cluster schedules
+      x-summary-source: derived
+    post:
+      operationId: addClusterSchedules
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScheduleRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ClusterSchedule'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-common-cluster-controller
+      summary: Add cluster schedules
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/schedule/{clusterScheduleId}:
+    delete:
+      operationId: deleteClusterSchedule
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: clusterScheduleId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ClusterSchedule'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-common-cluster-controller
+      summary: Delete cluster schedule
+      x-summary-source: derived
+    put:
+      operationId: updateClusterSchedules
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: clusterScheduleId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScheduleRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ClusterSchedule'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-common-cluster-controller
+      summary: Update cluster schedules
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/setClusterCode:
+    post:
+      operationId: setClusterCode
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: boolean
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-common-cluster-controller
+      summary: Set cluster code
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/silence-alerts:
+    post:
+      operationId: silenceAlerts
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SilenceAlarmRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: object
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-common-cluster-controller
+      summary: Silence alerts
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/templateInputs/:
+    get:
+      operationId: getAllTemplateInputs
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/StackTemplateInput'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-common-cluster-controller
+      summary: Get all template inputs
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/templateInputs/{inputType}/items:
+    get:
+      operationId: getTemplateInputs
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: inputType
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StackTemplateInput'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-common-cluster-controller
+      summary: Get template inputs
+      x-summary-source: derived
+    post:
+      operationId: createTemplateInputs
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: inputType
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/StackTemplateInput'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/StackTemplateInput'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-common-cluster-controller
+      summary: Create template inputs
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/templateInputs/{inputType}/items/{uid}:
+    delete:
+      operationId: deleteTemplateInputs
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: inputType
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: uid
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StackTemplateInput'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-common-cluster-controller
+      summary: Delete template inputs
+      x-summary-source: derived
+    get:
+      operationId: getTemplateInputByUid
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: inputType
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: uid
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StackTemplateInput'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-common-cluster-controller
+      summary: Get template input by uid
+      x-summary-source: derived
+    put:
+      operationId: updateTemplateInput
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: inputType
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: uid
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StackTemplateInput'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StackTemplateInput'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-common-cluster-controller
+      summary: Update template input
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/tools-config:
+    delete:
+      operationId: deleteToolsConfig
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-common-cluster-controller
+      summary: Delete tools config
+      x-summary-source: derived
+    get:
+      operationId: getToolsConfig
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ToolsConfig'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-common-cluster-controller
+      summary: Get tools config
+      x-summary-source: derived
+    post:
+      operationId: addToolsConfig
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ToolsConfig'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ToolsConfig'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-common-cluster-controller
+      summary: Add tools config
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/tools-config/{toolsConfigId}:
+    put:
+      operationId: editToolsConfig
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: toolsConfigId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ToolsConfig'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ToolsConfig'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-common-cluster-controller
+      summary: Edit tools config
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/variable-counts:
+    get:
+      operationId: getVariableCounts
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VariableCountDto'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-common-cluster-controller
+      summary: Get variable counts
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/vars:
+    get:
+      operationId: getVars
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AbstractCluster'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-common-cluster-controller
+      summary: Get vars
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/vars-with-secrets:
+    get:
+      operationId: getVarsWithSecrets
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AbstractCluster'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-common-cluster-controller
+      summary: Get vars with secrets
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/vars/upsert:
+    post:
+      operationId: upsertVars
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties:
+                type: string
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AbstractCluster'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-common-cluster-controller
+      summary: Upsert vars
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/varsWithStatus:
+    get:
+      operationId: getVarsWithStatus
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  $ref: '#/components/schemas/Variables'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-common-cluster-controller
+      summary: Get vars with status
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/vpn-profile:
+    get:
+      operationId: getVPNProfile
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-common-cluster-controller
+      summary: Get VPN profile
+      x-summary-source: derived
+components:
+  schemas:
+    InputOutputResource:
+      type: object
+      properties:
+        default:
+          type: boolean
+        outputName:
+          type: string
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+    ProvidedUnauthenticatedResource:
+      type: object
+      properties:
+        endpoint:
+          type: string
+        port:
+          type: string
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+    ClusterSchedule:
+      required:
+      - clusterId
+      - releaseType
+      type: object
+      properties:
+        byDay:
+          type: array
+          items:
+            type: string
+            enum:
+            - MON
+            - TUE
+            - WED
+            - THU
+            - FRI
+            - SAT
+            - SUN
+        byTime:
+          type: string
+          format: time
+          example: '14:30'
+        clusterId:
+          type: string
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        description:
+          type: string
+        frequency:
+          type: string
+          enum:
+          - PER_MINUTE
+          - HOURLY
+          - DAILY
+          - WEEKLY
+        id:
+          type: string
+        interval:
+          type: integer
+          format: int32
+        isPaused:
+          type: boolean
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        releaseType:
+          type: string
+          enum:
+          - HOTFIX
+          - RELEASE
+          - LAUNCH
+          - DESTROY
+          - CUSTOM
+          - UNLOCK_STATE
+          - PLAN
+          - HOTFIX_PLAN
+          - APPLY_PLAN
+          - APPLY_HOTFIX_PLAN
+          - SCALE_UP
+          - SCALE_DOWN
+          - MAINTENANCE
+          - TERRAFORM_EXPORT
+          - ROLLBACK_PLAN
+          - APPLY_ROLLBACK_PLAN
+          - PLAN_AND_APPLY
+          - HOTFIX_PLAN_AND_APPLY
+          - IMPORT_RELEASE
+        serverTimeZone:
+          type: string
+        timeZone:
+          type: string
+          example: Asia/Kolkata
+    GroupedCountDto:
+      type: object
+      properties:
+        enabled:
+          type: integer
+          format: int64
+        total:
+          type: integer
+          format: int64
+    VariableCountDto:
+      type: object
+      properties:
+        overriddenSecrets:
+          type: integer
+          format: int32
+        overriddenVariables:
+          type: integer
+          format: int32
+        totalSecrets:
+          type: integer
+          format: int32
+        totalVariables:
+          type: integer
+          format: int32
+    ModuleDTO:
+      type: object
+      properties:
+        facetsYaml:
+          type: object
+          additionalProperties:
+            type: object
+        tfModulePath:
+          $ref: '#/components/schemas/TFModulePath'
+    ProvidedShardedService:
+      type: object
+      properties:
+        shards:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProvidedAuthenticatedResource'
+    StackTemplateInput:
+      required:
+      - clusterId
+      - data
+      - inputType
+      - uid
+      type: object
+      properties:
+        clusterId:
+          type: string
+        data:
+          type: object
+          additionalProperties:
+            type: string
+        inputType:
+          type: string
+        uid:
+          type: string
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    ShortLivedTaskSchedule:
+      required:
+      - frequency
+      - releaseType
+      type: object
+      properties:
+        frequency:
+          type: string
+          enum:
+          - PER_MINUTE
+          - HOURLY
+          - DAILY
+          - WEEKLY
+        releaseType:
+          type: string
+          enum:
+          - HOTFIX
+          - RELEASE
+          - LAUNCH
+          - DESTROY
+          - CUSTOM
+          - UNLOCK_STATE
+          - PLAN
+          - HOTFIX_PLAN
+          - APPLY_PLAN
+          - APPLY_HOTFIX_PLAN
+          - SCALE_UP
+          - SCALE_DOWN
+          - MAINTENANCE
+          - TERRAFORM_EXPORT
+          - ROLLBACK_PLAN
+          - APPLY_ROLLBACK_PLAN
+          - PLAN_AND_APPLY
+          - HOTFIX_PLAN_AND_APPLY
+          - IMPORT_RELEASE
+        tearDownAfter:
+          type: integer
+          format: int32
+    ResourceEnableDisableRequest:
+      type: object
+      properties:
+        directory:
+          type: string
+        disabled:
+          type: boolean
+        filename:
+          type: string
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+    ReleaseDetails:
+      type: object
+      properties:
+        deploymentLogId:
+          type: string
+        releaseType:
+          type: string
+          enum:
+          - HOTFIX
+          - RELEASE
+          - LAUNCH
+          - DESTROY
+          - CUSTOM
+          - UNLOCK_STATE
+          - PLAN
+          - HOTFIX_PLAN
+          - APPLY_PLAN
+          - APPLY_HOTFIX_PLAN
+          - SCALE_UP
+          - SCALE_DOWN
+          - MAINTENANCE
+          - TERRAFORM_EXPORT
+          - ROLLBACK_PLAN
+          - APPLY_ROLLBACK_PLAN
+          - PLAN_AND_APPLY
+          - HOTFIX_PLAN_AND_APPLY
+          - IMPORT_RELEASE
+        stackVersion:
+          type: string
+        triggeredBy:
+          type: string
+        triggeredOn:
+          type: string
+          format: date-time
+    ResourceDetails:
+      type: object
+      properties:
+        key:
+          type: string
+        name:
+          type: string
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+        value:
+          type: string
+    PauseReleaseRequest:
+      type: object
+      properties:
+        clusterId:
+          type: string
+        pauseReleases:
+          type: boolean
+    ModuleInputDTO:
+      type: object
+      properties:
+        compatibleResources:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/InputOutputResource'
+        description:
+          type: string
+        displayName:
+          type: string
+        optional:
+          type: boolean
+        type:
+          type: string
+    ClusterMetadata:
+      type: object
+      properties:
+        cloud:
+          type: string
+          enum:
+          - AWS
+          - AZURE
+          - LOCAL
+          - GCP
+          - KUBERNETES
+          - NO_CLOUD
+        clusterId:
+          type: string
+        clusterName:
+          type: string
+        clusterState:
+          type: string
+          enum:
+          - STOPPED
+          - RUNNING
+          - LAUNCHING
+          - DESTROYING
+          - LAUNCH_FAILED
+          - DESTROY_FAILED
+          - UNKNOWN
+          - SCALE_DOWN
+          - SCALING_DOWN
+          - SCALE_DOWN_FAILED
+          - SCALING_UP
+          - SCALE_UP_FAILED
+        id:
+          type: string
+        stackName:
+          type: string
+    ClusterLite:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        stackName:
+          type: string
+    ResourceInheritFromBaseRequest:
+      type: object
+      properties:
+        directory:
+          type: string
+        filename:
+          type: string
+        inheritFromBase:
+          type: boolean
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+    ProvidedAuthenticatedResource:
+      type: object
+      properties:
+        endpoint:
+          type: string
+        password:
+          type: string
+        port:
+          type: string
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+        username:
+          type: string
+    AbstractCluster:
+      required:
+      - name
+      - releaseStream
+      - stackName
+      - tz
+      type: object
+      properties:
+        autoSignOffSchedule:
+          type: string
+        baseClusterId:
+          type: string
+        baseClusterName:
+          type: string
+        branch:
+          type: string
+        cdPipelineParent:
+          type: string
+        changeLog:
+          type: string
+          writeOnly: true
+        cloud:
+          type: string
+          enum:
+          - AWS
+          - AZURE
+          - LOCAL
+          - GCP
+          - KUBERNETES
+          - NO_CLOUD
+        cloudAccountId:
+          type: string
+        cloudAccountSecretId:
+          type: string
+        clusterCode:
+          type: string
+          readOnly: true
+        clusterState:
+          type: string
+          enum:
+          - STOPPED
+          - RUNNING
+          - LAUNCHING
+          - DESTROYING
+          - LAUNCH_FAILED
+          - DESTROY_FAILED
+          - UNKNOWN
+          - SCALE_DOWN
+          - SCALING_DOWN
+          - SCALE_DOWN_FAILED
+          - SCALING_UP
+          - SCALE_UP_FAILED
+        commonEnvironmentVariables:
+          type: object
+          additionalProperties:
+            type: string
+        componentVersions:
+          type: object
+          additionalProperties:
+            type: string
+        configured:
+          type: boolean
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        deleted:
+          type: boolean
+        description:
+          type: string
+        enableAutoSignOff:
+          type: boolean
+        globalVariables:
+          type: object
+          additionalProperties:
+            type: string
+        hasK8sCredentials:
+          type: boolean
+        id:
+          type: string
+        isEphemeral:
+          type: boolean
+        k8sRequestsToLimitsRatio:
+          type: number
+          format: double
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        name:
+          type: string
+        namespace:
+          type: string
+        pauseReleases:
+          type: boolean
+        releaseStream:
+          type: string
+        requireSignOff:
+          type: boolean
+        secrets:
+          type: object
+          additionalProperties:
+            type: string
+        stackName:
+          type: string
+        tz:
+          type: string
+        variables:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Variables'
+        versioningKey:
+          type: string
+    Variables:
+      type: object
+      properties:
+        description:
+          type: string
+        global:
+          type: boolean
+        secret:
+          type: boolean
+        status:
+          type: string
+          enum:
+          - DEFAULT
+          - OVERRIDDEN
+        value:
+          type: string
+    OverrideObject:
+      type: object
+      properties:
+        changeLog:
+          type: string
+        commitId:
+          type: string
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        id:
+          type: string
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        overrides:
+          type: object
+          additionalProperties:
+            type: object
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+        versioningKey:
+          type: string
+    ProvidedCloudResource:
+      type: object
+      properties:
+        name:
+          type: string
+        region:
+          type: string
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+    AvailabilitySchedule:
+      required:
+      - clusterId
+      type: object
+      properties:
+        clusterId:
+          type: string
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        id:
+          type: string
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        schedules:
+          type: array
+          items:
+            $ref: '#/components/schemas/AvailabilityTaskSchedule'
+        shortLivedSchedules:
+          type: array
+          items:
+            $ref: '#/components/schemas/ShortLivedTaskSchedule'
+    TFModulePath:
+      type: object
+      properties:
+        etag:
+          type: string
+        path:
+          type: string
+        pathType:
+          type: string
+          enum:
+          - S3
+          - FACETS_S3
+      description: Path information related to TF Module
+    MatchedResourceDTO:
+      type: object
+      properties:
+        content:
+          type: string
+        matched:
+          type: boolean
+        moduleRef:
+          type: string
+    KubernetesCredential:
+      type: object
+      properties:
+        cacert:
+          type: string
+        endpoint:
+          type: string
+        token:
+          type: string
+    AvailabilityTaskSchedule:
+      required:
+      - releaseType
+      type: object
+      properties:
+        byDay:
+          type: array
+          items:
+            type: string
+            enum:
+            - MON
+            - TUE
+            - WED
+            - THU
+            - FRI
+            - SAT
+            - SUN
+        byTime:
+          type: string
+          format: time
+          example: '14:30'
+        cronExpr:
+          type: string
+        description:
+          type: string
+        frequency:
+          type: string
+          enum:
+          - PER_MINUTE
+          - HOURLY
+          - DAILY
+          - WEEKLY
+        interval:
+          type: integer
+          format: int32
+        releaseType:
+          type: string
+          enum:
+          - HOTFIX
+          - RELEASE
+          - LAUNCH
+          - DESTROY
+          - CUSTOM
+          - UNLOCK_STATE
+          - PLAN
+          - HOTFIX_PLAN
+          - APPLY_PLAN
+          - APPLY_HOTFIX_PLAN
+          - SCALE_UP
+          - SCALE_DOWN
+          - MAINTENANCE
+          - TERRAFORM_EXPORT
+          - ROLLBACK_PLAN
+          - APPLY_ROLLBACK_PLAN
+          - PLAN_AND_APPLY
+          - HOTFIX_PLAN_AND_APPLY
+          - IMPORT_RELEASE
+        timeZone:
+          type: string
+          example: Asia/Kolkata
+    ResourceReleaseImpact:
+      type: object
+      properties:
+        changes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Change'
+        clusterId:
+          type: string
+        id:
+          type: string
+        labelIds:
+          type: array
+          items:
+            type: string
+        releaseDetails:
+          $ref: '#/components/schemas/ReleaseDetails'
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+    CopyConfigurationsRequest:
+      type: object
+      properties:
+        configurationTypes:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+            enum:
+            - VARIABLES_SECRETS
+            - ARTIFACTS
+            - ENVIRONMENT_SETTINGS
+            - SCHEDULES
+            - AVAILABILITY_SCHEDULES
+            - OVERRIDES
+            - TEMPLATE_INPUTS
+        selectionMode:
+          type: string
+          enum:
+          - INCLUDE
+          - EXCLUDE
+        sourceClusterId:
+          type: string
+      description: Request containing source cluster ID, selection mode (INCLUDE/EXCLUDE), and set of configuration types
+    PageableObject:
+      type: object
+      properties:
+        offset:
+          type: integer
+          format: int64
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        paged:
+          type: boolean
+        sort:
+          $ref: '#/components/schemas/SortObject'
+        unpaged:
+          type: boolean
+    MatchedModuleDTO:
+      type: object
+      properties:
+        modules:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ModuleDTO'
+        resources:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/MatchedResourceDTO'
+    Input:
+      type: object
+      properties:
+        addsCapability:
+          type: boolean
+        blockEdits:
+          type: boolean
+        defaultResource:
+          $ref: '#/components/schemas/InputOutputResource'
+        description:
+          type: string
+        displayName:
+          type: string
+        optional:
+          type: boolean
+        providers:
+          type: array
+          items:
+            type: string
+        type:
+          type: string
+      description: Input parameters for this module
+    DraftClusterRequest:
+      required:
+      - clusterName
+      type: object
+      properties:
+        autoSignOffSchedule:
+          type: string
+        baseClusterId:
+          type: string
+        cdPipelineParent:
+          type: string
+        cloud:
+          type: string
+          enum:
+          - AWS
+          - AZURE
+          - LOCAL
+          - GCP
+          - KUBERNETES
+          - NO_CLOUD
+        cloudAccountId:
+          type: string
+        clusterName:
+          maxLength: 40
+          minLength: 0
+          pattern: ^[a-z][a-z0-9-]*$
+          type: string
+        componentVersions:
+          type: object
+          additionalProperties:
+            type: string
+        description:
+          maxLength: 200
+          minLength: 0
+          type: string
+        enableAutoSignOff:
+          type: boolean
+        isEphemeral:
+          type: boolean
+        k8sRequestsToLimitsRatio:
+          type: number
+          format: double
+        namespace:
+          type: string
+        releaseStream:
+          type: string
+        requireSignOff:
+          type: boolean
+        stackName:
+          type: string
+        tz:
+          type: object
+          properties:
+            displayName:
+              type: string
+            dstsavings:
+              type: integer
+              format: int32
+            id:
+              type: string
+            rawOffset:
+              type: integer
+              format: int32
+    SilenceAlarmRequest:
+      required:
+      - comment
+      - labels
+      - snoozeInMinutes
+      type: object
+      properties:
+        comment:
+          type: string
+        id:
+          type: string
+        labels:
+          type: object
+          additionalProperties:
+            type: string
+        snoozeInMinutes:
+          type: integer
+          format: int32
+    SortObject:
+      type: object
+      properties:
+        empty:
+          type: boolean
+        sorted:
+          type: boolean
+        unsorted:
+          type: boolean
+    Change:
+      type: object
+      properties:
+        changeType:
+          type: string
+          enum:
+          - ADDED
+          - MODIFIED
+          - REMOVED
+        changedAttribute:
+          $ref: '#/components/schemas/ChangedAttribute'
+    ClusterResponse:
+      type: object
+      properties:
+        autoSignOffSchedule:
+          type: string
+        baseCluster:
+          $ref: '#/components/schemas/ClusterLite'
+        branch:
+          type: string
+        cdPipelineParent:
+          type: string
+        cloud:
+          type: string
+          enum:
+          - AWS
+          - AZURE
+          - LOCAL
+          - GCP
+          - KUBERNETES
+          - NO_CLOUD
+        cloudAccountId:
+          type: string
+        cloudAccountName:
+          type: string
+        clusterCode:
+          type: string
+        clusterState:
+          type: string
+          enum:
+          - STOPPED
+          - RUNNING
+          - LAUNCHING
+          - DESTROYING
+          - LAUNCH_FAILED
+          - DESTROY_FAILED
+          - UNKNOWN
+          - SCALE_DOWN
+          - SCALING_DOWN
+          - SCALE_DOWN_FAILED
+          - SCALING_UP
+          - SCALE_UP_FAILED
+        configured:
+          type: boolean
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        dependentClusters:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClusterLite'
+        description:
+          type: string
+        dynamicLaunch:
+          type: boolean
+        enableAutoSignOff:
+          type: boolean
+        hasK8sCredentials:
+          type: boolean
+        id:
+          type: string
+        isEphemeral:
+          type: boolean
+        k8sRequestsToLimitsRatio:
+          type: number
+          format: double
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        name:
+          type: string
+        namespace:
+          type: string
+        pauseReleases:
+          type: boolean
+        releaseStream:
+          type: string
+        requireSignOff:
+          type: boolean
+        showKubedebugger:
+          type: boolean
+        stackName:
+          type: string
+        tz:
+          type: string
+    ProvidedResources:
+      type: object
+      properties:
+        clusterId:
+          type: string
+        id:
+          type: string
+        providedAuthenticatedResources:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/ProvidedAuthenticatedResource'
+        providedCloudResources:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/ProvidedCloudResource'
+        providedShardedResources:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/ProvidedShardedService'
+        providedUnauthenticatedResources:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/ProvidedUnauthenticatedResource'
+    PageResourceReleaseImpact:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceReleaseImpact'
+        empty:
+          type: boolean
+        first:
+          type: boolean
+        last:
+          type: boolean
+        number:
+          type: integer
+          format: int32
+        numberOfElements:
+          type: integer
+          format: int32
+        pageable:
+          $ref: '#/components/schemas/PageableObject'
+        size:
+          type: integer
+          format: int32
+        sort:
+          $ref: '#/components/schemas/SortObject'
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int32
+    BlueprintFileSummaryDto:
+      type: object
+      properties:
+        enabled:
+          type: integer
+          format: int64
+        grouped:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/GroupedCountDto'
+        total:
+          type: integer
+          format: int64
+    AddOnDTO:
+      type: object
+      properties:
+        added:
+          type: boolean
+        flavor:
+          type: string
+        inputs:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Input'
+        intent:
+          type: string
+        resourceName:
+          type: string
+    ChangedAttribute:
+      type: object
+      properties:
+        attribute:
+          type: string
+        newValue:
+          type: string
+        oldValue:
+          type: string
+    ScheduleRequest:
+      type: object
+      properties:
+        byDay:
+          type: array
+          items:
+            type: string
+            enum:
+            - MON
+            - TUE
+            - WED
+            - THU
+            - FRI
+            - SAT
+            - SUN
+        byTime:
+          type: string
+          format: time
+          example: '14:30'
+        frequency:
+          type: string
+          enum:
+          - PER_MINUTE
+          - HOURLY
+          - DAILY
+          - WEEKLY
+        interval:
+          type: integer
+          format: int32
+        pauseReleaseSchedule:
+          type: boolean
+        releaseType:
+          type: string
+          enum:
+          - HOTFIX
+          - RELEASE
+          - LAUNCH
+          - DESTROY
+          - CUSTOM
+          - UNLOCK_STATE
+          - PLAN
+          - HOTFIX_PLAN
+          - APPLY_PLAN
+          - APPLY_HOTFIX_PLAN
+          - SCALE_UP
+          - SCALE_DOWN
+          - MAINTENANCE
+          - TERRAFORM_EXPORT
+          - ROLLBACK_PLAN
+          - APPLY_ROLLBACK_PLAN
+          - PLAN_AND_APPLY
+          - HOTFIX_PLAN_AND_APPLY
+          - IMPORT_RELEASE
+        shortLived:
+          type: boolean
+        tearDownAfter:
+          type: integer
+          format: int32
+        timeZone:
+          type: string
+          example: Asia/Kolkata
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    BranchUpdateRequest:
+      type: object
+      properties:
+        branch:
+          type: string
+    ImageOverrideRequest:
+      required:
+      - resourceName
+      - resourceType
+      type: object
+      properties:
+        artifactType:
+          type: string
+          enum:
+          - docker_image
+          - freestyle
+        artifactUri:
+          type: string
+        artifactory:
+          type: string
+        blueprintName:
+          type: string
+        ciName:
+          type: string
+        externalId:
+          type: string
+        registrationType:
+          type: string
+          enum:
+          - GIT_REF
+          - ENVIRONMENT
+          - RELEASE_STREAM
+        registrationValue:
+          type: string
+        repositoryName:
+          type: string
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+        tag:
+          type: string
+    ToolsConfig:
+      type: object
+      properties:
+        clusterId:
+          type: string
+        id:
+          type: string
+        toolsKey:
+          type: string
+        toolsUser:
+          type: string
+  securitySchemes:
+    basicAuth:
+      description: Basic Authentication
+      scheme: basic
+      type: http

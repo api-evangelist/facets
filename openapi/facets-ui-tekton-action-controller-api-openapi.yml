@@ -1,0 +1,642 @@
+openapi: 3.2.0
+info:
+  description: API Documentation
+  title: Control-plane UI Tekton Action Controller API
+  version: '1.0'
+servers:
+- url: https://facetsdemo.console.facets.cloud
+  description: Generated server url
+security:
+- basicAuth: []
+tags:
+- name: ui-tekton-action-controller
+paths:
+  /cc-ui/v1/actions:
+    get:
+      description: '- **Description:** Retrieve Actions optionally filtered by cluster, resource type, and resource name.
+
+        - **Restrictions:** Actions are filtered based on provided parameters.
+
+        - **Permissions:** None required.
+
+        - **Audit Logging:** Not applicable.'
+      operationId: getActions
+      parameters:
+      - in: query
+        name: clusterId
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: resourceType
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: resourceName
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ActionDto'
+          description: Successfully retrieved Actions.
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal server error.
+      summary: Get Actions
+      tags:
+      - ui-tekton-action-controller
+  /cc-ui/v1/actions/run:
+    post:
+      description: '- **Description:** Create and run Action Runs for multiple Actions with individual parameters.
+
+        - **Restrictions:** None.
+
+        - **Permissions:** Requires `RUN_ACTION` permission.
+
+        - **Audit Logging:** Not applicable.'
+      operationId: runActions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkActionRunRequestDto'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ActionRunDto'
+          description: Successfully ran Action Runs.
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad request.
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden.
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal server error.
+      summary: Run Multiple Actions
+      tags:
+      - ui-tekton-action-controller
+  /cc-ui/v1/actions/runs/{actionRunName}/steps/{stepName}/logs:
+    get:
+      description: '- **Description:** Retrieve logs for a specific step of an Action Run.
+
+        - **Restrictions:** None.
+
+        - **Permissions:** None required.
+
+        - **Audit Logging:** Not applicable.'
+      operationId: getStepLogs
+      parameters:
+      - in: path
+        name: actionRunName
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: stepName
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StepLogDto'
+          description: Successfully retrieved step logs.
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad request.
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden.
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal server error.
+      summary: Get Step Logs
+      tags:
+      - ui-tekton-action-controller
+  /cc-ui/v1/actions/runs/{actionRunName}/upload:
+    get:
+      description: '- **Description:** Download the file uploaded for a specific Action Run.
+
+        - **Restrictions:** User must have access to the associated task.
+
+        - **Permissions:** Requires task access permissions.
+
+        - **Audit Logging:** Not applicable.'
+      operationId: downloadUpload
+      parameters:
+      - in: path
+        name: actionRunName
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: string
+                format: binary
+          description: File downloaded successfully.
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden - no access to task.
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Upload not found.
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal server error.
+      summary: Download Upload for Action Run
+      tags:
+      - ui-tekton-action-controller
+  /cc-ui/v1/actions/{actionName}/runs:
+    get:
+      description: '- **Description:** Retrieve Action Runs for a specific Action.
+
+        - **Restrictions:** None.
+
+        - **Permissions:** None required.
+
+        - **Audit Logging:** Not applicable.'
+      operationId: getActionRuns
+      parameters:
+      - in: path
+        name: actionName
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ActionRunDto'
+          description: Successfully retrieved Action Runs.
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden.
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Action not found.
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal server error.
+      summary: Get Action Runs
+      tags:
+      - ui-tekton-action-controller
+components:
+  schemas:
+    ActionParameterValueDto:
+      required:
+      - type
+      type: object
+      properties:
+        arrayVal:
+          type: array
+          description: Array value for array type parameters. Only used when type is 'array'
+          items:
+            type: string
+            description: Array value for array type parameters. Only used when type is 'array'
+        stringVal:
+          type: string
+          description: String value for string type parameters. Only used when type is 'string'
+          example: my-app:latest
+        type:
+          type: string
+          description: Type of the parameter value
+          example: string
+          enum:
+          - string
+          - array
+      description: Represents the value of an action parameter
+    ActionStepDto:
+      required:
+      - name
+      - status
+      type: object
+      properties:
+        containerName:
+          type: string
+          description: Name of the container running this step
+          example: step-build
+        exitCode:
+          type: integer
+          description: Exit code of the step
+          format: int32
+          example: 0
+        finishedAt:
+          type: string
+          description: Timestamp when the step finished
+          format: date-time
+          example: '2024-01-15T10:35:00Z'
+        name:
+          type: string
+          description: Name of the step
+          example: build-step
+        podName:
+          type: string
+          description: Name of the pod running this step
+          example: build-action-run-xyz123-pod-abc456
+        startTime:
+          type: string
+          description: Timestamp when the step started
+          format: date-time
+          example: '2024-01-15T10:30:00Z'
+        status:
+          type: string
+          description: Represents the status of a step within an action run
+          example: COMPLETED
+          enum:
+          - WAITING
+          - RUNNING
+          - COMPLETED
+          - ERROR
+          - PENDING
+        terminationReason:
+          type: string
+          description: Reason for termination if the step did not complete successfully
+          example: Error
+      description: Represents a single step within an action run
+    ActionParameterDto:
+      required:
+      - name
+      - type
+      type: object
+      properties:
+        defaultValue:
+          $ref: '#/components/schemas/ActionParameterValueDto'
+        description:
+          type: string
+          description: Description of the parameter
+          example: Docker image name to build
+        name:
+          type: string
+          description: Name of the parameter
+          example: image-name
+        properties:
+          uniqueItems: true
+          type: array
+          description: Properties for object type parameters. Only applicable when type is 'object'
+          items:
+            type: string
+            description: Properties for object type parameters. Only applicable when type is 'object'
+        type:
+          type: string
+          description: Type of the parameter
+          example: string
+          enum:
+          - string
+          - array
+          - object
+      description: Defines a parameter that can be passed to an action
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    ActionDto:
+      required:
+      - name
+      type: object
+      properties:
+        cloudAction:
+          type: boolean
+          description: Indicates if this is a cloud action requiring RUN_CLOUD_ACTION permission
+        clusterId:
+          type: string
+          description: Cluster ID associated with the action
+        description:
+          type: string
+          description: Description of what the action does
+          example: Builds and packages the application
+        displayName:
+          type: string
+          description: Display name for the action
+          example: Build and Deploy Action
+        name:
+          type: string
+          description: Name of the action
+          example: build-action
+        params:
+          type: array
+          description: List of parameters that can be passed to the action
+          items:
+            $ref: '#/components/schemas/ActionParameterDto'
+        resourceName:
+          type: string
+          description: Resource name associated with the action
+        resourceType:
+          type: string
+          description: Resource type associated with the action
+      description: Represents an action definition
+    ActionRunDto:
+      required:
+      - actionName
+      - name
+      - status
+      type: object
+      properties:
+        actionDisplayName:
+          type: string
+          description: Display name of the action being executed
+          example: Build Application
+        actionName:
+          type: string
+          description: Name of the action being executed
+          example: build-action
+        clusterId:
+          type: string
+          description: Cluster ID associated with this action
+          example: prod-cluster-1
+        completionTime:
+          type: string
+          description: Timestamp when the action run completed
+          format: date-time
+          example: '2024-01-15T10:45:00Z'
+        hasUpload:
+          type: boolean
+          description: Indicates if this action run has an associated upload
+          example: false
+        message:
+          type: string
+          description: Detailed message about the current status
+          example: Task run exceeded timeout of 60 minutes
+        name:
+          type: string
+          description: Name of the action run
+          example: build-action-run-xyz123
+        params:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ActionParameterValueDto'
+          description: Parameters passed to this action run, keyed by parameter name
+        reason:
+          type: string
+          description: Reason for the current status
+          example: TaskRunTimeout
+        resourceName:
+          type: string
+          description: Resource name associated with this action
+          example: web-app
+        resourceType:
+          type: string
+          description: Resource type associated with this action
+          example: deployment
+        startTime:
+          type: string
+          description: Timestamp when the action run started
+          format: date-time
+          example: '2024-01-15T10:30:00Z'
+        status:
+          type: string
+          description: Represents the possible statuses of an action run
+          enum:
+          - STARTED
+          - PENDING
+          - RUNNING
+          - SUCCEEDED
+          - FAILED
+          - CANCELLED
+          - CANCELLING
+          - NON_PERMANENT_ERROR
+        steps:
+          type: array
+          description: List of steps executed in this action run
+          items:
+            $ref: '#/components/schemas/ActionStepDto'
+        triggeredBy:
+          type: string
+          description: User who triggered this action run
+          example: user@example.com
+      description: Represents an action run instance with its execution details
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    StepLogDto:
+      required:
+      - stepName
+      type: object
+      properties:
+        logs:
+          type: string
+          description: Log output from the step execution
+          example: Building application...
+        stepName:
+          type: string
+          description: Name of the step
+          example: build-step
+      description: Contains logs for a specific step in a Tekton task run
+    BulkActionRunRequestDto:
+      required:
+      - actions
+      type: object
+      properties:
+        actions:
+          type: array
+          description: List of actions to run with their individual parameters
+          items:
+            $ref: '#/components/schemas/ActionRunRequestDto'
+      description: Request for running multiple actions with individual parameters
+    ActionRunRequestDto:
+      required:
+      - actionName
+      type: object
+      properties:
+        actionName:
+          type: string
+          description: Name of the action to run
+          example: build-action
+        params:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ActionParameterValueDto'
+          description: Parameters to pass to the action
+      description: Request for running a single action with parameters
+  securitySchemes:
+    basicAuth:
+      description: Basic Authentication
+      scheme: basic
+      type: http

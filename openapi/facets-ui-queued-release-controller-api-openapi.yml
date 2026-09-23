@@ -1,0 +1,251 @@
+openapi: 3.2.0
+info:
+  description: API Documentation
+  title: Control-plane UI Queued Release Controller API
+  version: '1.0'
+servers:
+- url: https://facetsdemo.console.facets.cloud
+  description: Generated server url
+security:
+- basicAuth: []
+tags:
+- name: ui-queued-release-controller
+paths:
+  /cc-ui/v1/clusters/{clusterId}/queued-releases/:
+    get:
+      operationId: getAllQueuedReleases
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/QueuedRelease'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-queued-release-controller
+      summary: Get all queued releases
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/queued-releases/{queuedReleaseId}:
+    delete:
+      operationId: deleteById
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: queuedReleaseId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-queued-release-controller
+      summary: Delete by id
+      x-summary-source: derived
+components:
+  schemas:
+    FacetsResource:
+      type: object
+      properties:
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    TfVersion:
+      required:
+      - majorVersion
+      - minorVersion
+      - tfStream
+      type: object
+      properties:
+        lastModified:
+          type: string
+          format: date-time
+        majorVersion:
+          type: integer
+          format: int32
+        minorVersion:
+          type: string
+          description: LATEST
+          example: LATEST
+        tfStream:
+          type: string
+    QueuedRelease:
+      type: object
+      properties:
+        allowDestroy:
+          type: boolean
+        allowPreviewModules:
+          type: boolean
+        canQueue:
+          type: boolean
+        clusterId:
+          type: string
+        comment:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        forceRelease:
+          type: boolean
+        hotfixResources:
+          type: array
+          items:
+            $ref: '#/components/schemas/FacetsResource'
+        id:
+          type: string
+        importsTf:
+          type: string
+        overrideBuildSteps:
+          type: array
+          items:
+            type: string
+        parallelRelease:
+          type: boolean
+        releaseTraceId:
+          type: string
+        releaseType:
+          type: string
+          enum:
+          - HOTFIX
+          - RELEASE
+          - LAUNCH
+          - DESTROY
+          - CUSTOM
+          - UNLOCK_STATE
+          - PLAN
+          - HOTFIX_PLAN
+          - APPLY_PLAN
+          - APPLY_HOTFIX_PLAN
+          - SCALE_UP
+          - SCALE_DOWN
+          - MAINTENANCE
+          - TERRAFORM_EXPORT
+          - ROLLBACK_PLAN
+          - APPLY_ROLLBACK_PLAN
+          - PLAN_AND_APPLY
+          - HOTFIX_PLAN_AND_APPLY
+          - IMPORT_RELEASE
+        skipStateCheck:
+          type: boolean
+        tfVersion:
+          $ref: '#/components/schemas/TfVersion'
+        triggeredBy:
+          type: string
+        withRefresh:
+          type: boolean
+  securitySchemes:
+    basicAuth:
+      description: Basic Authentication
+      scheme: basic
+      type: http

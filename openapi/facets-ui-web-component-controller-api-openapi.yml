@@ -1,0 +1,533 @@
+openapi: 3.2.0
+info:
+  description: API Documentation
+  title: Control-plane UI Web Component Controller API
+  version: '1.0'
+servers:
+- url: https://facetsdemo.console.facets.cloud
+  description: Generated server url
+security:
+- basicAuth: []
+tags:
+- name: ui-web-component-controller
+paths:
+  /cc-ui/v1/web-components:
+    get:
+      operationId: getAllComponents
+      parameters:
+      - in: query
+        name: type
+        required: false
+        schema:
+          type: string
+          enum:
+          - NAV_APP
+          - BLUEPRINT
+          - ENVIRONMENT
+          - RESOURCE
+          - TAB_APP
+      - in: query
+        name: blueprintName
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: environmentId
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WebComponentDTO'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-web-component-controller
+      summary: Get all components
+      x-summary-source: derived
+    post:
+      operationId: createComponent
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebComponentDTO'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebComponentDTO'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-web-component-controller
+      summary: Create component
+      x-summary-source: derived
+  /cc-ui/v1/web-components/assets/**:
+    get:
+      operationId: serveAsset
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: string
+                format: binary
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-web-component-controller
+      summary: Serve asset
+      x-summary-source: derived
+  /cc-ui/v1/web-components/{webComponentId}:
+    delete:
+      operationId: deleteComponent
+      parameters:
+      - in: path
+        name: webComponentId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-web-component-controller
+      summary: Delete component
+      x-summary-source: derived
+    get:
+      operationId: getComponent
+      parameters:
+      - in: path
+        name: webComponentId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebComponentDTO'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-web-component-controller
+      summary: Get component
+      x-summary-source: derived
+    put:
+      operationId: updateComponent
+      parameters:
+      - in: path
+        name: webComponentId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebComponentDTO'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebComponentDTO'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-web-component-controller
+      summary: Update component
+      x-summary-source: derived
+components:
+  schemas:
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    WebComponentScopeDetails:
+      type: object
+      properties:
+        blueprintName:
+          type: string
+          description: Project (blueprint) name. Null means every project. Required to be present as a deliberate choice in the UI, not left blank.
+          example: testing-himanshu-bp
+        environmentId:
+          type: string
+          description: Environment (cluster) id — the match key. Null means every environment of blueprintName. Requires blueprintName to be set.
+          example: 65f0a1c2e4b09a3d5c7f1234
+        environmentName:
+          type: string
+          description: Environment name, stored for display only and never matched on. May be stale after a rename.
+          example: prod
+        resourceName:
+          type: string
+          description: Reserved for resource scope, which is not yet supported.
+        resourceType:
+          type: string
+          description: Reserved for resource scope, which is not yet supported.
+      description: Which blueprint / environment a scoped web component applies to
+    WebComponentDTO:
+      required:
+      - enabled
+      - name
+      - type
+      type: object
+      properties:
+        bundleUploadedAt:
+          type: string
+          description: 'UPLOAD mode: when the served bundle was last deployed. Set by the server whenever content is sent, and not settable directly; null means nothing has been deployed yet, so the component has nothing to serve. UTC.'
+          format: date-time
+          readOnly: true
+          example: '2026-08-11T09:11:07.911Z'
+        content:
+          type: string
+          description: 'UPLOAD mode: the built file to serve, as text. Send it to deploy or replace the bundle; omit it to leave the current one untouched. Never returned — read the component''s remoteURL to fetch it.'
+          writeOnly: true
+          example: customElements.define('my-widget', class extends HTMLElement {});
+        contextualAttributes:
+          type: object
+          additionalProperties:
+            type: object
+            description: Additional contextual attributes for component configuration
+            example:
+              theme: dark
+              width: 100%
+          description: Additional contextual attributes for component configuration
+          example:
+            theme: dark
+            width: 100%
+        description:
+          maxLength: 200
+          minLength: 0
+          type: string
+          description: Optional free-text description of what this web component is for
+          example: Embeds the internal cost-reporting dashboard
+        enabled:
+          type: boolean
+          description: Flag to enable/disable component visibility
+          example: true
+        entryFile:
+          type: string
+          description: Path within the repo to the component's entry file (git mode).
+          example: dist/remoteEntry.js
+        gitAccountId:
+          type: string
+          description: Id of the version-control account whose credentials clone gitUrl (git mode).
+          example: 5f8d0c...
+        gitBranch:
+          type: string
+          description: Branch to check out (git mode).
+          example: main
+        gitUrl:
+          type: string
+          description: Git repository URL to check out and serve (git mode).
+          example: https://github.com/acme/widget.git
+        iconURL:
+          type: string
+          description: URL of the icon to be displayed in the UI
+          example: https://example.com/icon.png
+        id:
+          type: string
+          description: Unique identifier for the web component
+          example: abc123
+        lastModifiedBy:
+          type: string
+          readOnly: true
+        lastModifiedDate:
+          type: string
+          format: date-time
+          readOnly: true
+        name:
+          type: string
+          description: Unique identifier for the web component
+          example: custom-dashboard
+        order:
+          type: integer
+          description: Position priority of the component
+          format: int32
+          example: 1
+        remoteURL:
+          type: string
+          description: Hosted location of the component script. In URL mode this is supplied directly; in git mode it is computed by the backend from the checked-out repo and returned read-only.
+          example: https://example.com/component.js
+        scopeDetails:
+          $ref: '#/components/schemas/WebComponentScopeDetails'
+        sourceMode:
+          type: string
+          description: URL (you host it), GIT (we clone a repo) or UPLOAD (you send the built file as content). Inferred from the fields set when omitted.
+          example: UPLOAD
+          enum:
+          - URL
+          - GIT
+          - UPLOAD
+        tooltip:
+          type: string
+          description: Tooltip text to display on hover
+          example: Custom Dashboard Component
+        type:
+          type: string
+          description: Which UI surface renders the component — this is the component's scope. NAV_APP is the navigation sidebar, BLUEPRINT the project overview, ENVIRONMENT the environment pages. RESOURCE is reserved and rejected; TAB_APP is deprecated, renders nowhere and is rejected on write.
+          example: NAV_APP
+          enum:
+          - NAV_APP
+          - BLUEPRINT
+          - ENVIRONMENT
+          - RESOURCE
+          - TAB_APP
+      description: Model representing a Web Component for embedding custom applications
+  securitySchemes:
+    basicAuth:
+      description: Basic Authentication
+      scheme: basic
+      type: http

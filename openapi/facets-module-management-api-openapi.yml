@@ -1,0 +1,1741 @@
+openapi: 3.2.0
+info:
+  description: API Documentation
+  title: Control-plane Module Management API
+  version: '1.0'
+servers:
+- url: https://facetsdemo.console.facets.cloud
+  description: Generated server url
+security:
+- basicAuth: []
+tags:
+- name: Module Management
+paths:
+  /cc-ui/v1/modules:
+    get:
+      description: '- **Description:** Retrieves all modules with optional filtering.
+
+        - **Parameters:**
+
+        - `canDownload` (optional): When true, returns only modules that have downloadable content (modules with path). Defaults to false.
+
+        - **Permissions:** Requires MODULE_READ permission.
+
+        - **Audit Logging:** No specific audit logging at the moment.'
+      operationId: getAllModules
+      parameters:
+      - in: query
+        name: canDownload
+        required: false
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TFModuleListResponseDTO'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: Get All Modules
+      tags:
+      - Module Management
+  /cc-ui/v1/modules/all:
+    get:
+      description: '- **Description:** Retrieves all modules with optional filtering.
+
+        - **Audit Logging:** No specific audit logging at the moment.'
+      operationId: getAll_2
+      parameters:
+      - in: query
+        name: includeFacetsYaml
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - in: query
+        name: allowPreviewModules
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - in: query
+        name: withPathOnly
+        required: false
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TFModule'
+          description: Operation successful
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Invalid input parameters
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Entity not found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal server error
+      summary: Get All Modules
+      tags:
+      - Module Management
+  /cc-ui/v1/modules/bootstrap:
+    post:
+      description: '- **Description:** Bootstraps modules for initialization.
+
+        - **Audit Logging:** No specific audit logging at the moment.'
+      operationId: bootstrapModules
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  uniqueItems: true
+                  type: array
+                  items:
+                    type: string
+          description: Operation successful
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Invalid input parameters
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Entity not found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal server error
+      summary: Bootstrap Modules
+      tags:
+      - Module Management
+  /cc-ui/v1/modules/intent/{intent}/flavor/{flavor}/version/{version}/mark-published:
+    post:
+      description: '- **Description:** Marks a specific module version as published.
+
+        - **Permissions:** Requires MODULE_WRITE permission.
+
+        - **Audit Logging:** Yes'
+      operationId: markAsPublished
+      parameters:
+      - in: path
+        name: intent
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: flavor
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: version
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TFModule'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: Mark Module as Published
+      tags:
+      - Module Management
+  /cc-ui/v1/modules/modules-lite:
+    get:
+      operationId: getAllModulesLite
+      parameters:
+      - in: query
+        name: clouds
+        required: false
+        schema:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+            enum:
+            - AWS
+            - AZURE
+            - LOCAL
+            - GCP
+            - KUBERNETES
+            - NO_CLOUD
+      - in: query
+        name: allowPreviewModules
+        required: false
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TFModuleLiteDTO'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - Module Management
+      summary: Get all modules lite
+      x-summary-source: derived
+  /cc-ui/v1/modules/stack/{stackName}/grouped:
+    get:
+      description: '- **Description:** Retrieves grouped modules specifically for a stack name.
+
+        - **Audit Logging:** No specific audit logging at the moment.'
+      operationId: getGroupedModulesForStack
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListResourcesResponse'
+          description: Operation successful
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Invalid input parameters
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Entity not found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal server error
+      summary: Get Grouped Modules for Stack
+      tags:
+      - Module Management
+  /cc-ui/v1/modules/stack/{stackName}/{intent}/{flavor}/{version}/module:
+    get:
+      operationId: getModuleForIFVAndStack
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: intent
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: flavor
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: version
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TFModuleResponseDTO'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - Module Management
+      summary: Get module for IFV and stack
+      x-summary-source: derived
+  /cc-ui/v1/modules/upload:
+    post:
+      description: '- **Description:** Uploads a module using a file.
+
+        - **Permissions:** Requires MODULE_WRITE permission.
+
+        - **Parameters:**
+
+        - `file`: The module file to upload
+
+        - `metadata` (optional): Additional module metadata including:
+
+        - `gitUrl`: Web URL of the git repository (Expected to embed the commit id)
+
+        - `gitRef`: Git reference (branch, tag, or commit)
+
+        - `isFeatureBranch`: If this is true, this preview module cannot be directly marked as published until we register the module again with this as false.
+
+        - **Audit Logging:** Yes'
+      operationId: uploadModule
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                metadata:
+                  $ref: '#/components/schemas/ModuleMetadata'
+              required:
+              - file
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TFModule'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: Upload a module
+      tags:
+      - Module Management
+  /cc-ui/v1/modules/version/{versionId}/download:
+    get:
+      operationId: downloadModuleByVersionId
+      parameters:
+      - in: path
+        name: versionId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: string
+                format: binary
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - Module Management
+      summary: Download module by version id
+      x-summary-source: derived
+  /cc-ui/v1/modules/{id}:
+    delete:
+      description: '- **Description:** Deletes a module by ID.
+
+        - **Permissions:** Requires MODULE_DELETE permission.
+
+        - **Audit Logging:** Yes'
+      operationId: deleteTfModule
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: force
+        required: false
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TFModule'
+          description: Operation successful
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Invalid input parameters
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Entity not found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal server error
+      summary: Delete a Module
+      tags:
+      - Module Management
+    get:
+      description: '- **Description:** Retrieves a module by its ID.
+
+        - **Audit Logging:** No specific audit logging at the moment.'
+      operationId: getById
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TFModuleResponseDTO'
+          description: Operation successful
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Invalid input parameters
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Entity not found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal server error
+      summary: Get Module by ID
+      tags:
+      - Module Management
+  /cc-ui/v1/modules/{id}/download:
+    get:
+      operationId: downloadModuleById
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: string
+                format: binary
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - Module Management
+      summary: Download module by id
+      x-summary-source: derived
+  /cc-ui/v1/modules/{id}/mark-published:
+    post:
+      description: '- **Description:** Marks a specific module version as published.
+
+        - **Permissions:** Requires MODULE_WRITE permission.
+
+        - **Audit Logging:** Yes'
+      operationId: markAsPublishedById
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TFModule'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: Mark Module as Published
+      tags:
+      - Module Management
+  /cc-ui/v1/modules/{id}/usages:
+    get:
+      description: '- **Description:** Retrieves all usages of a module across stacks and clusters.
+
+        - **Audit Logging:** No specific audit logging at the moment.'
+      operationId: getModuleUsages
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ModuleUsageDTO'
+          description: Operation successful
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Invalid input parameters
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Module not found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal server error
+      summary: Get Module Usages
+      tags:
+      - Module Management
+  /cc-ui/v1/modules/{stackName}/intent/{intent}/flavor/{flavor}/add-ons:
+    get:
+      description: '- **Description:** Retrieves all add-on modules based on stack, intent and flavor, optionally by cloud.
+
+        - **Audit Logging:** No specific audit logging at the moment.'
+      operationId: getIntentAddOnModules
+      parameters:
+      - in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: intent
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: flavor
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: cloud
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TFModuleLiteDTO'
+          description: Operation successful
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Invalid input parameters
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Entity not found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal server error
+      summary: Get Add-On Modules
+      tags:
+      - Module Management
+components:
+  schemas:
+    InputOutputResource:
+      type: object
+      properties:
+        default:
+          type: boolean
+        outputName:
+          type: string
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    OtherVersion:
+      type: object
+      properties:
+        id:
+          type: string
+        version:
+          type: string
+    TemplateResponseDTO:
+      type: object
+      properties:
+        clouds:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        description:
+          type: string
+        displayName:
+          type: string
+        group:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+          enum:
+          - MULTI_INSTANCE
+          - SINGLE_INSTANCE
+          - AUTO_INJECT
+      description: Templates associated with the resources
+    ListResourcesResponse:
+      type: object
+      properties:
+        resources:
+          type: object
+          additionalProperties:
+            type: object
+            additionalProperties:
+              $ref: '#/components/schemas/TFModuleLiteListDTO'
+            description: Grouped resources by type and name
+          description: Grouped resources by type and name
+        templates:
+          type: object
+          additionalProperties:
+            type: array
+            description: Templates associated with the resources
+            items:
+              $ref: '#/components/schemas/TemplateResponseDTO'
+          description: Templates associated with the resources
+      description: Response entity containing grouped resources and templates
+    IntentOutput:
+      type: object
+      properties:
+        description:
+          type: string
+        name:
+          type: string
+        providers:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/TFProvider'
+        title:
+          type: string
+        type:
+          type: string
+    ModuleMetadata:
+      type: object
+      properties:
+        autoCreate:
+          type: boolean
+        featureBranch:
+          type: boolean
+        gitRef:
+          type: string
+        gitUrl:
+          type: string
+        skipOutputWrite:
+          type: boolean
+    TFModuleLiteListDTO:
+      type: object
+      properties:
+        description:
+          type: string
+        displayName:
+          type: string
+        iconUrl:
+          type: string
+        modules:
+          type: array
+          items:
+            $ref: '#/components/schemas/TFModuleLiteDTO'
+      description: Grouped resources by type and name
+    TFModuleLiteDTO:
+      type: object
+      properties:
+        allowedTestProjects:
+          type: array
+          description: List of test projects where this module will be available
+          items:
+            type: string
+            description: List of test projects where this module will be available
+        clouds:
+          uniqueItems: true
+          type: array
+          description: Supported cloud providers
+          example:
+          - aws
+          - azure
+          items:
+            type: string
+            description: Supported cloud providers
+            example: '["aws","azure"]'
+        flavor:
+          type: string
+          description: Flavor of the TF Module
+          example: small
+        iacTool:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+            enum:
+            - TERRAFORM
+            - OPENTOFU
+        id:
+          type: string
+        inputs:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Input'
+          description: Input parameters for the module
+        intent:
+          type: string
+          description: Intent of the TF Module
+          example: deploy
+        intentType:
+          type: string
+        nameLengthLimit:
+          type: integer
+          description: Maximum allowed length for resource names using this module
+          format: int32
+          example: 40
+        nameRegex:
+          type: string
+          description: Regular expression pattern for validating resource names
+          example: ^[a-z0-9-]+$
+        source:
+          type: string
+          description: Source of the TF Module
+          enum:
+          - BUILT_IN
+          - CUSTOM
+        stage:
+          type: string
+          enum:
+          - PREVIEW
+          - PUBLISHED
+        tags:
+          uniqueItems: true
+          type: array
+          description: Tags associated with the module
+          example:
+          - tag1
+          - tag2
+          items:
+            type: string
+            description: Tags associated with the module
+            example: '["tag1","tag2"]'
+        version:
+          type: string
+          description: Version of the TF Module
+          example: 1.0.0
+      description: Lightweight DTO for TF Modules providing minimal details
+    TFModulePath:
+      type: object
+      properties:
+        etag:
+          type: string
+        path:
+          type: string
+        pathType:
+          type: string
+          enum:
+          - S3
+          - FACETS_S3
+      description: Path information related to TF Module
+    TFModuleListResponseDTO:
+      type: object
+      properties:
+        clouds:
+          uniqueItems: true
+          type: array
+          description: Supported cloud providers
+          example:
+          - aws
+          - azure
+          items:
+            type: string
+            description: Supported cloud providers
+            example: '["aws","azure"]'
+        controlPlaneUISettings:
+          $ref: '#/components/schemas/ControlPlaneUISettings'
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        featureBranch:
+          type: boolean
+        flavor:
+          type: string
+          description: Flavor of the TF Module
+          example: small
+        gitRef:
+          type: string
+        gitUrl:
+          type: string
+        iacTool:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+            enum:
+            - TERRAFORM
+            - OPENTOFU
+        id:
+          type: string
+        intentDetails:
+          $ref: '#/components/schemas/IntentResponseDTO'
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        previewGitRef:
+          type: string
+        previewGitUrl:
+          type: string
+        previewModuleId:
+          type: string
+        source:
+          type: string
+          description: Source of the TF Module
+          enum:
+          - BUILT_IN
+          - CUSTOM
+        stage:
+          type: string
+          description: Stage of the TF Module in its lifecycle
+          example: PUBLISHED
+          enum:
+          - PREVIEW
+          - PUBLISHED
+        tags:
+          uniqueItems: true
+          type: array
+          description: Tags associated with the module
+          example:
+          - tag1
+          - tag2
+          items:
+            type: string
+            description: Tags associated with the module
+            example: '["tag1","tag2"]'
+        type:
+          type: string
+          description: Type of the TF Module
+          example: SIMPLE
+          enum:
+          - SIMPLE
+          - ADD_ON
+        version:
+          type: string
+          description: Version of the TF Module
+          example: 1.0.0
+    ControlPlaneUISettings:
+      type: object
+      properties:
+        enableKubernetesExplorer:
+          type: boolean
+          description: Whether Kubernetes Explorer should be enabled for this resource
+        nameRegex:
+          type: string
+          description: Regular expression pattern for validating resource names
+          example: ^[a-z0-9-]+$
+      description: Control Plane UI specific settings
+    ModuleUsageDTO:
+      type: object
+      properties:
+        clusterId:
+          type: string
+        clusterName:
+          type: string
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+        stackName:
+          type: string
+    IntentResponseDTO:
+      type: object
+      properties:
+        description:
+          type: string
+        displayName:
+          type: string
+        iconUrl:
+          type: string
+        intentOutputs:
+          type: array
+          items:
+            $ref: '#/components/schemas/IntentOutput'
+        name:
+          type: string
+        source:
+          type: string
+          enum:
+          - BUILT_IN
+          - CUSTOM
+        type:
+          type: string
+    Input:
+      type: object
+      properties:
+        addsCapability:
+          type: boolean
+        blockEdits:
+          type: boolean
+        defaultResource:
+          $ref: '#/components/schemas/InputOutputResource'
+        description:
+          type: string
+        displayName:
+          type: string
+        optional:
+          type: boolean
+        providers:
+          type: array
+          items:
+            type: string
+        type:
+          type: string
+      description: Input parameters for this module
+    TFProvider:
+      type: object
+      properties:
+        attributes:
+          type: object
+          additionalProperties:
+            type: object
+        name:
+          type: string
+        source:
+          type: string
+        version:
+          type: string
+    TFModuleResponseDTO:
+      type: object
+      properties:
+        aliasFlavors:
+          uniqueItems: true
+          type: array
+          description: Alias flavors for the module
+          example:
+          - medium
+          - extra-large
+          items:
+            type: string
+            description: Alias flavors for the module
+            example: '["medium","extra-large"]'
+        allowedTestProjects:
+          type: array
+          description: List of test projects where this module will be available. If absent, it is available globally.
+          items:
+            type: string
+            description: List of test projects where this module will be available. If absent, it is available globally.
+        canDownload:
+          type: boolean
+        clouds:
+          uniqueItems: true
+          type: array
+          description: Supported cloud providers
+          example:
+          - aws
+          - azure
+          items:
+            type: string
+            description: Supported cloud providers
+            example: '["aws","azure"]'
+        controlPlaneUISettings:
+          $ref: '#/components/schemas/ControlPlaneUISettings'
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        criticalResource:
+          type: boolean
+        description:
+          type: string
+          description: Module description
+        featureBranch:
+          type: boolean
+        flavor:
+          type: string
+          description: Flavor of the TF Module
+          example: small
+        gitRef:
+          type: string
+          description: Reference to a specific GIT branch or commit
+          example: develop
+        gitUrl:
+          type: string
+          description: URL of the GIT repository
+          example: https://gitlab.com/repo.git
+        iacTool:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+            enum:
+            - TERRAFORM
+            - OPENTOFU
+        id:
+          type: string
+        inputs:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Input'
+          description: Input parameters for this module
+        intent:
+          type: string
+          description: Intent of the TF Module
+          example: compute
+        intentDetails:
+          $ref: '#/components/schemas/IntentResponseDTO'
+        kubernetes:
+          type: boolean
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        latestVersion:
+          $ref: '#/components/schemas/OtherVersion'
+        metadata:
+          type: string
+          description: Metadata of the module
+        nameLengthLimit:
+          type: integer
+          description: Maximum allowed length for resource names using this module
+          format: int32
+          example: 40
+        otherVersions:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/OtherVersion'
+        outputs:
+          type: array
+          items:
+            $ref: '#/components/schemas/IntentOutput'
+        previewModuleId:
+          type: string
+        publishedModuleId:
+          type: string
+        readmeMd:
+          type: string
+          description: Readme content in markdown format
+        sampleJson:
+          type: string
+          description: Sample JSON configuration
+          example: '{}'
+        source:
+          type: string
+          description: Source of the TF Module
+          enum:
+          - BUILT_IN
+          - CUSTOM
+        spec:
+          type: string
+          description: Specification details of the module
+        stage:
+          type: string
+          description: Stage of the TF Module in its lifecycle
+          example: PUBLISHED
+          enum:
+          - PREVIEW
+          - PUBLISHED
+        tags:
+          uniqueItems: true
+          type: array
+          description: Tags associated with the module
+          example:
+          - tag1
+          - tag2
+          items:
+            type: string
+            description: Tags associated with the module
+            example: '["tag1","tag2"]'
+        type:
+          type: string
+          description: Type of the TF Module
+          example: SIMPLE
+          enum:
+          - SIMPLE
+          - ADD_ON
+        version:
+          type: string
+          description: Version of the TF Module
+          example: 1.0.0
+        versioningKey:
+          type: string
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    TFModule:
+      type: object
+      properties:
+        accountId:
+          type: string
+          description: Account identifier
+          example: '67890'
+        aliasFlavors:
+          uniqueItems: true
+          type: array
+          description: Alias flavors for the module
+          example:
+          - medium
+          - extra-large
+          items:
+            type: string
+            description: Alias flavors for the module
+            example: '["medium","extra-large"]'
+        allowedTestProjects:
+          type: array
+          description: List of test projects where this module will be available. If absent, it is available globally.
+          example:
+          - project-1
+          - project-2
+          items:
+            type: string
+            description: List of test projects where this module will be available. If absent, it is available globally.
+            example: '["project-1","project-2"]'
+        changeLog:
+          type: string
+          writeOnly: true
+        clouds:
+          uniqueItems: true
+          type: array
+          description: Supported cloud providers for this module
+          example:
+          - gcp
+          items:
+            type: string
+            description: Supported cloud providers for this module
+            example: '["gcp"]'
+        containsOverridableFields:
+          type: boolean
+        controlPlaneUISettings:
+          $ref: '#/components/schemas/ControlPlaneUISettings'
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        criticalResource:
+          type: boolean
+        description:
+          type: string
+        enableKubernetesExplorer:
+          type: boolean
+        facetsYaml:
+          type: string
+          description: Facets YAML content
+        featureBranch:
+          type: boolean
+        flavor:
+          type: string
+          description: Flavor of the TF Module
+          example: large
+        gitRef:
+          type: string
+          description: Reference to a specific GIT branch or commit
+          example: develop
+        gitUrl:
+          type: string
+          description: URL of the GIT repository
+          example: https://gitlab.com/repo.git
+        iacTool:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+            enum:
+            - TERRAFORM
+            - OPENTOFU
+        id:
+          type: string
+        inputs:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Input'
+          description: Input parameters for this module
+        intent:
+          type: string
+          description: Intent of the TF Module
+          example: compute
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        metadata:
+          type: string
+        moduleGroupId:
+          type: string
+        nameLengthLimit:
+          minimum: 1
+          type: integer
+          description: Maximum allowed length for resource names using this module
+          format: int32
+          example: 40
+        outputs:
+          type: array
+          items:
+            $ref: '#/components/schemas/IntentOutput'
+        path:
+          $ref: '#/components/schemas/TFModulePath'
+        publishWarning:
+          type: string
+          description: 'Set only on the publish response when the modules repo is in WARN mode and the publish failed the provenance check: the message ENFORCE would have rejected with. Never persisted.'
+        readmeMd:
+          type: string
+        relativePath:
+          type: string
+          description: Relative path within the repository
+          example: modules/path
+        sampleJson:
+          type: string
+          description: Sample JSON configuration
+          example: '{}'
+        source:
+          type: string
+          description: Source of the module
+          enum:
+          - BUILT_IN
+          - CUSTOM
+        spec:
+          type: string
+          description: Specification details of the module
+        specModeled:
+          type: boolean
+        stage:
+          type: string
+          description: Stage of the TF Module in its lifecycle
+          example: PUBLISHED
+          enum:
+          - PREVIEW
+          - PUBLISHED
+        tags:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        type:
+          type: string
+          description: Type of the TF Module
+          example: SIMPLE
+          enum:
+          - SIMPLE
+          - ADD_ON
+        version:
+          type: string
+          description: Version of the TF Module
+          example: 2.0.0
+        versioningKey:
+          type: string
+      description: Model representing a Terraform Module
+  securitySchemes:
+    basicAuth:
+      description: Basic Authentication
+      scheme: basic
+      type: http

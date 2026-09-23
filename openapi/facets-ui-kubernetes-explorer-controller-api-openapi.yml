@@ -1,0 +1,2502 @@
+openapi: 3.2.0
+info:
+  description: API Documentation
+  title: Control-plane UI Kubernetes Explorer Controller API
+  version: '1.0'
+servers:
+- url: https://facetsdemo.console.facets.cloud
+  description: Generated server url
+security:
+- basicAuth: []
+tags:
+- name: ui-kubernetes-explorer-controller
+paths:
+  /cc-ui/v1/clusters/{clusterId}/k8s-explorer/configMaps:
+    get:
+      operationId: listConfigMapByLabels
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: labels
+        required: true
+        schema:
+          type: object
+          additionalProperties:
+            type: string
+        style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ConfigMapDTO'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-kubernetes-explorer-controller
+      summary: List config map by labels
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/k8s-explorer/configMaps/{configMapName}:
+    get:
+      operationId: getConfigMapData
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: configMapName
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: labels
+        required: true
+        schema:
+          type: object
+          additionalProperties:
+            type: string
+        style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-kubernetes-explorer-controller
+      summary: Get config map data
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/k8s-explorer/cronJobs:
+    get:
+      operationId: listCronJobByLabels
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: labels
+        required: true
+        schema:
+          type: object
+          additionalProperties:
+            type: string
+        style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CronJobDTO'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-kubernetes-explorer-controller
+      summary: List cron job by labels
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/k8s-explorer/daemonSets:
+    get:
+      operationId: listDaemonSetsByLabels
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: labels
+        required: true
+        schema:
+          type: object
+          additionalProperties:
+            type: string
+        style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DaemonSetDTO'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-kubernetes-explorer-controller
+      summary: List daemon sets by labels
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/k8s-explorer/deployments:
+    get:
+      operationId: listDeploymentsByLabels
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: labels
+        required: true
+        schema:
+          type: object
+          additionalProperties:
+            type: string
+        style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DeploymentDTO'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-kubernetes-explorer-controller
+      summary: List deployments by labels
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/k8s-explorer/deployments/{deploymentName}:
+    get:
+      operationId: getPodsForDeployment
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: deploymentName
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: labels
+        required: true
+        schema:
+          type: object
+          additionalProperties:
+            type: string
+        style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-kubernetes-explorer-controller
+      summary: Get pods for deployment
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/k8s-explorer/hpa:
+    get:
+      operationId: listHpaByLabels
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: labels
+        required: true
+        schema:
+          type: object
+          additionalProperties:
+            type: string
+        style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HorizontalPodAutoscalerDTO'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-kubernetes-explorer-controller
+      summary: List hpa by labels
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/k8s-explorer/ingress-rules:
+    get:
+      operationId: getAllIngressRulesForCluster
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/IngressRulesDTO'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-kubernetes-explorer-controller
+      summary: Get all ingress rules for cluster
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/k8s-explorer/ingresses:
+    get:
+      operationId: listIngressesByLabels
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: labels
+        required: true
+        schema:
+          type: object
+          additionalProperties:
+            type: string
+        style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/IngressDTO'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-kubernetes-explorer-controller
+      summary: List ingresses by labels
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/k8s-explorer/jobs:
+    get:
+      operationId: listJobsByLabels
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: labels
+        required: true
+        schema:
+          type: object
+          additionalProperties:
+            type: string
+        style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/JobDTO'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-kubernetes-explorer-controller
+      summary: List jobs by labels
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/k8s-explorer/pods:
+    get:
+      operationId: listPodsByLabels
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: labels
+        required: true
+        schema:
+          type: object
+          additionalProperties:
+            type: string
+        style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PodDTO'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-kubernetes-explorer-controller
+      summary: List pods by labels
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/k8s-explorer/pods/{podName}/{containerName}/logs:
+    get:
+      operationId: containerLogs
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: podName
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: containerName
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: tail
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - in: query
+        name: labels
+        required: true
+        schema:
+          type: object
+          additionalProperties:
+            type: string
+        style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StreamingResponseBody'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-kubernetes-explorer-controller
+      summary: Container logs
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/k8s-explorer/pv:
+    get:
+      operationId: listPVByLabels
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: labels
+        required: true
+        schema:
+          type: object
+          additionalProperties:
+            type: string
+        style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PersistentVolumeDTO'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-kubernetes-explorer-controller
+      summary: List PVBy labels
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/k8s-explorer/pvc:
+    get:
+      operationId: listPVCByLabels
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: labels
+        required: true
+        schema:
+          type: object
+          additionalProperties:
+            type: string
+        style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PersistentVolumeClaimDTO'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-kubernetes-explorer-controller
+      summary: List PVCBy labels
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/k8s-explorer/replicasets:
+    get:
+      operationId: listReplicasetsByLabels
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: labels
+        required: true
+        schema:
+          type: object
+          additionalProperties:
+            type: string
+        style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ReplicasetDTO'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-kubernetes-explorer-controller
+      summary: List replicasets by labels
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/k8s-explorer/secrets:
+    get:
+      operationId: listSecretsByLabels
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: labels
+        required: true
+        schema:
+          type: object
+          additionalProperties:
+            type: string
+        style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SecretDTO'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-kubernetes-explorer-controller
+      summary: List secrets by labels
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/k8s-explorer/secrets/{secretName}:
+    get:
+      operationId: getSecretsData
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: secretName
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: labels
+        required: true
+        schema:
+          type: object
+          additionalProperties:
+            type: string
+        style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-kubernetes-explorer-controller
+      summary: Get secrets data
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/k8s-explorer/services:
+    get:
+      operationId: listServicesByLabels
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: labels
+        required: true
+        schema:
+          type: object
+          additionalProperties:
+            type: string
+        style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ServiceDTO'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-kubernetes-explorer-controller
+      summary: List services by labels
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/k8s-explorer/statefulsets:
+    get:
+      operationId: listStatefulsetsLabelsByLabels
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: labels
+        required: true
+        schema:
+          type: object
+          additionalProperties:
+            type: string
+        style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StatefulSetDTO'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-kubernetes-explorer-controller
+      summary: List statefulsets labels by labels
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/k8s-explorer/{k8sResourceType}/{k8sResourceName}/events:
+    get:
+      operationId: listEventsByK8sResource
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: k8sResourceType
+        required: true
+        schema:
+          type: string
+          enum:
+          - Deployment
+          - Pod
+          - DaemonSet
+          - StatefulSet
+          - HorizontalPodAutoscaler
+          - ReplicaSet
+          - Job
+          - CronJob
+          - Ingress
+          - PersistentVolumeClaim
+          - PersistentVolume
+          - ConfigMaps
+      - in: path
+        name: k8sResourceName
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: labels
+        required: true
+        schema:
+          type: object
+          additionalProperties:
+            type: string
+        style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EventDTO'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-kubernetes-explorer-controller
+      summary: List events by k8s resource
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/k8s-explorer/{k8sResourceType}/{k8sResourceName}/manifest:
+    get:
+      operationId: getManifest
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: k8sResourceType
+        required: true
+        schema:
+          type: string
+          enum:
+          - Deployment
+          - Pod
+          - DaemonSet
+          - StatefulSet
+          - HorizontalPodAutoscaler
+          - ReplicaSet
+          - Job
+          - CronJob
+          - Ingress
+          - PersistentVolumeClaim
+          - PersistentVolume
+          - ConfigMaps
+      - in: path
+        name: k8sResourceName
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: labels
+        required: true
+        schema:
+          type: object
+          additionalProperties:
+            type: string
+        style: form
+      responses:
+        '200':
+          content:
+            text/plain:
+              schema:
+                type: string
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-kubernetes-explorer-controller
+      summary: Get manifest
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/k8s-explorer/{podName}/containers:
+    get:
+      operationId: listContainersInPod
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: podName
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: labels
+        required: true
+        schema:
+          type: object
+          additionalProperties:
+            type: string
+        style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Container'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-kubernetes-explorer-controller
+      summary: List containers in pod
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/k8s-explorer/{podName}/v2/containers:
+    get:
+      operationId: listContainersInPodV2
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: podName
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: labels
+        required: true
+        schema:
+          type: object
+          additionalProperties:
+            type: string
+        style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ContainerDTO'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-kubernetes-explorer-controller
+      summary: List containers in pod V2
+      x-summary-source: derived
+components:
+  schemas:
+    ExecAction:
+      type: object
+      properties:
+        command:
+          type: array
+          items:
+            type: string
+    GRPCAction:
+      type: object
+      properties:
+        port:
+          type: integer
+          format: int32
+        service:
+          type: string
+    TCPSocketAction:
+      type: object
+      properties:
+        host:
+          type: string
+        port:
+          $ref: '#/components/schemas/IntOrString'
+    ConfigMapKeySelector:
+      type: object
+      properties:
+        key:
+          type: string
+        name:
+          type: string
+        optional:
+          type: boolean
+    ContainerResizePolicy:
+      type: object
+      properties:
+        resourceName:
+          type: string
+        restartPolicy:
+          type: string
+    ConfigMapEnvSource:
+      type: object
+      properties:
+        name:
+          type: string
+        optional:
+          type: boolean
+    PodStatusDTO:
+      type: object
+      properties:
+        active:
+          type: integer
+          format: int32
+        completions:
+          type: string
+        failed:
+          type: integer
+          format: int32
+        succeeded:
+          type: integer
+          format: int32
+    ResourceFieldSelector:
+      type: object
+      properties:
+        containerName:
+          type: string
+        divisor:
+          $ref: '#/components/schemas/Quantity'
+        resource:
+          type: string
+    ContainerDTO:
+      type: object
+      properties:
+        ageInSeconds:
+          type: integer
+          format: int64
+        image:
+          type: string
+        name:
+          type: string
+        restartCount:
+          type: integer
+          format: int32
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    AppArmorProfile:
+      type: object
+      properties:
+        localhostProfile:
+          type: string
+        type:
+          type: string
+    Capabilities:
+      type: object
+      properties:
+        add:
+          type: array
+          items:
+            type: string
+        drop:
+          type: array
+          items:
+            type: string
+    SleepAction:
+      type: object
+      properties:
+        seconds:
+          type: integer
+          format: int64
+    DaemonSetDTO:
+      type: object
+      properties:
+        ageInSeconds:
+          type: integer
+          format: int64
+        available:
+          type: integer
+          format: int32
+        current:
+          type: integer
+          format: int32
+        desired:
+          type: integer
+          format: int32
+        name:
+          type: string
+        nodeSelector:
+          type: object
+          additionalProperties:
+            type: string
+        ready:
+          type: integer
+          format: int32
+        upToDate:
+          type: integer
+          format: int32
+    DeploymentDTO:
+      type: object
+      properties:
+        ageInSeconds:
+          type: integer
+          format: int64
+        available:
+          type: integer
+          format: int32
+        name:
+          type: string
+        ready:
+          type: integer
+          format: int32
+        upToDate:
+          type: integer
+          format: int32
+    ContainerPort:
+      type: object
+      properties:
+        containerPort:
+          type: integer
+          format: int32
+        hostIP:
+          type: string
+        hostPort:
+          type: integer
+          format: int32
+        name:
+          type: string
+        protocol:
+          type: string
+    FileKeySelector:
+      type: object
+      properties:
+        key:
+          type: string
+        optional:
+          type: boolean
+        path:
+          type: string
+        volumeName:
+          type: string
+    EnvFromSource:
+      type: object
+      properties:
+        configMapRef:
+          $ref: '#/components/schemas/ConfigMapEnvSource'
+        prefix:
+          type: string
+        secretRef:
+          $ref: '#/components/schemas/SecretEnvSource'
+    EventDTO:
+      type: object
+      properties:
+        lastSeen:
+          type: string
+        message:
+          type: string
+        object:
+          type: string
+        reason:
+          type: string
+        type:
+          type: string
+    LifecycleHandler:
+      type: object
+      properties:
+        exec:
+          $ref: '#/components/schemas/ExecAction'
+        httpGet:
+          $ref: '#/components/schemas/HTTPGetAction'
+        sleep:
+          $ref: '#/components/schemas/SleepAction'
+        tcpSocket:
+          $ref: '#/components/schemas/TCPSocketAction'
+    ConfigMapDTO:
+      type: object
+      properties:
+        age:
+          type: integer
+          format: int64
+        keys:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        name:
+          type: string
+    ObjectFieldSelector:
+      type: object
+      properties:
+        apiVersion:
+          type: string
+        fieldPath:
+          type: string
+    VolumeDevice:
+      type: object
+      properties:
+        devicePath:
+          type: string
+        name:
+          type: string
+    IngressBackendDTO:
+      type: object
+      properties:
+        port:
+          type: integer
+          format: int32
+        serviceName:
+          type: string
+    SeccompProfile:
+      type: object
+      properties:
+        localhostProfile:
+          type: string
+        type:
+          type: string
+    Quantity:
+      type: object
+      properties:
+        amount:
+          type: string
+        format:
+          type: string
+    SecretKeySelector:
+      type: object
+      properties:
+        key:
+          type: string
+        name:
+          type: string
+        optional:
+          type: boolean
+    SecretEnvSource:
+      type: object
+      properties:
+        name:
+          type: string
+        optional:
+          type: boolean
+    VolumeMount:
+      type: object
+      properties:
+        mountPath:
+          type: string
+        mountPropagation:
+          type: string
+        name:
+          type: string
+        readOnly:
+          type: boolean
+        recursiveReadOnly:
+          type: string
+        subPath:
+          type: string
+        subPathExpr:
+          type: string
+    EnvVarSource:
+      type: object
+      properties:
+        configMapKeyRef:
+          $ref: '#/components/schemas/ConfigMapKeySelector'
+        fieldRef:
+          $ref: '#/components/schemas/ObjectFieldSelector'
+        fileKeyRef:
+          $ref: '#/components/schemas/FileKeySelector'
+        resourceFieldRef:
+          $ref: '#/components/schemas/ResourceFieldSelector'
+        secretKeyRef:
+          $ref: '#/components/schemas/SecretKeySelector'
+    ServiceDTO:
+      type: object
+      properties:
+        age:
+          type: integer
+          format: int64
+        clusterIp:
+          type: string
+        externalIp:
+          type: string
+        ipFamilies:
+          type: array
+          items:
+            type: string
+        name:
+          type: string
+        port:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServicePortDTO'
+        type:
+          type: string
+    Metric:
+      type: object
+      properties:
+        cpuUtilization:
+          $ref: '#/components/schemas/Utilization'
+        memoryUtilization:
+          $ref: '#/components/schemas/Utilization'
+    Utilization:
+      type: object
+      properties:
+        current:
+          type: string
+        target:
+          type: string
+    HTTPGetAction:
+      type: object
+      properties:
+        host:
+          type: string
+        httpHeaders:
+          type: array
+          items:
+            $ref: '#/components/schemas/HTTPHeader'
+        path:
+          type: string
+        port:
+          $ref: '#/components/schemas/IntOrString'
+        scheme:
+          type: string
+    StreamingResponseBody:
+      type: object
+    CronJobDTO:
+      type: object
+      properties:
+        active:
+          type: integer
+          format: int32
+        ageInSeconds:
+          type: integer
+          format: int64
+        lastSchedule:
+          type: string
+        name:
+          type: string
+        schedule:
+          type: string
+        suspend:
+          type: boolean
+    StatefulSetDTO:
+      type: object
+      properties:
+        ageInSeconds:
+          type: integer
+          format: int64
+        desiredReplicas:
+          type: integer
+          format: int32
+        name:
+          type: string
+        podCount:
+          type: integer
+          format: int32
+        readyReplicas:
+          type: integer
+          format: int32
+        replicas:
+          type: integer
+          format: int32
+        status:
+          type: string
+    PodDTO:
+      type: object
+      properties:
+        ageInSeconds:
+          type: integer
+          format: int64
+        name:
+          type: string
+        ready:
+          type: string
+        restarts:
+          type: integer
+          format: int32
+        role:
+          type: string
+          enum:
+          - active
+          - preview
+          - na
+        status:
+          type: string
+          enum:
+          - Pending
+          - Running
+          - Succeeded
+          - Failed
+          - Unknown
+          - CrashLoopBackOff
+          - ImagePullBackOff
+          - ContainerCreating
+          - Terminating
+          - Evicted
+          - Completed
+          - Restarting
+          - Error
+          - InvalidImageName
+          - OOMKilled
+    WindowsSecurityContextOptions:
+      type: object
+      properties:
+        gmsaCredentialSpec:
+          type: string
+        gmsaCredentialSpecName:
+          type: string
+        hostProcess:
+          type: boolean
+        runAsUserName:
+          type: string
+    SELinuxOptions:
+      type: object
+      properties:
+        level:
+          type: string
+        role:
+          type: string
+        type:
+          type: string
+        user:
+          type: string
+    ResourceClaim:
+      type: object
+      properties:
+        name:
+          type: string
+        request:
+          type: string
+    EnvVar:
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+        valueFrom:
+          $ref: '#/components/schemas/EnvVarSource'
+    PersistentVolumeClaimDTO:
+      type: object
+      properties:
+        ageInSeconds:
+          type: integer
+          format: int64
+        associatedPods:
+          type: array
+          items:
+            type: string
+        capacity:
+          type: string
+        name:
+          type: string
+        pvcAccessModes:
+          type: array
+          items:
+            type: string
+        status:
+          type: string
+        storageClass:
+          type: string
+        volume:
+          type: string
+    SecretDTO:
+      type: object
+      properties:
+        age:
+          type: integer
+          format: int64
+        dataCount:
+          type: integer
+          format: int32
+        dataKeySet:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        name:
+          type: string
+        type:
+          type: string
+    ResourceRequirements:
+      type: object
+      properties:
+        claims:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceClaim'
+        limits:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Quantity'
+        requests:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Quantity'
+    PersistentVolumeDTO:
+      type: object
+      properties:
+        ageInSeconds:
+          type: integer
+          format: int64
+        capacity:
+          type: string
+        claim:
+          type: string
+        name:
+          type: string
+        pvAccessModes:
+          type: array
+          items:
+            type: string
+        reason:
+          type: string
+        reclaimPolicy:
+          type: string
+        status:
+          type: string
+        storageClass:
+          type: string
+    IntOrString:
+      type: object
+      properties:
+        intVal:
+          type: integer
+          format: int32
+        strVal:
+          type: string
+        value:
+          type: object
+    SecurityContext:
+      type: object
+      properties:
+        allowPrivilegeEscalation:
+          type: boolean
+        appArmorProfile:
+          $ref: '#/components/schemas/AppArmorProfile'
+        capabilities:
+          $ref: '#/components/schemas/Capabilities'
+        privileged:
+          type: boolean
+        procMount:
+          type: string
+        readOnlyRootFilesystem:
+          type: boolean
+        runAsGroup:
+          type: integer
+          format: int64
+        runAsNonRoot:
+          type: boolean
+        runAsUser:
+          type: integer
+          format: int64
+        seLinuxOptions:
+          $ref: '#/components/schemas/SELinuxOptions'
+        seccompProfile:
+          $ref: '#/components/schemas/SeccompProfile'
+        windowsOptions:
+          $ref: '#/components/schemas/WindowsSecurityContextOptions'
+    Lifecycle:
+      type: object
+      properties:
+        postStart:
+          $ref: '#/components/schemas/LifecycleHandler'
+        preStop:
+          $ref: '#/components/schemas/LifecycleHandler'
+        stopSignal:
+          type: string
+    HTTPHeader:
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+    HorizontalPodAutoscalerDTO:
+      type: object
+      properties:
+        ageInSeconds:
+          type: integer
+          format: int64
+        metric:
+          $ref: '#/components/schemas/Metric'
+        name:
+          type: string
+        replicaStatus:
+          $ref: '#/components/schemas/ReplicaStatus'
+    ContainerRestartRuleOnExitCodes:
+      type: object
+      properties:
+        operator:
+          type: string
+        values:
+          type: array
+          items:
+            type: integer
+            format: int32
+    ReplicaStatus:
+      type: object
+      properties:
+        currentReplicas:
+          type: integer
+          format: int32
+        maxReplicas:
+          type: integer
+          format: int32
+        minReplicas:
+          type: integer
+          format: int32
+        targetReplicas:
+          type: integer
+          format: int32
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    ServicePortDTO:
+      type: object
+      properties:
+        name:
+          type: string
+        port:
+          type: integer
+          format: int32
+        protocol:
+          type: string
+        targetPort:
+          type: string
+    Container:
+      type: object
+      properties:
+        args:
+          type: array
+          items:
+            type: string
+        command:
+          type: array
+          items:
+            type: string
+        env:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnvVar'
+        envFrom:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnvFromSource'
+        image:
+          type: string
+        imagePullPolicy:
+          type: string
+        lifecycle:
+          $ref: '#/components/schemas/Lifecycle'
+        livenessProbe:
+          $ref: '#/components/schemas/Probe'
+        name:
+          type: string
+        ports:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContainerPort'
+        readinessProbe:
+          $ref: '#/components/schemas/Probe'
+        resizePolicy:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContainerResizePolicy'
+        resources:
+          $ref: '#/components/schemas/ResourceRequirements'
+        restartPolicy:
+          type: string
+        restartPolicyRules:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContainerRestartRule'
+        securityContext:
+          $ref: '#/components/schemas/SecurityContext'
+        startupProbe:
+          $ref: '#/components/schemas/Probe'
+        stdin:
+          type: boolean
+        stdinOnce:
+          type: boolean
+        terminationMessagePath:
+          type: string
+        terminationMessagePolicy:
+          type: string
+        tty:
+          type: boolean
+        volumeDevices:
+          type: array
+          items:
+            $ref: '#/components/schemas/VolumeDevice'
+        volumeMounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/VolumeMount'
+        workingDir:
+          type: string
+    JobDTO:
+      type: object
+      properties:
+        ageInSeconds:
+          type: integer
+          format: int64
+        durationInSeconds:
+          type: integer
+          format: int64
+        name:
+          type: string
+        podStatus:
+          $ref: '#/components/schemas/PodStatusDTO'
+    ReplicasetDTO:
+      type: object
+      properties:
+        ageInSeconds:
+          type: integer
+          format: int64
+        current:
+          type: integer
+          format: int32
+        desired:
+          type: integer
+          format: int32
+        name:
+          type: string
+        ready:
+          type: integer
+          format: int32
+        role:
+          type: string
+          enum:
+          - active
+          - preview
+          - na
+    IngressRulesDTO:
+      type: object
+      properties:
+        backend:
+          $ref: '#/components/schemas/IngressBackendDTO'
+        hosts:
+          type: string
+        path:
+          type: string
+    ContainerRestartRule:
+      type: object
+      properties:
+        action:
+          type: string
+        exitCodes:
+          $ref: '#/components/schemas/ContainerRestartRuleOnExitCodes'
+    IngressDTO:
+      type: object
+      properties:
+        addresses:
+          type: array
+          items:
+            type: string
+        age:
+          type: integer
+          format: int64
+        ingressClass:
+          type: string
+        name:
+          type: string
+        rules:
+          type: array
+          items:
+            $ref: '#/components/schemas/IngressRulesDTO'
+    Probe:
+      type: object
+      properties:
+        exec:
+          $ref: '#/components/schemas/ExecAction'
+        failureThreshold:
+          type: integer
+          format: int32
+        grpc:
+          $ref: '#/components/schemas/GRPCAction'
+        httpGet:
+          $ref: '#/components/schemas/HTTPGetAction'
+        initialDelaySeconds:
+          type: integer
+          format: int32
+        periodSeconds:
+          type: integer
+          format: int32
+        successThreshold:
+          type: integer
+          format: int32
+        tcpSocket:
+          $ref: '#/components/schemas/TCPSocketAction'
+        terminationGracePeriodSeconds:
+          type: integer
+          format: int64
+        timeoutSeconds:
+          type: integer
+          format: int32
+  securitySchemes:
+    basicAuth:
+      description: Basic Authentication
+      scheme: basic
+      type: http

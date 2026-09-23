@@ -1,0 +1,760 @@
+openapi: 3.2.0
+info:
+  description: API Documentation
+  title: Control-plane Modules Repo API
+  version: '1.0'
+servers:
+- url: https://facetsdemo.console.facets.cloud
+  description: Generated server url
+security:
+- basicAuth: []
+tags:
+- name: Modules Repo
+paths:
+  /cc-ui/v1/modules-repo:
+    delete:
+      description: '- **Description:** Unregisters the repo. Does not touch the git repo or the CI account.
+
+        - **Permissions:** Requires MODULE_REPO_MANAGE permission.'
+      operationId: unregister
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: Unregister the modules repo
+      tags:
+      - Modules Repo
+    get:
+      description: '- **Description:** Returns the org''s registered modules repo, or 404 if none.
+
+        - **Permissions:** Requires MODULE_READ permission.'
+      operationId: get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModulesRepo'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: Get the org's modules repo
+      tags:
+      - Modules Repo
+    patch:
+      description: '- **Description:** Updates enforcement mode / default branch / path prefix.
+
+        - **Permissions:** Requires MODULE_REPO_MANAGE permission.'
+      operationId: patch
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchModulesRepoRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModulesRepo'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: Update the modules repo
+      tags:
+      - Modules Repo
+    post:
+      description: '- **Description:** Registers an existing git repo as the org''s modules repo (no export).
+
+        - **Permissions:** Requires MODULE_REPO_MANAGE permission.'
+      operationId: register
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterModulesRepoRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModulesRepo'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: Register an existing modules repo
+      tags:
+      - Modules Repo
+  /cc-ui/v1/modules-repo/bootstrap:
+    post:
+      description: '- **Description:** Kicks off an async bootstrap (resolve/create repo, export modules,
+
+        wire CI, push, provision secrets, register). Returns a job id immediately.
+
+        - **Permissions:** Requires MODULE_REPO_MANAGE permission.'
+      operationId: bootstrap
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BootstrapModulesRepoRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BootstrapTriggerResponse'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: Bootstrap the modules repo
+      tags:
+      - Modules Repo
+  /cc-ui/v1/modules-repo/bootstrap/{jobId}:
+    get:
+      description: '- **Description:** Returns the status and per-step progress of a bootstrap job.
+
+        - **Permissions:** Requires MODULE_READ permission.'
+      operationId: getBootstrapJob
+      parameters:
+      - in: path
+        name: jobId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BootstrapJobResponse'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: Get bootstrap job status
+      tags:
+      - Modules Repo
+  /cc-ui/v1/modules-repo/rotate-ci-token:
+    post:
+      description: '- **Description:** Regenerates the CI token and updates the GitHub secret when possible.
+
+        The raw token is only returned if the secret could not be provisioned.
+
+        - **Permissions:** Requires MODULE_REPO_MANAGE permission.'
+      operationId: rotateCiToken
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RotateCiTokenResponse'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: Rotate the CI service-account token
+      tags:
+      - Modules Repo
+  /cc-ui/v1/modules-repo/sync:
+    post:
+      description: '- **Description:** Kicks off an async sync that re-exports all published custom modules
+
+        over a clone of the repo''s default branch and diffs. On drift, force-pushes the
+
+        `facets/registry-sync` branch and opens (or updates) a PR whose merge restores the
+
+        repo to registry state; when already in sync, reports so and closes any stale sync
+
+        PR. Returns a job id immediately.
+
+        - **Permissions:** Requires MODULE_REPO_MANAGE permission.'
+      operationId: sync
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SyncTriggerResponse'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: Sync the modules repo with the registry
+      tags:
+      - Modules Repo
+  /cc-ui/v1/modules-repo/sync/{jobId}:
+    get:
+      description: '- **Description:** Returns the status, per-step progress, drift classification, and PR
+
+        link of a sync job.
+
+        - **Permissions:** Requires MODULE_READ permission.'
+      operationId: getSyncJob
+      parameters:
+      - in: path
+        name: jobId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SyncJobResponse'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: Get sync job status
+      tags:
+      - Modules Repo
+components:
+  schemas:
+    BootstrapModulesRepoRequest:
+      type: object
+      properties:
+        defaultBranch:
+          type: string
+        gitUrl:
+          type: string
+        orgName:
+          type: string
+        pathPrefix:
+          type: string
+        repoName:
+          type: string
+        vcsAccountId:
+          type: string
+    BootstrapStep:
+      type: object
+      properties:
+        detail:
+          type: string
+        name:
+          type: string
+        status:
+          type: string
+          enum:
+          - PENDING
+          - RUNNING
+          - SUCCEEDED
+          - FAILED
+          - SKIPPED
+    PatchModulesRepoRequest:
+      type: object
+      properties:
+        defaultBranch:
+          type: string
+        enforcementMode:
+          type: string
+          enum:
+          - 'OFF'
+          - WARN
+          - ENFORCE
+        pathPrefix:
+          type: string
+    BootstrapTriggerResponse:
+      type: object
+      properties:
+        jobId:
+          type: string
+    SyncJobResponse:
+      type: object
+      properties:
+        added:
+          type: array
+          items:
+            type: string
+        deleted:
+          type: array
+          items:
+            type: string
+        error:
+          type: string
+        jobId:
+          type: string
+        outcome:
+          type: string
+          enum:
+          - IN_SYNC
+          - DRIFT_PR_CREATED
+        prNumber:
+          type: integer
+          format: int32
+        prUrl:
+          type: string
+        skipped:
+          type: array
+          items:
+            type: string
+        status:
+          type: string
+          enum:
+          - PENDING
+          - RUNNING
+          - SUCCEEDED
+          - FAILED
+          - SKIPPED
+        steps:
+          type: array
+          items:
+            $ref: '#/components/schemas/BootstrapStep'
+        updated:
+          type: array
+          items:
+            type: string
+    SecretStatus:
+      type: object
+      properties:
+        error:
+          type: string
+        status:
+          type: string
+          enum:
+          - SET
+          - FAILED
+          - SKIPPED
+    SyncTriggerResponse:
+      type: object
+      properties:
+        jobId:
+          type: string
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    RegisterModulesRepoRequest:
+      type: object
+      properties:
+        defaultBranch:
+          type: string
+        enforcementMode:
+          type: string
+          enum:
+          - 'OFF'
+          - WARN
+          - ENFORCE
+        gitUrl:
+          type: string
+        pathPrefix:
+          type: string
+        vcsAccountId:
+          type: string
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    BootstrapJobResponse:
+      type: object
+      properties:
+        error:
+          type: string
+        jobId:
+          type: string
+        secretsStatus:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/SecretStatus'
+        status:
+          type: string
+          enum:
+          - PENDING
+          - RUNNING
+          - SUCCEEDED
+          - FAILED
+          - SKIPPED
+        steps:
+          type: array
+          items:
+            $ref: '#/components/schemas/BootstrapStep'
+    RotateCiTokenResponse:
+      type: object
+      properties:
+        secretsStatus:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/SecretStatus'
+        token:
+          type: string
+        userName:
+          type: string
+    ModulesRepo:
+      type: object
+      properties:
+        bootstrapJobId:
+          type: string
+        ciTokenId:
+          type: string
+        ciUserName:
+          type: string
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        defaultBranch:
+          type: string
+        enforcementMode:
+          type: string
+          enum:
+          - 'OFF'
+          - WARN
+          - ENFORCE
+        gitUrl:
+          type: string
+        id:
+          type: string
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        pathPrefix:
+          type: string
+        vcsAccountId:
+          type: string
+  securitySchemes:
+    basicAuth:
+      description: Basic Authentication
+      scheme: basic
+      type: http

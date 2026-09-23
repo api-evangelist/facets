@@ -1,0 +1,1793 @@
+openapi: 3.2.0
+info:
+  description: API Documentation
+  title: Control-plane Public Ap Is API
+  version: '1.0'
+servers:
+- url: https://facetsdemo.console.facets.cloud
+  description: Generated server url
+security:
+- basicAuth: []
+tags:
+- name: public-ap-is
+paths:
+  /public/v1/cp-cloud:
+    get:
+      operationId: getCPCloud
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: string
+                enum:
+                - AWS
+                - AZURE
+                - LOCAL
+                - GCP
+                - KUBERNETES
+                - NO_CLOUD
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - public-ap-is
+      summary: Get CP cloud
+      x-summary-source: derived
+  /public/v1/features:
+    get:
+      operationId: getAllFeatureProperties
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: string
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - public-ap-is
+      summary: Get all feature properties
+      x-summary-source: derived
+  /public/v1/features/{name}:
+    get:
+      operationId: getFeatureProperty
+      parameters:
+      - in: path
+        name: name
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: string
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - public-ap-is
+      summary: Get feature property
+      x-summary-source: derived
+  /public/v1/github-installation-request:
+    post:
+      operationId: processGithubInstallationRequest
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GithubAppInstallationRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GithubAppInstallationRequestResponse'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - public-ap-is
+      summary: Process github installation request
+      x-summary-source: derived
+  /public/v1/health:
+    get:
+      operationId: healthCheck
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: object
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - public-ap-is
+      summary: Health check
+      x-summary-source: derived
+  /public/v1/link-aws:
+    post:
+      operationId: linkAwsAccount
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OneTimePayloadAwsAccount'
+        required: true
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - public-ap-is
+      summary: Link aws account
+      x-summary-source: derived
+  /public/v1/link-azure:
+    post:
+      operationId: linkAzureAccount
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OneTimePayloadAzureAccount'
+        required: true
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - public-ap-is
+      summary: Link azure account
+      x-summary-source: derived
+  /public/v1/link-bitbucket:
+    post:
+      operationId: linkBitbucketAccount
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OneTimePayloadBitbucketOauthAppPayload'
+        required: true
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - public-ap-is
+      summary: Link bitbucket account
+      x-summary-source: derived
+  /public/v1/link-docker-registries:
+    post:
+      operationId: linkDockerRegistries
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OneTimePayloadBasicDockerDTO'
+        required: true
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - public-ap-is
+      summary: Link docker registries
+      x-summary-source: derived
+  /public/v1/link-ecr:
+    post:
+      operationId: linkECR
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OneTimePayloadECRArtifactory'
+        required: true
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - public-ap-is
+      summary: Link ECR
+      x-summary-source: derived
+  /public/v1/link-gcp:
+    post:
+      operationId: linkGcpAccount
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OneTimePayloadGcpAccount'
+        required: true
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - public-ap-is
+      summary: Link gcp account
+      x-summary-source: derived
+  /public/v1/link-github:
+    post:
+      operationId: linkGithubAccount
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OneTimePayloadGithubAppInstallationPayload'
+        required: true
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - public-ap-is
+      summary: Link github account
+      x-summary-source: derived
+  /public/v1/link-gitlab:
+    post:
+      operationId: linkGitlabAccount
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OneTimePayloadGitlabOauthAppPayload'
+        required: true
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - public-ap-is
+      summary: Link gitlab account
+      x-summary-source: derived
+  /public/v1/link-kubernetes:
+    post:
+      operationId: linkK8sAccount
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OneTimePayloadKubernetesAccount'
+        required: true
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - public-ap-is
+      summary: Link k8s account
+      x-summary-source: derived
+  /public/v1/loginOptions:
+    get:
+      operationId: getLoginOptions
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CustomOAuth2ClientRegistration'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - public-ap-is
+      summary: Get login options
+      x-summary-source: derived
+  /public/v1/logo:
+    get:
+      operationId: getLogo
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - public-ap-is
+      summary: Get logo
+      x-summary-source: derived
+  /public/v1/module/{intent}/{flavor}/{version}/schema:
+    get:
+      operationId: getModuleSchema
+      parameters:
+      - in: path
+        name: intent
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: flavor
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: version
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: allowPreview
+        required: false
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModuleSchemaResponseDTO'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - public-ap-is
+      summary: Get module schema
+      x-summary-source: derived
+  /public/v1/module/{intent}/{flavor}/{version}/schema/{type}:
+    get:
+      operationId: getModuleSchemaByType
+      parameters:
+      - in: path
+        name: intent
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: flavor
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: version
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: type
+        required: true
+        schema:
+          type: string
+          enum:
+          - BLUEPRINT
+          - OVERRIDES
+      - in: query
+        name: allowPreview
+        required: false
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModuleSchemaResponseDTO'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - public-ap-is
+      summary: Get module schema by type
+      x-summary-source: derived
+  /public/v1/samlLoginOptions:
+    get:
+      operationId: getSamlLoginOptions
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CustomSamlRegistration'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - public-ap-is
+      summary: Get saml login options
+      x-summary-source: derived
+  /public/v1/themeFile:
+    get:
+      operationId: retrieveThemeFile
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ThemeFileResponse'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - public-ap-is
+      summary: Retrieve theme file
+      x-summary-source: derived
+components:
+  schemas:
+    GitlabOauthAppPayload:
+      type: object
+      properties:
+        accountName:
+          type: string
+        code:
+          type: string
+        redirectUrl:
+          type: string
+    GithubAppInstallationRequest:
+      type: object
+      properties:
+        code:
+          type: string
+        enterpriseHostName:
+          type: string
+        webhookId:
+          type: string
+    OneTimePayloadAzureAccount:
+      type: object
+      properties:
+        payload:
+          $ref: '#/components/schemas/AzureAccount'
+        webhookId:
+          type: string
+    CustomSamlRegistration:
+      required:
+      - entityId
+      - loginButtonText
+      - provider
+      - registrationId
+      type: object
+      properties:
+        description:
+          maxLength: 200
+          minLength: 0
+          type: string
+        entityId:
+          type: string
+        isSystemConfigured:
+          type: boolean
+          readOnly: true
+        loginButtonText:
+          type: string
+        provider:
+          type: string
+          enum:
+          - GOOGLE_SAML
+          - OKTA_SAML
+        registrationId:
+          type: string
+        singleSignOnServiceLocation:
+          type: string
+        systemConfigured:
+          type: boolean
+        verificationX509Certificate:
+          type: string
+          writeOnly: true
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    OneTimePayloadKubernetesAccount:
+      type: object
+      properties:
+        payload:
+          $ref: '#/components/schemas/KubernetesAccount'
+        webhookId:
+          type: string
+    CustomOAuth2ClientRegistration:
+      required:
+      - clientId
+      - clientSecret
+      - loginButtonText
+      - provider
+      - registrationId
+      - scope
+      type: object
+      properties:
+        clientId:
+          type: string
+        clientSecret:
+          type: string
+          writeOnly: true
+        description:
+          maxLength: 200
+          minLength: 0
+          type: string
+        isSystemConfigured:
+          type: boolean
+          readOnly: true
+        issuerUrl:
+          type: string
+        loginButtonText:
+          type: string
+        provider:
+          type: string
+          enum:
+          - GOOGLE
+          - OKTA
+          - ONE_LOGIN
+          - AZURE_AD
+          - JUMP_CLOUD
+          - OPEN_ID
+        registrationId:
+          type: string
+        scope:
+          type: string
+        systemConfigured:
+          type: boolean
+    AwsAccount:
+      type: object
+      properties:
+        accountType:
+          type: string
+          enum:
+          - VERSION_CONTROL
+          - CLOUD
+          - CODER
+        associatedTo:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountAssociationInfo'
+        changeLog:
+          type: string
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        description:
+          type: string
+        externalId:
+          type: string
+        iamRole:
+          type: string
+        id:
+          type: string
+        inUse:
+          type: boolean
+        labelIds:
+          type: array
+          items:
+            type: string
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        name:
+          type: string
+        provider:
+          type: string
+          enum:
+          - GITHUB
+          - BITBUCKET
+          - GITLAB
+          - AWS
+          - AZURE
+          - GCP
+          - KUBERNETES
+          - CODER
+        providerDescription:
+          type: string
+        providerTags:
+          type: object
+          additionalProperties:
+            type: string
+        systemDefined:
+          type: boolean
+        versioningKey:
+          type: string
+    GithubAppInstallationPayload:
+      type: object
+      properties:
+        accountName:
+          type: string
+        code:
+          type: string
+        enterpriseHostName:
+          type: string
+        installationId:
+          type: integer
+          format: int64
+    OneTimePayloadGcpAccount:
+      type: object
+      properties:
+        payload:
+          $ref: '#/components/schemas/GcpAccount'
+        webhookId:
+          type: string
+    OneTimePayloadGitlabOauthAppPayload:
+      type: object
+      properties:
+        payload:
+          $ref: '#/components/schemas/GitlabOauthAppPayload'
+        webhookId:
+          type: string
+    BasicDockerDTO:
+      required:
+      - artifactoryName
+      - artifactoryType
+      - uri
+      - username
+      type: object
+      properties:
+        artifactoryName:
+          type: string
+        artifactoryProject:
+          type: string
+        artifactoryType:
+          type: string
+          enum:
+          - ECR
+          - AZURE_CONTAINER_REGISTRY
+          - GOOGLE_ARTIFACT_REGISTRY
+          - GOOGLE_CONTAINER_REGISTRY
+          - NEXUS
+          - DOCKER_HUB
+          - JFROG
+          - HARBOR
+          - OTHERS
+        description:
+          maxLength: 200
+          minLength: 0
+          type: string
+        password:
+          type: string
+        stacksAssociated:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        uri:
+          type: string
+        username:
+          type: string
+    ClusterInfo:
+      type: object
+      properties:
+        clusterId:
+          type: string
+        clusterName:
+          type: string
+    BitbucketOauthAppPayload:
+      type: object
+      properties:
+        accountName:
+          type: string
+        code:
+          type: string
+    GcpAccount:
+      type: object
+      properties:
+        accountType:
+          type: string
+          enum:
+          - VERSION_CONTROL
+          - CLOUD
+          - CODER
+        associatedTo:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountAssociationInfo'
+        changeLog:
+          type: string
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        description:
+          type: string
+        id:
+          type: string
+        inUse:
+          type: boolean
+        labelIds:
+          type: array
+          items:
+            type: string
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        name:
+          type: string
+        project:
+          type: string
+        provider:
+          type: string
+          enum:
+          - GITHUB
+          - BITBUCKET
+          - GITLAB
+          - AWS
+          - AZURE
+          - GCP
+          - KUBERNETES
+          - CODER
+        providerDescription:
+          type: string
+        providerTags:
+          type: object
+          additionalProperties:
+            type: string
+        serviceAccountKey:
+          type: string
+          writeOnly: true
+        systemDefined:
+          type: boolean
+        versioningKey:
+          type: string
+    ExclusionFilter:
+      type: object
+      properties:
+        filter:
+          type: string
+        filterType:
+          type: string
+          enum:
+          - WILDCARD
+    KubernetesAccount:
+      type: object
+      properties:
+        accountType:
+          type: string
+          enum:
+          - VERSION_CONTROL
+          - CLOUD
+          - CODER
+        associatedTo:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountAssociationInfo'
+        certificateAuthority:
+          type: string
+          writeOnly: true
+        changeLog:
+          type: string
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        description:
+          type: string
+        host:
+          type: string
+        id:
+          type: string
+        inUse:
+          type: boolean
+        labelIds:
+          type: array
+          items:
+            type: string
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        name:
+          type: string
+        provider:
+          type: string
+          enum:
+          - GITHUB
+          - BITBUCKET
+          - GITLAB
+          - AWS
+          - AZURE
+          - GCP
+          - KUBERNETES
+          - CODER
+        providerDescription:
+          type: string
+        providerTags:
+          type: object
+          additionalProperties:
+            type: string
+        systemDefined:
+          type: boolean
+        token:
+          type: string
+          writeOnly: true
+        versioningKey:
+          type: string
+    OneTimePayloadBasicDockerDTO:
+      type: object
+      properties:
+        payload:
+          $ref: '#/components/schemas/BasicDockerDTO'
+        webhookId:
+          type: string
+    ThemeFileResponse:
+      type: object
+      properties:
+        content:
+          type: string
+    OneTimePayloadECRArtifactory:
+      type: object
+      properties:
+        payload:
+          $ref: '#/components/schemas/ECRArtifactory'
+        webhookId:
+          type: string
+    OneTimePayloadGithubAppInstallationPayload:
+      type: object
+      properties:
+        payload:
+          $ref: '#/components/schemas/GithubAppInstallationPayload'
+        webhookId:
+          type: string
+    AccountAssociationInfo:
+      type: object
+      properties:
+        clusters:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClusterInfo'
+        projectTypeName:
+          type: string
+        stackName:
+          type: string
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    GithubAppInstallationRequestResponse:
+      type: object
+      properties:
+        targetId:
+          type: integer
+          format: int64
+    ECRArtifactory:
+      required:
+      - awsAccountId
+      - awsKey
+      - awsRegion
+      - awsSecret
+      - name
+      type: object
+      properties:
+        artifactoryType:
+          type: string
+          enum:
+          - ECR
+          - AZURE_CONTAINER_REGISTRY
+          - GOOGLE_ARTIFACT_REGISTRY
+          - GOOGLE_CONTAINER_REGISTRY
+          - NEXUS
+          - DOCKER_HUB
+          - JFROG
+          - HARBOR
+          - OTHERS
+        awsAccountId:
+          type: string
+        awsKey:
+          type: string
+          writeOnly: true
+        awsRegion:
+          type: string
+        awsSecret:
+          type: string
+          writeOnly: true
+        changeLog:
+          type: string
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        customLifecyclePolicyText:
+          type: string
+        description:
+          maxLength: 200
+          minLength: 0
+          type: string
+        id:
+          type: string
+        imageTagMutability:
+          type: string
+          enum:
+          - MUTABLE
+          - IMMUTABLE
+        imageTagMutabilityExclusionFilters:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExclusionFilter'
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        maxImages:
+          type: integer
+          format: int32
+        name:
+          type: string
+        stacksAssociated:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        systemDefined:
+          type: boolean
+        uri:
+          type: string
+        versioningKey:
+          type: string
+    AzureAccount:
+      type: object
+      properties:
+        accountType:
+          type: string
+          enum:
+          - VERSION_CONTROL
+          - CLOUD
+          - CODER
+        associatedTo:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountAssociationInfo'
+        changeLog:
+          type: string
+        clientId:
+          type: string
+        clientSecret:
+          type: string
+          writeOnly: true
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        description:
+          type: string
+        id:
+          type: string
+        inUse:
+          type: boolean
+        labelIds:
+          type: array
+          items:
+            type: string
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        name:
+          type: string
+        provider:
+          type: string
+          enum:
+          - GITHUB
+          - BITBUCKET
+          - GITLAB
+          - AWS
+          - AZURE
+          - GCP
+          - KUBERNETES
+          - CODER
+        providerDescription:
+          type: string
+        providerTags:
+          type: object
+          additionalProperties:
+            type: string
+        subscriptionId:
+          type: string
+        systemDefined:
+          type: boolean
+        tenantId:
+          type: string
+        versioningKey:
+          type: string
+    ModuleSchemaResponseDTO:
+      type: object
+      properties:
+        $schema:
+          type: string
+          description: JSON Schema URL
+        additionalProperties:
+          type: boolean
+          description: Allow additional properties
+          example: true
+        properties:
+          type: object
+          additionalProperties:
+            type: object
+            description: Schema properties
+          description: Schema properties
+        required:
+          type: array
+          description: Required fields
+          items:
+            type: string
+            description: Required fields
+        type:
+          type: string
+          description: Schema type
+          example: object
+      description: Response containing complete JSON schema for module configuration
+    OneTimePayloadBitbucketOauthAppPayload:
+      type: object
+      properties:
+        payload:
+          $ref: '#/components/schemas/BitbucketOauthAppPayload'
+        webhookId:
+          type: string
+    OneTimePayloadAwsAccount:
+      type: object
+      properties:
+        payload:
+          $ref: '#/components/schemas/AwsAccount'
+        webhookId:
+          type: string
+  securitySchemes:
+    basicAuth:
+      description: Basic Authentication
+      scheme: basic
+      type: http

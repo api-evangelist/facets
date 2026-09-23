@@ -1,0 +1,3997 @@
+openapi: 3.2.0
+info:
+  description: API Documentation
+  title: Control-plane UI Application Controller API
+  version: '1.0'
+servers:
+- url: https://facetsdemo.console.facets.cloud
+  description: Generated server url
+security:
+- basicAuth: []
+tags:
+- name: ui-application-controller
+paths:
+  /cc-ui/v1/clusters/{clusterId}/abort:
+    put:
+      operationId: abort
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: labels
+        required: true
+        schema:
+          type: object
+          additionalProperties:
+            type: string
+        style: form
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-application-controller
+      summary: Abort
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/argo-info:
+    get:
+      operationId: getArgoRolloutInfo
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: labels
+        required: true
+        schema:
+          type: object
+          additionalProperties:
+            type: string
+        style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-application-controller
+      summary: Get argo rollout info
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/overrides:
+    post:
+      description: 'Replaces the override map of each resource in the request. The whole batch goes to the database in one round trip. The batch is not atomic: if one resource fails, the others can still be written.'
+      operationId: postResourceOverrides
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: doSync
+        required: false
+        schema:
+          type: boolean
+          default: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/OverrideRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OverrideObject'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: Write the overrides of several resources
+      tags:
+      - ui-application-controller
+  /cc-ui/v1/clusters/{clusterId}/pods/{podName}/events:
+    get:
+      operationId: getEvents
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: podName
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Event'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-application-controller
+      summary: Get events
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/pods/{podName}/logs:
+    get:
+      operationId: logs
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: podName
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: labels
+        required: true
+        schema:
+          type: object
+          additionalProperties:
+            type: string
+        style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StreamingResponseBody'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-application-controller
+      summary: Logs
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/promote:
+    put:
+      operationId: promote
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: labels
+        required: true
+        schema:
+          type: object
+          additionalProperties:
+            type: string
+        style: form
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-application-controller
+      summary: Promote
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/resourceName/{applicationName}/hpa:
+    get:
+      operationId: getHPA
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: applicationName
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HorizontalPodAutoscaler'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-application-controller
+      summary: Get HPA
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/resourceName/{applicationName}/ingresses:
+    get:
+      operationId: getIngresses
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: applicationName
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Ingress'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-application-controller
+      summary: Get ingresses
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/resourceName/{applicationName}/pods:
+    get:
+      operationId: listPods
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: applicationName
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Pod'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-application-controller
+      summary: List pods
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/resourceType/{resourceType}/resourceName/{resourceName}:
+    get:
+      operationId: getResourceByNameV2
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: resourceName
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: resourceType
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: object
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-application-controller
+      summary: Get resource by name V2
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/resourceType/{resourceType}/resourceName/{resourceName}/deployed-commit-id:
+    get:
+      operationId: getDeployedCommitIdForResource
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: resourceType
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: resourceName
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-application-controller
+      summary: Get deployed commit id for resource
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/resourceType/{resourceType}/resourceName/{resourceName}/overrides:
+    get:
+      operationId: getResourceOverrideObject
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: resourceName
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: resourceType
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OverrideObject'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-application-controller
+      summary: Get resource override object
+      x-summary-source: derived
+    post:
+      operationId: postResourceOverrideObject
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: resourceName
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: resourceType
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: doSync
+        required: false
+        schema:
+          type: boolean
+          default: true
+      - in: query
+        name: changeAffectedResources
+        required: false
+        schema:
+          type: boolean
+          default: false
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OverrideRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OverrideObject'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-application-controller
+      summary: Post resource override object
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/resourceType/{resourceType}/resourceName/{resourceName}/resource-history:
+    get:
+      operationId: getResourceHistory
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: resourceType
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: resourceName
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceHistory'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-application-controller
+      summary: Get resource history
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/resourceType/{resourceType}/resourceName/{resourceName}/resource-out-properties:
+    get:
+      operationId: getResourceOutProperties
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: resourceType
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: resourceName
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceOutProperties'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-application-controller
+      summary: Get resource out properties
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/restart/{applicationName}:
+    post:
+      operationId: rollingRestart
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: applicationName
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: labels
+        required: true
+        schema:
+          type: object
+          additionalProperties:
+            type: string
+        style: form
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-application-controller
+      summary: Rolling restart
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/sync-with-git:
+    post:
+      description: Api for cluster sync with git.
+      operationId: clusterSyncWithGit
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: force
+        required: false
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: Sync cluster with git
+      tags:
+      - ui-application-controller
+  /cc-ui/v1/clusters/{clusterId}/validate:
+    post:
+      operationId: runValidation
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-application-controller
+      summary: Run validation
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/validation-errors:
+    get:
+      operationId: getValidations
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ValidationResponse'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-application-controller
+      summary: Get validations
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/{resourceType}/{appName}:
+    get:
+      deprecated: true
+      operationId: getResourceByName
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: appName
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: resourceType
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: object
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-application-controller
+      summary: Get resource by name
+      x-summary-source: derived
+  /cc-ui/v1/clusters/{clusterId}/{resourceType}/{appName}/overrides:
+    get:
+      deprecated: true
+      operationId: getApplicationOverrides
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: appName
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: resourceType
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: object
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-application-controller
+      summary: Get application overrides
+      x-summary-source: derived
+components:
+  schemas:
+    ExecAction:
+      type: object
+      properties:
+        command:
+          type: array
+          items:
+            type: string
+    ValidationResponse:
+      type: object
+      properties:
+        directory:
+          type: string
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/BlueprintValidationError'
+        filename:
+          type: string
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+    ISCSIVolumeSource:
+      type: object
+      properties:
+        chapAuthDiscovery:
+          type: boolean
+        chapAuthSession:
+          type: boolean
+        fsType:
+          type: string
+        initiatorName:
+          type: string
+        iqn:
+          type: string
+        iscsiInterface:
+          type: string
+        lun:
+          type: integer
+          format: int32
+        portals:
+          type: array
+          items:
+            type: string
+        readOnly:
+          type: boolean
+        secretRef:
+          $ref: '#/components/schemas/LocalObjectReference'
+        targetPortal:
+          type: string
+    HPAScalingRules:
+      type: object
+      properties:
+        policies:
+          type: array
+          items:
+            $ref: '#/components/schemas/HPAScalingPolicy'
+        selectPolicy:
+          type: string
+        stabilizationWindowSeconds:
+          type: integer
+          format: int32
+        tolerance:
+          $ref: '#/components/schemas/Quantity'
+    ResourceMetricSource:
+      type: object
+      properties:
+        name:
+          type: string
+        target:
+          $ref: '#/components/schemas/MetricTarget'
+    ResourceHistory:
+      type: object
+      properties:
+        alpha:
+          type: boolean
+        artifactVersion:
+          $ref: '#/components/schemas/HistoryMetadata'
+        blueprintVersion:
+          $ref: '#/components/schemas/HistoryMetadata'
+        clusterId:
+          type: string
+        clusterName:
+          type: string
+        disabled:
+          type: boolean
+        overridden:
+          type: boolean
+        overrideVersion:
+          $ref: '#/components/schemas/HistoryMetadata'
+        resourceName:
+          type: string
+        resourceStatus:
+          type: string
+          enum:
+          - RUNNING
+          - STOPPED
+        resourceType:
+          type: string
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    IngressTLS:
+      type: object
+      properties:
+        hosts:
+          type: array
+          items:
+            type: string
+        secretName:
+          type: string
+    FieldsV1:
+      type: object
+    ContainerState:
+      type: object
+      properties:
+        running:
+          $ref: '#/components/schemas/ContainerStateRunning'
+        terminated:
+          $ref: '#/components/schemas/ContainerStateTerminated'
+        waiting:
+          $ref: '#/components/schemas/ContainerStateWaiting'
+    ContainerStateTerminated:
+      type: object
+      properties:
+        containerID:
+          type: string
+        exitCode:
+          type: integer
+          format: int32
+        finishedAt:
+          type: string
+        message:
+          type: string
+        reason:
+          type: string
+        signal:
+          type: integer
+          format: int32
+        startedAt:
+          type: string
+    AzureDiskVolumeSource:
+      type: object
+      properties:
+        cachingMode:
+          type: string
+        diskName:
+          type: string
+        diskURI:
+          type: string
+        fsType:
+          type: string
+        kind:
+          type: string
+        readOnly:
+          type: boolean
+    FlexVolumeSource:
+      type: object
+      properties:
+        driver:
+          type: string
+        fsType:
+          type: string
+        options:
+          type: object
+          additionalProperties:
+            type: string
+        readOnly:
+          type: boolean
+        secretRef:
+          $ref: '#/components/schemas/LocalObjectReference'
+    ResourceStatus:
+      type: object
+      properties:
+        artifactory:
+          type: string
+        ciName:
+          type: string
+        clusterId:
+          type: string
+        currentArtifactBuildId:
+          type: string
+        currentArtifactUrl:
+          type: string
+        currentBPVersion:
+          type: string
+        currentModuleVersion:
+          type: string
+        currentOverrideVersion:
+          type: string
+        currentState:
+          type: string
+          enum:
+          - ENABLED
+          - DISABLED
+        deployed:
+          type: boolean
+        disabled:
+          type: boolean
+        flavor:
+          type: string
+        hasStateChange:
+          type: boolean
+        healthStatus:
+          type: string
+        id:
+          type: string
+        isAlpha:
+          type: boolean
+        liveArtifactBuildId:
+          type: string
+        liveArtifactUrl:
+          type: string
+        liveBPVersion:
+          type: string
+        liveModuleVersion:
+          type: string
+        liveOverrideVersion:
+          type: string
+        previousState:
+          type: string
+          enum:
+          - ENABLED
+          - DISABLED
+        releaseStatus:
+          type: string
+          enum:
+          - QUEUED
+          - FAILED
+          - IN_PROGRESS
+          - COMPLETED
+        releaseTraceId:
+          type: string
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+        syncStatus:
+          type: string
+          enum:
+          - IN_SYNC
+          - OUT_OF_SYNC
+    NodeSelectorRequirement:
+      type: object
+      properties:
+        key:
+          type: string
+        operator:
+          type: string
+        values:
+          type: array
+          items:
+            type: string
+    LifecycleHandler:
+      type: object
+      properties:
+        exec:
+          $ref: '#/components/schemas/ExecAction'
+        httpGet:
+          $ref: '#/components/schemas/HTTPGetAction'
+        sleep:
+          $ref: '#/components/schemas/SleepAction'
+        tcpSocket:
+          $ref: '#/components/schemas/TCPSocketAction'
+    MetricIdentifier:
+      type: object
+      properties:
+        name:
+          type: string
+        selector:
+          $ref: '#/components/schemas/LabelSelector'
+    HorizontalPodAutoscalerStatus:
+      type: object
+      properties:
+        conditions:
+          type: array
+          items:
+            $ref: '#/components/schemas/HorizontalPodAutoscalerCondition'
+        currentMetrics:
+          type: array
+          items:
+            $ref: '#/components/schemas/MetricStatus'
+        currentReplicas:
+          type: integer
+          format: int32
+        desiredReplicas:
+          type: integer
+          format: int32
+        lastScaleTime:
+          type: string
+        observedGeneration:
+          type: integer
+          format: int64
+    ObjectFieldSelector:
+      type: object
+      properties:
+        apiVersion:
+          type: string
+        fieldPath:
+          type: string
+    VolumeStatus:
+      type: object
+      properties:
+        image:
+          $ref: '#/components/schemas/ImageVolumeStatus'
+    SecretEnvSource:
+      type: object
+      properties:
+        name:
+          type: string
+        optional:
+          type: boolean
+    Quantity:
+      type: object
+      properties:
+        amount:
+          type: string
+        format:
+          type: string
+    VolumeMount:
+      type: object
+      properties:
+        mountPath:
+          type: string
+        mountPropagation:
+          type: string
+        name:
+          type: string
+        readOnly:
+          type: boolean
+        recursiveReadOnly:
+          type: string
+        subPath:
+          type: string
+        subPathExpr:
+          type: string
+    EnvVarSource:
+      type: object
+      properties:
+        configMapKeyRef:
+          $ref: '#/components/schemas/ConfigMapKeySelector'
+        fieldRef:
+          $ref: '#/components/schemas/ObjectFieldSelector'
+        fileKeyRef:
+          $ref: '#/components/schemas/FileKeySelector'
+        resourceFieldRef:
+          $ref: '#/components/schemas/ResourceFieldSelector'
+        secretKeyRef:
+          $ref: '#/components/schemas/SecretKeySelector'
+    PodSpec:
+      type: object
+      properties:
+        activeDeadlineSeconds:
+          type: integer
+          format: int64
+        affinity:
+          $ref: '#/components/schemas/Affinity'
+        automountServiceAccountToken:
+          type: boolean
+        containers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Container'
+        dnsConfig:
+          $ref: '#/components/schemas/PodDNSConfig'
+        dnsPolicy:
+          type: string
+        enableServiceLinks:
+          type: boolean
+        ephemeralContainers:
+          type: array
+          items:
+            $ref: '#/components/schemas/EphemeralContainer'
+        hostAliases:
+          type: array
+          items:
+            $ref: '#/components/schemas/HostAlias'
+        hostIPC:
+          type: boolean
+        hostNetwork:
+          type: boolean
+        hostPID:
+          type: boolean
+        hostUsers:
+          type: boolean
+        hostname:
+          type: string
+        hostnameOverride:
+          type: string
+        imagePullSecrets:
+          type: array
+          items:
+            $ref: '#/components/schemas/LocalObjectReference'
+        initContainers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Container'
+        nodeName:
+          type: string
+        nodeSelector:
+          type: object
+          additionalProperties:
+            type: string
+        os:
+          $ref: '#/components/schemas/PodOS'
+        overhead:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Quantity'
+        preemptionPolicy:
+          type: string
+        priority:
+          type: integer
+          format: int32
+        priorityClassName:
+          type: string
+        readinessGates:
+          type: array
+          items:
+            $ref: '#/components/schemas/PodReadinessGate'
+        resourceClaims:
+          type: array
+          items:
+            $ref: '#/components/schemas/PodResourceClaim'
+        resources:
+          $ref: '#/components/schemas/ResourceRequirements'
+        restartPolicy:
+          type: string
+        runtimeClassName:
+          type: string
+        schedulerName:
+          type: string
+        schedulingGates:
+          type: array
+          items:
+            $ref: '#/components/schemas/PodSchedulingGate'
+        schedulingGroup:
+          $ref: '#/components/schemas/PodSchedulingGroup'
+        securityContext:
+          $ref: '#/components/schemas/PodSecurityContext'
+        serviceAccount:
+          type: string
+        serviceAccountName:
+          type: string
+        setHostnameAsFQDN:
+          type: boolean
+        shareProcessNamespace:
+          type: boolean
+        subdomain:
+          type: string
+        terminationGracePeriodSeconds:
+          type: integer
+          format: int64
+        tolerations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Toleration'
+        topologySpreadConstraints:
+          type: array
+          items:
+            $ref: '#/components/schemas/TopologySpreadConstraint'
+        volumes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Volume'
+    NodeSelector:
+      type: object
+      properties:
+        nodeSelectorTerms:
+          type: array
+          items:
+            $ref: '#/components/schemas/NodeSelectorTerm'
+    StreamingResponseBody:
+      type: object
+    SecretProjection:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/KeyToPath'
+        name:
+          type: string
+        optional:
+          type: boolean
+    ConfigMapVolumeSource:
+      type: object
+      properties:
+        defaultMode:
+          type: integer
+          format: int32
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/KeyToPath'
+        name:
+          type: string
+        optional:
+          type: boolean
+    PersistentVolumeClaimTemplate:
+      type: object
+      properties:
+        metadata:
+          $ref: '#/components/schemas/ObjectMeta'
+        spec:
+          $ref: '#/components/schemas/PersistentVolumeClaimSpec'
+    EphemeralContainer:
+      type: object
+      properties:
+        args:
+          type: array
+          items:
+            type: string
+        command:
+          type: array
+          items:
+            type: string
+        env:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnvVar'
+        envFrom:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnvFromSource'
+        image:
+          type: string
+        imagePullPolicy:
+          type: string
+        lifecycle:
+          $ref: '#/components/schemas/Lifecycle'
+        livenessProbe:
+          $ref: '#/components/schemas/Probe'
+        name:
+          type: string
+        ports:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContainerPort'
+        readinessProbe:
+          $ref: '#/components/schemas/Probe'
+        resizePolicy:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContainerResizePolicy'
+        resources:
+          $ref: '#/components/schemas/ResourceRequirements'
+        restartPolicy:
+          type: string
+        restartPolicyRules:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContainerRestartRule'
+        securityContext:
+          $ref: '#/components/schemas/SecurityContext'
+        startupProbe:
+          $ref: '#/components/schemas/Probe'
+        stdin:
+          type: boolean
+        stdinOnce:
+          type: boolean
+        targetContainerName:
+          type: string
+        terminationMessagePath:
+          type: string
+        terminationMessagePolicy:
+          type: string
+        tty:
+          type: boolean
+        volumeDevices:
+          type: array
+          items:
+            $ref: '#/components/schemas/VolumeDevice'
+        volumeMounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/VolumeMount'
+        workingDir:
+          type: string
+    PodAffinityTerm:
+      type: object
+      properties:
+        labelSelector:
+          $ref: '#/components/schemas/LabelSelector'
+        matchLabelKeys:
+          type: array
+          items:
+            type: string
+        mismatchLabelKeys:
+          type: array
+          items:
+            type: string
+        namespaceSelector:
+          $ref: '#/components/schemas/LabelSelector'
+        namespaces:
+          type: array
+          items:
+            type: string
+        topologyKey:
+          type: string
+    HistoryMetadata:
+      type: object
+      properties:
+        liveVersionId:
+          type: string
+        previewVersionId:
+          type: string
+        versions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Version'
+    MetricStatus:
+      type: object
+      properties:
+        containerResource:
+          $ref: '#/components/schemas/ContainerResourceMetricStatus'
+        external:
+          $ref: '#/components/schemas/ExternalMetricStatus'
+        object:
+          $ref: '#/components/schemas/ObjectMetricStatus'
+        pods:
+          $ref: '#/components/schemas/PodsMetricStatus'
+        resource:
+          $ref: '#/components/schemas/ResourceMetricStatus'
+        type:
+          type: string
+    ResourceRequirements:
+      type: object
+      properties:
+        claims:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceClaim'
+        limits:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Quantity'
+        requests:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Quantity'
+    VsphereVirtualDiskVolumeSource:
+      type: object
+      properties:
+        fsType:
+          type: string
+        storagePolicyID:
+          type: string
+        storagePolicyName:
+          type: string
+        volumePath:
+          type: string
+    NodeSelectorTerm:
+      type: object
+      properties:
+        matchExpressions:
+          type: array
+          items:
+            $ref: '#/components/schemas/NodeSelectorRequirement'
+        matchFields:
+          type: array
+          items:
+            $ref: '#/components/schemas/NodeSelectorRequirement'
+    Version:
+      type: object
+      properties:
+        archiveDate:
+          type: string
+          format: date-time
+        entity:
+          $ref: '#/components/schemas/Versioned'
+        id:
+          type: string
+        sequence:
+          type: integer
+          format: int64
+          writeOnly: true
+        sequenceKey:
+          type: string
+        version:
+          type: integer
+          format: int64
+        versioningKey:
+          type: string
+    WeightedPodAffinityTerm:
+      type: object
+      properties:
+        podAffinityTerm:
+          $ref: '#/components/schemas/PodAffinityTerm'
+        weight:
+          type: integer
+          format: int32
+    HTTPHeader:
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+    VolumeMountStatus:
+      type: object
+      properties:
+        mountPath:
+          type: string
+        name:
+          type: string
+        readOnly:
+          type: boolean
+        recursiveReadOnly:
+          type: string
+        volumeStatus:
+          $ref: '#/components/schemas/VolumeStatus'
+    ClusterTrustBundleProjection:
+      type: object
+      properties:
+        labelSelector:
+          $ref: '#/components/schemas/LabelSelector'
+        name:
+          type: string
+        optional:
+          type: boolean
+        path:
+          type: string
+        signerName:
+          type: string
+    PodIP:
+      type: object
+      properties:
+        ip:
+          type: string
+    Probe:
+      type: object
+      properties:
+        exec:
+          $ref: '#/components/schemas/ExecAction'
+        failureThreshold:
+          type: integer
+          format: int32
+        grpc:
+          $ref: '#/components/schemas/GRPCAction'
+        httpGet:
+          $ref: '#/components/schemas/HTTPGetAction'
+        initialDelaySeconds:
+          type: integer
+          format: int32
+        periodSeconds:
+          type: integer
+          format: int32
+        successThreshold:
+          type: integer
+          format: int32
+        tcpSocket:
+          $ref: '#/components/schemas/TCPSocketAction'
+        terminationGracePeriodSeconds:
+          type: integer
+          format: int64
+        timeoutSeconds:
+          type: integer
+          format: int32
+    EmptyDirVolumeSource:
+      type: object
+      properties:
+        medium:
+          type: string
+        sizeLimit:
+          $ref: '#/components/schemas/Quantity'
+    VolumeProjection:
+      type: object
+      properties:
+        clusterTrustBundle:
+          $ref: '#/components/schemas/ClusterTrustBundleProjection'
+        configMap:
+          $ref: '#/components/schemas/ConfigMapProjection'
+        downwardAPI:
+          $ref: '#/components/schemas/DownwardAPIProjection'
+        podCertificate:
+          $ref: '#/components/schemas/PodCertificateProjection'
+        secret:
+          $ref: '#/components/schemas/SecretProjection'
+        serviceAccountToken:
+          $ref: '#/components/schemas/ServiceAccountTokenProjection'
+    HostAlias:
+      type: object
+      properties:
+        hostnames:
+          type: array
+          items:
+            type: string
+        ip:
+          type: string
+    MetricValueStatus:
+      type: object
+      properties:
+        averageUtilization:
+          type: integer
+          format: int32
+        averageValue:
+          $ref: '#/components/schemas/Quantity'
+        value:
+          $ref: '#/components/schemas/Quantity'
+    ConfigMapEnvSource:
+      type: object
+      properties:
+        name:
+          type: string
+        optional:
+          type: boolean
+    ContainerStateRunning:
+      type: object
+      properties:
+        startedAt:
+          type: string
+    ResourceFieldSelector:
+      type: object
+      properties:
+        containerName:
+          type: string
+        divisor:
+          $ref: '#/components/schemas/Quantity'
+        resource:
+          type: string
+    EventSeries:
+      type: object
+      properties:
+        count:
+          type: integer
+          format: int32
+        lastObservedTime:
+          $ref: '#/components/schemas/MicroTime'
+    SleepAction:
+      type: object
+      properties:
+        seconds:
+          type: integer
+          format: int64
+    Capabilities:
+      type: object
+      properties:
+        add:
+          type: array
+          items:
+            type: string
+        drop:
+          type: array
+          items:
+            type: string
+    ScaleIOVolumeSource:
+      type: object
+      properties:
+        fsType:
+          type: string
+        gateway:
+          type: string
+        protectionDomain:
+          type: string
+        readOnly:
+          type: boolean
+        secretRef:
+          $ref: '#/components/schemas/LocalObjectReference'
+        sslEnabled:
+          type: boolean
+        storageMode:
+          type: string
+        storagePool:
+          type: string
+        system:
+          type: string
+        volumeName:
+          type: string
+    PortworxVolumeSource:
+      type: object
+      properties:
+        fsType:
+          type: string
+        readOnly:
+          type: boolean
+        volumeID:
+          type: string
+    ResourceEnableDisableRequest:
+      type: object
+      properties:
+        directory:
+          type: string
+        disabled:
+          type: boolean
+        filename:
+          type: string
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+    PodDNSConfig:
+      type: object
+      properties:
+        nameservers:
+          type: array
+          items:
+            type: string
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/PodDNSConfigOption'
+        searches:
+          type: array
+          items:
+            type: string
+    PreferredSchedulingTerm:
+      type: object
+      properties:
+        preference:
+          $ref: '#/components/schemas/NodeSelectorTerm'
+        weight:
+          type: integer
+          format: int32
+    ContainerStateWaiting:
+      type: object
+      properties:
+        message:
+          type: string
+        reason:
+          type: string
+    ContainerPort:
+      type: object
+      properties:
+        containerPort:
+          type: integer
+          format: int32
+        hostIP:
+          type: string
+        hostPort:
+          type: integer
+          format: int32
+        name:
+          type: string
+        protocol:
+          type: string
+    MetricTarget:
+      type: object
+      properties:
+        averageUtilization:
+          type: integer
+          format: int32
+        averageValue:
+          $ref: '#/components/schemas/Quantity'
+        type:
+          type: string
+        value:
+          $ref: '#/components/schemas/Quantity'
+    ObjectMetricStatus:
+      type: object
+      properties:
+        current:
+          $ref: '#/components/schemas/MetricValueStatus'
+        describedObject:
+          $ref: '#/components/schemas/CrossVersionObjectReference'
+        metric:
+          $ref: '#/components/schemas/MetricIdentifier'
+    NodeAffinity:
+      type: object
+      properties:
+        preferredDuringSchedulingIgnoredDuringExecution:
+          type: array
+          items:
+            $ref: '#/components/schemas/PreferredSchedulingTerm'
+        requiredDuringSchedulingIgnoredDuringExecution:
+          $ref: '#/components/schemas/NodeSelector'
+    ExternalMetricStatus:
+      type: object
+      properties:
+        current:
+          $ref: '#/components/schemas/MetricValueStatus'
+        metric:
+          $ref: '#/components/schemas/MetricIdentifier'
+    ImageVolumeStatus:
+      type: object
+      properties:
+        imageRef:
+          type: string
+    ContainerExtendedResourceRequest:
+      type: object
+      properties:
+        containerName:
+          type: string
+        requestName:
+          type: string
+        resourceName:
+          type: string
+    IngressPortStatus:
+      type: object
+      properties:
+        error:
+          type: string
+        port:
+          type: integer
+          format: int32
+        protocol:
+          type: string
+    ExternalMetricSource:
+      type: object
+      properties:
+        metric:
+          $ref: '#/components/schemas/MetricIdentifier'
+        target:
+          $ref: '#/components/schemas/MetricTarget'
+    VolumeDevice:
+      type: object
+      properties:
+        devicePath:
+          type: string
+        name:
+          type: string
+    SeccompProfile:
+      type: object
+      properties:
+        localhostProfile:
+          type: string
+        type:
+          type: string
+    LabelSelector:
+      type: object
+      properties:
+        matchExpressions:
+          type: array
+          items:
+            $ref: '#/components/schemas/LabelSelectorRequirement'
+        matchLabels:
+          type: object
+          additionalProperties:
+            type: string
+    CinderVolumeSource:
+      type: object
+      properties:
+        fsType:
+          type: string
+        readOnly:
+          type: boolean
+        secretRef:
+          $ref: '#/components/schemas/LocalObjectReference'
+        volumeID:
+          type: string
+    OverrideObject:
+      type: object
+      properties:
+        changeLog:
+          type: string
+        commitId:
+          type: string
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        id:
+          type: string
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        overrides:
+          type: object
+          additionalProperties:
+            type: object
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+        versioningKey:
+          type: string
+    GitRepoVolumeSource:
+      type: object
+      properties:
+        directory:
+          type: string
+        repository:
+          type: string
+        revision:
+          type: string
+    PodExtendedResourceClaimStatus:
+      type: object
+      properties:
+        requestMappings:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContainerExtendedResourceRequest'
+        resourceClaimName:
+          type: string
+    TypedObjectReference:
+      type: object
+      properties:
+        apiGroup:
+          type: string
+        kind:
+          type: string
+        name:
+          type: string
+        namespace:
+          type: string
+    DownwardAPIVolumeFile:
+      type: object
+      properties:
+        fieldRef:
+          $ref: '#/components/schemas/ObjectFieldSelector'
+        mode:
+          type: integer
+          format: int32
+        path:
+          type: string
+        resourceFieldRef:
+          $ref: '#/components/schemas/ResourceFieldSelector'
+    PodReadinessGate:
+      type: object
+      properties:
+        conditionType:
+          type: string
+    HostIP:
+      type: object
+      properties:
+        ip:
+          type: string
+    ObjectMetricSource:
+      type: object
+      properties:
+        describedObject:
+          $ref: '#/components/schemas/CrossVersionObjectReference'
+        metric:
+          $ref: '#/components/schemas/MetricIdentifier'
+        target:
+          $ref: '#/components/schemas/MetricTarget'
+    ResourceClaim:
+      type: object
+      properties:
+        name:
+          type: string
+        request:
+          type: string
+    SELinuxOptions:
+      type: object
+      properties:
+        level:
+          type: string
+        role:
+          type: string
+        type:
+          type: string
+        user:
+          type: string
+    WindowsSecurityContextOptions:
+      type: object
+      properties:
+        gmsaCredentialSpec:
+          type: string
+        gmsaCredentialSpecName:
+          type: string
+        hostProcess:
+          type: boolean
+        runAsUserName:
+          type: string
+    Sysctl:
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+    ObjectMeta:
+      type: object
+      properties:
+        annotations:
+          type: object
+          additionalProperties:
+            type: string
+        creationTimestamp:
+          type: string
+        deletionGracePeriodSeconds:
+          type: integer
+          format: int64
+        deletionTimestamp:
+          type: string
+        finalizers:
+          type: array
+          items:
+            type: string
+        generateName:
+          type: string
+        generation:
+          type: integer
+          format: int64
+        labels:
+          type: object
+          additionalProperties:
+            type: string
+        managedFields:
+          type: array
+          items:
+            $ref: '#/components/schemas/ManagedFieldsEntry'
+        name:
+          type: string
+        namespace:
+          type: string
+        ownerReferences:
+          type: array
+          items:
+            $ref: '#/components/schemas/OwnerReference'
+        resourceVersion:
+          type: string
+        selfLink:
+          type: string
+        uid:
+          type: string
+    Versioned:
+      type: object
+      properties:
+        changeLog:
+          type: string
+          writeOnly: true
+        versioningKey:
+          type: string
+    OverrideRequest:
+      required:
+      - resourceName
+      - resourceType
+      type: object
+      properties:
+        affectedResources:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceEnableDisableRequest'
+        changeLog:
+          type: string
+        overrides:
+          type: object
+          additionalProperties:
+            type: object
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+    PodSecurityContext:
+      type: object
+      properties:
+        appArmorProfile:
+          $ref: '#/components/schemas/AppArmorProfile'
+        fsGroup:
+          type: integer
+          format: int64
+        fsGroupChangePolicy:
+          type: string
+        runAsGroup:
+          type: integer
+          format: int64
+        runAsNonRoot:
+          type: boolean
+        runAsUser:
+          type: integer
+          format: int64
+        seLinuxChangePolicy:
+          type: string
+        seLinuxOptions:
+          $ref: '#/components/schemas/SELinuxOptions'
+        seccompProfile:
+          $ref: '#/components/schemas/SeccompProfile'
+        supplementalGroups:
+          type: array
+          items:
+            type: integer
+            format: int64
+        supplementalGroupsPolicy:
+          type: string
+        sysctls:
+          type: array
+          items:
+            $ref: '#/components/schemas/Sysctl'
+        windowsOptions:
+          $ref: '#/components/schemas/WindowsSecurityContextOptions'
+    EphemeralVolumeSource:
+      type: object
+      properties:
+        volumeClaimTemplate:
+          $ref: '#/components/schemas/PersistentVolumeClaimTemplate'
+    PersistentVolumeClaimSpec:
+      type: object
+      properties:
+        accessModes:
+          type: array
+          items:
+            type: string
+        dataSource:
+          $ref: '#/components/schemas/TypedLocalObjectReference'
+        dataSourceRef:
+          $ref: '#/components/schemas/TypedObjectReference'
+        resources:
+          $ref: '#/components/schemas/VolumeResourceRequirements'
+        selector:
+          $ref: '#/components/schemas/LabelSelector'
+        storageClassName:
+          type: string
+        volumeAttributesClassName:
+          type: string
+        volumeMode:
+          type: string
+        volumeName:
+          type: string
+    PodsMetricSource:
+      type: object
+      properties:
+        metric:
+          $ref: '#/components/schemas/MetricIdentifier'
+        target:
+          $ref: '#/components/schemas/MetricTarget'
+    IngressStatus:
+      type: object
+      properties:
+        loadBalancer:
+          $ref: '#/components/schemas/IngressLoadBalancerStatus'
+    LabelSelectorRequirement:
+      type: object
+      properties:
+        key:
+          type: string
+        operator:
+          type: string
+        values:
+          type: array
+          items:
+            type: string
+    HorizontalPodAutoscalerBehavior:
+      type: object
+      properties:
+        scaleDown:
+          $ref: '#/components/schemas/HPAScalingRules'
+        scaleUp:
+          $ref: '#/components/schemas/HPAScalingRules'
+    HTTPIngressPath:
+      type: object
+      properties:
+        backend:
+          $ref: '#/components/schemas/IngressBackend'
+        path:
+          type: string
+        pathType:
+          type: string
+    AWSElasticBlockStoreVolumeSource:
+      type: object
+      properties:
+        fsType:
+          type: string
+        partition:
+          type: integer
+          format: int32
+        readOnly:
+          type: boolean
+        volumeID:
+          type: string
+    ContainerRestartRule:
+      type: object
+      properties:
+        action:
+          type: string
+        exitCodes:
+          $ref: '#/components/schemas/ContainerRestartRuleOnExitCodes'
+    VolumeResourceRequirements:
+      type: object
+      properties:
+        limits:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Quantity'
+        requests:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Quantity'
+    PodStatus:
+      type: object
+      properties:
+        allocatedResources:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Quantity'
+        conditions:
+          type: array
+          items:
+            $ref: '#/components/schemas/PodCondition'
+        containerStatuses:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContainerStatus'
+        ephemeralContainerStatuses:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContainerStatus'
+        extendedResourceClaimStatus:
+          $ref: '#/components/schemas/PodExtendedResourceClaimStatus'
+        hostIP:
+          type: string
+        hostIPs:
+          type: array
+          items:
+            $ref: '#/components/schemas/HostIP'
+        initContainerStatuses:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContainerStatus'
+        message:
+          type: string
+        nodeAllocatableResourceClaimStatuses:
+          type: array
+          items:
+            $ref: '#/components/schemas/NodeAllocatableResourceClaimStatus'
+        nominatedNodeName:
+          type: string
+        observedGeneration:
+          type: integer
+          format: int64
+        phase:
+          type: string
+        podIP:
+          type: string
+        podIPs:
+          type: array
+          items:
+            $ref: '#/components/schemas/PodIP'
+        qosClass:
+          type: string
+        reason:
+          type: string
+        resize:
+          type: string
+        resourceClaimStatuses:
+          type: array
+          items:
+            $ref: '#/components/schemas/PodResourceClaimStatus'
+        resources:
+          $ref: '#/components/schemas/ResourceRequirements'
+        startTime:
+          type: string
+    GRPCAction:
+      type: object
+      properties:
+        port:
+          type: integer
+          format: int32
+        service:
+          type: string
+    IngressLoadBalancerStatus:
+      type: object
+      properties:
+        ingress:
+          type: array
+          items:
+            $ref: '#/components/schemas/IngressLoadBalancerIngress'
+    TypedLocalObjectReference:
+      type: object
+      properties:
+        apiGroup:
+          type: string
+        kind:
+          type: string
+        name:
+          type: string
+    ContainerResizePolicy:
+      type: object
+      properties:
+        resourceName:
+          type: string
+        restartPolicy:
+          type: string
+    ContainerResourceMetricStatus:
+      type: object
+      properties:
+        container:
+          type: string
+        current:
+          $ref: '#/components/schemas/MetricValueStatus'
+        name:
+          type: string
+    HorizontalPodAutoscaler:
+      type: object
+      properties:
+        apiVersion:
+          type: string
+        kind:
+          type: string
+        metadata:
+          $ref: '#/components/schemas/ObjectMeta'
+        spec:
+          $ref: '#/components/schemas/HorizontalPodAutoscalerSpec'
+        status:
+          $ref: '#/components/schemas/HorizontalPodAutoscalerStatus'
+    AppArmorProfile:
+      type: object
+      properties:
+        localhostProfile:
+          type: string
+        type:
+          type: string
+    PodSchedulingGroup:
+      type: object
+      properties:
+        podGroupName:
+          type: string
+    ContainerResourceMetricSource:
+      type: object
+      properties:
+        container:
+          type: string
+        name:
+          type: string
+        target:
+          $ref: '#/components/schemas/MetricTarget'
+    HTTPIngressRuleValue:
+      type: object
+      properties:
+        paths:
+          type: array
+          items:
+            $ref: '#/components/schemas/HTTPIngressPath'
+    ObjectReference:
+      type: object
+      properties:
+        apiVersion:
+          type: string
+        fieldPath:
+          type: string
+        kind:
+          type: string
+        name:
+          type: string
+        namespace:
+          type: string
+        resourceVersion:
+          type: string
+        uid:
+          type: string
+    PodCondition:
+      type: object
+      properties:
+        lastProbeTime:
+          type: string
+        lastTransitionTime:
+          type: string
+        message:
+          type: string
+        observedGeneration:
+          type: integer
+          format: int64
+        reason:
+          type: string
+        status:
+          type: string
+        type:
+          type: string
+    Pod:
+      type: object
+      properties:
+        apiVersion:
+          type: string
+        kind:
+          type: string
+        metadata:
+          $ref: '#/components/schemas/ObjectMeta'
+        spec:
+          $ref: '#/components/schemas/PodSpec'
+        status:
+          $ref: '#/components/schemas/PodStatus'
+    ServiceAccountTokenProjection:
+      type: object
+      properties:
+        audience:
+          type: string
+        expirationSeconds:
+          type: integer
+          format: int64
+        path:
+          type: string
+    PodAffinity:
+      type: object
+      properties:
+        preferredDuringSchedulingIgnoredDuringExecution:
+          type: array
+          items:
+            $ref: '#/components/schemas/WeightedPodAffinityTerm'
+        requiredDuringSchedulingIgnoredDuringExecution:
+          type: array
+          items:
+            $ref: '#/components/schemas/PodAffinityTerm'
+    DownwardAPIVolumeSource:
+      type: object
+      properties:
+        defaultMode:
+          type: integer
+          format: int32
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/DownwardAPIVolumeFile'
+    ManagedFieldsEntry:
+      type: object
+      properties:
+        apiVersion:
+          type: string
+        fieldsType:
+          type: string
+        fieldsV1:
+          $ref: '#/components/schemas/FieldsV1'
+        manager:
+          type: string
+        operation:
+          type: string
+        subresource:
+          type: string
+        time:
+          type: string
+    AzureFileVolumeSource:
+      type: object
+      properties:
+        readOnly:
+          type: boolean
+        secretName:
+          type: string
+        shareName:
+          type: string
+    SecretKeySelector:
+      type: object
+      properties:
+        key:
+          type: string
+        name:
+          type: string
+        optional:
+          type: boolean
+    Event:
+      type: object
+      properties:
+        action:
+          type: string
+        apiVersion:
+          type: string
+        count:
+          type: integer
+          format: int32
+        eventTime:
+          $ref: '#/components/schemas/MicroTime'
+        firstTimestamp:
+          type: string
+        involvedObject:
+          $ref: '#/components/schemas/ObjectReference'
+        kind:
+          type: string
+        lastTimestamp:
+          type: string
+        message:
+          type: string
+        metadata:
+          $ref: '#/components/schemas/ObjectMeta'
+        reason:
+          type: string
+        related:
+          $ref: '#/components/schemas/ObjectReference'
+        reportingComponent:
+          type: string
+        reportingInstance:
+          type: string
+        series:
+          $ref: '#/components/schemas/EventSeries'
+        source:
+          $ref: '#/components/schemas/EventSource'
+        type:
+          type: string
+    IngressServiceBackend:
+      type: object
+      properties:
+        name:
+          type: string
+        port:
+          $ref: '#/components/schemas/ServiceBackendPort'
+    QuobyteVolumeSource:
+      type: object
+      properties:
+        group:
+          type: string
+        readOnly:
+          type: boolean
+        registry:
+          type: string
+        tenant:
+          type: string
+        user:
+          type: string
+        volume:
+          type: string
+    LinuxContainerUser:
+      type: object
+      properties:
+        gid:
+          type: integer
+          format: int64
+        supplementalGroups:
+          type: array
+          items:
+            type: integer
+            format: int64
+        uid:
+          type: integer
+          format: int64
+    ServiceBackendPort:
+      type: object
+      properties:
+        name:
+          type: string
+        number:
+          type: integer
+          format: int32
+    StorageOSVolumeSource:
+      type: object
+      properties:
+        fsType:
+          type: string
+        readOnly:
+          type: boolean
+        secretRef:
+          $ref: '#/components/schemas/LocalObjectReference'
+        volumeName:
+          type: string
+        volumeNamespace:
+          type: string
+    PodAntiAffinity:
+      type: object
+      properties:
+        preferredDuringSchedulingIgnoredDuringExecution:
+          type: array
+          items:
+            $ref: '#/components/schemas/WeightedPodAffinityTerm'
+        requiredDuringSchedulingIgnoredDuringExecution:
+          type: array
+          items:
+            $ref: '#/components/schemas/PodAffinityTerm'
+    EnvVar:
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+        valueFrom:
+          $ref: '#/components/schemas/EnvVarSource'
+    KeyToPath:
+      type: object
+      properties:
+        key:
+          type: string
+        mode:
+          type: integer
+          format: int32
+        path:
+          type: string
+    GCEPersistentDiskVolumeSource:
+      type: object
+      properties:
+        fsType:
+          type: string
+        partition:
+          type: integer
+          format: int32
+        pdName:
+          type: string
+        readOnly:
+          type: boolean
+    PodOS:
+      type: object
+      properties:
+        name:
+          type: string
+    PersistentVolumeClaimVolumeSource:
+      type: object
+      properties:
+        claimName:
+          type: string
+        readOnly:
+          type: boolean
+    PodResourceClaim:
+      type: object
+      properties:
+        name:
+          type: string
+        resourceClaimName:
+          type: string
+        resourceClaimTemplateName:
+          type: string
+    Toleration:
+      type: object
+      properties:
+        effect:
+          type: string
+        key:
+          type: string
+        operator:
+          type: string
+        tolerationSeconds:
+          type: integer
+          format: int64
+        value:
+          type: string
+    Lifecycle:
+      type: object
+      properties:
+        postStart:
+          $ref: '#/components/schemas/LifecycleHandler'
+        preStop:
+          $ref: '#/components/schemas/LifecycleHandler'
+        stopSignal:
+          type: string
+    SecretVolumeSource:
+      type: object
+      properties:
+        defaultMode:
+          type: integer
+          format: int32
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/KeyToPath'
+        optional:
+          type: boolean
+        secretName:
+          type: string
+    NodeAllocatableResourceClaimStatus:
+      type: object
+      properties:
+        containers:
+          type: array
+          items:
+            type: string
+        resourceClaimName:
+          type: string
+        resources:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Quantity'
+    MicroTime:
+      type: object
+      properties:
+        Time:
+          type: string
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    Ingress:
+      type: object
+      properties:
+        apiVersion:
+          type: string
+        kind:
+          type: string
+        metadata:
+          $ref: '#/components/schemas/ObjectMeta'
+        spec:
+          $ref: '#/components/schemas/IngressSpec'
+        status:
+          $ref: '#/components/schemas/IngressStatus'
+    HPAScalingPolicy:
+      type: object
+      properties:
+        periodSeconds:
+          type: integer
+          format: int32
+        type:
+          type: string
+        value:
+          type: integer
+          format: int32
+    CrossVersionObjectReference:
+      type: object
+      properties:
+        apiVersion:
+          type: string
+        kind:
+          type: string
+        name:
+          type: string
+    HostPathVolumeSource:
+      type: object
+      properties:
+        path:
+          type: string
+        type:
+          type: string
+    FlockerVolumeSource:
+      type: object
+      properties:
+        datasetName:
+          type: string
+        datasetUUID:
+          type: string
+    PodsMetricStatus:
+      type: object
+      properties:
+        current:
+          $ref: '#/components/schemas/MetricValueStatus'
+        metric:
+          $ref: '#/components/schemas/MetricIdentifier'
+    TCPSocketAction:
+      type: object
+      properties:
+        host:
+          type: string
+        port:
+          $ref: '#/components/schemas/IntOrString'
+    OwnerReference:
+      type: object
+      properties:
+        apiVersion:
+          type: string
+        blockOwnerDeletion:
+          type: boolean
+        controller:
+          type: boolean
+        kind:
+          type: string
+        name:
+          type: string
+        uid:
+          type: string
+    RBDVolumeSource:
+      type: object
+      properties:
+        fsType:
+          type: string
+        image:
+          type: string
+        keyring:
+          type: string
+        monitors:
+          type: array
+          items:
+            type: string
+        pool:
+          type: string
+        readOnly:
+          type: boolean
+        secretRef:
+          $ref: '#/components/schemas/LocalObjectReference'
+        user:
+          type: string
+    ResourceOutProperties:
+      type: object
+      properties:
+        attributes:
+          type: object
+          additionalProperties:
+            type: object
+        clusterId:
+          type: string
+        id:
+          type: string
+        interfaces:
+          type: object
+          additionalProperties:
+            type: object
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+        updatedAt:
+          type: string
+          format: date-time
+    ConfigMapKeySelector:
+      type: object
+      properties:
+        key:
+          type: string
+        name:
+          type: string
+        optional:
+          type: boolean
+    IngressBackend:
+      type: object
+      properties:
+        resource:
+          $ref: '#/components/schemas/TypedLocalObjectReference'
+        service:
+          $ref: '#/components/schemas/IngressServiceBackend'
+    LocalObjectReference:
+      type: object
+      properties:
+        name:
+          type: string
+    GlusterfsVolumeSource:
+      type: object
+      properties:
+        endpoints:
+          type: string
+        path:
+          type: string
+        readOnly:
+          type: boolean
+    HorizontalPodAutoscalerCondition:
+      type: object
+      properties:
+        lastTransitionTime:
+          type: string
+        message:
+          type: string
+        reason:
+          type: string
+        status:
+          type: string
+        type:
+          type: string
+    ContainerUser:
+      type: object
+      properties:
+        linux:
+          $ref: '#/components/schemas/LinuxContainerUser'
+    FileKeySelector:
+      type: object
+      properties:
+        key:
+          type: string
+        optional:
+          type: boolean
+        path:
+          type: string
+        volumeName:
+          type: string
+    ResourceMetricStatus:
+      type: object
+      properties:
+        current:
+          $ref: '#/components/schemas/MetricValueStatus'
+        name:
+          type: string
+    NFSVolumeSource:
+      type: object
+      properties:
+        path:
+          type: string
+        readOnly:
+          type: boolean
+        server:
+          type: string
+    EnvFromSource:
+      type: object
+      properties:
+        configMapRef:
+          $ref: '#/components/schemas/ConfigMapEnvSource'
+        prefix:
+          type: string
+        secretRef:
+          $ref: '#/components/schemas/SecretEnvSource'
+    PodCertificateProjection:
+      type: object
+      properties:
+        certificateChainPath:
+          type: string
+        credentialBundlePath:
+          type: string
+        keyPath:
+          type: string
+        keyType:
+          type: string
+        maxExpirationSeconds:
+          type: integer
+          format: int32
+        signerName:
+          type: string
+        userAnnotations:
+          type: object
+          additionalProperties:
+            type: string
+    IngressRule:
+      type: object
+      properties:
+        host:
+          type: string
+        http:
+          $ref: '#/components/schemas/HTTPIngressRuleValue'
+    EventSource:
+      type: object
+      properties:
+        component:
+          type: string
+        host:
+          type: string
+    DownwardAPIProjection:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/DownwardAPIVolumeFile'
+    Affinity:
+      type: object
+      properties:
+        nodeAffinity:
+          $ref: '#/components/schemas/NodeAffinity'
+        podAffinity:
+          $ref: '#/components/schemas/PodAffinity'
+        podAntiAffinity:
+          $ref: '#/components/schemas/PodAntiAffinity'
+    HTTPGetAction:
+      type: object
+      properties:
+        host:
+          type: string
+        httpHeaders:
+          type: array
+          items:
+            $ref: '#/components/schemas/HTTPHeader'
+        path:
+          type: string
+        port:
+          $ref: '#/components/schemas/IntOrString'
+        scheme:
+          type: string
+    IngressSpec:
+      type: object
+      properties:
+        defaultBackend:
+          $ref: '#/components/schemas/IngressBackend'
+        ingressClassName:
+          type: string
+        rules:
+          type: array
+          items:
+            $ref: '#/components/schemas/IngressRule'
+        tls:
+          type: array
+          items:
+            $ref: '#/components/schemas/IngressTLS'
+    HorizontalPodAutoscalerSpec:
+      type: object
+      properties:
+        behavior:
+          $ref: '#/components/schemas/HorizontalPodAutoscalerBehavior'
+        maxReplicas:
+          type: integer
+          format: int32
+        metrics:
+          type: array
+          items:
+            $ref: '#/components/schemas/MetricSpec'
+        minReplicas:
+          type: integer
+          format: int32
+        scaleTargetRef:
+          $ref: '#/components/schemas/CrossVersionObjectReference'
+    PhotonPersistentDiskVolumeSource:
+      type: object
+      properties:
+        fsType:
+          type: string
+        pdID:
+          type: string
+    BlueprintValidationError:
+      type: object
+      properties:
+        blueprintErrorLines:
+          type: array
+          items:
+            type: integer
+            format: int32
+        category:
+          type: string
+          enum:
+          - Syntax Error
+          - Non-Existent Resource Reference
+          - Disabled Resource References
+          - Invalid Reference Expression
+          - Schema Compliance Error
+          - GuardRails Compliance Issues
+          - Overrides Syntax Error
+          - Invalid Filename Error
+          - Input Validation Error
+          - Missing Environment Override
+        message:
+          type: string
+        overrideErrorLines:
+          type: array
+          items:
+            type: integer
+            format: int32
+        severity:
+          type: string
+          enum:
+          - ERROR
+          - WARNING
+    ImageVolumeSource:
+      type: object
+      properties:
+        pullPolicy:
+          type: string
+        reference:
+          type: string
+    MetricSpec:
+      type: object
+      properties:
+        containerResource:
+          $ref: '#/components/schemas/ContainerResourceMetricSource'
+        external:
+          $ref: '#/components/schemas/ExternalMetricSource'
+        object:
+          $ref: '#/components/schemas/ObjectMetricSource'
+        pods:
+          $ref: '#/components/schemas/PodsMetricSource'
+        resource:
+          $ref: '#/components/schemas/ResourceMetricSource'
+        type:
+          type: string
+    PodResourceClaimStatus:
+      type: object
+      properties:
+        name:
+          type: string
+        resourceClaimName:
+          type: string
+    CephFSVolumeSource:
+      type: object
+      properties:
+        monitors:
+          type: array
+          items:
+            type: string
+        path:
+          type: string
+        readOnly:
+          type: boolean
+        secretFile:
+          type: string
+        secretRef:
+          $ref: '#/components/schemas/LocalObjectReference'
+        user:
+          type: string
+    PodDNSConfigOption:
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+    ProjectedVolumeSource:
+      type: object
+      properties:
+        defaultMode:
+          type: integer
+          format: int32
+        sources:
+          type: array
+          items:
+            $ref: '#/components/schemas/VolumeProjection'
+    IntOrString:
+      type: object
+      properties:
+        intVal:
+          type: integer
+          format: int32
+        strVal:
+          type: string
+        value:
+          type: object
+    SecurityContext:
+      type: object
+      properties:
+        allowPrivilegeEscalation:
+          type: boolean
+        appArmorProfile:
+          $ref: '#/components/schemas/AppArmorProfile'
+        capabilities:
+          $ref: '#/components/schemas/Capabilities'
+        privileged:
+          type: boolean
+        procMount:
+          type: string
+        readOnlyRootFilesystem:
+          type: boolean
+        runAsGroup:
+          type: integer
+          format: int64
+        runAsNonRoot:
+          type: boolean
+        runAsUser:
+          type: integer
+          format: int64
+        seLinuxOptions:
+          $ref: '#/components/schemas/SELinuxOptions'
+        seccompProfile:
+          $ref: '#/components/schemas/SeccompProfile'
+        windowsOptions:
+          $ref: '#/components/schemas/WindowsSecurityContextOptions'
+    PodSchedulingGate:
+      type: object
+      properties:
+        name:
+          type: string
+    ContainerStatus:
+      type: object
+      properties:
+        allocatedResources:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Quantity'
+        allocatedResourcesStatus:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceStatus'
+        containerID:
+          type: string
+        image:
+          type: string
+        imageID:
+          type: string
+        lastState:
+          $ref: '#/components/schemas/ContainerState'
+        name:
+          type: string
+        ready:
+          type: boolean
+        resources:
+          $ref: '#/components/schemas/ResourceRequirements'
+        restartCount:
+          type: integer
+          format: int32
+        started:
+          type: boolean
+        state:
+          $ref: '#/components/schemas/ContainerState'
+        stopSignal:
+          type: string
+        user:
+          $ref: '#/components/schemas/ContainerUser'
+        volumeMounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/VolumeMountStatus'
+    ConfigMapProjection:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/KeyToPath'
+        name:
+          type: string
+        optional:
+          type: boolean
+    CSIVolumeSource:
+      type: object
+      properties:
+        driver:
+          type: string
+        fsType:
+          type: string
+        nodePublishSecretRef:
+          $ref: '#/components/schemas/LocalObjectReference'
+        readOnly:
+          type: boolean
+        volumeAttributes:
+          type: object
+          additionalProperties:
+            type: string
+    ContainerRestartRuleOnExitCodes:
+      type: object
+      properties:
+        operator:
+          type: string
+        values:
+          type: array
+          items:
+            type: integer
+            format: int32
+    TopologySpreadConstraint:
+      type: object
+      properties:
+        labelSelector:
+          $ref: '#/components/schemas/LabelSelector'
+        matchLabelKeys:
+          type: array
+          items:
+            type: string
+        maxSkew:
+          type: integer
+          format: int32
+        minDomains:
+          type: integer
+          format: int32
+        nodeAffinityPolicy:
+          type: string
+        nodeTaintsPolicy:
+          type: string
+        topologyKey:
+          type: string
+        whenUnsatisfiable:
+          type: string
+    Container:
+      type: object
+      properties:
+        args:
+          type: array
+          items:
+            type: string
+        command:
+          type: array
+          items:
+            type: string
+        env:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnvVar'
+        envFrom:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnvFromSource'
+        image:
+          type: string
+        imagePullPolicy:
+          type: string
+        lifecycle:
+          $ref: '#/components/schemas/Lifecycle'
+        livenessProbe:
+          $ref: '#/components/schemas/Probe'
+        name:
+          type: string
+        ports:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContainerPort'
+        readinessProbe:
+          $ref: '#/components/schemas/Probe'
+        resizePolicy:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContainerResizePolicy'
+        resources:
+          $ref: '#/components/schemas/ResourceRequirements'
+        restartPolicy:
+          type: string
+        restartPolicyRules:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContainerRestartRule'
+        securityContext:
+          $ref: '#/components/schemas/SecurityContext'
+        startupProbe:
+          $ref: '#/components/schemas/Probe'
+        stdin:
+          type: boolean
+        stdinOnce:
+          type: boolean
+        terminationMessagePath:
+          type: string
+        terminationMessagePolicy:
+          type: string
+        tty:
+          type: boolean
+        volumeDevices:
+          type: array
+          items:
+            $ref: '#/components/schemas/VolumeDevice'
+        volumeMounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/VolumeMount'
+        workingDir:
+          type: string
+    IngressLoadBalancerIngress:
+      type: object
+      properties:
+        hostname:
+          type: string
+        ip:
+          type: string
+        ports:
+          type: array
+          items:
+            $ref: '#/components/schemas/IngressPortStatus'
+    FCVolumeSource:
+      type: object
+      properties:
+        fsType:
+          type: string
+        lun:
+          type: integer
+          format: int32
+        readOnly:
+          type: boolean
+        targetWWNs:
+          type: array
+          items:
+            type: string
+        wwids:
+          type: array
+          items:
+            type: string
+    Volume:
+      type: object
+      properties:
+        awsElasticBlockStore:
+          $ref: '#/components/schemas/AWSElasticBlockStoreVolumeSource'
+        azureDisk:
+          $ref: '#/components/schemas/AzureDiskVolumeSource'
+        azureFile:
+          $ref: '#/components/schemas/AzureFileVolumeSource'
+        cephfs:
+          $ref: '#/components/schemas/CephFSVolumeSource'
+        cinder:
+          $ref: '#/components/schemas/CinderVolumeSource'
+        configMap:
+          $ref: '#/components/schemas/ConfigMapVolumeSource'
+        csi:
+          $ref: '#/components/schemas/CSIVolumeSource'
+        downwardAPI:
+          $ref: '#/components/schemas/DownwardAPIVolumeSource'
+        emptyDir:
+          $ref: '#/components/schemas/EmptyDirVolumeSource'
+        ephemeral:
+          $ref: '#/components/schemas/EphemeralVolumeSource'
+        fc:
+          $ref: '#/components/schemas/FCVolumeSource'
+        flexVolume:
+          $ref: '#/components/schemas/FlexVolumeSource'
+        flocker:
+          $ref: '#/components/schemas/FlockerVolumeSource'
+        gcePersistentDisk:
+          $ref: '#/components/schemas/GCEPersistentDiskVolumeSource'
+        gitRepo:
+          $ref: '#/components/schemas/GitRepoVolumeSource'
+        glusterfs:
+          $ref: '#/components/schemas/GlusterfsVolumeSource'
+        hostPath:
+          $ref: '#/components/schemas/HostPathVolumeSource'
+        image:
+          $ref: '#/components/schemas/ImageVolumeSource'
+        iscsi:
+          $ref: '#/components/schemas/ISCSIVolumeSource'
+        name:
+          type: string
+        nfs:
+          $ref: '#/components/schemas/NFSVolumeSource'
+        persistentVolumeClaim:
+          $ref: '#/components/schemas/PersistentVolumeClaimVolumeSource'
+        photonPersistentDisk:
+          $ref: '#/components/schemas/PhotonPersistentDiskVolumeSource'
+        portworxVolume:
+          $ref: '#/components/schemas/PortworxVolumeSource'
+        projected:
+          $ref: '#/components/schemas/ProjectedVolumeSource'
+        quobyte:
+          $ref: '#/components/schemas/QuobyteVolumeSource'
+        rbd:
+          $ref: '#/components/schemas/RBDVolumeSource'
+        scaleIO:
+          $ref: '#/components/schemas/ScaleIOVolumeSource'
+        secret:
+          $ref: '#/components/schemas/SecretVolumeSource'
+        storageos:
+          $ref: '#/components/schemas/StorageOSVolumeSource'
+        vsphereVolume:
+          $ref: '#/components/schemas/VsphereVirtualDiskVolumeSource'
+  securitySchemes:
+    basicAuth:
+      description: Basic Authentication
+      scheme: basic
+      type: http

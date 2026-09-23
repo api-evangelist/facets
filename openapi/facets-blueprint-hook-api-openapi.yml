@@ -1,0 +1,310 @@
+openapi: 3.2.0
+info:
+  description: API Documentation
+  title: Control-plane Blueprint Hook API
+  version: '1.0'
+servers:
+- url: https://facetsdemo.console.facets.cloud
+  description: Generated server url
+security:
+- basicAuth: []
+tags:
+- description: Manage a blueprint hook (e.g. the pre-release approval hook)
+  name: Blueprint Hook
+paths:
+  /cc-ui/v1/designer/v2/{stackName}/hooks/{type}:
+    delete:
+      description: Deletes the hook script from the blueprint.
+      operationId: deleteHook
+      parameters:
+      - description: Blueprint name
+        in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      - description: Hook type
+        example: PRE_RELEASE
+        in: path
+        name: type
+        required: true
+        schema:
+          type: string
+          enum:
+          - PRE_RELEASE
+      - description: Optional branch; defaults to the blueprint's branch
+        in: query
+        name: branch
+        required: false
+        schema:
+          type: string
+      - description: Optional custom commit message
+        in: query
+        name: commitMessage
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Hook removed
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Unknown hook type
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Blueprint not found or hook not configured
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: Remove a blueprint hook
+      tags:
+      - Blueprint Hook
+    get:
+      description: Returns the installed hook script and language, or installed=false if none.
+      operationId: getHook
+      parameters:
+      - description: Blueprint name
+        in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      - description: Hook type
+        example: PRE_RELEASE
+        in: path
+        name: type
+        required: true
+        schema:
+          type: string
+          enum:
+          - PRE_RELEASE
+      - description: Optional branch; defaults to the blueprint's branch
+        in: query
+        name: branch
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HookResponse'
+          description: Hook state returned
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Unknown hook type
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Blueprint not found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: Get a blueprint hook
+      tags:
+      - Blueprint Hook
+    put:
+      description: Writes the provided script to the blueprint, keeping a single hook file.
+      operationId: setHook
+      parameters:
+      - description: Blueprint name
+        in: path
+        name: stackName
+        required: true
+        schema:
+          type: string
+      - description: Hook type
+        example: PRE_RELEASE
+        in: path
+        name: type
+        required: true
+        schema:
+          type: string
+          enum:
+          - PRE_RELEASE
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HookRequest'
+        required: true
+      responses:
+        '200':
+          description: Hook installed
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Invalid request (blank script or unknown type)
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Blueprint not found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: Install or replace a blueprint hook
+      tags:
+      - Blueprint Hook
+components:
+  schemas:
+    HookResponse:
+      type: object
+      properties:
+        installed:
+          type: boolean
+          description: True when a hook script is present
+        language:
+          type: string
+          description: Language of the installed script, or null if not installed
+          enum:
+          - PYTHON
+          - SHELL
+        script:
+          type: string
+          description: The installed script body, or null if not installed
+        scriptPath:
+          type: string
+          description: Path of the hook script within the blueprint repo
+        type:
+          type: string
+          description: The hook type
+          enum:
+          - PRE_RELEASE
+      description: Blueprint hook state
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    HookRequest:
+      required:
+      - language
+      - script
+      type: object
+      properties:
+        branch:
+          type: string
+          description: Optional branch name. If not provided, uses the stack's default branch.
+          example: feature/my-branch
+        commitMessage:
+          type: string
+          description: Optional custom commit message. If not provided, auto-generated.
+          example: Added redis cache resource
+        language:
+          type: string
+          description: Script language; determines the file extension. Required.
+          example: PYTHON
+          enum:
+          - PYTHON
+          - SHELL
+        script:
+          type: string
+          description: Full hook script body, written verbatim to the blueprint repo
+      description: Install or replace a blueprint hook script
+  securitySchemes:
+    basicAuth:
+      description: Basic Authentication
+      scheme: basic
+      type: http

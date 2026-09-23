@@ -1,0 +1,450 @@
+openapi: 3.2.0
+info:
+  description: API Documentation
+  title: Control-plane TF Output Management API
+  version: '1.0'
+servers:
+- url: https://facetsdemo.console.facets.cloud
+  description: Generated server url
+security:
+- basicAuth: []
+tags:
+- name: TF Output Management
+paths:
+  /cc-ui/v1/tf-outputs:
+    get:
+      operationId: getAllOutputs
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TFOutputResponseDTO'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - TF Output Management
+      summary: Get all outputs
+      x-summary-source: derived
+    post:
+      operationId: createOrUpdateOutput
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TFOutputRequestDTO'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TFOutputResponseDTO'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - TF Output Management
+      summary: Create or update output
+      x-summary-source: derived
+  /cc-ui/v1/tf-outputs/provider:
+    get:
+      operationId: getOutputsByProviderSource
+      parameters:
+      - description: Provider source name
+        in: query
+        name: source
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TFOutputResponseDTO'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: Get all outputs that use a specific provider source
+      tags:
+      - TF Output Management
+  /cc-ui/v1/tf-outputs/{name}:
+    delete:
+      description: Deletes a TF output. By default, deletion is blocked if the output is in use by any modules or intents. Use force=true to override this validation and delete anyway.
+      operationId: deleteOutput
+      parameters:
+      - description: Output name
+        in: path
+        name: name
+        required: true
+        schema:
+          type: string
+      - description: Output namespace (e.g., @outputs, @custom)
+        in: query
+        name: namespace
+        required: true
+        schema:
+          type: string
+      - description: 'Force deletion even if output is in use. Default: false. When false, deletion fails with 400 error if output is referenced by modules/intents.'
+        in: query
+        name: force
+        required: false
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: Delete a TF output by name and namespace
+      tags:
+      - TF Output Management
+    get:
+      operationId: getOutputByName
+      parameters:
+      - in: path
+        name: name
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: namespace
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TFOutputResponseDTO'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - TF Output Management
+      summary: Get output by name
+      x-summary-source: derived
+components:
+  schemas:
+    TFProvider:
+      type: object
+      properties:
+        attributes:
+          type: object
+          additionalProperties:
+            type: object
+        name:
+          type: string
+        source:
+          type: string
+        version:
+          type: string
+    OutputModuleUsageDTO:
+      type: object
+      properties:
+        fieldName:
+          type: string
+        flavor:
+          type: string
+        intent:
+          type: string
+        moduleIdentifier:
+          type: string
+        usageType:
+          type: string
+          enum:
+          - INPUT
+          - OUTPUT
+        version:
+          type: string
+    OutputIntentUsageDTO:
+      type: object
+      properties:
+        displayName:
+          type: string
+        intentName:
+          type: string
+        outputAlias:
+          type: string
+    TFOutputRequestDTO:
+      required:
+      - name
+      type: object
+      properties:
+        lookupTree:
+          type: string
+        name:
+          type: string
+        namespace:
+          type: string
+        properties:
+          $ref: '#/components/schemas/JsonNode'
+        providers:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/TFProvider'
+    JsonNode:
+      type: object
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    TFOutputResponseDTO:
+      type: object
+      properties:
+        facetsYaml:
+          type: string
+        id:
+          type: string
+        lookupTree:
+          type: string
+        name:
+          type: string
+        namespace:
+          type: string
+        properties:
+          $ref: '#/components/schemas/JsonNode'
+        providers:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/TFProvider'
+        source:
+          type: string
+          enum:
+          - BUILT_IN
+          - CUSTOM
+        usage:
+          $ref: '#/components/schemas/TFOutputUsageDTO'
+    TFOutputUsageDTO:
+      type: object
+      properties:
+        inUse:
+          type: boolean
+        intentsReferencing:
+          type: array
+          items:
+            $ref: '#/components/schemas/OutputIntentUsageDTO'
+        modulesConsuming:
+          type: array
+          items:
+            $ref: '#/components/schemas/OutputModuleUsageDTO'
+        modulesProducing:
+          type: array
+          items:
+            $ref: '#/components/schemas/OutputModuleUsageDTO'
+        totalUsageCount:
+          type: integer
+          format: int32
+  securitySchemes:
+    basicAuth:
+      description: Basic Authentication
+      scheme: basic
+      type: http

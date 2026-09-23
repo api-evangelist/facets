@@ -1,0 +1,279 @@
+openapi: 3.2.0
+info:
+  description: API Documentation
+  title: Control-plane Intent Management API
+  version: '1.0'
+servers:
+- url: https://facetsdemo.console.facets.cloud
+  description: Generated server url
+security:
+- basicAuth: []
+tags:
+- name: Intent Management
+paths:
+  /cc-ui/v1/intents:
+    get:
+      operationId: getAllIntents
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/IntentResponseDTO'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - Intent Management
+      summary: Get all intents
+      x-summary-source: derived
+    post:
+      operationId: createOrUpdateIntent
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IntentRequestDTO'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntentResponseDTO'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - Intent Management
+      summary: Create or update intent
+      x-summary-source: derived
+  /cc-ui/v1/intents/{name}:
+    delete:
+      operationId: deleteIntent
+      parameters:
+      - in: path
+        name: name
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - Intent Management
+      summary: Delete intent
+      x-summary-source: derived
+components:
+  schemas:
+    IntentRequestDTO:
+      required:
+      - displayName
+      - name
+      - type
+      type: object
+      properties:
+        description:
+          type: string
+        displayName:
+          type: string
+        iconUrl:
+          type: string
+        intentOutputs:
+          type: array
+          items:
+            $ref: '#/components/schemas/IntentOutput'
+        name:
+          type: string
+        type:
+          type: string
+    TFProvider:
+      type: object
+      properties:
+        attributes:
+          type: object
+          additionalProperties:
+            type: object
+        name:
+          type: string
+        source:
+          type: string
+        version:
+          type: string
+    IntentOutput:
+      type: object
+      properties:
+        description:
+          type: string
+        name:
+          type: string
+        providers:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/TFProvider'
+        title:
+          type: string
+        type:
+          type: string
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    IntentResponseDTO:
+      type: object
+      properties:
+        description:
+          type: string
+        displayName:
+          type: string
+        iconUrl:
+          type: string
+        intentOutputs:
+          type: array
+          items:
+            $ref: '#/components/schemas/IntentOutput'
+        name:
+          type: string
+        source:
+          type: string
+          enum:
+          - BUILT_IN
+          - CUSTOM
+        type:
+          type: string
+  securitySchemes:
+    basicAuth:
+      description: Basic Authentication
+      scheme: basic
+      type: http

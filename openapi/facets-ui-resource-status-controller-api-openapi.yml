@@ -1,0 +1,404 @@
+openapi: 3.2.0
+info:
+  description: API Documentation
+  title: Control-plane UI Resource Status Controller API
+  version: '1.0'
+servers:
+- url: https://facetsdemo.console.facets.cloud
+  description: Generated server url
+security:
+- basicAuth: []
+tags:
+- name: ui-resource-status-controller
+paths:
+  /cc-ui/v1/resources/sync:
+    post:
+      operationId: syncResource
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResourceSyncRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceStatusResponse'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-resource-status-controller
+      summary: Sync resource
+      x-summary-source: derived
+  /cc-ui/v1/resources/{baseClusterId}/base-env-in-use-namespaces:
+    get:
+      operationId: getNamespacesInUseByDependentClusters
+      parameters:
+      - in: path
+        name: baseClusterId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: string
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-resource-status-controller
+      summary: Get namespaces in use by dependent clusters
+      x-summary-source: derived
+  /cc-ui/v1/resources/{clusterId}/release-preview:
+    get:
+      operationId: getReleasePreview
+      parameters:
+      - in: path
+        name: clusterId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReleasePreviewResponse'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-resource-status-controller
+      summary: Get release preview
+      x-summary-source: derived
+  /cc-ui/v1/resources/{projectName}/{environmentName}/status:
+    get:
+      operationId: getResourceStatus
+      parameters:
+      - in: path
+        name: projectName
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: environmentName
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: resources
+        required: true
+        schema:
+          type: object
+          additionalProperties:
+            type: string
+        style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceStatusResponse'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-resource-status-controller
+      summary: Get resource status
+      x-summary-source: derived
+components:
+  schemas:
+    ResourceStatus:
+      type: object
+      properties:
+        artifactory:
+          type: string
+        ciName:
+          type: string
+        clusterId:
+          type: string
+        currentArtifactBuildId:
+          type: string
+        currentArtifactUrl:
+          type: string
+        currentBPVersion:
+          type: string
+        currentModuleVersion:
+          type: string
+        currentOverrideVersion:
+          type: string
+        currentState:
+          type: string
+          enum:
+          - ENABLED
+          - DISABLED
+        deployed:
+          type: boolean
+        disabled:
+          type: boolean
+        flavor:
+          type: string
+        hasStateChange:
+          type: boolean
+        healthStatus:
+          type: string
+        id:
+          type: string
+        isAlpha:
+          type: boolean
+        liveArtifactBuildId:
+          type: string
+        liveArtifactUrl:
+          type: string
+        liveBPVersion:
+          type: string
+        liveModuleVersion:
+          type: string
+        liveOverrideVersion:
+          type: string
+        previousState:
+          type: string
+          enum:
+          - ENABLED
+          - DISABLED
+        releaseStatus:
+          type: string
+          enum:
+          - QUEUED
+          - FAILED
+          - IN_PROGRESS
+          - COMPLETED
+        releaseTraceId:
+          type: string
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+        syncStatus:
+          type: string
+          enum:
+          - IN_SYNC
+          - OUT_OF_SYNC
+    FacetsResource:
+      type: object
+      properties:
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+    ResourceStatusResponse:
+      type: object
+      properties:
+        clusterId:
+          type: string
+        environmentName:
+          type: string
+        projectName:
+          type: string
+        resourceStatuses:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceStatus'
+    ReleasePreviewResponse:
+      type: object
+      properties:
+        changedResources:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceStatus'
+        clusterId:
+          type: string
+        environmentName:
+          type: string
+        projectName:
+          type: string
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    ResourceSyncRequest:
+      type: object
+      properties:
+        environmentName:
+          type: string
+        projectName:
+          type: string
+        resources:
+          type: array
+          items:
+            $ref: '#/components/schemas/FacetsResource'
+  securitySchemes:
+    basicAuth:
+      description: Basic Authentication
+      scheme: basic
+      type: http

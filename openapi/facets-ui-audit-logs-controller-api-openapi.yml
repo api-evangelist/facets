@@ -1,0 +1,670 @@
+openapi: 3.2.0
+info:
+  description: API Documentation
+  title: Control-plane UI Audit Logs Controller API
+  version: '1.0'
+servers:
+- url: https://facetsdemo.console.facets.cloud
+  description: Generated server url
+security:
+- basicAuth: []
+tags:
+- name: ui-audit-logs-controller
+paths:
+  /cc-ui/v1/audit-logs:
+    get:
+      operationId: getAuditLogs
+      parameters:
+      - example: '2023-10-31T01:30:00.000+05:30'
+        in: query
+        name: start
+        required: true
+        schema:
+          type: string
+          format: date-time
+      - example: '2023-10-31T01:30:00.000+05:30'
+        in: query
+        name: end
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: number
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      - in: query
+        name: size
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 50
+      - description: Regex based string match
+        in: query
+        name: stackName
+        required: false
+        schema:
+          type: string
+      - description: Regex based string match
+        in: query
+        name: clusterName
+        required: false
+        schema:
+          type: string
+      - description: Regex based string match
+        in: query
+        name: target
+        required: false
+        schema:
+          type: string
+      - description: Regex based string match
+        in: query
+        name: performedBy
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: entity
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - BLUEPRINT
+            - ENVIRONMENT
+            - RESOURCE
+            - CI_INTEGRATION
+            - CI_RULE
+            - CI_CD
+            - PROMOTION_WORKFLOW
+            - RELEASE_STREAM
+            - DELIVERY_PIPELINE
+            - TRASH
+            - RELEASE_SCHEDULE
+            - AVAILABILITY_RULES
+            - TEMPLATE_INPUT
+            - SETTINGS
+            - ACCOUNT
+            - CONTAINER_REGISTRY
+            - NOTIFICATION_CHANNEL
+            - NOTIFICATION_SUBSCRIPTION
+            - OAUTH_INTEGRATION
+            - SAML_INTEGRATION
+            - GUARDRAIL_POLICY
+            - USER
+            - USER_GROUP
+            - CUSTOM_ROLE
+            - RESOURCE_GROUP
+            - PROJECT_TYPE
+            - MODULE
+            - MODULES_REPO
+            - WEB_COMPONENT
+            - UNKNOWN
+      - in: query
+        name: entityAction
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - BLUEPRINT_CREATE
+            - BLUEPRINT_DELETE
+            - BLUEPRINT_UPDATE
+            - BLUEPRINT_RESOURCE_CREATE
+            - BLUEPRINT_RESOURCE_UPDATE
+            - BLUEPRINT_RESOURCE_RENAME
+            - BLUEPRINT_RESOURCE_DELETE
+            - BLUEPRINT_RESOURCE_ENABLE
+            - BLUEPRINT_RESOURCE_DISABLE
+            - BLUEPRINT_ADD_TEMPLATE
+            - BLUEPRINT_SECRETS_VARIABLES_CREATE
+            - BLUEPRINT_SECRETS_VARIABLES_UPDATE
+            - BLUEPRINT_SECRETS_VARIABLES_DELETE
+            - PROJECT_TYPE_CREATE
+            - PROJECT_TYPE_UPDATE
+            - PROJECT_TYPE_DELETE
+            - MODULE_UPLOAD
+            - MODULE_MARKED_AS_PUBLISHED
+            - MODULE_DELETE
+            - MODULES_REPO_REGISTER
+            - MODULES_REPO_UPDATE
+            - MODULES_REPO_DETACH
+            - MODULES_REPO_BOOTSTRAP
+            - MODULES_REPO_CI_TOKEN_ROTATE
+            - MODULES_REPO_SYNC
+            - ENVIRONMENT_CREATE
+            - ENVIRONMENT_DELETE
+            - ENVIRONMENT_UPDATE
+            - CI_INTEGRATION_CREATE
+            - CI_INTEGRATION_UPDATE
+            - CI_INTEGRATION_DELETE
+            - CI_CD_CONFIGURE
+            - CI_CD_RESET
+            - CI_CD_CUSTOM_CONFIGURE
+            - CI_RULE_CREATE
+            - CI_RULE_UPDATE
+            - CI_RULE_DELETE
+            - PROMOTION_WORKFLOW_CREATE
+            - PROMOTION_WORKFLOW_UPDATE
+            - PROMOTION_WORKFLOW_DELETE
+            - RELEASE_STREAM_CREATE
+            - RELEASE_STREAM_DELETE
+            - DELIVERY_PIPELINE_UPDATE
+            - OVERRIDE_UPDATE
+            - OVERRIDE_VERSION_ROLLBACK
+            - SECRETS_VARIABLES_UPDATE
+            - TEMPLATE_INPUT_CREATE
+            - TEMPLATE_INPUT_DELETE
+            - IAC_VERSION_UPDATE
+            - RELEASES_PAUSE
+            - RELEASES_RESUME
+            - RELEASE_SCHEDULE_CREATE
+            - RELEASE_SCHEDULE_UPDATE
+            - RELEASE_SCHEDULE_DELETE
+            - AVAILABILITY_RULES_CREATE
+            - AVAILABILITY_RULES_UPDATE
+            - AVAILABILITY_RULES_DELETE
+            - MAINTENANCE_WINDOW_UPDATE
+            - ENVIRONMENT_SETTINGS_UPDATE
+            - GENERAL_SETTINGS_UPDATE
+            - ACCOUNT_CREATE
+            - ACCOUNT_UPDATE
+            - ACCOUNT_DELETE
+            - CONTAINER_REGISTRY_CREATE
+            - CONTAINER_REGISTRY_UPDATE
+            - CONTAINER_REGISTRY_DELETE
+            - NOTIFICATION_SUBSCRIPTION_CREATE
+            - NOTIFICATION_SUBSCRIPTION_UPDATE
+            - NOTIFICATION_SUBSCRIPTION_DELETE
+            - NOTIFICATION_CHANNEL_CREATE
+            - NOTIFICATION_CHANNEL_UPDATE
+            - NOTIFICATION_CHANNEL_DELETE
+            - OAUTH_INTEGRATION_CREATE
+            - OAUTH_INTEGRATION_UPDATE
+            - OAUTH_INTEGRATION_DELETE
+            - SAML_INTEGRATION_CREATE
+            - SAML_INTEGRATION_UPDATE
+            - SAML_INTEGRATION_DELETE
+            - ENVIRONMENT_RESOURCE_DISABLE
+            - ENVIRONMENT_RESOURCE_ENABLE
+            - APPLICATION_ROLLOUT_RESTART
+            - GUARDRAIL_POLICY_CREATE
+            - GUARDRAIL_POLICY_UPDATE
+            - GUARDRAIL_POLICY_DELETE
+            - USER_CREATE
+            - USER_UPDATE
+            - USER_DELETE
+            - CI_USER_TOKEN_CREATE
+            - CI_USER_TOKEN_DELETE
+            - USER_GROUP_CREATE
+            - USER_GROUP_UPDATE
+            - USER_GROUP_DELETE
+            - RESOURCE_GROUP_CREATE
+            - RESOURCE_GROUP_UPDATE
+            - RESOURCE_GROUP_DELETE
+            - CUSTOM_ROLE_CREATE
+            - CUSTOM_ROLE_UPDATE
+            - CUSTOM_ROLE_DELETE
+            - TRASH_RESTORE
+            - TRASH_DELETE
+            - TRASH_EMPTY
+            - WEB_COMPONENT_CREATE
+            - WEB_COMPONENT_UPDATE
+            - WEB_COMPONENT_DELETE
+            - ACTION_RUN
+            - UNKNOWN
+      - in: query
+        name: source
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - RAPTOR
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageFacetsAuditLogResponse'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      tags:
+      - ui-audit-logs-controller
+      summary: Get audit logs
+      x-summary-source: derived
+  /cc-ui/v1/audit-logs/entities:
+    get:
+      description: Returns the canonical set of audit entity types (value + label) accepted by the 'entity' filter on GET /audit-logs. Clients should use this instead of hardcoding the enum. UNKNOWN (the parse fallback) is not returned, though it remains a valid filter value.
+      operationId: getAuditEntities
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AuditEnumOption'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: List audit entity types
+      tags:
+      - ui-audit-logs-controller
+  /cc-ui/v1/audit-logs/entity-actions:
+    get:
+      description: Returns the canonical set of audit actions (value + label) accepted by the 'entityAction' filter on GET /audit-logs. Each action is tagged with its parent entity so clients can build cascading entity -> action filters. Optionally pass 'entity' to return only that entity's actions. UNKNOWN (the parse fallback) is not returned, though it remains a valid filter value.
+      operationId: getAuditEntityActions
+      parameters:
+      - description: Optional entity to filter actions by, e.g. BLUEPRINT
+        in: query
+        name: entity
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AuditEntityActionOption'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: List audit entity actions
+      tags:
+      - ui-audit-logs-controller
+components:
+  schemas:
+    AuditEntityActionOption:
+      type: object
+      properties:
+        entity:
+          type: string
+        label:
+          type: string
+        value:
+          type: string
+    PageFacetsAuditLogResponse:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/FacetsAuditLogResponse'
+        empty:
+          type: boolean
+        first:
+          type: boolean
+        last:
+          type: boolean
+        number:
+          type: integer
+          format: int32
+        numberOfElements:
+          type: integer
+          format: int32
+        pageable:
+          $ref: '#/components/schemas/PageableObject'
+        size:
+          type: integer
+          format: int32
+        sort:
+          $ref: '#/components/schemas/SortObject'
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int32
+    FacetsAuditLogResponse:
+      type: object
+      properties:
+        clusterId:
+          type: string
+        clusterName:
+          type: string
+        entity:
+          type: string
+          enum:
+          - BLUEPRINT
+          - ENVIRONMENT
+          - RESOURCE
+          - CI_INTEGRATION
+          - CI_RULE
+          - CI_CD
+          - PROMOTION_WORKFLOW
+          - RELEASE_STREAM
+          - DELIVERY_PIPELINE
+          - TRASH
+          - RELEASE_SCHEDULE
+          - AVAILABILITY_RULES
+          - TEMPLATE_INPUT
+          - SETTINGS
+          - ACCOUNT
+          - CONTAINER_REGISTRY
+          - NOTIFICATION_CHANNEL
+          - NOTIFICATION_SUBSCRIPTION
+          - OAUTH_INTEGRATION
+          - SAML_INTEGRATION
+          - GUARDRAIL_POLICY
+          - USER
+          - USER_GROUP
+          - CUSTOM_ROLE
+          - RESOURCE_GROUP
+          - PROJECT_TYPE
+          - MODULE
+          - MODULES_REPO
+          - WEB_COMPONENT
+          - UNKNOWN
+        entityAction:
+          type: string
+          enum:
+          - BLUEPRINT_CREATE
+          - BLUEPRINT_DELETE
+          - BLUEPRINT_UPDATE
+          - BLUEPRINT_RESOURCE_CREATE
+          - BLUEPRINT_RESOURCE_UPDATE
+          - BLUEPRINT_RESOURCE_RENAME
+          - BLUEPRINT_RESOURCE_DELETE
+          - BLUEPRINT_RESOURCE_ENABLE
+          - BLUEPRINT_RESOURCE_DISABLE
+          - BLUEPRINT_ADD_TEMPLATE
+          - BLUEPRINT_SECRETS_VARIABLES_CREATE
+          - BLUEPRINT_SECRETS_VARIABLES_UPDATE
+          - BLUEPRINT_SECRETS_VARIABLES_DELETE
+          - PROJECT_TYPE_CREATE
+          - PROJECT_TYPE_UPDATE
+          - PROJECT_TYPE_DELETE
+          - MODULE_UPLOAD
+          - MODULE_MARKED_AS_PUBLISHED
+          - MODULE_DELETE
+          - MODULES_REPO_REGISTER
+          - MODULES_REPO_UPDATE
+          - MODULES_REPO_DETACH
+          - MODULES_REPO_BOOTSTRAP
+          - MODULES_REPO_CI_TOKEN_ROTATE
+          - MODULES_REPO_SYNC
+          - ENVIRONMENT_CREATE
+          - ENVIRONMENT_DELETE
+          - ENVIRONMENT_UPDATE
+          - CI_INTEGRATION_CREATE
+          - CI_INTEGRATION_UPDATE
+          - CI_INTEGRATION_DELETE
+          - CI_CD_CONFIGURE
+          - CI_CD_RESET
+          - CI_CD_CUSTOM_CONFIGURE
+          - CI_RULE_CREATE
+          - CI_RULE_UPDATE
+          - CI_RULE_DELETE
+          - PROMOTION_WORKFLOW_CREATE
+          - PROMOTION_WORKFLOW_UPDATE
+          - PROMOTION_WORKFLOW_DELETE
+          - RELEASE_STREAM_CREATE
+          - RELEASE_STREAM_DELETE
+          - DELIVERY_PIPELINE_UPDATE
+          - OVERRIDE_UPDATE
+          - OVERRIDE_VERSION_ROLLBACK
+          - SECRETS_VARIABLES_UPDATE
+          - TEMPLATE_INPUT_CREATE
+          - TEMPLATE_INPUT_DELETE
+          - IAC_VERSION_UPDATE
+          - RELEASES_PAUSE
+          - RELEASES_RESUME
+          - RELEASE_SCHEDULE_CREATE
+          - RELEASE_SCHEDULE_UPDATE
+          - RELEASE_SCHEDULE_DELETE
+          - AVAILABILITY_RULES_CREATE
+          - AVAILABILITY_RULES_UPDATE
+          - AVAILABILITY_RULES_DELETE
+          - MAINTENANCE_WINDOW_UPDATE
+          - ENVIRONMENT_SETTINGS_UPDATE
+          - GENERAL_SETTINGS_UPDATE
+          - ACCOUNT_CREATE
+          - ACCOUNT_UPDATE
+          - ACCOUNT_DELETE
+          - CONTAINER_REGISTRY_CREATE
+          - CONTAINER_REGISTRY_UPDATE
+          - CONTAINER_REGISTRY_DELETE
+          - NOTIFICATION_SUBSCRIPTION_CREATE
+          - NOTIFICATION_SUBSCRIPTION_UPDATE
+          - NOTIFICATION_SUBSCRIPTION_DELETE
+          - NOTIFICATION_CHANNEL_CREATE
+          - NOTIFICATION_CHANNEL_UPDATE
+          - NOTIFICATION_CHANNEL_DELETE
+          - OAUTH_INTEGRATION_CREATE
+          - OAUTH_INTEGRATION_UPDATE
+          - OAUTH_INTEGRATION_DELETE
+          - SAML_INTEGRATION_CREATE
+          - SAML_INTEGRATION_UPDATE
+          - SAML_INTEGRATION_DELETE
+          - ENVIRONMENT_RESOURCE_DISABLE
+          - ENVIRONMENT_RESOURCE_ENABLE
+          - APPLICATION_ROLLOUT_RESTART
+          - GUARDRAIL_POLICY_CREATE
+          - GUARDRAIL_POLICY_UPDATE
+          - GUARDRAIL_POLICY_DELETE
+          - USER_CREATE
+          - USER_UPDATE
+          - USER_DELETE
+          - CI_USER_TOKEN_CREATE
+          - CI_USER_TOKEN_DELETE
+          - USER_GROUP_CREATE
+          - USER_GROUP_UPDATE
+          - USER_GROUP_DELETE
+          - RESOURCE_GROUP_CREATE
+          - RESOURCE_GROUP_UPDATE
+          - RESOURCE_GROUP_DELETE
+          - CUSTOM_ROLE_CREATE
+          - CUSTOM_ROLE_UPDATE
+          - CUSTOM_ROLE_DELETE
+          - TRASH_RESTORE
+          - TRASH_DELETE
+          - TRASH_EMPTY
+          - WEB_COMPONENT_CREATE
+          - WEB_COMPONENT_UPDATE
+          - WEB_COMPONENT_DELETE
+          - ACTION_RUN
+          - UNKNOWN
+        entityActionLabel:
+          type: string
+        entityLabel:
+          type: string
+        id:
+          type: string
+        metadata:
+          type: object
+          additionalProperties:
+            type: object
+        performedAt:
+          type: string
+          format: date-time
+        performedBy:
+          type: string
+        source:
+          type: string
+          enum:
+          - RAPTOR
+        stackName:
+          type: string
+        target:
+          type: string
+    AuditEnumOption:
+      type: object
+      properties:
+        label:
+          type: string
+        value:
+          type: string
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    PageableObject:
+      type: object
+      properties:
+        offset:
+          type: integer
+          format: int64
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        paged:
+          type: boolean
+        sort:
+          $ref: '#/components/schemas/SortObject'
+        unpaged:
+          type: boolean
+    SortObject:
+      type: object
+      properties:
+        empty:
+          type: boolean
+        sorted:
+          type: boolean
+        unsorted:
+          type: boolean
+  securitySchemes:
+    basicAuth:
+      description: Basic Authentication
+      scheme: basic
+      type: http

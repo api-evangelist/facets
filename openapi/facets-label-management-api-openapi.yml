@@ -1,0 +1,386 @@
+openapi: 3.2.0
+info:
+  description: API Documentation
+  title: Control-plane Label Management API
+  version: '1.0'
+servers:
+- url: https://facetsdemo.console.facets.cloud
+  description: Generated server url
+security:
+- basicAuth: []
+tags:
+- description: APIs for managing labels
+  name: Label Management
+paths:
+  /cc-ui/v1/labels:
+    get:
+      description: Retrieve labels from the system. Pass scope to list one scope only; omit it for every scope. scope=RELEASE also returns labels written before the scope field existed.
+      operationId: getAllLabels
+      parameters:
+      - description: Only return labels in this scope
+        in: query
+        name: scope
+        required: false
+        schema:
+          type: string
+          enum:
+          - ACCOUNT
+          - RELEASE
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Label'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: Get all labels
+      tags:
+      - Label Management
+    post:
+      description: Create a new label with the specified name, color code and scope. Scope defaults to RELEASE when omitted and is fixed once set. Returns 400 if a label with the same name already exists in that scope, 403 if an ACCOUNT-scoped label is created without ACCOUNTS_WRITE.
+      operationId: createLabel
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LabelRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Label'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: Create a new label
+      tags:
+      - Label Management
+  /cc-ui/v1/labels/{labelId}:
+    delete:
+      description: Delete a label by its ID. An ACCOUNT-scoped label is also detached from every account that carries it. Returns 404 if label not found, 403 if an ACCOUNT-scoped label is deleted without ACCOUNTS_WRITE.
+      operationId: deleteLabel
+      parameters:
+      - description: Label ID
+        in: path
+        name: labelId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: Delete a label
+      tags:
+      - Label Management
+    get:
+      description: Retrieve a specific label by its ID. Returns 404 if not found.
+      operationId: getLabelById
+      parameters:
+      - description: Label ID
+        in: path
+        name: labelId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Label'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: Get label by ID
+      tags:
+      - Label Management
+    put:
+      description: 'Update an existing label. A label''s scope cannot be changed: send no scope, or the one it already has. Returns 404 if label not found, 400 if the new name conflicts within the same scope or the request tries to change the scope, 403 if an ACCOUNT-scoped label is changed without ACCOUNTS_WRITE.'
+      operationId: updateLabel
+      parameters:
+      - description: Label ID
+        in: path
+        name: labelId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LabelRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Label'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ErrorDetails'
+                - $ref: '#/components/schemas/GithubAppPermissionsPendingErrorDetails'
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Not Found
+        '405':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Method Not Allowed
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Conflict
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+          description: Internal Server Error
+      summary: Update a label
+      tags:
+      - Label Management
+components:
+  schemas:
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    LabelRequest:
+      required:
+      - name
+      type: object
+      properties:
+        colorCode:
+          type: string
+          description: Color code for the label in hex format
+          example: '#FF5733'
+        name:
+          type: string
+          description: Label name
+          example: stable
+        scope:
+          type: string
+          description: What the label tags. Set on create and fixed thereafter. Defaults to RELEASE when omitted.
+          example: ACCOUNT
+          enum:
+          - ACCOUNT
+          - RELEASE
+      description: Label request with label name and optional color code
+    Label:
+      type: object
+      properties:
+        colorCode:
+          type: string
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        id:
+          type: string
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        name:
+          type: string
+        scope:
+          type: string
+          enum:
+          - ACCOUNT
+          - RELEASE
+  securitySchemes:
+    basicAuth:
+      description: Basic Authentication
+      scheme: basic
+      type: http
