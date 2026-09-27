@@ -377,6 +377,114 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    CustomerOnboardRequest:
+      required:
+      - customerName
+      - externalId
+      - region
+      - releaseStream
+      - roleARN
+      type: object
+      properties:
+        azs:
+          type: array
+          items:
+            type: string
+        customerName:
+          maxLength: 50
+          minLength: 3
+          type: string
+        externalId:
+          type: string
+        region:
+          type: string
+        releaseStream:
+          type: string
+        roleARN:
+          type: string
+        timezone:
+          type: string
+    AwsClusterRequest:
+      required:
+      - clusterName
+      type: object
+      properties:
+        accessKeyId:
+          type: string
+        autoSignOffSchedule:
+          type: string
+        azs:
+          type: array
+          items:
+            type: string
+        baseClusterId:
+          type: string
+        cdPipelineParent:
+          type: string
+        cloud:
+          type: string
+          enum:
+          - AWS
+          - AZURE
+          - LOCAL
+          - GCP
+          - KUBERNETES
+          - NO_CLOUD
+        cloudAccountId:
+          type: string
+        clusterName:
+          maxLength: 40
+          minLength: 0
+          pattern: ^[a-z][a-z0-9-]*$
+          type: string
+        componentVersions:
+          type: object
+          additionalProperties:
+            type: string
+        description:
+          maxLength: 200
+          minLength: 0
+          type: string
+        enableAutoSignOff:
+          type: boolean
+        instanceTypes:
+          type: array
+          items:
+            type: string
+        isEphemeral:
+          type: boolean
+        k8sRequestsToLimitsRatio:
+          type: number
+          format: double
+        namespace:
+          type: string
+        providedVPCId:
+          type: string
+        region:
+          type: string
+        releaseStream:
+          type: string
+        requireSignOff:
+          type: boolean
+        secretAccessKey:
+          type: string
+        stackName:
+          type: string
+        tz:
+          type: object
+          properties:
+            displayName:
+              type: string
+            dstsavings:
+              type: integer
+              format: int32
+            id:
+              type: string
+            rawOffset:
+              type: integer
+              format: int32
+        vpcCIDR:
+          type: string
     AwsCluster:
       required:
       - name
@@ -530,94 +638,6 @@ components:
           - OVERRIDDEN
         value:
           type: string
-    AwsClusterRequest:
-      required:
-      - clusterName
-      type: object
-      properties:
-        accessKeyId:
-          type: string
-        autoSignOffSchedule:
-          type: string
-        azs:
-          type: array
-          items:
-            type: string
-        baseClusterId:
-          type: string
-        cdPipelineParent:
-          type: string
-        cloud:
-          type: string
-          enum:
-          - AWS
-          - AZURE
-          - LOCAL
-          - GCP
-          - KUBERNETES
-          - NO_CLOUD
-        cloudAccountId:
-          type: string
-        clusterName:
-          maxLength: 40
-          minLength: 0
-          pattern: ^[a-z][a-z0-9-]*$
-          type: string
-        componentVersions:
-          type: object
-          additionalProperties:
-            type: string
-        description:
-          maxLength: 200
-          minLength: 0
-          type: string
-        enableAutoSignOff:
-          type: boolean
-        instanceTypes:
-          type: array
-          items:
-            type: string
-        isEphemeral:
-          type: boolean
-        k8sRequestsToLimitsRatio:
-          type: number
-          format: double
-        namespace:
-          type: string
-        providedVPCId:
-          type: string
-        region:
-          type: string
-        releaseStream:
-          type: string
-        requireSignOff:
-          type: boolean
-        secretAccessKey:
-          type: string
-        stackName:
-          type: string
-        tz:
-          type: object
-          properties:
-            displayName:
-              type: string
-            dstsavings:
-              type: integer
-              format: int32
-            id:
-              type: string
-            rawOffset:
-              type: integer
-              format: int32
-        vpcCIDR:
-          type: string
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
     GithubAppPermissionsPendingErrorDetails:
       type: object
       properties:
@@ -633,32 +653,12 @@ components:
           type: array
           items:
             type: string
-    CustomerOnboardRequest:
-      required:
-      - customerName
-      - externalId
-      - region
-      - releaseStream
-      - roleARN
+    ErrorDetails:
       type: object
       properties:
-        azs:
-          type: array
-          items:
-            type: string
-        customerName:
-          maxLength: 50
-          minLength: 3
+        code:
           type: string
-        externalId:
-          type: string
-        region:
-          type: string
-        releaseStream:
-          type: string
-        roleARN:
-          type: string
-        timezone:
+        message:
           type: string
   securitySchemes:
     basicAuth:

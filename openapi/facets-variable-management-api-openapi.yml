@@ -269,57 +269,6 @@ paths:
       - Variable Management
 components:
   schemas:
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-    GithubAppPermissionsPendingErrorDetails:
-      type: object
-      properties:
-        approvalUrl:
-          type: string
-        code:
-          type: string
-        errorCode:
-          type: string
-        message:
-          type: string
-        missingPermissions:
-          type: array
-          items:
-            type: string
-    VariableEnvironmentResponse:
-      type: object
-      properties:
-        description:
-          type: string
-          description: Description of the variable/secret
-          example: Database connection password
-        environmentValues:
-          type: array
-          description: Values across different environments
-          items:
-            $ref: '#/components/schemas/EnvironmentVariableValue'
-        global:
-          type: boolean
-          description: Whether this is a global variable
-          example: false
-        isSecret:
-          type: boolean
-          description: Whether this is a secret or regular variable
-          example: true
-        stackDefault:
-          type: string
-          description: Default value defined at stack level
-          example: default_password
-        variableName:
-          type: string
-          description: Name of the variable/secret
-          example: database_password
-      description: Variable/secret values across environments
     VariableRequest:
       required:
       - variableName
@@ -377,6 +326,57 @@ components:
           description: Value of the variable/secret
           example: actual_password
       description: Variable/secret value in a specific environment
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    VariableEnvironmentResponse:
+      type: object
+      properties:
+        description:
+          type: string
+          description: Description of the variable/secret
+          example: Database connection password
+        environmentValues:
+          type: array
+          description: Values across different environments
+          items:
+            $ref: '#/components/schemas/EnvironmentVariableValue'
+        global:
+          type: boolean
+          description: Whether this is a global variable
+          example: false
+        isSecret:
+          type: boolean
+          description: Whether this is a secret or regular variable
+          example: true
+        stackDefault:
+          type: string
+          description: Default value defined at stack level
+          example: default_password
+        variableName:
+          type: string
+          description: Name of the variable/secret
+          example: database_password
+      description: Variable/secret values across environments
   securitySchemes:
     basicAuth:
       description: Basic Authentication

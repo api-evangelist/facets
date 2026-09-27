@@ -720,12 +720,75 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    FacetsResource:
+    GrantedAuthority:
       type: object
       properties:
-        resourceName:
+        authority:
           type: string
-        resourceType:
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    User:
+      type: object
+      properties:
+        clusterIds:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        description:
+          maxLength: 200
+          minLength: 0
+          type: string
+        groupId:
+          type: string
+          deprecated: true
+        groupIds:
+          type: array
+          items:
+            type: string
+        id:
+          type: string
+        password:
+          type: string
+          writeOnly: true
+        picture:
+          type: string
+        roles:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        serviceAccount:
+          type: boolean
+        teams:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        userName:
+          type: string
+    StackResource:
+      type: object
+      properties:
+        resources:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/FacetsResource'
+        stackName:
           type: string
     ClusterResourceBinding:
       type: object
@@ -738,6 +801,20 @@ components:
           items:
             $ref: '#/components/schemas/FacetsResource'
         stackName:
+          type: string
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    PasswordChange:
+      type: object
+      properties:
+        newPassword:
+          type: string
+        oldPassword:
           type: string
     SimpleOauth2User:
       type: object
@@ -789,89 +866,12 @@ components:
             $ref: '#/components/schemas/StackResource'
         userId:
           type: string
-    User:
+    FacetsResource:
       type: object
       properties:
-        clusterIds:
-          uniqueItems: true
-          type: array
-          items:
-            type: string
-        description:
-          maxLength: 200
-          minLength: 0
+        resourceName:
           type: string
-        groupId:
-          type: string
-          deprecated: true
-        groupIds:
-          type: array
-          items:
-            type: string
-        id:
-          type: string
-        password:
-          type: string
-          writeOnly: true
-        picture:
-          type: string
-        roles:
-          uniqueItems: true
-          type: array
-          items:
-            type: string
-        serviceAccount:
-          type: boolean
-        teams:
-          uniqueItems: true
-          type: array
-          items:
-            type: string
-        userName:
-          type: string
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-    GrantedAuthority:
-      type: object
-      properties:
-        authority:
-          type: string
-    GithubAppPermissionsPendingErrorDetails:
-      type: object
-      properties:
-        approvalUrl:
-          type: string
-        code:
-          type: string
-        errorCode:
-          type: string
-        message:
-          type: string
-        missingPermissions:
-          type: array
-          items:
-            type: string
-    StackResource:
-      type: object
-      properties:
-        resources:
-          uniqueItems: true
-          type: array
-          items:
-            $ref: '#/components/schemas/FacetsResource'
-        stackName:
-          type: string
-    PasswordChange:
-      type: object
-      properties:
-        newPassword:
-          type: string
-        oldPassword:
+        resourceType:
           type: string
   securitySchemes:
     basicAuth:

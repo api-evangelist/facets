@@ -376,6 +376,21 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
     ClientAuthenticationMethod:
       type: object
       properties:
@@ -443,21 +458,6 @@ components:
           type: string
         message:
           type: string
-    GithubAppPermissionsPendingErrorDetails:
-      type: object
-      properties:
-        approvalUrl:
-          type: string
-        code:
-          type: string
-        errorCode:
-          type: string
-        message:
-          type: string
-        missingPermissions:
-          type: array
-          items:
-            type: string
     CustomOAuth2ClientRegistration:
       required:
       - clientId

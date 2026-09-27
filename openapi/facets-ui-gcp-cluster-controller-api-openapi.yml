@@ -319,6 +319,120 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    GCPClusterRequest:
+      required:
+      - clusterName
+      type: object
+      properties:
+        autoSignOffSchedule:
+          type: string
+        azs:
+          type: array
+          items:
+            type: string
+        baseClusterId:
+          type: string
+        cdPipelineParent:
+          type: string
+        cloud:
+          type: string
+          enum:
+          - AWS
+          - AZURE
+          - LOCAL
+          - GCP
+          - KUBERNETES
+          - NO_CLOUD
+        cloudAccountId:
+          type: string
+        clusterName:
+          maxLength: 40
+          minLength: 0
+          pattern: ^[a-z][a-z0-9-]*$
+          type: string
+        componentVersions:
+          type: object
+          additionalProperties:
+            type: string
+        description:
+          maxLength: 200
+          minLength: 0
+          type: string
+        enableAutoSignOff:
+          type: boolean
+        isEphemeral:
+          type: boolean
+        k8sRequestsToLimitsRatio:
+          type: number
+          format: double
+        machineType:
+          type: string
+        namespace:
+          type: string
+        project:
+          type: string
+        providedVPCId:
+          type: string
+        region:
+          type: string
+        releaseStream:
+          type: string
+        requireSignOff:
+          type: boolean
+        serviceAccountKey:
+          type: string
+        sharedVPCSettings:
+          type: object
+          additionalProperties:
+            type: string
+        stackName:
+          type: string
+        tz:
+          type: object
+          properties:
+            displayName:
+              type: string
+            dstsavings:
+              type: integer
+              format: int32
+            id:
+              type: string
+            rawOffset:
+              type: integer
+              format: int32
+        vpcCIDR:
+          type: string
+    Variables:
+      type: object
+      properties:
+        description:
+          type: string
+        global:
+          type: boolean
+        secret:
+          type: boolean
+        status:
+          type: string
+          enum:
+          - DEFAULT
+          - OVERRIDDEN
+        value:
+          type: string
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
     GCPCluster:
       required:
       - name
@@ -460,120 +574,6 @@ components:
         code:
           type: string
         message:
-          type: string
-    GithubAppPermissionsPendingErrorDetails:
-      type: object
-      properties:
-        approvalUrl:
-          type: string
-        code:
-          type: string
-        errorCode:
-          type: string
-        message:
-          type: string
-        missingPermissions:
-          type: array
-          items:
-            type: string
-    GCPClusterRequest:
-      required:
-      - clusterName
-      type: object
-      properties:
-        autoSignOffSchedule:
-          type: string
-        azs:
-          type: array
-          items:
-            type: string
-        baseClusterId:
-          type: string
-        cdPipelineParent:
-          type: string
-        cloud:
-          type: string
-          enum:
-          - AWS
-          - AZURE
-          - LOCAL
-          - GCP
-          - KUBERNETES
-          - NO_CLOUD
-        cloudAccountId:
-          type: string
-        clusterName:
-          maxLength: 40
-          minLength: 0
-          pattern: ^[a-z][a-z0-9-]*$
-          type: string
-        componentVersions:
-          type: object
-          additionalProperties:
-            type: string
-        description:
-          maxLength: 200
-          minLength: 0
-          type: string
-        enableAutoSignOff:
-          type: boolean
-        isEphemeral:
-          type: boolean
-        k8sRequestsToLimitsRatio:
-          type: number
-          format: double
-        machineType:
-          type: string
-        namespace:
-          type: string
-        project:
-          type: string
-        providedVPCId:
-          type: string
-        region:
-          type: string
-        releaseStream:
-          type: string
-        requireSignOff:
-          type: boolean
-        serviceAccountKey:
-          type: string
-        sharedVPCSettings:
-          type: object
-          additionalProperties:
-            type: string
-        stackName:
-          type: string
-        tz:
-          type: object
-          properties:
-            displayName:
-              type: string
-            dstsavings:
-              type: integer
-              format: int32
-            id:
-              type: string
-            rawOffset:
-              type: integer
-              format: int32
-        vpcCIDR:
-          type: string
-    Variables:
-      type: object
-      properties:
-        description:
-          type: string
-        global:
-          type: boolean
-        secret:
-          type: boolean
-        status:
-          type: string
-          enum:
-          - DEFAULT
-          - OVERRIDDEN
-        value:
           type: string
   securitySchemes:
     basicAuth:

@@ -256,69 +256,22 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    KubernetesClusterRequest:
-      required:
-      - clusterName
+    Variables:
       type: object
       properties:
-        autoSignOffSchedule:
+        description:
           type: string
-        baseClusterId:
-          type: string
-        cdPipelineParent:
-          type: string
-        cloud:
+        global:
+          type: boolean
+        secret:
+          type: boolean
+        status:
           type: string
           enum:
-          - AWS
-          - AZURE
-          - LOCAL
-          - GCP
-          - KUBERNETES
-          - NO_CLOUD
-        cloudAccountId:
+          - DEFAULT
+          - OVERRIDDEN
+        value:
           type: string
-        clusterName:
-          maxLength: 40
-          minLength: 0
-          pattern: ^[a-z][a-z0-9-]*$
-          type: string
-        componentVersions:
-          type: object
-          additionalProperties:
-            type: string
-        description:
-          maxLength: 200
-          minLength: 0
-          type: string
-        enableAutoSignOff:
-          type: boolean
-        isEphemeral:
-          type: boolean
-        k8sRequestsToLimitsRatio:
-          type: number
-          format: double
-        namespace:
-          type: string
-        releaseStream:
-          type: string
-        requireSignOff:
-          type: boolean
-        stackName:
-          type: string
-        tz:
-          type: object
-          properties:
-            displayName:
-              type: string
-            dstsavings:
-              type: integer
-              format: int32
-            id:
-              type: string
-            rawOffset:
-              type: integer
-              format: int32
     KubernetesCluster:
       required:
       - name
@@ -440,13 +393,6 @@ components:
             $ref: '#/components/schemas/Variables'
         versioningKey:
           type: string
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
     GithubAppPermissionsPendingErrorDetails:
       type: object
       properties:
@@ -462,22 +408,76 @@ components:
           type: array
           items:
             type: string
-    Variables:
+    ErrorDetails:
       type: object
       properties:
-        description:
+        code:
           type: string
-        global:
-          type: boolean
-        secret:
-          type: boolean
-        status:
+        message:
+          type: string
+    KubernetesClusterRequest:
+      required:
+      - clusterName
+      type: object
+      properties:
+        autoSignOffSchedule:
+          type: string
+        baseClusterId:
+          type: string
+        cdPipelineParent:
+          type: string
+        cloud:
           type: string
           enum:
-          - DEFAULT
-          - OVERRIDDEN
-        value:
+          - AWS
+          - AZURE
+          - LOCAL
+          - GCP
+          - KUBERNETES
+          - NO_CLOUD
+        cloudAccountId:
           type: string
+        clusterName:
+          maxLength: 40
+          minLength: 0
+          pattern: ^[a-z][a-z0-9-]*$
+          type: string
+        componentVersions:
+          type: object
+          additionalProperties:
+            type: string
+        description:
+          maxLength: 200
+          minLength: 0
+          type: string
+        enableAutoSignOff:
+          type: boolean
+        isEphemeral:
+          type: boolean
+        k8sRequestsToLimitsRatio:
+          type: number
+          format: double
+        namespace:
+          type: string
+        releaseStream:
+          type: string
+        requireSignOff:
+          type: boolean
+        stackName:
+          type: string
+        tz:
+          type: object
+          properties:
+            displayName:
+              type: string
+            dstsavings:
+              type: integer
+              format: int32
+            id:
+              type: string
+            rawOffset:
+              type: integer
+              format: int32
   securitySchemes:
     basicAuth:
       description: Basic Authentication

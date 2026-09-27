@@ -613,65 +613,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    PageVersionVersioned:
-      type: object
-      properties:
-        content:
-          type: array
-          items:
-            $ref: '#/components/schemas/VersionVersioned'
-        empty:
-          type: boolean
-        first:
-          type: boolean
-        last:
-          type: boolean
-        number:
-          type: integer
-          format: int32
-        numberOfElements:
-          type: integer
-          format: int32
-        pageable:
-          $ref: '#/components/schemas/PageableObject'
-        size:
-          type: integer
-          format: int32
-        sort:
-          $ref: '#/components/schemas/SortObject'
-        totalElements:
-          type: integer
-          format: int64
-        totalPages:
-          type: integer
-          format: int32
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-    SoftDelete:
-      type: object
-      properties:
-        id:
-          type: string
-    GithubAppPermissionsPendingErrorDetails:
-      type: object
-      properties:
-        approvalUrl:
-          type: string
-        code:
-          type: string
-        errorCode:
-          type: string
-        message:
-          type: string
-        missingPermissions:
-          type: array
-          items:
-            type: string
     PageableObject:
       type: object
       properties:
@@ -719,6 +660,50 @@ components:
         lastModifiedDate:
           type: string
           format: date-time
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    SoftDelete:
+      type: object
+      properties:
+        id:
+          type: string
+    SortObject:
+      type: object
+      properties:
+        empty:
+          type: boolean
+        sorted:
+          type: boolean
+        unsorted:
+          type: boolean
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    Versioned:
+      type: object
+      properties:
+        changeLog:
+          type: string
+          writeOnly: true
+        versioningKey:
+          type: string
     VersionVersioned:
       type: object
       properties:
@@ -738,23 +723,6 @@ components:
         version:
           type: integer
           format: int64
-        versioningKey:
-          type: string
-    SortObject:
-      type: object
-      properties:
-        empty:
-          type: boolean
-        sorted:
-          type: boolean
-        unsorted:
-          type: boolean
-    Versioned:
-      type: object
-      properties:
-        changeLog:
-          type: string
-          writeOnly: true
         versioningKey:
           type: string
     Version:
@@ -778,6 +746,38 @@ components:
           format: int64
         versioningKey:
           type: string
+    PageVersionVersioned:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/VersionVersioned'
+        empty:
+          type: boolean
+        first:
+          type: boolean
+        last:
+          type: boolean
+        number:
+          type: integer
+          format: int32
+        numberOfElements:
+          type: integer
+          format: int32
+        pageable:
+          $ref: '#/components/schemas/PageableObject'
+        size:
+          type: integer
+          format: int32
+        sort:
+          $ref: '#/components/schemas/SortObject'
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int32
   securitySchemes:
     basicAuth:
       description: Basic Authentication

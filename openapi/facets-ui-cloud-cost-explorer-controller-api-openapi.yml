@@ -262,6 +262,21 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
     DailyCloudCostDTO:
       type: object
       properties:
@@ -286,21 +301,7 @@ components:
           format: double
         unit:
           type: string
-    ClusterCostDTO:
-      type: object
-      properties:
-        clusterId:
-          type: string
-        clusterName:
-          type: string
-        costs:
-          type: array
-          items:
-            $ref: '#/components/schemas/CostDTO'
-        total:
-          type: number
-          format: double
-    DailyCost:
+    CostDTO:
       type: object
       properties:
         amount:
@@ -308,13 +309,11 @@ components:
           format: double
         date:
           type: string
-          format: date
-        perServiceCost:
+          format: date-time
+        serviceCost:
           type: array
           items:
-            $ref: '#/components/schemas/ServiceCost'
-        unit:
-          type: string
+            $ref: '#/components/schemas/ServiceCostDTO'
     ServiceCostDTO:
       type: object
       properties:
@@ -333,34 +332,20 @@ components:
           type: string
         message:
           type: string
-    GithubAppPermissionsPendingErrorDetails:
+    ClusterCostDTO:
       type: object
       properties:
-        approvalUrl:
+        clusterId:
           type: string
-        code:
+        clusterName:
           type: string
-        errorCode:
-          type: string
-        message:
-          type: string
-        missingPermissions:
+        costs:
           type: array
           items:
-            type: string
-    CostDTO:
-      type: object
-      properties:
-        amount:
+            $ref: '#/components/schemas/CostDTO'
+        total:
           type: number
           format: double
-        date:
-          type: string
-          format: date-time
-        serviceCost:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceCostDTO'
     ServiceCost:
       type: object
       properties:
@@ -373,6 +358,21 @@ components:
           type: string
           format: date
         serviceName:
+          type: string
+    DailyCost:
+      type: object
+      properties:
+        amount:
+          type: number
+          format: double
+        date:
+          type: string
+          format: date
+        perServiceCost:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceCost'
+        unit:
           type: string
   securitySchemes:
     basicAuth:

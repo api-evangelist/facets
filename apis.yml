@@ -307,7 +307,7 @@ apis:
   - type: Webhooks
     url: asyncapi/facets-webhooks.yml
 - aid: facets:facets-public-ap-is-api
-  name: Facets Public Ap Is API
+  name: Facets Public APIs API
   description: The public-ap-is API from Facets — 20 operation(s) for public-ap-is.
   humanURL: https://www.facets.cloud/docs/api
   baseURL: https://{account-id}.console.facets.cloud

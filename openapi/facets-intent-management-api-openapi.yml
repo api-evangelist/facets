@@ -178,6 +178,34 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    TFProvider:
+      type: object
+      properties:
+        attributes:
+          type: object
+          additionalProperties:
+            type: object
+        name:
+          type: string
+        source:
+          type: string
+        version:
+          type: string
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
     IntentRequestDTO:
       required:
       - displayName
@@ -199,19 +227,6 @@ components:
           type: string
         type:
           type: string
-    TFProvider:
-      type: object
-      properties:
-        attributes:
-          type: object
-          additionalProperties:
-            type: object
-        name:
-          type: string
-        source:
-          type: string
-        version:
-          type: string
     IntentOutput:
       type: object
       properties:
@@ -228,28 +243,6 @@ components:
           type: string
         type:
           type: string
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-    GithubAppPermissionsPendingErrorDetails:
-      type: object
-      properties:
-        approvalUrl:
-          type: string
-        code:
-          type: string
-        errorCode:
-          type: string
-        message:
-          type: string
-        missingPermissions:
-          type: array
-          items:
-            type: string
     IntentResponseDTO:
       type: object
       properties:
@@ -271,6 +264,13 @@ components:
           - BUILT_IN
           - CUSTOM
         type:
+          type: string
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
           type: string
   securitySchemes:
     basicAuth:

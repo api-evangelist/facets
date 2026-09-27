@@ -689,62 +689,12 @@ paths:
       - Blueprint Designer V2
 components:
   schemas:
-    BulkInheritFromBaseRequest:
-      required:
-      - resources
-      type: object
-      properties:
-        branch:
-          type: string
-          description: Optional branch name. If not provided, uses the stack's default branch.
-          example: feature/my-branch
-        commitMessage:
-          type: string
-          description: Optional custom commit message. If not provided, auto-generated.
-          example: Added redis cache resource
-        resources:
-          type: array
-          items:
-            $ref: '#/components/schemas/InheritFromBaseItem'
-      description: Request to bulk set inherit-from-base for resources in the blueprint
-    RenameResourceRequest:
-      required:
-      - newResourceName
-      - oldResourceName
-      - resourceType
-      type: object
-      properties:
-        branch:
-          type: string
-          description: Optional branch name. If not provided, uses the stack's default branch.
-          example: feature/my-branch
-        commitMessage:
-          type: string
-          description: Optional custom commit message. If not provided, auto-generated.
-          example: Added redis cache resource
-        newResourceName:
-          type: string
-          description: New resource name
-          example: new-db
-        oldResourceName:
-          type: string
-          description: Current resource name
-          example: old-db
-        resourceType:
-          type: string
-          description: The resource type (intent)
-          example: mysql
-      description: Request to rename a resource
-    ResourceToggleItem:
+    ResourceIdentifier:
       required:
       - resourceName
       - resourceType
       type: object
       properties:
-        disabled:
-          type: boolean
-          description: Whether the resource should be disabled
-          example: true
         resourceName:
           type: string
           description: The resource name
@@ -753,10 +703,9 @@ components:
           type: string
           description: The resource type (intent)
           example: mysql
-      description: Optional list of resources to enable/disable as a side-effect of this update. All changes are committed atomically in a single commit.
-    AddVariablesRequest:
+    DeleteVariablesRequest:
       required:
-      - variables
+      - variableNames
       type: object
       properties:
         branch:
@@ -767,12 +716,14 @@ components:
           type: string
           description: Optional custom commit message. If not provided, auto-generated.
           example: Added redis cache resource
-        variables:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/VariableItem'
-          description: Map of variable name to variable details
-      description: Request to add variables to the blueprint
+        variableNames:
+          uniqueItems: true
+          type: array
+          description: Set of variable names to delete
+          items:
+            type: string
+            description: Set of variable names to delete
+      description: Request to delete variables from the blueprint
     CreateResourceItem:
       required:
       - resourceName
@@ -809,27 +760,9 @@ components:
           type: string
           description: The resource type (intent)
           example: mysql
-    VariableItem:
-      type: object
-      properties:
-        description:
-          type: string
-          description: Human-readable description
-          example: Database connection string
-        global:
-          type: boolean
-          description: Whether this is a global variable
-          example: false
-        secret:
-          type: boolean
-          description: Whether this is a secret variable
-          example: false
-        value:
-          type: string
-          description: The variable value. Null means the variable is required but has no default.
-          example: my-value
-      description: Map of variable name to updated variable details
-    ApplyTemplateRequest:
+    BulkToggleResourcesRequest:
+      required:
+      - resources
       type: object
       properties:
         branch:
@@ -840,15 +773,26 @@ components:
           type: string
           description: Optional custom commit message. If not provided, auto-generated.
           example: Added redis cache resource
-        prefix:
+        resources:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceToggleItem'
+      description: Request to bulk enable/disable resources in the blueprint
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
           type: string
-          description: Optional prefix to add to resource and variable names
-          example: prod-
-        suffix:
+        code:
           type: string
-          description: Optional suffix to add to resource and variable names
-          example: -v2
-      description: Request to apply a template to a blueprint
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
     UpdateResourcesRequest:
       required:
       - resources
@@ -873,77 +817,36 @@ components:
           items:
             $ref: '#/components/schemas/UpdateResourceItem'
       description: Request to update resources in the blueprint
-    BulkToggleResourcesRequest:
-      required:
-      - resources
+    VariableItem:
       type: object
       properties:
-        branch:
+        description:
           type: string
-          description: Optional branch name. If not provided, uses the stack's default branch.
-          example: feature/my-branch
-        commitMessage:
+          description: Human-readable description
+          example: Database connection string
+        global:
+          type: boolean
+          description: Whether this is a global variable
+          example: false
+        secret:
+          type: boolean
+          description: Whether this is a secret variable
+          example: false
+        value:
           type: string
-          description: Optional custom commit message. If not provided, auto-generated.
-          example: Added redis cache resource
-        resources:
-          type: array
-          items:
-            $ref: '#/components/schemas/ResourceToggleItem'
-      description: Request to bulk enable/disable resources in the blueprint
-    DeleteVariablesRequest:
-      required:
-      - variableNames
-      type: object
-      properties:
-        branch:
-          type: string
-          description: Optional branch name. If not provided, uses the stack's default branch.
-          example: feature/my-branch
-        commitMessage:
-          type: string
-          description: Optional custom commit message. If not provided, auto-generated.
-          example: Added redis cache resource
-        variableNames:
-          uniqueItems: true
-          type: array
-          description: Set of variable names to delete
-          items:
-            type: string
-            description: Set of variable names to delete
-      description: Request to delete variables from the blueprint
-    DeleteResourcesRequest:
-      required:
-      - resources
-      type: object
-      properties:
-        branch:
-          type: string
-          description: Optional branch name. If not provided, uses the stack's default branch.
-          example: feature/my-branch
-        commitMessage:
-          type: string
-          description: Optional custom commit message. If not provided, auto-generated.
-          example: Added redis cache resource
-        resources:
-          uniqueItems: true
-          type: array
-          items:
-            $ref: '#/components/schemas/ResourceIdentifier'
-      description: Request to delete resources from the blueprint
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-    ResourceIdentifier:
+          description: The variable value. Null means the variable is required but has no default.
+          example: my-value
+      description: Map of variable name to updated variable details
+    ResourceToggleItem:
       required:
       - resourceName
       - resourceType
       type: object
       properties:
+        disabled:
+          type: boolean
+          description: Whether the resource should be disabled
+          example: true
         resourceName:
           type: string
           description: The resource name
@@ -952,21 +855,7 @@ components:
           type: string
           description: The resource type (intent)
           example: mysql
-    GithubAppPermissionsPendingErrorDetails:
-      type: object
-      properties:
-        approvalUrl:
-          type: string
-        code:
-          type: string
-        errorCode:
-          type: string
-        message:
-          type: string
-        missingPermissions:
-          type: array
-          items:
-            type: string
+      description: Optional list of resources to enable/disable as a side-effect of this update. All changes are committed atomically in a single commit.
     CreateResourcesRequest:
       required:
       - resources
@@ -986,9 +875,9 @@ components:
           items:
             $ref: '#/components/schemas/CreateResourceItem'
       description: Request to create resources in the blueprint
-    UpdateVariablesRequest:
+    DeleteResourcesRequest:
       required:
-      - variables
+      - resources
       type: object
       properties:
         branch:
@@ -999,12 +888,12 @@ components:
           type: string
           description: Optional custom commit message. If not provided, auto-generated.
           example: Added redis cache resource
-        variables:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/VariableItem'
-          description: Map of variable name to updated variable details
-      description: Request to update variables in the blueprint
+        resources:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceIdentifier'
+      description: Request to delete resources from the blueprint
     InheritFromBaseItem:
       required:
       - resourceName
@@ -1023,6 +912,78 @@ components:
           type: string
           description: The resource type (intent)
           example: mysql
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    AddVariablesRequest:
+      required:
+      - variables
+      type: object
+      properties:
+        branch:
+          type: string
+          description: Optional branch name. If not provided, uses the stack's default branch.
+          example: feature/my-branch
+        commitMessage:
+          type: string
+          description: Optional custom commit message. If not provided, auto-generated.
+          example: Added redis cache resource
+        variables:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/VariableItem'
+          description: Map of variable name to variable details
+      description: Request to add variables to the blueprint
+    RenameResourceRequest:
+      required:
+      - newResourceName
+      - oldResourceName
+      - resourceType
+      type: object
+      properties:
+        branch:
+          type: string
+          description: Optional branch name. If not provided, uses the stack's default branch.
+          example: feature/my-branch
+        commitMessage:
+          type: string
+          description: Optional custom commit message. If not provided, auto-generated.
+          example: Added redis cache resource
+        newResourceName:
+          type: string
+          description: New resource name
+          example: new-db
+        oldResourceName:
+          type: string
+          description: Current resource name
+          example: old-db
+        resourceType:
+          type: string
+          description: The resource type (intent)
+          example: mysql
+      description: Request to rename a resource
+    BulkInheritFromBaseRequest:
+      required:
+      - resources
+      type: object
+      properties:
+        branch:
+          type: string
+          description: Optional branch name. If not provided, uses the stack's default branch.
+          example: feature/my-branch
+        commitMessage:
+          type: string
+          description: Optional custom commit message. If not provided, auto-generated.
+          example: Added redis cache resource
+        resources:
+          type: array
+          items:
+            $ref: '#/components/schemas/InheritFromBaseItem'
+      description: Request to bulk set inherit-from-base for resources in the blueprint
     UpdateResourceItem:
       required:
       - resourceName
@@ -1046,6 +1007,45 @@ components:
           type: string
           description: The resource type (intent)
           example: mysql
+    UpdateVariablesRequest:
+      required:
+      - variables
+      type: object
+      properties:
+        branch:
+          type: string
+          description: Optional branch name. If not provided, uses the stack's default branch.
+          example: feature/my-branch
+        commitMessage:
+          type: string
+          description: Optional custom commit message. If not provided, auto-generated.
+          example: Added redis cache resource
+        variables:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/VariableItem'
+          description: Map of variable name to updated variable details
+      description: Request to update variables in the blueprint
+    ApplyTemplateRequest:
+      type: object
+      properties:
+        branch:
+          type: string
+          description: Optional branch name. If not provided, uses the stack's default branch.
+          example: feature/my-branch
+        commitMessage:
+          type: string
+          description: Optional custom commit message. If not provided, auto-generated.
+          example: Added redis cache resource
+        prefix:
+          type: string
+          description: Optional prefix to add to resource and variable names
+          example: prod-
+        suffix:
+          type: string
+          description: Optional suffix to add to resource and variable names
+          example: -v2
+      description: Request to apply a template to a blueprint
   securitySchemes:
     basicAuth:
       description: Basic Authentication

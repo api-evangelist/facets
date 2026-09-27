@@ -187,6 +187,11 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    ResetPasswordRequest:
+      type: object
+      properties:
+        email:
+          type: string
     TokenValidity:
       type: object
       properties:
@@ -200,20 +205,6 @@ components:
           type: string
         valid:
           type: boolean
-    Response:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
     GithubAppPermissionsPendingErrorDetails:
       type: object
       properties:
@@ -238,15 +229,24 @@ components:
           type: string
         token:
           type: string
-    ResetPasswordRequest:
+    Response:
       type: object
       properties:
-        email:
+        code:
+          type: string
+        message:
           type: string
     TokenValidationRequest:
       type: object
       properties:
         token:
+          type: string
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
           type: string
   securitySchemes:
     basicAuth:

@@ -436,11 +436,21 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    TestRuleResponse:
+    GithubAppPermissionsPendingErrorDetails:
       type: object
       properties:
-        routeTo:
+        approvalUrl:
           type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
     ArtifactRoutingRuleResponse:
       type: object
       properties:
@@ -467,6 +477,11 @@ components:
           type: string
         stackName:
           type: string
+    TestRuleResponse:
+      type: object
+      properties:
+        routeTo:
+          type: string
     ErrorDetails:
       type: object
       properties:
@@ -474,21 +489,30 @@ components:
           type: string
         message:
           type: string
-    GithubAppPermissionsPendingErrorDetails:
+    Criterion:
+      required:
+      - metadataKey
+      - operator
+      - routeTo
+      - value
       type: object
       properties:
-        approvalUrl:
+        metadataKey:
           type: string
-        code:
+        operator:
           type: string
-        errorCode:
+          enum:
+          - EQUALS
+          - STARTS_WITH
+          - ENDS_WITH
+          - CONTAINS
+        priority:
+          type: integer
+          format: int32
+        routeTo:
           type: string
-        message:
+        value:
           type: string
-        missingPermissions:
-          type: array
-          items:
-            type: string
     ArtifactRoutingRuleRequest:
       required:
       - criteria
@@ -520,30 +544,6 @@ components:
         ruleName:
           type: string
         stackName:
-          type: string
-    Criterion:
-      required:
-      - metadataKey
-      - operator
-      - routeTo
-      - value
-      type: object
-      properties:
-        metadataKey:
-          type: string
-        operator:
-          type: string
-          enum:
-          - EQUALS
-          - STARTS_WITH
-          - ENDS_WITH
-          - CONTAINS
-        priority:
-          type: integer
-          format: int32
-        routeTo:
-          type: string
-        value:
           type: string
   securitySchemes:
     basicAuth:

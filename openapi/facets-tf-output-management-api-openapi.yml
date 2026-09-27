@@ -314,19 +314,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    TFProvider:
-      type: object
-      properties:
-        attributes:
-          type: object
-          additionalProperties:
-            type: object
-        name:
-          type: string
-        source:
-          type: string
-        version:
-          type: string
     OutputModuleUsageDTO:
       type: object
       properties:
@@ -345,41 +332,18 @@ components:
           - OUTPUT
         version:
           type: string
-    OutputIntentUsageDTO:
+    TFProvider:
       type: object
       properties:
-        displayName:
-          type: string
-        intentName:
-          type: string
-        outputAlias:
-          type: string
-    TFOutputRequestDTO:
-      required:
-      - name
-      type: object
-      properties:
-        lookupTree:
-          type: string
+        attributes:
+          type: object
+          additionalProperties:
+            type: object
         name:
           type: string
-        namespace:
+        source:
           type: string
-        properties:
-          $ref: '#/components/schemas/JsonNode'
-        providers:
-          uniqueItems: true
-          type: array
-          items:
-            $ref: '#/components/schemas/TFProvider'
-    JsonNode:
-      type: object
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
+        version:
           type: string
     GithubAppPermissionsPendingErrorDetails:
       type: object
@@ -396,6 +360,37 @@ components:
           type: array
           items:
             type: string
+    JsonNode:
+      type: object
+    TFOutputUsageDTO:
+      type: object
+      properties:
+        inUse:
+          type: boolean
+        intentsReferencing:
+          type: array
+          items:
+            $ref: '#/components/schemas/OutputIntentUsageDTO'
+        modulesConsuming:
+          type: array
+          items:
+            $ref: '#/components/schemas/OutputModuleUsageDTO'
+        modulesProducing:
+          type: array
+          items:
+            $ref: '#/components/schemas/OutputModuleUsageDTO'
+        totalUsageCount:
+          type: integer
+          format: int32
+    OutputIntentUsageDTO:
+      type: object
+      properties:
+        displayName:
+          type: string
+        intentName:
+          type: string
+        outputAlias:
+          type: string
     TFOutputResponseDTO:
       type: object
       properties:
@@ -423,26 +418,31 @@ components:
           - CUSTOM
         usage:
           $ref: '#/components/schemas/TFOutputUsageDTO'
-    TFOutputUsageDTO:
+    ErrorDetails:
       type: object
       properties:
-        inUse:
-          type: boolean
-        intentsReferencing:
+        code:
+          type: string
+        message:
+          type: string
+    TFOutputRequestDTO:
+      required:
+      - name
+      type: object
+      properties:
+        lookupTree:
+          type: string
+        name:
+          type: string
+        namespace:
+          type: string
+        properties:
+          $ref: '#/components/schemas/JsonNode'
+        providers:
+          uniqueItems: true
           type: array
           items:
-            $ref: '#/components/schemas/OutputIntentUsageDTO'
-        modulesConsuming:
-          type: array
-          items:
-            $ref: '#/components/schemas/OutputModuleUsageDTO'
-        modulesProducing:
-          type: array
-          items:
-            $ref: '#/components/schemas/OutputModuleUsageDTO'
-        totalUsageCount:
-          type: integer
-          format: int32
+            $ref: '#/components/schemas/TFProvider'
   securitySchemes:
     basicAuth:
       description: Basic Authentication

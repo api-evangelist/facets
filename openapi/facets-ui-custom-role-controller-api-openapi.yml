@@ -352,13 +352,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
     GithubAppPermissionsPendingErrorDetails:
       type: object
       properties:
@@ -374,6 +367,13 @@ components:
           type: array
           items:
             type: string
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
     CustomRoleRequest:
       required:
       - permissions

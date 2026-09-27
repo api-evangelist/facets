@@ -334,28 +334,6 @@ paths:
       - Blueprint Pull Requests
 components:
   schemas:
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-    GithubAppPermissionsPendingErrorDetails:
-      type: object
-      properties:
-        approvalUrl:
-          type: string
-        code:
-          type: string
-        errorCode:
-          type: string
-        message:
-          type: string
-        missingPermissions:
-          type: array
-          items:
-            type: string
     CreatePullRequestRequest:
       required:
       - sourceBranch
@@ -376,6 +354,28 @@ components:
           type: string
           description: PR title (defaults to the source branch name when blank)
       description: Request to create a blueprint pull request (branch)
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
     BlueprintPullRequest:
       type: object
       properties:

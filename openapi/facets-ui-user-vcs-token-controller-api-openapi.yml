@@ -235,6 +235,21 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    UserVCSTokenRequest:
+      required:
+      - hostName
+      - personalAccessToken
+      - userName
+      type: object
+      properties:
+        hostName:
+          type: string
+        id:
+          type: string
+        personalAccessToken:
+          type: string
+        userName:
+          type: string
     GithubAppPermissionsPendingErrorDetails:
       type: object
       properties:
@@ -265,21 +280,6 @@ components:
         id:
           type: string
         userId:
-          type: string
-        userName:
-          type: string
-    UserVCSTokenRequest:
-      required:
-      - hostName
-      - personalAccessToken
-      - userName
-      type: object
-      properties:
-        hostName:
-          type: string
-        id:
-          type: string
-        personalAccessToken:
           type: string
         userName:
           type: string

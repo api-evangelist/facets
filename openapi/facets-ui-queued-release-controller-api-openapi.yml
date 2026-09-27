@@ -132,20 +132,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    FacetsResource:
-      type: object
-      properties:
-        resourceName:
-          type: string
-        resourceType:
-          type: string
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
     GithubAppPermissionsPendingErrorDetails:
       type: object
       properties:
@@ -244,6 +230,20 @@ components:
           type: string
         withRefresh:
           type: boolean
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    FacetsResource:
+      type: object
+      properties:
+        resourceName:
+          type: string
+        resourceType:
+          type: string
   securitySchemes:
     basicAuth:
       description: Basic Authentication

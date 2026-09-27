@@ -256,6 +256,37 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    Variables:
+      type: object
+      properties:
+        description:
+          type: string
+        global:
+          type: boolean
+        secret:
+          type: boolean
+        status:
+          type: string
+          enum:
+          - DEFAULT
+          - OVERRIDDEN
+        value:
+          type: string
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
     Environment:
       required:
       - name
@@ -378,21 +409,6 @@ components:
           type: string
         message:
           type: string
-    GithubAppPermissionsPendingErrorDetails:
-      type: object
-      properties:
-        approvalUrl:
-          type: string
-        code:
-          type: string
-        errorCode:
-          type: string
-        message:
-          type: string
-        missingPermissions:
-          type: array
-          items:
-            type: string
     EnvironmentRequest:
       required:
       - clusterName
@@ -456,22 +472,6 @@ components:
             rawOffset:
               type: integer
               format: int32
-    Variables:
-      type: object
-      properties:
-        description:
-          type: string
-        global:
-          type: boolean
-        secret:
-          type: boolean
-        status:
-          type: string
-          enum:
-          - DEFAULT
-          - OVERRIDDEN
-        value:
-          type: string
   securitySchemes:
     basicAuth:
       description: Basic Authentication

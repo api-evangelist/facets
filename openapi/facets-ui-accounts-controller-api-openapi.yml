@@ -2335,435 +2335,12 @@ paths:
       - ui-accounts-controller
 components:
   schemas:
-    CloudLinkingRequest:
-      type: object
-      properties:
-        accountName:
-          type: string
-        description:
-          type: string
-        labelIds:
-          type: array
-          items:
-            type: string
-        webhook:
-          $ref: '#/components/schemas/OneTimeWebhook'
-    AttachLabelsRequest:
-      required:
-      - labelIds
-      type: object
-      properties:
-        labelIds:
-          type: array
-          description: List of label IDs to assign to the deployment. Replaces existing labels. Use empty list to clear all labels. Labels must be created beforehand using label management APIs.
-          items:
-            type: string
-            description: List of label IDs to assign to the deployment. Replaces existing labels. Use empty list to clear all labels. Labels must be created beforehand using label management APIs.
-      description: Request to attach labels to a deployment log
-    VCSLinkingRequest:
-      type: object
-      properties:
-        accountName:
-          type: string
-        description:
-          type: string
-        enterpriseHostName:
-          type: string
-        labelIds:
-          type: array
-          items:
-            type: string
-        webhook:
-          $ref: '#/components/schemas/OneTimeWebhook'
-    GithubAppPermissionsPendingErrorDetails:
-      type: object
-      properties:
-        approvalUrl:
-          type: string
-        code:
-          type: string
-        errorCode:
-          type: string
-        message:
-          type: string
-        missingPermissions:
-          type: array
-          items:
-            type: string
-    VCSTokenDetailsResponse:
-      type: object
-      properties:
-        accountId:
-          type: string
-        accountName:
-          type: string
-        expired:
-          type: boolean
-        expiryDate:
-          type: string
-          format: date-time
-        id:
-          type: string
-    AwsAccount:
-      type: object
-      properties:
-        accountType:
-          type: string
-          enum:
-          - VERSION_CONTROL
-          - CLOUD
-          - CODER
-        associatedTo:
-          type: array
-          items:
-            $ref: '#/components/schemas/AccountAssociationInfo'
-        changeLog:
-          type: string
-        createdBy:
-          type: string
-        creationDate:
-          type: string
-          format: date-time
-        description:
-          type: string
-        externalId:
-          type: string
-        iamRole:
-          type: string
-        id:
-          type: string
-        inUse:
-          type: boolean
-        labelIds:
-          type: array
-          items:
-            type: string
-        lastModifiedBy:
-          type: string
-        lastModifiedDate:
-          type: string
-          format: date-time
-        name:
-          type: string
-        provider:
-          type: string
-          enum:
-          - GITHUB
-          - BITBUCKET
-          - GITLAB
-          - AWS
-          - AZURE
-          - GCP
-          - KUBERNETES
-          - CODER
-        providerDescription:
-          type: string
-        providerTags:
-          type: object
-          additionalProperties:
-            type: string
-        systemDefined:
-          type: boolean
-        versioningKey:
-          type: string
-    BitBucketAccount:
-      type: object
-      properties:
-        accessToken:
-          type: string
-          writeOnly: true
-        accountType:
-          type: string
-          enum:
-          - VERSION_CONTROL
-          - CLOUD
-          - CODER
-        app:
-          type: boolean
-        associatedTo:
-          type: array
-          items:
-            $ref: '#/components/schemas/AccountAssociationInfo'
-        changeLog:
-          type: string
-        createdBy:
-          type: string
-        creationDate:
-          type: string
-          format: date-time
-        description:
-          type: string
-        host:
-          type: string
-        id:
-          type: string
-        inUse:
-          type: boolean
-        labelIds:
-          type: array
-          items:
-            type: string
-        lastModifiedBy:
-          type: string
-        lastModifiedDate:
-          type: string
-          format: date-time
-        name:
-          type: string
-        orgName:
-          type: string
-        projectKey:
-          type: string
-        provider:
-          type: string
-          enum:
-          - GITHUB
-          - BITBUCKET
-          - GITLAB
-          - AWS
-          - AZURE
-          - GCP
-          - KUBERNETES
-          - CODER
-        systemDefined:
-          type: boolean
-        userEmail:
-          type: string
-        userName:
-          type: string
-        versioningKey:
-          type: string
-    GithubAppPermissionStatus:
-      type: object
-      properties:
-        approvalUrl:
-          type: string
-        grantedPermissions:
-          type: object
-          additionalProperties:
-            type: string
-        missingPermissions:
-          type: array
-          items:
-            type: string
-        repositorySelection:
-          type: string
-        state:
-          type: string
-          enum:
-          - UP_TO_DATE
-          - APPROVAL_PENDING
-          - NOT_INSTALLED
     ClusterInfo:
       type: object
       properties:
         clusterId:
           type: string
         clusterName:
-          type: string
-    VCSAccountUpdateRequest:
-      type: object
-      properties:
-        organisationName:
-          type: string
-        projectKey:
-          type: string
-    GcpAccount:
-      type: object
-      properties:
-        accountType:
-          type: string
-          enum:
-          - VERSION_CONTROL
-          - CLOUD
-          - CODER
-        associatedTo:
-          type: array
-          items:
-            $ref: '#/components/schemas/AccountAssociationInfo'
-        changeLog:
-          type: string
-        createdBy:
-          type: string
-        creationDate:
-          type: string
-          format: date-time
-        description:
-          type: string
-        id:
-          type: string
-        inUse:
-          type: boolean
-        labelIds:
-          type: array
-          items:
-            type: string
-        lastModifiedBy:
-          type: string
-        lastModifiedDate:
-          type: string
-          format: date-time
-        name:
-          type: string
-        project:
-          type: string
-        provider:
-          type: string
-          enum:
-          - GITHUB
-          - BITBUCKET
-          - GITLAB
-          - AWS
-          - AZURE
-          - GCP
-          - KUBERNETES
-          - CODER
-        providerDescription:
-          type: string
-        providerTags:
-          type: object
-          additionalProperties:
-            type: string
-        serviceAccountKey:
-          type: string
-          writeOnly: true
-        systemDefined:
-          type: boolean
-        versioningKey:
-          type: string
-    GitLabAccount:
-      type: object
-      properties:
-        accessToken:
-          type: string
-          writeOnly: true
-        accountType:
-          type: string
-          enum:
-          - VERSION_CONTROL
-          - CLOUD
-          - CODER
-        apiBaseUrl:
-          type: string
-        app:
-          type: boolean
-        associatedTo:
-          type: array
-          items:
-            $ref: '#/components/schemas/AccountAssociationInfo'
-        changeLog:
-          type: string
-        createdBy:
-          type: string
-        creationDate:
-          type: string
-          format: date-time
-        description:
-          type: string
-        enterpriseHostName:
-          type: string
-        host:
-          type: string
-        id:
-          type: string
-        inUse:
-          type: boolean
-        labelIds:
-          type: array
-          items:
-            type: string
-        lastModifiedBy:
-          type: string
-        lastModifiedDate:
-          type: string
-          format: date-time
-        name:
-          type: string
-        orgName:
-          type: string
-        provider:
-          type: string
-          enum:
-          - GITHUB
-          - BITBUCKET
-          - GITLAB
-          - AWS
-          - AZURE
-          - GCP
-          - KUBERNETES
-          - CODER
-        systemDefined:
-          type: boolean
-        userName:
-          type: string
-        versioningKey:
-          type: string
-    GitHubAccount:
-      type: object
-      properties:
-        accessToken:
-          type: string
-          writeOnly: true
-        accountType:
-          type: string
-          enum:
-          - VERSION_CONTROL
-          - CLOUD
-          - CODER
-        apiBaseUrl:
-          type: string
-        app:
-          type: boolean
-        associatedTo:
-          type: array
-          items:
-            $ref: '#/components/schemas/AccountAssociationInfo'
-        changeLog:
-          type: string
-        createdBy:
-          type: string
-        creationDate:
-          type: string
-          format: date-time
-        description:
-          type: string
-        enterpriseHostName:
-          type: string
-        host:
-          type: string
-        id:
-          type: string
-        inUse:
-          type: boolean
-        labelIds:
-          type: array
-          items:
-            type: string
-        lastModifiedBy:
-          type: string
-        lastModifiedDate:
-          type: string
-          format: date-time
-        name:
-          type: string
-        orgName:
-          type: string
-        provider:
-          type: string
-          enum:
-          - GITHUB
-          - BITBUCKET
-          - GITLAB
-          - AWS
-          - AZURE
-          - GCP
-          - KUBERNETES
-          - CODER
-        systemDefined:
-          type: boolean
-        userName:
-          type: string
-        versioningKey:
           type: string
     KubernetesAccount:
       type: object
@@ -2831,6 +2408,223 @@ components:
           writeOnly: true
         versioningKey:
           type: string
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    VCSLinkingResponse:
+      type: object
+      properties:
+        redirectUrl:
+          type: string
+        webhook:
+          $ref: '#/components/schemas/OneTimeWebhook'
+    VCSOrganizationsRequest:
+      type: object
+      properties:
+        accessToken:
+          type: string
+        enterpriseHostName:
+          type: string
+        userEmail:
+          type: string
+        username:
+          type: string
+        vcsType:
+          type: string
+          enum:
+          - GITHUB
+          - BITBUCKET
+          - GITLAB
+    VCSLinkingRequest:
+      type: object
+      properties:
+        accountName:
+          type: string
+        description:
+          type: string
+        enterpriseHostName:
+          type: string
+        labelIds:
+          type: array
+          items:
+            type: string
+        webhook:
+          $ref: '#/components/schemas/OneTimeWebhook'
+    GitHubAccount:
+      type: object
+      properties:
+        accessToken:
+          type: string
+          writeOnly: true
+        accountType:
+          type: string
+          enum:
+          - VERSION_CONTROL
+          - CLOUD
+          - CODER
+        apiBaseUrl:
+          type: string
+        app:
+          type: boolean
+        associatedTo:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountAssociationInfo'
+        changeLog:
+          type: string
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        description:
+          type: string
+        enterpriseHostName:
+          type: string
+        host:
+          type: string
+        id:
+          type: string
+        inUse:
+          type: boolean
+        labelIds:
+          type: array
+          items:
+            type: string
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        name:
+          type: string
+        orgName:
+          type: string
+        provider:
+          type: string
+          enum:
+          - GITHUB
+          - BITBUCKET
+          - GITLAB
+          - AWS
+          - AZURE
+          - GCP
+          - KUBERNETES
+          - CODER
+        systemDefined:
+          type: boolean
+        userName:
+          type: string
+        versioningKey:
+          type: string
+    VCSTokenDetailsResponse:
+      type: object
+      properties:
+        accountId:
+          type: string
+        accountName:
+          type: string
+        expired:
+          type: boolean
+        expiryDate:
+          type: string
+          format: date-time
+        id:
+          type: string
+    CloudLinkingRequest:
+      type: object
+      properties:
+        accountName:
+          type: string
+        description:
+          type: string
+        labelIds:
+          type: array
+          items:
+            type: string
+        webhook:
+          $ref: '#/components/schemas/OneTimeWebhook'
+    Response:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    AwsAccount:
+      type: object
+      properties:
+        accountType:
+          type: string
+          enum:
+          - VERSION_CONTROL
+          - CLOUD
+          - CODER
+        associatedTo:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountAssociationInfo'
+        changeLog:
+          type: string
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        description:
+          type: string
+        externalId:
+          type: string
+        iamRole:
+          type: string
+        id:
+          type: string
+        inUse:
+          type: boolean
+        labelIds:
+          type: array
+          items:
+            type: string
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        name:
+          type: string
+        provider:
+          type: string
+          enum:
+          - GITHUB
+          - BITBUCKET
+          - GITLAB
+          - AWS
+          - AZURE
+          - GCP
+          - KUBERNETES
+          - CODER
+        providerDescription:
+          type: string
+        providerTags:
+          type: object
+          additionalProperties:
+            type: string
+        systemDefined:
+          type: boolean
+        versioningKey:
+          type: string
     CoderAccount:
       type: object
       properties:
@@ -2894,73 +2688,12 @@ components:
           type: string
         versioningKey:
           type: string
-    AccountLinkingDetails:
-      type: object
-      properties:
-        description:
-          type: string
-        labelIds:
-          type: array
-          items:
-            type: string
-    Response:
+    ErrorDetails:
       type: object
       properties:
         code:
           type: string
         message:
-          type: string
-    Account:
-      type: object
-      properties:
-        accountType:
-          type: string
-          enum:
-          - VERSION_CONTROL
-          - CLOUD
-          - CODER
-        associatedTo:
-          type: array
-          items:
-            $ref: '#/components/schemas/AccountAssociationInfo'
-        changeLog:
-          type: string
-        createdBy:
-          type: string
-        creationDate:
-          type: string
-          format: date-time
-        description:
-          type: string
-        id:
-          type: string
-        inUse:
-          type: boolean
-        labelIds:
-          type: array
-          items:
-            type: string
-        lastModifiedBy:
-          type: string
-        lastModifiedDate:
-          type: string
-          format: date-time
-        name:
-          type: string
-        provider:
-          type: string
-          enum:
-          - GITHUB
-          - BITBUCKET
-          - GITLAB
-          - AWS
-          - AZURE
-          - GCP
-          - KUBERNETES
-          - CODER
-        systemDefined:
-          type: boolean
-        versioningKey:
           type: string
     OneTimeWebhook:
       type: object
@@ -3009,30 +2742,12 @@ components:
           - GITHUB
           - GITLAB
           - BITBUCKET
-    VCSLinkingResponse:
+    VCSAccountUpdateRequest:
       type: object
       properties:
-        redirectUrl:
+        organisationName:
           type: string
-        webhook:
-          $ref: '#/components/schemas/OneTimeWebhook'
-    AccountAssociationInfo:
-      type: object
-      properties:
-        clusters:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClusterInfo'
-        projectTypeName:
-          type: string
-        stackName:
-          type: string
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
+        projectKey:
           type: string
     AzureAccount:
       type: object
@@ -3101,23 +2816,308 @@ components:
           type: string
         versioningKey:
           type: string
-    VCSOrganizationsRequest:
+    AccountLinkingDetails:
+      type: object
+      properties:
+        description:
+          type: string
+        labelIds:
+          type: array
+          items:
+            type: string
+    AttachLabelsRequest:
+      required:
+      - labelIds
+      type: object
+      properties:
+        labelIds:
+          type: array
+          description: List of label IDs to assign to the deployment. Replaces existing labels. Use empty list to clear all labels. Labels must be created beforehand using label management APIs.
+          items:
+            type: string
+            description: List of label IDs to assign to the deployment. Replaces existing labels. Use empty list to clear all labels. Labels must be created beforehand using label management APIs.
+      description: Request to attach labels to a deployment log
+    GitLabAccount:
       type: object
       properties:
         accessToken:
           type: string
+          writeOnly: true
+        accountType:
+          type: string
+          enum:
+          - VERSION_CONTROL
+          - CLOUD
+          - CODER
+        apiBaseUrl:
+          type: string
+        app:
+          type: boolean
+        associatedTo:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountAssociationInfo'
+        changeLog:
+          type: string
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        description:
+          type: string
         enterpriseHostName:
           type: string
-        userEmail:
+        host:
           type: string
-        username:
+        id:
           type: string
-        vcsType:
+        inUse:
+          type: boolean
+        labelIds:
+          type: array
+          items:
+            type: string
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        name:
+          type: string
+        orgName:
+          type: string
+        provider:
           type: string
           enum:
           - GITHUB
           - BITBUCKET
           - GITLAB
+          - AWS
+          - AZURE
+          - GCP
+          - KUBERNETES
+          - CODER
+        systemDefined:
+          type: boolean
+        userName:
+          type: string
+        versioningKey:
+          type: string
+    GithubAppPermissionStatus:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        grantedPermissions:
+          type: object
+          additionalProperties:
+            type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+        repositorySelection:
+          type: string
+        state:
+          type: string
+          enum:
+          - UP_TO_DATE
+          - APPROVAL_PENDING
+          - NOT_INSTALLED
+    BitBucketAccount:
+      type: object
+      properties:
+        accessToken:
+          type: string
+          writeOnly: true
+        accountType:
+          type: string
+          enum:
+          - VERSION_CONTROL
+          - CLOUD
+          - CODER
+        app:
+          type: boolean
+        associatedTo:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountAssociationInfo'
+        changeLog:
+          type: string
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        description:
+          type: string
+        host:
+          type: string
+        id:
+          type: string
+        inUse:
+          type: boolean
+        labelIds:
+          type: array
+          items:
+            type: string
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        name:
+          type: string
+        orgName:
+          type: string
+        projectKey:
+          type: string
+        provider:
+          type: string
+          enum:
+          - GITHUB
+          - BITBUCKET
+          - GITLAB
+          - AWS
+          - AZURE
+          - GCP
+          - KUBERNETES
+          - CODER
+        systemDefined:
+          type: boolean
+        userEmail:
+          type: string
+        userName:
+          type: string
+        versioningKey:
+          type: string
+    GcpAccount:
+      type: object
+      properties:
+        accountType:
+          type: string
+          enum:
+          - VERSION_CONTROL
+          - CLOUD
+          - CODER
+        associatedTo:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountAssociationInfo'
+        changeLog:
+          type: string
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        description:
+          type: string
+        id:
+          type: string
+        inUse:
+          type: boolean
+        labelIds:
+          type: array
+          items:
+            type: string
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        name:
+          type: string
+        project:
+          type: string
+        provider:
+          type: string
+          enum:
+          - GITHUB
+          - BITBUCKET
+          - GITLAB
+          - AWS
+          - AZURE
+          - GCP
+          - KUBERNETES
+          - CODER
+        providerDescription:
+          type: string
+        providerTags:
+          type: object
+          additionalProperties:
+            type: string
+        serviceAccountKey:
+          type: string
+          writeOnly: true
+        systemDefined:
+          type: boolean
+        versioningKey:
+          type: string
+    AccountAssociationInfo:
+      type: object
+      properties:
+        clusters:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClusterInfo'
+        projectTypeName:
+          type: string
+        stackName:
+          type: string
+    Account:
+      type: object
+      properties:
+        accountType:
+          type: string
+          enum:
+          - VERSION_CONTROL
+          - CLOUD
+          - CODER
+        associatedTo:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountAssociationInfo'
+        changeLog:
+          type: string
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        description:
+          type: string
+        id:
+          type: string
+        inUse:
+          type: boolean
+        labelIds:
+          type: array
+          items:
+            type: string
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        name:
+          type: string
+        provider:
+          type: string
+          enum:
+          - GITHUB
+          - BITBUCKET
+          - GITLAB
+          - AWS
+          - AZURE
+          - GCP
+          - KUBERNETES
+          - CODER
+        systemDefined:
+          type: boolean
+        versioningKey:
+          type: string
   securitySchemes:
     basicAuth:
       description: Basic Authentication

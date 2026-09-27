@@ -1080,12 +1080,86 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    NotificationTagPayload:
+    NotificationTypeResponse:
       type: object
       properties:
-        name:
+        key:
           type: string
-        notificationTag:
+        notificationName:
+          type: string
+        notificationType:
+          type: string
+          enum:
+          - DEPLOYMENT_STATUS_UPDATE
+          - APP_DEPLOYMENT
+          - QASUITE_SANITY
+          - DR_RESULT
+          - STACK_SIGNOFF
+          - ALERT
+          - TEST
+          - APPLICATION_DEPLOYMENT_COMPLETE
+          - ENVIRONMENT_CREATE
+          - ENVIRONMENT_DELETE
+          - ENVIRONMENT_LAUNCH
+          - ENVIRONMENT_DESTROY
+          - SHORT_LIVED_ENVIRONMENT_TEARDOWN
+          - ENVIRONMENT_CONFIGURE
+          - AUDIT_LOG
+        supportedTags:
+          type: array
+          items:
+            type: string
+            enum:
+            - CLUSTER_NAME
+            - CLUSTER_TYPE
+            - QASUITE_RESULT
+            - DR_ACTION
+            - DR_STATUS
+            - STACK_NAME
+            - SEVERITY
+            - ALERT_NAME
+            - DEPLOYMENT_STATUS
+            - APPLICATION_NAME
+            - SEND_RESOLVED
+            - RELEASE_TYPE
+            - ENVIRONMENT_TEARDOWN_NOTIFY_BEFORE
+            - AUDIT_ENTITY
+            - AUDIT_ACTION
+    ChannelTypePayload:
+      type: object
+      properties:
+        label:
+          type: string
+        type:
+          type: string
+          enum:
+          - SLACK
+          - CAPILLARY_VALIDATOR
+          - WEBHOOK
+          - PAGER_DUTY
+          - ZEN_DUTY
+          - EMAIL
+          - MS_TEAMS
+          - MS_TEAMS_WORKFLOW
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    NotificationTagsForTypeResult:
+      type: object
+      properties:
+        id:
           type: string
           enum:
           - CLUSTER_NAME
@@ -1103,24 +1177,17 @@ components:
           - ENVIRONMENT_TEARDOWN_NOTIFY_BEFORE
           - AUDIT_ENTITY
           - AUDIT_ACTION
-    TagDataModel:
-      type: object
-    ChannelTypePayload:
-      type: object
-      properties:
         label:
           type: string
-        type:
+        tooltip:
           type: string
-          enum:
-          - SLACK
-          - CAPILLARY_VALIDATOR
-          - WEBHOOK
-          - PAGER_DUTY
-          - ZEN_DUTY
-          - EMAIL
-          - MS_TEAMS
-          - MS_TEAMS_WORKFLOW
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
     TestNotificationRequest:
       type: object
       properties:
@@ -1165,45 +1232,8 @@ components:
           - AUDIT_LOG
         payload:
           type: string
-    NotificationChannel:
+    TagDataModel:
       type: object
-      properties:
-        authorizationHeader:
-          type: string
-        channelAddress:
-          type: string
-        channelType:
-          type: string
-          enum:
-          - SLACK
-          - CAPILLARY_VALIDATOR
-          - WEBHOOK
-          - PAGER_DUTY
-          - ZEN_DUTY
-          - EMAIL
-          - MS_TEAMS
-          - MS_TEAMS_WORKFLOW
-        description:
-          maxLength: 200
-          minLength: 0
-          type: string
-        emailAddresses:
-          type: array
-          items:
-            type: string
-        id:
-          type: string
-        integrationKey:
-          type: string
-        name:
-          type: string
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
     Subscription:
       required:
       - channelId
@@ -1266,10 +1296,44 @@ components:
           type: string
         test:
           type: boolean
-    NotificationTagsForTypeResult:
+    NotificationChannel:
       type: object
       properties:
+        authorizationHeader:
+          type: string
+        channelAddress:
+          type: string
+        channelType:
+          type: string
+          enum:
+          - SLACK
+          - CAPILLARY_VALIDATOR
+          - WEBHOOK
+          - PAGER_DUTY
+          - ZEN_DUTY
+          - EMAIL
+          - MS_TEAMS
+          - MS_TEAMS_WORKFLOW
+        description:
+          maxLength: 200
+          minLength: 0
+          type: string
+        emailAddresses:
+          type: array
+          items:
+            type: string
         id:
+          type: string
+        integrationKey:
+          type: string
+        name:
+          type: string
+    NotificationTagPayload:
+      type: object
+      properties:
+        name:
+          type: string
+        notificationTag:
           type: string
           enum:
           - CLUSTER_NAME
@@ -1287,70 +1351,6 @@ components:
           - ENVIRONMENT_TEARDOWN_NOTIFY_BEFORE
           - AUDIT_ENTITY
           - AUDIT_ACTION
-        label:
-          type: string
-        tooltip:
-          type: string
-    GithubAppPermissionsPendingErrorDetails:
-      type: object
-      properties:
-        approvalUrl:
-          type: string
-        code:
-          type: string
-        errorCode:
-          type: string
-        message:
-          type: string
-        missingPermissions:
-          type: array
-          items:
-            type: string
-    NotificationTypeResponse:
-      type: object
-      properties:
-        key:
-          type: string
-        notificationName:
-          type: string
-        notificationType:
-          type: string
-          enum:
-          - DEPLOYMENT_STATUS_UPDATE
-          - APP_DEPLOYMENT
-          - QASUITE_SANITY
-          - DR_RESULT
-          - STACK_SIGNOFF
-          - ALERT
-          - TEST
-          - APPLICATION_DEPLOYMENT_COMPLETE
-          - ENVIRONMENT_CREATE
-          - ENVIRONMENT_DELETE
-          - ENVIRONMENT_LAUNCH
-          - ENVIRONMENT_DESTROY
-          - SHORT_LIVED_ENVIRONMENT_TEARDOWN
-          - ENVIRONMENT_CONFIGURE
-          - AUDIT_LOG
-        supportedTags:
-          type: array
-          items:
-            type: string
-            enum:
-            - CLUSTER_NAME
-            - CLUSTER_TYPE
-            - QASUITE_RESULT
-            - DR_ACTION
-            - DR_STATUS
-            - STACK_NAME
-            - SEVERITY
-            - ALERT_NAME
-            - DEPLOYMENT_STATUS
-            - APPLICATION_NAME
-            - SEND_RESOLVED
-            - RELEASE_TYPE
-            - ENVIRONMENT_TEARDOWN_NOTIFY_BEFORE
-            - AUDIT_ENTITY
-            - AUDIT_ACTION
   securitySchemes:
     basicAuth:
       description: Basic Authentication

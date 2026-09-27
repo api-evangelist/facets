@@ -472,6 +472,72 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    MigrationScriptMetadata:
+      type: object
+      properties:
+        clouds:
+          type: array
+          items:
+            type: string
+        description:
+          type: string
+        downtime:
+          type: boolean
+        sequenceNumber:
+          type: integer
+          format: int32
+    TfVersion:
+      required:
+      - majorVersion
+      - minorVersion
+      - tfStream
+      type: object
+      properties:
+        lastModified:
+          type: string
+          format: date-time
+        majorVersion:
+          type: integer
+          format: int32
+        minorVersion:
+          type: string
+          description: LATEST
+          example: LATEST
+        tfStream:
+          type: string
+    PendingMigrationDetails:
+      type: object
+      properties:
+        blockReleases:
+          type: boolean
+        migrationStatusAvailable:
+          type: boolean
+        pendingMigrations:
+          type: array
+          items:
+            $ref: '#/components/schemas/MigrationScriptMetadata'
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
     ClusterTfVersionMapping:
       required:
       - clusterId
@@ -494,72 +560,6 @@ components:
           format: date-time
         version:
           $ref: '#/components/schemas/TfVersion'
-    PendingMigrationDetails:
-      type: object
-      properties:
-        blockReleases:
-          type: boolean
-        migrationStatusAvailable:
-          type: boolean
-        pendingMigrations:
-          type: array
-          items:
-            $ref: '#/components/schemas/MigrationScriptMetadata'
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-    GithubAppPermissionsPendingErrorDetails:
-      type: object
-      properties:
-        approvalUrl:
-          type: string
-        code:
-          type: string
-        errorCode:
-          type: string
-        message:
-          type: string
-        missingPermissions:
-          type: array
-          items:
-            type: string
-    TfVersion:
-      required:
-      - majorVersion
-      - minorVersion
-      - tfStream
-      type: object
-      properties:
-        lastModified:
-          type: string
-          format: date-time
-        majorVersion:
-          type: integer
-          format: int32
-        minorVersion:
-          type: string
-          description: LATEST
-          example: LATEST
-        tfStream:
-          type: string
-    MigrationScriptMetadata:
-      type: object
-      properties:
-        clouds:
-          type: array
-          items:
-            type: string
-        description:
-          type: string
-        downtime:
-          type: boolean
-        sequenceNumber:
-          type: integer
-          format: int32
   securitySchemes:
     basicAuth:
       description: Basic Authentication

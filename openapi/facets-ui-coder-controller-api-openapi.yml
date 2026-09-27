@@ -477,20 +477,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    CoderLaunchEligibilityResponse:
-      type: object
-      properties:
-        coderAccountPresent:
-          type: boolean
-        userVCSTokenPresent:
-          type: boolean
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
     GithubAppPermissionsPendingErrorDetails:
       type: object
       properties:
@@ -516,6 +502,29 @@ components:
           type: string
         workspaceName:
           type: string
+    CoderWorkspaceResponse:
+      type: object
+      properties:
+        name:
+          type: string
+        url:
+          type: string
+        workspaceId:
+          type: string
+    CoderLaunchEligibilityResponse:
+      type: object
+      properties:
+        coderAccountPresent:
+          type: boolean
+        userVCSTokenPresent:
+          type: boolean
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
     CreateWorkspaceNewBranchRequest:
       required:
       - newBranch
@@ -528,15 +537,6 @@ components:
         sourceBranch:
           type: string
         workspaceName:
-          type: string
-    CoderWorkspaceResponse:
-      type: object
-      properties:
-        name:
-          type: string
-        url:
-          type: string
-        workspaceId:
           type: string
   securitySchemes:
     basicAuth:

@@ -312,13 +312,6 @@ paths:
       - Label Management
 components:
   schemas:
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
     GithubAppPermissionsPendingErrorDetails:
       type: object
       properties:
@@ -334,27 +327,13 @@ components:
           type: array
           items:
             type: string
-    LabelRequest:
-      required:
-      - name
+    ErrorDetails:
       type: object
       properties:
-        colorCode:
+        code:
           type: string
-          description: Color code for the label in hex format
-          example: '#FF5733'
-        name:
+        message:
           type: string
-          description: Label name
-          example: stable
-        scope:
-          type: string
-          description: What the label tags. Set on create and fixed thereafter. Defaults to RELEASE when omitted.
-          example: ACCOUNT
-          enum:
-          - ACCOUNT
-          - RELEASE
-      description: Label request with label name and optional color code
     Label:
       type: object
       properties:
@@ -379,6 +358,27 @@ components:
           enum:
           - ACCOUNT
           - RELEASE
+    LabelRequest:
+      required:
+      - name
+      type: object
+      properties:
+        colorCode:
+          type: string
+          description: Color code for the label in hex format
+          example: '#FF5733'
+        name:
+          type: string
+          description: Label name
+          example: stable
+        scope:
+          type: string
+          description: What the label tags. Set on create and fixed thereafter. Defaults to RELEASE when omitted.
+          example: ACCOUNT
+          enum:
+          - ACCOUNT
+          - RELEASE
+      description: Label request with label name and optional color code
   securitySchemes:
     basicAuth:
       description: Basic Authentication

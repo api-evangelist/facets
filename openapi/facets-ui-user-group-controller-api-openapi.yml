@@ -404,6 +404,36 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    ExpandedUserGroup:
+      type: object
+      properties:
+        accessibleAccounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdName'
+        accessibleEnvironments:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnvInfo'
+        accessibleProjects:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        associatedResourceGroups:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdName'
+        baseRole:
+          $ref: '#/components/schemas/RoleInfo'
+        envSpecificRoles:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnvSpecificAccess'
+        groupId:
+          type: string
+        groupName:
+          type: string
     UserGroup:
       type: object
       properties:
@@ -449,33 +479,6 @@ components:
             type: string
         versioningKey:
           type: string
-    EnvSpecificAccess:
-      type: object
-      properties:
-        clusterId:
-          type: string
-        envName:
-          type: string
-        project:
-          type: string
-        roleInfo:
-          $ref: '#/components/schemas/RoleInfo'
-    EnvInfo:
-      type: object
-      properties:
-        clusterId:
-          type: string
-        envName:
-          type: string
-        project:
-          type: string
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
     GithubAppPermissionsPendingErrorDetails:
       type: object
       properties:
@@ -498,35 +501,14 @@ components:
           type: string
         roleName:
           type: string
-    ExpandedUserGroup:
+    EnvInfo:
       type: object
       properties:
-        accessibleAccounts:
-          type: array
-          items:
-            $ref: '#/components/schemas/IdName'
-        accessibleEnvironments:
-          type: array
-          items:
-            $ref: '#/components/schemas/EnvInfo'
-        accessibleProjects:
-          uniqueItems: true
-          type: array
-          items:
-            type: string
-        associatedResourceGroups:
-          type: array
-          items:
-            $ref: '#/components/schemas/IdName'
-        baseRole:
-          $ref: '#/components/schemas/RoleInfo'
-        envSpecificRoles:
-          type: array
-          items:
-            $ref: '#/components/schemas/EnvSpecificAccess'
-        groupId:
+        clusterId:
           type: string
-        groupName:
+        envName:
+          type: string
+        project:
           type: string
     IdName:
       type: object
@@ -535,6 +517,24 @@ components:
           type: string
         name:
           type: string
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    EnvSpecificAccess:
+      type: object
+      properties:
+        clusterId:
+          type: string
+        envName:
+          type: string
+        project:
+          type: string
+        roleInfo:
+          $ref: '#/components/schemas/RoleInfo'
   securitySchemes:
     basicAuth:
       description: Basic Authentication

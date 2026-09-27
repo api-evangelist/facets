@@ -520,6 +520,14 @@ components:
           type: string
         message:
           type: string
+    WorkflowHierarchy:
+      type: object
+      properties:
+        registrationValue:
+          type: string
+        sequence:
+          type: integer
+          format: int32
     PromotionWorkflow:
       required:
       - registrationType
@@ -554,14 +562,6 @@ components:
           type: string
         workflowName:
           type: string
-    WorkflowHierarchy:
-      type: object
-      properties:
-        registrationValue:
-          type: string
-        sequence:
-          type: integer
-          format: int32
   securitySchemes:
     basicAuth:
       description: Basic Authentication

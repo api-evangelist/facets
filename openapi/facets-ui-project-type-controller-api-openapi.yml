@@ -334,6 +334,28 @@ paths:
       - ui-project-type-controller
 components:
   schemas:
+    ProjectTypeFilter:
+      type: object
+      properties:
+        legacy:
+          type: boolean
+        name:
+          type: string
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
     ProjectTypeMappedResource:
       required:
       - flavor
@@ -348,13 +370,38 @@ components:
         intentType:
           type: string
       description: Allowed modules for the project
-    ProjectTypeFilter:
+    ErrorDetails:
       type: object
       properties:
-        legacy:
-          type: boolean
-        name:
+        code:
           type: string
+        message:
+          type: string
+    TemplateGitDetails:
+      required:
+      - accountId
+      - gitRef
+      - gitUrl
+      - path
+      type: object
+      properties:
+        accountId:
+          type: string
+          description: Account ID associated with the Git repository
+          example: acct123
+        gitRef:
+          type: string
+          description: Git reference (branch or tag)
+          example: main
+        gitUrl:
+          type: string
+          description: Git repository URL
+          example: https://github.com/example/repo.git
+        path:
+          type: string
+          description: Path within the Git repository
+          example: /templates/project
+      description: Git details for the template used in Project Type
     ProjectTypeRequest:
       required:
       - iacTool
@@ -429,28 +476,6 @@ components:
           description: Whether to use CRD-driven releases
           example: false
       description: Request model for Project Type operations.
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-    GithubAppPermissionsPendingErrorDetails:
-      type: object
-      properties:
-        approvalUrl:
-          type: string
-        code:
-          type: string
-        errorCode:
-          type: string
-        message:
-          type: string
-        missingPermissions:
-          type: array
-          items:
-            type: string
     ProjectTypeResponse:
       type: object
       properties:
@@ -515,31 +540,6 @@ components:
           $ref: '#/components/schemas/TemplateGitDetails'
         useCrdDrivenReleases:
           type: boolean
-    TemplateGitDetails:
-      required:
-      - accountId
-      - gitRef
-      - gitUrl
-      - path
-      type: object
-      properties:
-        accountId:
-          type: string
-          description: Account ID associated with the Git repository
-          example: acct123
-        gitRef:
-          type: string
-          description: Git reference (branch or tag)
-          example: main
-        gitUrl:
-          type: string
-          description: Git repository URL
-          example: https://github.com/example/repo.git
-        path:
-          type: string
-          description: Path within the Git repository
-          example: /templates/project
-      description: Git details for the template used in Project Type
   securitySchemes:
     basicAuth:
       description: Basic Authentication

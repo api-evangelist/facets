@@ -373,13 +373,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
     GithubAppPermissionsPendingErrorDetails:
       type: object
       properties:
@@ -395,28 +388,13 @@ components:
           type: array
           items:
             type: string
-    WebComponentScopeDetails:
+    ErrorDetails:
       type: object
       properties:
-        blueprintName:
+        code:
           type: string
-          description: Project (blueprint) name. Null means every project. Required to be present as a deliberate choice in the UI, not left blank.
-          example: testing-himanshu-bp
-        environmentId:
+        message:
           type: string
-          description: Environment (cluster) id — the match key. Null means every environment of blueprintName. Requires blueprintName to be set.
-          example: 65f0a1c2e4b09a3d5c7f1234
-        environmentName:
-          type: string
-          description: Environment name, stored for display only and never matched on. May be stale after a rename.
-          example: prod
-        resourceName:
-          type: string
-          description: Reserved for resource scope, which is not yet supported.
-        resourceType:
-          type: string
-          description: Reserved for resource scope, which is not yet supported.
-      description: Which blueprint / environment a scoped web component applies to
     WebComponentDTO:
       required:
       - enabled
@@ -526,6 +504,28 @@ components:
           - RESOURCE
           - TAB_APP
       description: Model representing a Web Component for embedding custom applications
+    WebComponentScopeDetails:
+      type: object
+      properties:
+        blueprintName:
+          type: string
+          description: Project (blueprint) name. Null means every project. Required to be present as a deliberate choice in the UI, not left blank.
+          example: testing-himanshu-bp
+        environmentId:
+          type: string
+          description: Environment (cluster) id — the match key. Null means every environment of blueprintName. Requires blueprintName to be set.
+          example: 65f0a1c2e4b09a3d5c7f1234
+        environmentName:
+          type: string
+          description: Environment name, stored for display only and never matched on. May be stale after a rename.
+          example: prod
+        resourceName:
+          type: string
+          description: Reserved for resource scope, which is not yet supported.
+        resourceType:
+          type: string
+          description: Reserved for resource scope, which is not yet supported.
+      description: Which blueprint / environment a scoped web component applies to
   securitySchemes:
     basicAuth:
       description: Basic Authentication

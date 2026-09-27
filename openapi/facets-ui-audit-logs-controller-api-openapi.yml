@@ -394,15 +394,6 @@ paths:
       - ui-audit-logs-controller
 components:
   schemas:
-    AuditEntityActionOption:
-      type: object
-      properties:
-        entity:
-          type: string
-        label:
-          type: string
-        value:
-          type: string
     PageFacetsAuditLogResponse:
       type: object
       properties:
@@ -435,6 +426,31 @@ components:
         totalPages:
           type: integer
           format: int32
+    PageableObject:
+      type: object
+      properties:
+        offset:
+          type: integer
+          format: int64
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        paged:
+          type: boolean
+        sort:
+          $ref: '#/components/schemas/SortObject'
+        unpaged:
+          type: boolean
+    AuditEnumOption:
+      type: object
+      properties:
+        label:
+          type: string
+        value:
+          type: string
     FacetsAuditLogResponse:
       type: object
       properties:
@@ -607,20 +623,6 @@ components:
           type: string
         target:
           type: string
-    AuditEnumOption:
-      type: object
-      properties:
-        label:
-          type: string
-        value:
-          type: string
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
     GithubAppPermissionsPendingErrorDetails:
       type: object
       properties:
@@ -636,24 +638,6 @@ components:
           type: array
           items:
             type: string
-    PageableObject:
-      type: object
-      properties:
-        offset:
-          type: integer
-          format: int64
-        pageNumber:
-          type: integer
-          format: int32
-        pageSize:
-          type: integer
-          format: int32
-        paged:
-          type: boolean
-        sort:
-          $ref: '#/components/schemas/SortObject'
-        unpaged:
-          type: boolean
     SortObject:
       type: object
       properties:
@@ -663,6 +647,22 @@ components:
           type: boolean
         unsorted:
           type: boolean
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    AuditEntityActionOption:
+      type: object
+      properties:
+        entity:
+          type: string
+        label:
+          type: string
+        value:
+          type: string
   securitySchemes:
     basicAuth:
       description: Basic Authentication
