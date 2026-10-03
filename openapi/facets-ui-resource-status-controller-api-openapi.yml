@@ -260,65 +260,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    ResourceStatusResponse:
-      type: object
-      properties:
-        clusterId:
-          type: string
-        environmentName:
-          type: string
-        projectName:
-          type: string
-        resourceStatuses:
-          type: array
-          items:
-            $ref: '#/components/schemas/ResourceStatus'
-    ReleasePreviewResponse:
-      type: object
-      properties:
-        changedResources:
-          type: array
-          items:
-            $ref: '#/components/schemas/ResourceStatus'
-        clusterId:
-          type: string
-        environmentName:
-          type: string
-        projectName:
-          type: string
-    GithubAppPermissionsPendingErrorDetails:
-      type: object
-      properties:
-        approvalUrl:
-          type: string
-        code:
-          type: string
-        errorCode:
-          type: string
-        message:
-          type: string
-        missingPermissions:
-          type: array
-          items:
-            type: string
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-    ResourceSyncRequest:
-      type: object
-      properties:
-        environmentName:
-          type: string
-        projectName:
-          type: string
-        resources:
-          type: array
-          items:
-            $ref: '#/components/schemas/FacetsResource'
     ResourceStatus:
       type: object
       properties:
@@ -396,6 +337,65 @@ components:
         resourceName:
           type: string
         resourceType:
+          type: string
+    ResourceSyncRequest:
+      type: object
+      properties:
+        environmentName:
+          type: string
+        projectName:
+          type: string
+        resources:
+          type: array
+          items:
+            $ref: '#/components/schemas/FacetsResource'
+    ResourceStatusResponse:
+      type: object
+      properties:
+        clusterId:
+          type: string
+        environmentName:
+          type: string
+        projectName:
+          type: string
+        resourceStatuses:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceStatus'
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    ReleasePreviewResponse:
+      type: object
+      properties:
+        changedResources:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceStatus'
+        clusterId:
+          type: string
+        environmentName:
+          type: string
+        projectName:
           type: string
   securitySchemes:
     basicAuth:

@@ -436,21 +436,11 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    GithubAppPermissionsPendingErrorDetails:
+    TestRuleResponse:
       type: object
       properties:
-        approvalUrl:
+        routeTo:
           type: string
-        code:
-          type: string
-        errorCode:
-          type: string
-        message:
-          type: string
-        missingPermissions:
-          type: array
-          items:
-            type: string
     ArtifactRoutingRuleResponse:
       type: object
       properties:
@@ -477,18 +467,6 @@ components:
           type: string
         stackName:
           type: string
-    TestRuleResponse:
-      type: object
-      properties:
-        routeTo:
-          type: string
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
     Criterion:
       required:
       - metadataKey
@@ -512,6 +490,28 @@ components:
         routeTo:
           type: string
         value:
+          type: string
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
           type: string
     ArtifactRoutingRuleRequest:
       required:

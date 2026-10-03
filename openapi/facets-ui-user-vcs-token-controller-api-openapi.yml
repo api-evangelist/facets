@@ -265,13 +265,6 @@ components:
           type: array
           items:
             type: string
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
     UserVCSTokenResponse:
       type: object
       properties:
@@ -282,6 +275,13 @@ components:
         userId:
           type: string
         userName:
+          type: string
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
           type: string
   securitySchemes:
     basicAuth:

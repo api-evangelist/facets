@@ -720,26 +720,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    GrantedAuthority:
-      type: object
-      properties:
-        authority:
-          type: string
-    GithubAppPermissionsPendingErrorDetails:
-      type: object
-      properties:
-        approvalUrl:
-          type: string
-        code:
-          type: string
-        errorCode:
-          type: string
-        message:
-          type: string
-        missingPermissions:
-          type: array
-          items:
-            type: string
     User:
       type: object
       properties:
@@ -780,41 +760,12 @@ components:
             type: string
         userName:
           type: string
-    StackResource:
+    FacetsResource:
       type: object
       properties:
-        resources:
-          uniqueItems: true
-          type: array
-          items:
-            $ref: '#/components/schemas/FacetsResource'
-        stackName:
+        resourceName:
           type: string
-    ClusterResourceBinding:
-      type: object
-      properties:
-        clusterId:
-          type: string
-        resources:
-          uniqueItems: true
-          type: array
-          items:
-            $ref: '#/components/schemas/FacetsResource'
-        stackName:
-          type: string
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-    PasswordChange:
-      type: object
-      properties:
-        newPassword:
-          type: string
-        oldPassword:
+        resourceType:
           type: string
     SimpleOauth2User:
       type: object
@@ -866,12 +817,61 @@ components:
             $ref: '#/components/schemas/StackResource'
         userId:
           type: string
-    FacetsResource:
+    GrantedAuthority:
       type: object
       properties:
-        resourceName:
+        authority:
           type: string
-        resourceType:
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    PasswordChange:
+      type: object
+      properties:
+        newPassword:
+          type: string
+        oldPassword:
+          type: string
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    ClusterResourceBinding:
+      type: object
+      properties:
+        clusterId:
+          type: string
+        resources:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/FacetsResource'
+        stackName:
+          type: string
+    StackResource:
+      type: object
+      properties:
+        resources:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/FacetsResource'
+        stackName:
           type: string
   securitySchemes:
     basicAuth:

@@ -304,13 +304,6 @@ components:
           type: array
           items:
             type: string
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
     DomainDTO:
       required:
       - alias
@@ -326,6 +319,13 @@ components:
           minLength: 0
           type: string
         domain:
+          type: string
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
           type: string
   securitySchemes:
     basicAuth:

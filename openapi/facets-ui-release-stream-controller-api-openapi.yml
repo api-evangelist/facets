@@ -184,22 +184,13 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    ReleaseStreamResponse:
+    ReleaseStreamRequest:
+      required:
+      - name
       type: object
       properties:
-        builtIn:
-          type: boolean
-        createdBy:
-          type: string
-        creationDate:
-          type: string
-          format: date-time
         description:
           type: string
-        mappedClusterNames:
-          type: array
-          items:
-            type: string
         name:
           type: string
         prod:
@@ -219,6 +210,13 @@ components:
           type: array
           items:
             type: string
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
     ReleaseStream:
       type: object
       properties:
@@ -236,20 +234,22 @@ components:
         version:
           type: integer
           format: int64
-    ErrorDetails:
+    ReleaseStreamResponse:
       type: object
       properties:
-        code:
+        builtIn:
+          type: boolean
+        createdBy:
           type: string
-        message:
+        creationDate:
           type: string
-    ReleaseStreamRequest:
-      required:
-      - name
-      type: object
-      properties:
+          format: date-time
         description:
           type: string
+        mappedClusterNames:
+          type: array
+          items:
+            type: string
         name:
           type: string
         prod:

@@ -132,39 +132,12 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    GithubAppPermissionsPendingErrorDetails:
+    FacetsResource:
       type: object
       properties:
-        approvalUrl:
+        resourceName:
           type: string
-        code:
-          type: string
-        errorCode:
-          type: string
-        message:
-          type: string
-        missingPermissions:
-          type: array
-          items:
-            type: string
-    TfVersion:
-      required:
-      - majorVersion
-      - minorVersion
-      - tfStream
-      type: object
-      properties:
-        lastModified:
-          type: string
-          format: date-time
-        majorVersion:
-          type: integer
-          format: int32
-        minorVersion:
-          type: string
-          description: LATEST
-          example: LATEST
-        tfStream:
+        resourceType:
           type: string
     QueuedRelease:
       type: object
@@ -230,6 +203,21 @@ components:
           type: string
         withRefresh:
           type: boolean
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
     ErrorDetails:
       type: object
       properties:
@@ -237,12 +225,24 @@ components:
           type: string
         message:
           type: string
-    FacetsResource:
+    TfVersion:
+      required:
+      - majorVersion
+      - minorVersion
+      - tfStream
       type: object
       properties:
-        resourceName:
+        lastModified:
           type: string
-        resourceType:
+          format: date-time
+        majorVersion:
+          type: integer
+          format: int32
+        minorVersion:
+          type: string
+          description: LATEST
+          example: LATEST
+        tfStream:
           type: string
   securitySchemes:
     basicAuth:

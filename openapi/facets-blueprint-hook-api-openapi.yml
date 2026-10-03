@@ -247,6 +247,31 @@ components:
           type: array
           items:
             type: string
+    HookRequest:
+      required:
+      - language
+      - script
+      type: object
+      properties:
+        branch:
+          type: string
+          description: Optional branch name. If not provided, uses the stack's default branch.
+          example: feature/my-branch
+        commitMessage:
+          type: string
+          description: Optional custom commit message. If not provided, auto-generated.
+          example: Added redis cache resource
+        language:
+          type: string
+          description: Script language; determines the file extension. Required.
+          example: PYTHON
+          enum:
+          - PYTHON
+          - SHELL
+        script:
+          type: string
+          description: Full hook script body, written verbatim to the blueprint repo
+      description: Install or replace a blueprint hook script
     HookResponse:
       type: object
       properties:
@@ -278,31 +303,6 @@ components:
           type: string
         message:
           type: string
-    HookRequest:
-      required:
-      - language
-      - script
-      type: object
-      properties:
-        branch:
-          type: string
-          description: Optional branch name. If not provided, uses the stack's default branch.
-          example: feature/my-branch
-        commitMessage:
-          type: string
-          description: Optional custom commit message. If not provided, auto-generated.
-          example: Added redis cache resource
-        language:
-          type: string
-          description: Script language; determines the file extension. Required.
-          example: PYTHON
-          enum:
-          - PYTHON
-          - SHELL
-        script:
-          type: string
-          description: Full hook script body, written verbatim to the blueprint repo
-      description: Install or replace a blueprint hook script
   securitySchemes:
     basicAuth:
       description: Basic Authentication

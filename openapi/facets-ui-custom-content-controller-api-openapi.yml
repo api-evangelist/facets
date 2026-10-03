@@ -356,12 +356,20 @@ components:
           type: array
           items:
             type: string
-    ErrorDetails:
+    Selectors:
       type: object
       properties:
-        code:
+        displayType:
           type: string
-        message:
+          enum:
+          - INLINE
+          - TAB
+          - PAGE
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+        subType:
           type: string
     ContentFile:
       type: object
@@ -395,20 +403,12 @@ components:
           enum:
           - CI
           - DOCUMENTATION
-    Selectors:
+    ErrorDetails:
       type: object
       properties:
-        displayType:
+        code:
           type: string
-          enum:
-          - INLINE
-          - TAB
-          - PAGE
-        resourceName:
-          type: string
-        resourceType:
-          type: string
-        subType:
+        message:
           type: string
   securitySchemes:
     basicAuth:

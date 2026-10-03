@@ -391,11 +391,6 @@ components:
           type: array
           items:
             type: string
-    ClientAuthenticationMethod:
-      type: object
-      properties:
-        value:
-          type: string
     GenericOAuth2ClientRegistration:
       required:
       - authorizationUri
@@ -451,13 +446,6 @@ components:
           type: string
         userInfoUri:
           type: string
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
     CustomOAuth2ClientRegistration:
       required:
       - clientId
@@ -499,6 +487,18 @@ components:
           type: string
         systemConfigured:
           type: boolean
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    ClientAuthenticationMethod:
+      type: object
+      properties:
+        value:
+          type: string
   securitySchemes:
     basicAuth:
       description: Basic Authentication

@@ -187,10 +187,10 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    ResetPasswordRequest:
+    TokenValidationRequest:
       type: object
       properties:
-        email:
+        token:
           type: string
     TokenValidity:
       type: object
@@ -220,6 +220,18 @@ components:
           type: array
           items:
             type: string
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    ResetPasswordRequest:
+      type: object
+      properties:
+        email:
+          type: string
     SavePasswordResetPasswordRequest:
       type: object
       properties:
@@ -230,18 +242,6 @@ components:
         token:
           type: string
     Response:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-    TokenValidationRequest:
-      type: object
-      properties:
-        token:
-          type: string
-    ErrorDetails:
       type: object
       properties:
         code:

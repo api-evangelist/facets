@@ -178,71 +178,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    TFProvider:
-      type: object
-      properties:
-        attributes:
-          type: object
-          additionalProperties:
-            type: object
-        name:
-          type: string
-        source:
-          type: string
-        version:
-          type: string
-    GithubAppPermissionsPendingErrorDetails:
-      type: object
-      properties:
-        approvalUrl:
-          type: string
-        code:
-          type: string
-        errorCode:
-          type: string
-        message:
-          type: string
-        missingPermissions:
-          type: array
-          items:
-            type: string
-    IntentRequestDTO:
-      required:
-      - displayName
-      - name
-      - type
-      type: object
-      properties:
-        description:
-          type: string
-        displayName:
-          type: string
-        iconUrl:
-          type: string
-        intentOutputs:
-          type: array
-          items:
-            $ref: '#/components/schemas/IntentOutput'
-        name:
-          type: string
-        type:
-          type: string
-    IntentOutput:
-      type: object
-      properties:
-        description:
-          type: string
-        name:
-          type: string
-        providers:
-          uniqueItems: true
-          type: array
-          items:
-            $ref: '#/components/schemas/TFProvider'
-        title:
-          type: string
-        type:
-          type: string
     IntentResponseDTO:
       type: object
       properties:
@@ -265,12 +200,77 @@ components:
           - CUSTOM
         type:
           type: string
+    IntentRequestDTO:
+      required:
+      - displayName
+      - name
+      - type
+      type: object
+      properties:
+        description:
+          type: string
+        displayName:
+          type: string
+        iconUrl:
+          type: string
+        intentOutputs:
+          type: array
+          items:
+            $ref: '#/components/schemas/IntentOutput'
+        name:
+          type: string
+        type:
+          type: string
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
     ErrorDetails:
       type: object
       properties:
         code:
           type: string
         message:
+          type: string
+    IntentOutput:
+      type: object
+      properties:
+        description:
+          type: string
+        name:
+          type: string
+        providers:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/TFProvider'
+        title:
+          type: string
+        type:
+          type: string
+    TFProvider:
+      type: object
+      properties:
+        attributes:
+          type: object
+          additionalProperties:
+            type: object
+        name:
+          type: string
+        source:
+          type: string
+        version:
           type: string
   securitySchemes:
     basicAuth:

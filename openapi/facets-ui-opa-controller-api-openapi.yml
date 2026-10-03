@@ -478,13 +478,17 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    EnableDisableOPAPolicy:
+    OpaPolicyExecutionResult:
       type: object
       properties:
-        disabled:
+        errorDetails:
+          type: object
+          additionalProperties:
+            type: object
+        serverResponse:
+          type: object
+        status:
           type: boolean
-        policyName:
-          type: string
     GithubAppPermissionsPendingErrorDetails:
       type: object
       properties:
@@ -500,17 +504,13 @@ components:
           type: array
           items:
             type: string
-    OpaPolicyExecutionResult:
+    ErrorDetails:
       type: object
       properties:
-        errorDetails:
-          type: object
-          additionalProperties:
-            type: object
-        serverResponse:
-          type: object
-        status:
-          type: boolean
+        code:
+          type: string
+        message:
+          type: string
     OpaPolicyRequest:
       type: object
       properties:
@@ -581,12 +581,12 @@ components:
           type: string
         templateName:
           type: string
-    ErrorDetails:
+    EnableDisableOPAPolicy:
       type: object
       properties:
-        code:
-          type: string
-        message:
+        disabled:
+          type: boolean
+        policyName:
           type: string
     OpaPolicy:
       type: object

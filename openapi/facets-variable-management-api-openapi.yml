@@ -269,6 +269,21 @@ paths:
       - Variable Management
 components:
   schemas:
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
     VariableRequest:
       required:
       - variableName
@@ -303,6 +318,13 @@ components:
           description: Name of the variable/secret
           example: database_password
       description: Variable request with project default and environment values
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
     EnvironmentVariableValue:
       type: object
       properties:
@@ -326,28 +348,6 @@ components:
           description: Value of the variable/secret
           example: actual_password
       description: Variable/secret value in a specific environment
-    GithubAppPermissionsPendingErrorDetails:
-      type: object
-      properties:
-        approvalUrl:
-          type: string
-        code:
-          type: string
-        errorCode:
-          type: string
-        message:
-          type: string
-        missingPermissions:
-          type: array
-          items:
-            type: string
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
     VariableEnvironmentResponse:
       type: object
       properties:

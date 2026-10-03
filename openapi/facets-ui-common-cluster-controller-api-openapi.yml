@@ -3707,470 +3707,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    SilenceAlarmRequest:
-      required:
-      - comment
-      - labels
-      - snoozeInMinutes
-      type: object
-      properties:
-        comment:
-          type: string
-        id:
-          type: string
-        labels:
-          type: object
-          additionalProperties:
-            type: string
-        snoozeInMinutes:
-          type: integer
-          format: int32
-    Change:
-      type: object
-      properties:
-        changeType:
-          type: string
-          enum:
-          - ADDED
-          - MODIFIED
-          - REMOVED
-        changedAttribute:
-          $ref: '#/components/schemas/ChangedAttribute'
-    Input:
-      type: object
-      properties:
-        addsCapability:
-          type: boolean
-        blockEdits:
-          type: boolean
-        defaultResource:
-          $ref: '#/components/schemas/InputOutputResource'
-        description:
-          type: string
-        displayName:
-          type: string
-        optional:
-          type: boolean
-        providers:
-          type: array
-          items:
-            type: string
-        type:
-          type: string
-      description: Input parameters for this module
-    ResourceDetails:
-      type: object
-      properties:
-        key:
-          type: string
-        name:
-          type: string
-        resourceName:
-          type: string
-        resourceType:
-          type: string
-        value:
-          type: string
-    StackTemplateInput:
-      required:
-      - clusterId
-      - data
-      - inputType
-      - uid
-      type: object
-      properties:
-        clusterId:
-          type: string
-        data:
-          type: object
-          additionalProperties:
-            type: string
-        inputType:
-          type: string
-        uid:
-          type: string
-    GithubAppPermissionsPendingErrorDetails:
-      type: object
-      properties:
-        approvalUrl:
-          type: string
-        code:
-          type: string
-        errorCode:
-          type: string
-        message:
-          type: string
-        missingPermissions:
-          type: array
-          items:
-            type: string
-    AvailabilityTaskSchedule:
-      required:
-      - releaseType
-      type: object
-      properties:
-        byDay:
-          type: array
-          items:
-            type: string
-            enum:
-            - MON
-            - TUE
-            - WED
-            - THU
-            - FRI
-            - SAT
-            - SUN
-        byTime:
-          type: string
-          format: time
-          example: '14:30'
-        cronExpr:
-          type: string
-        description:
-          type: string
-        frequency:
-          type: string
-          enum:
-          - PER_MINUTE
-          - HOURLY
-          - DAILY
-          - WEEKLY
-        interval:
-          type: integer
-          format: int32
-        releaseType:
-          type: string
-          enum:
-          - HOTFIX
-          - RELEASE
-          - LAUNCH
-          - DESTROY
-          - CUSTOM
-          - UNLOCK_STATE
-          - PLAN
-          - HOTFIX_PLAN
-          - APPLY_PLAN
-          - APPLY_HOTFIX_PLAN
-          - SCALE_UP
-          - SCALE_DOWN
-          - MAINTENANCE
-          - TERRAFORM_EXPORT
-          - ROLLBACK_PLAN
-          - APPLY_ROLLBACK_PLAN
-          - PLAN_AND_APPLY
-          - HOTFIX_PLAN_AND_APPLY
-          - IMPORT_RELEASE
-        timeZone:
-          type: string
-          example: Asia/Kolkata
-    PageResourceReleaseImpact:
-      type: object
-      properties:
-        content:
-          type: array
-          items:
-            $ref: '#/components/schemas/ResourceReleaseImpact'
-        empty:
-          type: boolean
-        first:
-          type: boolean
-        last:
-          type: boolean
-        number:
-          type: integer
-          format: int32
-        numberOfElements:
-          type: integer
-          format: int32
-        pageable:
-          $ref: '#/components/schemas/PageableObject'
-        size:
-          type: integer
-          format: int32
-        sort:
-          $ref: '#/components/schemas/SortObject'
-        totalElements:
-          type: integer
-          format: int64
-        totalPages:
-          type: integer
-          format: int32
-    BlueprintFileSummaryDto:
-      type: object
-      properties:
-        enabled:
-          type: integer
-          format: int64
-        grouped:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/GroupedCountDto'
-        total:
-          type: integer
-          format: int64
-    KubernetesCredential:
-      type: object
-      properties:
-        cacert:
-          type: string
-        endpoint:
-          type: string
-        token:
-          type: string
-    ProvidedResources:
-      type: object
-      properties:
-        clusterId:
-          type: string
-        id:
-          type: string
-        providedAuthenticatedResources:
-          uniqueItems: true
-          type: array
-          items:
-            $ref: '#/components/schemas/ProvidedAuthenticatedResource'
-        providedCloudResources:
-          uniqueItems: true
-          type: array
-          items:
-            $ref: '#/components/schemas/ProvidedCloudResource'
-        providedShardedResources:
-          uniqueItems: true
-          type: array
-          items:
-            $ref: '#/components/schemas/ProvidedShardedService'
-        providedUnauthenticatedResources:
-          uniqueItems: true
-          type: array
-          items:
-            $ref: '#/components/schemas/ProvidedUnauthenticatedResource'
-    ResourceInheritFromBaseRequest:
-      type: object
-      properties:
-        directory:
-          type: string
-        filename:
-          type: string
-        inheritFromBase:
-          type: boolean
-        resourceName:
-          type: string
-        resourceType:
-          type: string
-    ScheduleRequest:
-      type: object
-      properties:
-        byDay:
-          type: array
-          items:
-            type: string
-            enum:
-            - MON
-            - TUE
-            - WED
-            - THU
-            - FRI
-            - SAT
-            - SUN
-        byTime:
-          type: string
-          format: time
-          example: '14:30'
-        frequency:
-          type: string
-          enum:
-          - PER_MINUTE
-          - HOURLY
-          - DAILY
-          - WEEKLY
-        interval:
-          type: integer
-          format: int32
-        pauseReleaseSchedule:
-          type: boolean
-        releaseType:
-          type: string
-          enum:
-          - HOTFIX
-          - RELEASE
-          - LAUNCH
-          - DESTROY
-          - CUSTOM
-          - UNLOCK_STATE
-          - PLAN
-          - HOTFIX_PLAN
-          - APPLY_PLAN
-          - APPLY_HOTFIX_PLAN
-          - SCALE_UP
-          - SCALE_DOWN
-          - MAINTENANCE
-          - TERRAFORM_EXPORT
-          - ROLLBACK_PLAN
-          - APPLY_ROLLBACK_PLAN
-          - PLAN_AND_APPLY
-          - HOTFIX_PLAN_AND_APPLY
-          - IMPORT_RELEASE
-        shortLived:
-          type: boolean
-        tearDownAfter:
-          type: integer
-          format: int32
-        timeZone:
-          type: string
-          example: Asia/Kolkata
-    GroupedCountDto:
-      type: object
-      properties:
-        enabled:
-          type: integer
-          format: int64
-        total:
-          type: integer
-          format: int64
-    ProvidedShardedService:
-      type: object
-      properties:
-        shards:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProvidedAuthenticatedResource'
-    ResourceEnableDisableRequest:
-      type: object
-      properties:
-        directory:
-          type: string
-        disabled:
-          type: boolean
-        filename:
-          type: string
-        resourceName:
-          type: string
-        resourceType:
-          type: string
-    ClusterSchedule:
-      required:
-      - clusterId
-      - releaseType
-      type: object
-      properties:
-        byDay:
-          type: array
-          items:
-            type: string
-            enum:
-            - MON
-            - TUE
-            - WED
-            - THU
-            - FRI
-            - SAT
-            - SUN
-        byTime:
-          type: string
-          format: time
-          example: '14:30'
-        clusterId:
-          type: string
-        createdBy:
-          type: string
-        creationDate:
-          type: string
-          format: date-time
-        description:
-          type: string
-        frequency:
-          type: string
-          enum:
-          - PER_MINUTE
-          - HOURLY
-          - DAILY
-          - WEEKLY
-        id:
-          type: string
-        interval:
-          type: integer
-          format: int32
-        isPaused:
-          type: boolean
-        lastModifiedBy:
-          type: string
-        lastModifiedDate:
-          type: string
-          format: date-time
-        releaseType:
-          type: string
-          enum:
-          - HOTFIX
-          - RELEASE
-          - LAUNCH
-          - DESTROY
-          - CUSTOM
-          - UNLOCK_STATE
-          - PLAN
-          - HOTFIX_PLAN
-          - APPLY_PLAN
-          - APPLY_HOTFIX_PLAN
-          - SCALE_UP
-          - SCALE_DOWN
-          - MAINTENANCE
-          - TERRAFORM_EXPORT
-          - ROLLBACK_PLAN
-          - APPLY_ROLLBACK_PLAN
-          - PLAN_AND_APPLY
-          - HOTFIX_PLAN_AND_APPLY
-          - IMPORT_RELEASE
-        serverTimeZone:
-          type: string
-        timeZone:
-          type: string
-          example: Asia/Kolkata
-    CopyConfigurationsRequest:
-      type: object
-      properties:
-        configurationTypes:
-          uniqueItems: true
-          type: array
-          items:
-            type: string
-            enum:
-            - VARIABLES_SECRETS
-            - ARTIFACTS
-            - ENVIRONMENT_SETTINGS
-            - SCHEDULES
-            - AVAILABILITY_SCHEDULES
-            - OVERRIDES
-            - TEMPLATE_INPUTS
-        selectionMode:
-          type: string
-          enum:
-          - INCLUDE
-          - EXCLUDE
-        sourceClusterId:
-          type: string
-      description: Request containing source cluster ID, selection mode (INCLUDE/EXCLUDE), and set of configuration types
-    VariableCountDto:
-      type: object
-      properties:
-        overriddenSecrets:
-          type: integer
-          format: int32
-        overriddenVariables:
-          type: integer
-          format: int32
-        totalSecrets:
-          type: integer
-          format: int32
-        totalVariables:
-          type: integer
-          format: int32
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
     ShortLivedTaskSchedule:
       required:
       - frequency
@@ -4209,314 +3745,6 @@ components:
         tearDownAfter:
           type: integer
           format: int32
-    AddOnDTO:
-      type: object
-      properties:
-        added:
-          type: boolean
-        flavor:
-          type: string
-        inputs:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/Input'
-        intent:
-          type: string
-        resourceName:
-          type: string
-    DraftClusterRequest:
-      required:
-      - clusterName
-      type: object
-      properties:
-        autoSignOffSchedule:
-          type: string
-        baseClusterId:
-          type: string
-        cdPipelineParent:
-          type: string
-        cloud:
-          type: string
-          enum:
-          - AWS
-          - AZURE
-          - LOCAL
-          - GCP
-          - KUBERNETES
-          - NO_CLOUD
-        cloudAccountId:
-          type: string
-        clusterName:
-          maxLength: 40
-          minLength: 0
-          pattern: ^[a-z][a-z0-9-]*$
-          type: string
-        componentVersions:
-          type: object
-          additionalProperties:
-            type: string
-        description:
-          maxLength: 200
-          minLength: 0
-          type: string
-        enableAutoSignOff:
-          type: boolean
-        isEphemeral:
-          type: boolean
-        k8sRequestsToLimitsRatio:
-          type: number
-          format: double
-        namespace:
-          type: string
-        releaseStream:
-          type: string
-        requireSignOff:
-          type: boolean
-        stackName:
-          type: string
-        tz:
-          type: object
-          properties:
-            displayName:
-              type: string
-            dstsavings:
-              type: integer
-              format: int32
-            id:
-              type: string
-            rawOffset:
-              type: integer
-              format: int32
-    MatchedModuleDTO:
-      type: object
-      properties:
-        modules:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/ModuleDTO'
-        resources:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/MatchedResourceDTO'
-    ClusterLite:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        stackName:
-          type: string
-    PageableObject:
-      type: object
-      properties:
-        offset:
-          type: integer
-          format: int64
-        pageNumber:
-          type: integer
-          format: int32
-        pageSize:
-          type: integer
-          format: int32
-        paged:
-          type: boolean
-        sort:
-          $ref: '#/components/schemas/SortObject'
-        unpaged:
-          type: boolean
-    Variables:
-      type: object
-      properties:
-        description:
-          type: string
-        global:
-          type: boolean
-        secret:
-          type: boolean
-        status:
-          type: string
-          enum:
-          - DEFAULT
-          - OVERRIDDEN
-        value:
-          type: string
-    ModuleDTO:
-      type: object
-      properties:
-        facetsYaml:
-          type: object
-          additionalProperties:
-            type: object
-        tfModulePath:
-          $ref: '#/components/schemas/TFModulePath'
-    ToolsConfig:
-      type: object
-      properties:
-        clusterId:
-          type: string
-        id:
-          type: string
-        toolsKey:
-          type: string
-        toolsUser:
-          type: string
-    PauseReleaseRequest:
-      type: object
-      properties:
-        clusterId:
-          type: string
-        pauseReleases:
-          type: boolean
-    ProvidedCloudResource:
-      type: object
-      properties:
-        name:
-          type: string
-        region:
-          type: string
-        resourceName:
-          type: string
-        resourceType:
-          type: string
-    BranchUpdateRequest:
-      type: object
-      properties:
-        branch:
-          type: string
-    ClusterMetadata:
-      type: object
-      properties:
-        cloud:
-          type: string
-          enum:
-          - AWS
-          - AZURE
-          - LOCAL
-          - GCP
-          - KUBERNETES
-          - NO_CLOUD
-        clusterId:
-          type: string
-        clusterName:
-          type: string
-        clusterState:
-          type: string
-          enum:
-          - STOPPED
-          - RUNNING
-          - LAUNCHING
-          - DESTROYING
-          - LAUNCH_FAILED
-          - DESTROY_FAILED
-          - UNKNOWN
-          - SCALE_DOWN
-          - SCALING_DOWN
-          - SCALE_DOWN_FAILED
-          - SCALING_UP
-          - SCALE_UP_FAILED
-        id:
-          type: string
-        stackName:
-          type: string
-    OverrideObject:
-      type: object
-      properties:
-        changeLog:
-          type: string
-        commitId:
-          type: string
-        createdBy:
-          type: string
-        creationDate:
-          type: string
-          format: date-time
-        id:
-          type: string
-        lastModifiedBy:
-          type: string
-        lastModifiedDate:
-          type: string
-          format: date-time
-        overrides:
-          type: object
-          additionalProperties:
-            type: object
-        resourceName:
-          type: string
-        resourceType:
-          type: string
-        versioningKey:
-          type: string
-    InputOutputResource:
-      type: object
-      properties:
-        default:
-          type: boolean
-        outputName:
-          type: string
-        resourceName:
-          type: string
-        resourceType:
-          type: string
-    ReleaseDetails:
-      type: object
-      properties:
-        deploymentLogId:
-          type: string
-        releaseType:
-          type: string
-          enum:
-          - HOTFIX
-          - RELEASE
-          - LAUNCH
-          - DESTROY
-          - CUSTOM
-          - UNLOCK_STATE
-          - PLAN
-          - HOTFIX_PLAN
-          - APPLY_PLAN
-          - APPLY_HOTFIX_PLAN
-          - SCALE_UP
-          - SCALE_DOWN
-          - MAINTENANCE
-          - TERRAFORM_EXPORT
-          - ROLLBACK_PLAN
-          - APPLY_ROLLBACK_PLAN
-          - PLAN_AND_APPLY
-          - HOTFIX_PLAN_AND_APPLY
-          - IMPORT_RELEASE
-        stackVersion:
-          type: string
-        triggeredBy:
-          type: string
-        triggeredOn:
-          type: string
-          format: date-time
-    ChangedAttribute:
-      type: object
-      properties:
-        attribute:
-          type: string
-        newValue:
-          type: string
-        oldValue:
-          type: string
-    ProvidedAuthenticatedResource:
-      type: object
-      properties:
-        endpoint:
-          type: string
-        password:
-          type: string
-        port:
-          type: string
-        resourceName:
-          type: string
-        resourceType:
-          type: string
-        username:
-          type: string
     ImageOverrideRequest:
       required:
       - resourceName
@@ -4554,17 +3782,63 @@ components:
           type: string
         tag:
           type: string
-    ClusterResponse:
+    Input:
       type: object
       properties:
-        autoSignOffSchedule:
+        addsCapability:
+          type: boolean
+        blockEdits:
+          type: boolean
+        defaultResource:
+          $ref: '#/components/schemas/InputOutputResource'
+        description:
           type: string
-        baseCluster:
-          $ref: '#/components/schemas/ClusterLite'
-        branch:
+        displayName:
           type: string
-        cdPipelineParent:
+        optional:
+          type: boolean
+        providers:
+          type: array
+          items:
+            type: string
+        type:
           type: string
+      description: Input parameters for this module
+    PageResourceReleaseImpact:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceReleaseImpact'
+        empty:
+          type: boolean
+        first:
+          type: boolean
+        last:
+          type: boolean
+        number:
+          type: integer
+          format: int32
+        numberOfElements:
+          type: integer
+          format: int32
+        pageable:
+          $ref: '#/components/schemas/PageableObject'
+        size:
+          type: integer
+          format: int32
+        sort:
+          $ref: '#/components/schemas/SortObject'
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int32
+    ClusterMetadata:
+      type: object
+      properties:
         cloud:
           type: string
           enum:
@@ -4574,11 +3848,9 @@ components:
           - GCP
           - KUBERNETES
           - NO_CLOUD
-        cloudAccountId:
+        clusterId:
           type: string
-        cloudAccountName:
-          type: string
-        clusterCode:
+        clusterName:
           type: string
         clusterState:
           type: string
@@ -4595,116 +3867,10 @@ components:
           - SCALE_DOWN_FAILED
           - SCALING_UP
           - SCALE_UP_FAILED
-        configured:
-          type: boolean
-        createdBy:
-          type: string
-        creationDate:
-          type: string
-          format: date-time
-        dependentClusters:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClusterLite'
-        description:
-          type: string
-        dynamicLaunch:
-          type: boolean
-        enableAutoSignOff:
-          type: boolean
-        hasK8sCredentials:
-          type: boolean
         id:
           type: string
-        isEphemeral:
-          type: boolean
-        k8sRequestsToLimitsRatio:
-          type: number
-          format: double
-        lastModifiedBy:
-          type: string
-        lastModifiedDate:
-          type: string
-          format: date-time
-        name:
-          type: string
-        namespace:
-          type: string
-        pauseReleases:
-          type: boolean
-        releaseStream:
-          type: string
-        requireSignOff:
-          type: boolean
-        showKubedebugger:
-          type: boolean
         stackName:
           type: string
-        tz:
-          type: string
-    MatchedResourceDTO:
-      type: object
-      properties:
-        content:
-          type: string
-        matched:
-          type: boolean
-        moduleRef:
-          type: string
-    ProvidedUnauthenticatedResource:
-      type: object
-      properties:
-        endpoint:
-          type: string
-        port:
-          type: string
-        resourceName:
-          type: string
-        resourceType:
-          type: string
-    ResourceReleaseImpact:
-      type: object
-      properties:
-        changes:
-          type: array
-          items:
-            $ref: '#/components/schemas/Change'
-        clusterId:
-          type: string
-        id:
-          type: string
-        labelIds:
-          type: array
-          items:
-            type: string
-        releaseDetails:
-          $ref: '#/components/schemas/ReleaseDetails'
-        resourceName:
-          type: string
-        resourceType:
-          type: string
-    SortObject:
-      type: object
-      properties:
-        empty:
-          type: boolean
-        sorted:
-          type: boolean
-        unsorted:
-          type: boolean
-    TFModulePath:
-      type: object
-      properties:
-        etag:
-          type: string
-        path:
-          type: string
-        pathType:
-          type: string
-          enum:
-          - S3
-          - FACETS_S3
-      description: Path information related to TF Module
     AbstractCluster:
       required:
       - name
@@ -4820,21 +3986,14 @@ components:
             $ref: '#/components/schemas/Variables'
         versioningKey:
           type: string
-    ModuleInputDTO:
+    ClusterLite:
       type: object
       properties:
-        compatibleResources:
-          uniqueItems: true
-          type: array
-          items:
-            $ref: '#/components/schemas/InputOutputResource'
-        description:
+        id:
           type: string
-        displayName:
+        name:
           type: string
-        optional:
-          type: boolean
-        type:
+        stackName:
           type: string
     AvailabilitySchedule:
       required:
@@ -4863,6 +4022,847 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ShortLivedTaskSchedule'
+    AddOnDTO:
+      type: object
+      properties:
+        added:
+          type: boolean
+        flavor:
+          type: string
+        inputs:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Input'
+        intent:
+          type: string
+        resourceName:
+          type: string
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    AvailabilityTaskSchedule:
+      required:
+      - releaseType
+      type: object
+      properties:
+        byDay:
+          type: array
+          items:
+            type: string
+            enum:
+            - MON
+            - TUE
+            - WED
+            - THU
+            - FRI
+            - SAT
+            - SUN
+        byTime:
+          type: string
+          format: time
+          example: '14:30'
+        cronExpr:
+          type: string
+        description:
+          type: string
+        frequency:
+          type: string
+          enum:
+          - PER_MINUTE
+          - HOURLY
+          - DAILY
+          - WEEKLY
+        interval:
+          type: integer
+          format: int32
+        releaseType:
+          type: string
+          enum:
+          - HOTFIX
+          - RELEASE
+          - LAUNCH
+          - DESTROY
+          - CUSTOM
+          - UNLOCK_STATE
+          - PLAN
+          - HOTFIX_PLAN
+          - APPLY_PLAN
+          - APPLY_HOTFIX_PLAN
+          - SCALE_UP
+          - SCALE_DOWN
+          - MAINTENANCE
+          - TERRAFORM_EXPORT
+          - ROLLBACK_PLAN
+          - APPLY_ROLLBACK_PLAN
+          - PLAN_AND_APPLY
+          - HOTFIX_PLAN_AND_APPLY
+          - IMPORT_RELEASE
+        timeZone:
+          type: string
+          example: Asia/Kolkata
+    InputOutputResource:
+      type: object
+      properties:
+        default:
+          type: boolean
+        outputName:
+          type: string
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+    Variables:
+      type: object
+      properties:
+        description:
+          type: string
+        global:
+          type: boolean
+        secret:
+          type: boolean
+        status:
+          type: string
+          enum:
+          - DEFAULT
+          - OVERRIDDEN
+        value:
+          type: string
+    TFModulePath:
+      type: object
+      properties:
+        etag:
+          type: string
+        path:
+          type: string
+        pathType:
+          type: string
+          enum:
+          - S3
+          - FACETS_S3
+      description: Path information related to TF Module
+    DraftClusterRequest:
+      required:
+      - clusterName
+      type: object
+      properties:
+        autoSignOffSchedule:
+          type: string
+        baseClusterId:
+          type: string
+        cdPipelineParent:
+          type: string
+        cloud:
+          type: string
+          enum:
+          - AWS
+          - AZURE
+          - LOCAL
+          - GCP
+          - KUBERNETES
+          - NO_CLOUD
+        cloudAccountId:
+          type: string
+        clusterName:
+          maxLength: 40
+          minLength: 0
+          pattern: ^[a-z][a-z0-9-]*$
+          type: string
+        componentVersions:
+          type: object
+          additionalProperties:
+            type: string
+        description:
+          maxLength: 200
+          minLength: 0
+          type: string
+        enableAutoSignOff:
+          type: boolean
+        isEphemeral:
+          type: boolean
+        k8sRequestsToLimitsRatio:
+          type: number
+          format: double
+        namespace:
+          type: string
+        releaseStream:
+          type: string
+        requireSignOff:
+          type: boolean
+        stackName:
+          type: string
+        tz:
+          type: object
+          properties:
+            displayName:
+              type: string
+            dstsavings:
+              type: integer
+              format: int32
+            id:
+              type: string
+            rawOffset:
+              type: integer
+              format: int32
+    ClusterSchedule:
+      required:
+      - clusterId
+      - releaseType
+      type: object
+      properties:
+        byDay:
+          type: array
+          items:
+            type: string
+            enum:
+            - MON
+            - TUE
+            - WED
+            - THU
+            - FRI
+            - SAT
+            - SUN
+        byTime:
+          type: string
+          format: time
+          example: '14:30'
+        clusterId:
+          type: string
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        description:
+          type: string
+        frequency:
+          type: string
+          enum:
+          - PER_MINUTE
+          - HOURLY
+          - DAILY
+          - WEEKLY
+        id:
+          type: string
+        interval:
+          type: integer
+          format: int32
+        isPaused:
+          type: boolean
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        releaseType:
+          type: string
+          enum:
+          - HOTFIX
+          - RELEASE
+          - LAUNCH
+          - DESTROY
+          - CUSTOM
+          - UNLOCK_STATE
+          - PLAN
+          - HOTFIX_PLAN
+          - APPLY_PLAN
+          - APPLY_HOTFIX_PLAN
+          - SCALE_UP
+          - SCALE_DOWN
+          - MAINTENANCE
+          - TERRAFORM_EXPORT
+          - ROLLBACK_PLAN
+          - APPLY_ROLLBACK_PLAN
+          - PLAN_AND_APPLY
+          - HOTFIX_PLAN_AND_APPLY
+          - IMPORT_RELEASE
+        serverTimeZone:
+          type: string
+        timeZone:
+          type: string
+          example: Asia/Kolkata
+    CopyConfigurationsRequest:
+      type: object
+      properties:
+        configurationTypes:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+            enum:
+            - VARIABLES_SECRETS
+            - ARTIFACTS
+            - ENVIRONMENT_SETTINGS
+            - SCHEDULES
+            - AVAILABILITY_SCHEDULES
+            - OVERRIDES
+            - TEMPLATE_INPUTS
+        selectionMode:
+          type: string
+          enum:
+          - INCLUDE
+          - EXCLUDE
+        sourceClusterId:
+          type: string
+      description: Request containing source cluster ID, selection mode (INCLUDE/EXCLUDE), and set of configuration types
+    ProvidedResources:
+      type: object
+      properties:
+        clusterId:
+          type: string
+        id:
+          type: string
+        providedAuthenticatedResources:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/ProvidedAuthenticatedResource'
+        providedCloudResources:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/ProvidedCloudResource'
+        providedShardedResources:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/ProvidedShardedService'
+        providedUnauthenticatedResources:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/ProvidedUnauthenticatedResource'
+    KubernetesCredential:
+      type: object
+      properties:
+        cacert:
+          type: string
+        endpoint:
+          type: string
+        token:
+          type: string
+    ResourceInheritFromBaseRequest:
+      type: object
+      properties:
+        directory:
+          type: string
+        filename:
+          type: string
+        inheritFromBase:
+          type: boolean
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+    GroupedCountDto:
+      type: object
+      properties:
+        enabled:
+          type: integer
+          format: int64
+        total:
+          type: integer
+          format: int64
+    VariableCountDto:
+      type: object
+      properties:
+        overriddenSecrets:
+          type: integer
+          format: int32
+        overriddenVariables:
+          type: integer
+          format: int32
+        totalSecrets:
+          type: integer
+          format: int32
+        totalVariables:
+          type: integer
+          format: int32
+    MatchedResourceDTO:
+      type: object
+      properties:
+        content:
+          type: string
+        matched:
+          type: boolean
+        moduleRef:
+          type: string
+    ChangedAttribute:
+      type: object
+      properties:
+        attribute:
+          type: string
+        newValue:
+          type: string
+        oldValue:
+          type: string
+    ClusterResponse:
+      type: object
+      properties:
+        autoSignOffSchedule:
+          type: string
+        baseCluster:
+          $ref: '#/components/schemas/ClusterLite'
+        branch:
+          type: string
+        cdPipelineParent:
+          type: string
+        cloud:
+          type: string
+          enum:
+          - AWS
+          - AZURE
+          - LOCAL
+          - GCP
+          - KUBERNETES
+          - NO_CLOUD
+        cloudAccountId:
+          type: string
+        cloudAccountName:
+          type: string
+        clusterCode:
+          type: string
+        clusterState:
+          type: string
+          enum:
+          - STOPPED
+          - RUNNING
+          - LAUNCHING
+          - DESTROYING
+          - LAUNCH_FAILED
+          - DESTROY_FAILED
+          - UNKNOWN
+          - SCALE_DOWN
+          - SCALING_DOWN
+          - SCALE_DOWN_FAILED
+          - SCALING_UP
+          - SCALE_UP_FAILED
+        configured:
+          type: boolean
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        dependentClusters:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClusterLite'
+        description:
+          type: string
+        dynamicLaunch:
+          type: boolean
+        enableAutoSignOff:
+          type: boolean
+        hasK8sCredentials:
+          type: boolean
+        id:
+          type: string
+        isEphemeral:
+          type: boolean
+        k8sRequestsToLimitsRatio:
+          type: number
+          format: double
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        name:
+          type: string
+        namespace:
+          type: string
+        pauseReleases:
+          type: boolean
+        releaseStream:
+          type: string
+        requireSignOff:
+          type: boolean
+        showKubedebugger:
+          type: boolean
+        stackName:
+          type: string
+        tz:
+          type: string
+    PageableObject:
+      type: object
+      properties:
+        offset:
+          type: integer
+          format: int64
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        paged:
+          type: boolean
+        sort:
+          $ref: '#/components/schemas/SortObject'
+        unpaged:
+          type: boolean
+    OverrideObject:
+      type: object
+      properties:
+        changeLog:
+          type: string
+        commitId:
+          type: string
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        id:
+          type: string
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        overrides:
+          type: object
+          additionalProperties:
+            type: object
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+        versioningKey:
+          type: string
+    ResourceDetails:
+      type: object
+      properties:
+        key:
+          type: string
+        name:
+          type: string
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+        value:
+          type: string
+    ProvidedUnauthenticatedResource:
+      type: object
+      properties:
+        endpoint:
+          type: string
+        port:
+          type: string
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+    BlueprintFileSummaryDto:
+      type: object
+      properties:
+        enabled:
+          type: integer
+          format: int64
+        grouped:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/GroupedCountDto'
+        total:
+          type: integer
+          format: int64
+    StackTemplateInput:
+      required:
+      - clusterId
+      - data
+      - inputType
+      - uid
+      type: object
+      properties:
+        clusterId:
+          type: string
+        data:
+          type: object
+          additionalProperties:
+            type: string
+        inputType:
+          type: string
+        uid:
+          type: string
+    SilenceAlarmRequest:
+      required:
+      - comment
+      - labels
+      - snoozeInMinutes
+      type: object
+      properties:
+        comment:
+          type: string
+        id:
+          type: string
+        labels:
+          type: object
+          additionalProperties:
+            type: string
+        snoozeInMinutes:
+          type: integer
+          format: int32
+    PauseReleaseRequest:
+      type: object
+      properties:
+        clusterId:
+          type: string
+        pauseReleases:
+          type: boolean
+    MatchedModuleDTO:
+      type: object
+      properties:
+        modules:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ModuleDTO'
+        resources:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/MatchedResourceDTO'
+    ProvidedShardedService:
+      type: object
+      properties:
+        shards:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProvidedAuthenticatedResource'
+    Change:
+      type: object
+      properties:
+        changeType:
+          type: string
+          enum:
+          - ADDED
+          - MODIFIED
+          - REMOVED
+        changedAttribute:
+          $ref: '#/components/schemas/ChangedAttribute'
+    ResourceEnableDisableRequest:
+      type: object
+      properties:
+        directory:
+          type: string
+        disabled:
+          type: boolean
+        filename:
+          type: string
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+    SortObject:
+      type: object
+      properties:
+        empty:
+          type: boolean
+        sorted:
+          type: boolean
+        unsorted:
+          type: boolean
+    ScheduleRequest:
+      type: object
+      properties:
+        byDay:
+          type: array
+          items:
+            type: string
+            enum:
+            - MON
+            - TUE
+            - WED
+            - THU
+            - FRI
+            - SAT
+            - SUN
+        byTime:
+          type: string
+          format: time
+          example: '14:30'
+        frequency:
+          type: string
+          enum:
+          - PER_MINUTE
+          - HOURLY
+          - DAILY
+          - WEEKLY
+        interval:
+          type: integer
+          format: int32
+        pauseReleaseSchedule:
+          type: boolean
+        releaseType:
+          type: string
+          enum:
+          - HOTFIX
+          - RELEASE
+          - LAUNCH
+          - DESTROY
+          - CUSTOM
+          - UNLOCK_STATE
+          - PLAN
+          - HOTFIX_PLAN
+          - APPLY_PLAN
+          - APPLY_HOTFIX_PLAN
+          - SCALE_UP
+          - SCALE_DOWN
+          - MAINTENANCE
+          - TERRAFORM_EXPORT
+          - ROLLBACK_PLAN
+          - APPLY_ROLLBACK_PLAN
+          - PLAN_AND_APPLY
+          - HOTFIX_PLAN_AND_APPLY
+          - IMPORT_RELEASE
+        shortLived:
+          type: boolean
+        tearDownAfter:
+          type: integer
+          format: int32
+        timeZone:
+          type: string
+          example: Asia/Kolkata
+    ToolsConfig:
+      type: object
+      properties:
+        clusterId:
+          type: string
+        id:
+          type: string
+        toolsKey:
+          type: string
+        toolsUser:
+          type: string
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    ProvidedAuthenticatedResource:
+      type: object
+      properties:
+        endpoint:
+          type: string
+        password:
+          type: string
+        port:
+          type: string
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+        username:
+          type: string
+    ModuleDTO:
+      type: object
+      properties:
+        facetsYaml:
+          type: object
+          additionalProperties:
+            type: object
+        tfModulePath:
+          $ref: '#/components/schemas/TFModulePath'
+    ReleaseDetails:
+      type: object
+      properties:
+        deploymentLogId:
+          type: string
+        releaseType:
+          type: string
+          enum:
+          - HOTFIX
+          - RELEASE
+          - LAUNCH
+          - DESTROY
+          - CUSTOM
+          - UNLOCK_STATE
+          - PLAN
+          - HOTFIX_PLAN
+          - APPLY_PLAN
+          - APPLY_HOTFIX_PLAN
+          - SCALE_UP
+          - SCALE_DOWN
+          - MAINTENANCE
+          - TERRAFORM_EXPORT
+          - ROLLBACK_PLAN
+          - APPLY_ROLLBACK_PLAN
+          - PLAN_AND_APPLY
+          - HOTFIX_PLAN_AND_APPLY
+          - IMPORT_RELEASE
+        stackVersion:
+          type: string
+        triggeredBy:
+          type: string
+        triggeredOn:
+          type: string
+          format: date-time
+    ResourceReleaseImpact:
+      type: object
+      properties:
+        changes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Change'
+        clusterId:
+          type: string
+        id:
+          type: string
+        labelIds:
+          type: array
+          items:
+            type: string
+        releaseDetails:
+          $ref: '#/components/schemas/ReleaseDetails'
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+    ModuleInputDTO:
+      type: object
+      properties:
+        compatibleResources:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/InputOutputResource'
+        description:
+          type: string
+        displayName:
+          type: string
+        optional:
+          type: boolean
+        type:
+          type: string
+    BranchUpdateRequest:
+      type: object
+      properties:
+        branch:
+          type: string
+    ProvidedCloudResource:
+      type: object
+      properties:
+        name:
+          type: string
+        region:
+          type: string
+        resourceName:
+          type: string
+        resourceType:
+          type: string
   securitySchemes:
     basicAuth:
       description: Basic Authentication

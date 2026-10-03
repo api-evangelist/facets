@@ -697,6 +697,115 @@ paths:
       - ui-ci-cd-controller
 components:
   schemas:
+    WorkflowHierarchy:
+      type: object
+      properties:
+        registrationValue:
+          type: string
+        sequence:
+          type: integer
+          format: int32
+    PushCredentialsResponse:
+      type: object
+      properties:
+        artifactoryUri:
+          type: string
+        password:
+          type: string
+        repositoryUri:
+          type: string
+        username:
+          type: string
+    AttachDetachCiRequest:
+      required:
+      - blueprintName
+      - ciName
+      - registrationType
+      type: object
+      properties:
+        blueprintName:
+          type: string
+          description: Blueprint name related to the CI.
+          example: blueprint-1
+        ciName:
+          type: string
+          description: CI name to which the operation is applied.
+          example: ci-my-app
+        registrationType:
+          type: string
+          description: Registration type for the operation.
+          example: GIT_REF
+          enum:
+          - ENVIRONMENT
+          - RELEASE_STREAM
+          - HYBRID
+      description: Request details for attaching or detaching a rule and workflow to/from a CI.
+    Criterion:
+      required:
+      - metadataKey
+      - operator
+      - routeTo
+      - value
+      type: object
+      properties:
+        metadataKey:
+          type: string
+        operator:
+          type: string
+          enum:
+          - EQUALS
+          - STARTS_WITH
+          - ENDS_WITH
+          - CONTAINS
+        priority:
+          type: integer
+          format: int32
+        routeTo:
+          type: string
+        value:
+          type: string
+    PushCredentialsRequest:
+      required:
+      - applicationName
+      - artifactory
+      - blueprintName
+      type: object
+      properties:
+        applicationName:
+          type: string
+          description: Application name associated with the request.
+          example: my-app
+        artifactory:
+          type: string
+          description: Name of the artifactory.
+          example: DOCKER
+        blueprintName:
+          type: string
+          description: Blueprint name for which credentials are requested.
+          example: blueprint-1
+      description: Request details for generating push credentials for an artifact.
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
     CiCustomCiCdRequest:
       required:
       - promotionHierarchies
@@ -736,56 +845,6 @@ components:
           description: Name of the project.
           example: my-project
       description: Request for configuring custom CI/CD for a specific CI integration.
-    AttachDetachCiRequest:
-      required:
-      - blueprintName
-      - ciName
-      - registrationType
-      type: object
-      properties:
-        blueprintName:
-          type: string
-          description: Blueprint name related to the CI.
-          example: blueprint-1
-        ciName:
-          type: string
-          description: CI name to which the operation is applied.
-          example: ci-my-app
-        registrationType:
-          type: string
-          description: Registration type for the operation.
-          example: GIT_REF
-          enum:
-          - ENVIRONMENT
-          - RELEASE_STREAM
-          - HYBRID
-      description: Request details for attaching or detaching a rule and workflow to/from a CI.
-    PushCredentialsResponse:
-      type: object
-      properties:
-        artifactoryUri:
-          type: string
-        password:
-          type: string
-        repositoryUri:
-          type: string
-        username:
-          type: string
-    GithubAppPermissionsPendingErrorDetails:
-      type: object
-      properties:
-        approvalUrl:
-          type: string
-        code:
-          type: string
-        errorCode:
-          type: string
-        message:
-          type: string
-        missingPermissions:
-          type: array
-          items:
-            type: string
     CiCustomCiCdResponse:
       type: object
       properties:
@@ -839,37 +898,54 @@ components:
           description: Name of the project.
           example: my-project
       description: Response containing CI-level CI/CD configuration details.
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-    Criterion:
+    CiCdDto:
       required:
-      - metadataKey
-      - operator
-      - routeTo
-      - value
+      - promotionHierarchies
+      - registrationType
+      - routingRules
+      - stackName
       type: object
       properties:
-        metadataKey:
+        ciSystem:
           type: string
-        operator:
-          type: string
+          description: CI system used.
+          example: JENKINS
           enum:
-          - EQUALS
-          - STARTS_WITH
-          - ENDS_WITH
-          - CONTAINS
-        priority:
-          type: integer
-          format: int32
-        routeTo:
+          - BRANCH_PER_ENVIRONMENT
+          - SINGLE_BRANCH_PROMOTION
+          - ADVANCED
+        mapToAllCis:
+          type: boolean
+          description: Indicate whether to map to all CI systems.
+        promotionHierarchies:
+          type: array
+          description: Promotion workflow hierarchies.
+          items:
+            $ref: '#/components/schemas/WorkflowHierarchy'
+        promotionWorkflowId:
           type: string
-        value:
+          description: ID of the promotion workflow.
+        registrationType:
           type: string
+          description: Registration type for the CI/CD setup.
+          example: GIT_REF
+          enum:
+          - ENVIRONMENT
+          - RELEASE_STREAM
+          - HYBRID
+        routingRules:
+          type: array
+          description: Routing rules for artifact promotion.
+          items:
+            $ref: '#/components/schemas/Criterion'
+        ruleId:
+          type: string
+          description: ID of the routing rule.
+        stackName:
+          type: string
+          description: Name of the project.
+          example: my-project
+      description: Details required for configuring CI/CD for a project.
     SaasArtifactRequest:
       required:
       - artifactRegisterType
@@ -937,82 +1013,6 @@ components:
           type: string
         stackName:
           type: string
-    CiCdDto:
-      required:
-      - promotionHierarchies
-      - registrationType
-      - routingRules
-      - stackName
-      type: object
-      properties:
-        ciSystem:
-          type: string
-          description: CI system used.
-          example: JENKINS
-          enum:
-          - BRANCH_PER_ENVIRONMENT
-          - SINGLE_BRANCH_PROMOTION
-          - ADVANCED
-        mapToAllCis:
-          type: boolean
-          description: Indicate whether to map to all CI systems.
-        promotionHierarchies:
-          type: array
-          description: Promotion workflow hierarchies.
-          items:
-            $ref: '#/components/schemas/WorkflowHierarchy'
-        promotionWorkflowId:
-          type: string
-          description: ID of the promotion workflow.
-        registrationType:
-          type: string
-          description: Registration type for the CI/CD setup.
-          example: GIT_REF
-          enum:
-          - ENVIRONMENT
-          - RELEASE_STREAM
-          - HYBRID
-        routingRules:
-          type: array
-          description: Routing rules for artifact promotion.
-          items:
-            $ref: '#/components/schemas/Criterion'
-        ruleId:
-          type: string
-          description: ID of the routing rule.
-        stackName:
-          type: string
-          description: Name of the project.
-          example: my-project
-      description: Details required for configuring CI/CD for a project.
-    PushCredentialsRequest:
-      required:
-      - applicationName
-      - artifactory
-      - blueprintName
-      type: object
-      properties:
-        applicationName:
-          type: string
-          description: Application name associated with the request.
-          example: my-app
-        artifactory:
-          type: string
-          description: Name of the artifactory.
-          example: DOCKER
-        blueprintName:
-          type: string
-          description: Blueprint name for which credentials are requested.
-          example: blueprint-1
-      description: Request details for generating push credentials for an artifact.
-    WorkflowHierarchy:
-      type: object
-      properties:
-        registrationValue:
-          type: string
-        sequence:
-          type: integer
-          format: int32
   securitySchemes:
     basicAuth:
       description: Basic Authentication

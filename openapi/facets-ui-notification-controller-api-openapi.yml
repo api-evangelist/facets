@@ -1125,6 +1125,21 @@ components:
             - ENVIRONMENT_TEARDOWN_NOTIFY_BEFORE
             - AUDIT_ENTITY
             - AUDIT_ACTION
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
     ChannelTypePayload:
       type: object
       properties:
@@ -1141,53 +1156,6 @@ components:
           - EMAIL
           - MS_TEAMS
           - MS_TEAMS_WORKFLOW
-    GithubAppPermissionsPendingErrorDetails:
-      type: object
-      properties:
-        approvalUrl:
-          type: string
-        code:
-          type: string
-        errorCode:
-          type: string
-        message:
-          type: string
-        missingPermissions:
-          type: array
-          items:
-            type: string
-    NotificationTagsForTypeResult:
-      type: object
-      properties:
-        id:
-          type: string
-          enum:
-          - CLUSTER_NAME
-          - CLUSTER_TYPE
-          - QASUITE_RESULT
-          - DR_ACTION
-          - DR_STATUS
-          - STACK_NAME
-          - SEVERITY
-          - ALERT_NAME
-          - DEPLOYMENT_STATUS
-          - APPLICATION_NAME
-          - SEND_RESOLVED
-          - RELEASE_TYPE
-          - ENVIRONMENT_TEARDOWN_NOTIFY_BEFORE
-          - AUDIT_ENTITY
-          - AUDIT_ACTION
-        label:
-          type: string
-        tooltip:
-          type: string
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
     TestNotificationRequest:
       type: object
       properties:
@@ -1232,8 +1200,45 @@ components:
           - AUDIT_LOG
         payload:
           type: string
-    TagDataModel:
+    ErrorDetails:
       type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    NotificationChannel:
+      type: object
+      properties:
+        authorizationHeader:
+          type: string
+        channelAddress:
+          type: string
+        channelType:
+          type: string
+          enum:
+          - SLACK
+          - CAPILLARY_VALIDATOR
+          - WEBHOOK
+          - PAGER_DUTY
+          - ZEN_DUTY
+          - EMAIL
+          - MS_TEAMS
+          - MS_TEAMS_WORKFLOW
+        description:
+          maxLength: 200
+          minLength: 0
+          type: string
+        emailAddresses:
+          type: array
+          items:
+            type: string
+        id:
+          type: string
+        integrationKey:
+          type: string
+        name:
+          type: string
     Subscription:
       required:
       - channelId
@@ -1296,37 +1301,30 @@ components:
           type: string
         test:
           type: boolean
-    NotificationChannel:
+    NotificationTagsForTypeResult:
       type: object
       properties:
-        authorizationHeader:
-          type: string
-        channelAddress:
-          type: string
-        channelType:
-          type: string
-          enum:
-          - SLACK
-          - CAPILLARY_VALIDATOR
-          - WEBHOOK
-          - PAGER_DUTY
-          - ZEN_DUTY
-          - EMAIL
-          - MS_TEAMS
-          - MS_TEAMS_WORKFLOW
-        description:
-          maxLength: 200
-          minLength: 0
-          type: string
-        emailAddresses:
-          type: array
-          items:
-            type: string
         id:
           type: string
-        integrationKey:
+          enum:
+          - CLUSTER_NAME
+          - CLUSTER_TYPE
+          - QASUITE_RESULT
+          - DR_ACTION
+          - DR_STATUS
+          - STACK_NAME
+          - SEVERITY
+          - ALERT_NAME
+          - DEPLOYMENT_STATUS
+          - APPLICATION_NAME
+          - SEND_RESOLVED
+          - RELEASE_TYPE
+          - ENVIRONMENT_TEARDOWN_NOTIFY_BEFORE
+          - AUDIT_ENTITY
+          - AUDIT_ACTION
+        label:
           type: string
-        name:
+        tooltip:
           type: string
     NotificationTagPayload:
       type: object
@@ -1351,6 +1349,8 @@ components:
           - ENVIRONMENT_TEARDOWN_NOTIFY_BEFORE
           - AUDIT_ENTITY
           - AUDIT_ACTION
+    TagDataModel:
+      type: object
   securitySchemes:
     basicAuth:
       description: Basic Authentication

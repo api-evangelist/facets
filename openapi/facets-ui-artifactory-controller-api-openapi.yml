@@ -1043,149 +1043,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    Artifactory:
-      required:
-      - name
-      type: object
-      properties:
-        artifactoryType:
-          type: string
-          enum:
-          - ECR
-          - AZURE_CONTAINER_REGISTRY
-          - GOOGLE_ARTIFACT_REGISTRY
-          - GOOGLE_CONTAINER_REGISTRY
-          - NEXUS
-          - DOCKER_HUB
-          - JFROG
-          - HARBOR
-          - OTHERS
-        changeLog:
-          type: string
-        createdBy:
-          type: string
-        creationDate:
-          type: string
-          format: date-time
-        description:
-          maxLength: 200
-          minLength: 0
-          type: string
-        id:
-          type: string
-        lastModifiedBy:
-          type: string
-        lastModifiedDate:
-          type: string
-          format: date-time
-        name:
-          type: string
-        stacksAssociated:
-          uniqueItems: true
-          type: array
-          items:
-            type: string
-        systemDefined:
-          type: boolean
-        uri:
-          type: string
-        versioningKey:
-          type: string
-    BasicDockerArtifactory:
-      required:
-      - name
-      - password
-      type: object
-      properties:
-        artifactoryProject:
-          type: string
-        artifactoryType:
-          type: string
-          enum:
-          - ECR
-          - AZURE_CONTAINER_REGISTRY
-          - GOOGLE_ARTIFACT_REGISTRY
-          - GOOGLE_CONTAINER_REGISTRY
-          - NEXUS
-          - DOCKER_HUB
-          - JFROG
-          - HARBOR
-          - OTHERS
-        changeLog:
-          type: string
-        createdBy:
-          type: string
-        creationDate:
-          type: string
-          format: date-time
-        description:
-          maxLength: 200
-          minLength: 0
-          type: string
-        id:
-          type: string
-        lastModifiedBy:
-          type: string
-        lastModifiedDate:
-          type: string
-          format: date-time
-        name:
-          type: string
-        password:
-          type: string
-          writeOnly: true
-        stacksAssociated:
-          uniqueItems: true
-          type: array
-          items:
-            type: string
-        systemDefined:
-          type: boolean
-        uri:
-          type: string
-        username:
-          type: string
-        versioningKey:
-          type: string
-    BasicDockerDTO:
-      required:
-      - artifactoryName
-      - artifactoryType
-      - uri
-      - username
-      type: object
-      properties:
-        artifactoryName:
-          type: string
-        artifactoryProject:
-          type: string
-        artifactoryType:
-          type: string
-          enum:
-          - ECR
-          - AZURE_CONTAINER_REGISTRY
-          - GOOGLE_ARTIFACT_REGISTRY
-          - GOOGLE_CONTAINER_REGISTRY
-          - NEXUS
-          - DOCKER_HUB
-          - JFROG
-          - HARBOR
-          - OTHERS
-        description:
-          maxLength: 200
-          minLength: 0
-          type: string
-        password:
-          type: string
-        stacksAssociated:
-          uniqueItems: true
-          type: array
-          items:
-            type: string
-        uri:
-          type: string
-        username:
-          type: string
     ECRArtifactory:
       required:
       - awsAccountId
@@ -1262,37 +1119,6 @@ components:
           type: string
         versioningKey:
           type: string
-    GithubAppPermissionsPendingErrorDetails:
-      type: object
-      properties:
-        approvalUrl:
-          type: string
-        code:
-          type: string
-        errorCode:
-          type: string
-        message:
-          type: string
-        missingPermissions:
-          type: array
-          items:
-            type: string
-    ExclusionFilter:
-      type: object
-      properties:
-        filter:
-          type: string
-        filterType:
-          type: string
-          enum:
-          - WILDCARD
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
     ArtifactoryOneTimeWebhook:
       type: object
       properties:
@@ -1345,6 +1171,157 @@ components:
           - GITHUB
           - GITLAB
           - BITBUCKET
+    BasicDockerArtifactory:
+      required:
+      - name
+      - password
+      type: object
+      properties:
+        artifactoryProject:
+          type: string
+        artifactoryType:
+          type: string
+          enum:
+          - ECR
+          - AZURE_CONTAINER_REGISTRY
+          - GOOGLE_ARTIFACT_REGISTRY
+          - GOOGLE_CONTAINER_REGISTRY
+          - NEXUS
+          - DOCKER_HUB
+          - JFROG
+          - HARBOR
+          - OTHERS
+        changeLog:
+          type: string
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        description:
+          maxLength: 200
+          minLength: 0
+          type: string
+        id:
+          type: string
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        name:
+          type: string
+        password:
+          type: string
+          writeOnly: true
+        stacksAssociated:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        systemDefined:
+          type: boolean
+        uri:
+          type: string
+        username:
+          type: string
+        versioningKey:
+          type: string
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    Artifactory:
+      required:
+      - name
+      type: object
+      properties:
+        artifactoryType:
+          type: string
+          enum:
+          - ECR
+          - AZURE_CONTAINER_REGISTRY
+          - GOOGLE_ARTIFACT_REGISTRY
+          - GOOGLE_CONTAINER_REGISTRY
+          - NEXUS
+          - DOCKER_HUB
+          - JFROG
+          - HARBOR
+          - OTHERS
+        changeLog:
+          type: string
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        description:
+          maxLength: 200
+          minLength: 0
+          type: string
+        id:
+          type: string
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        name:
+          type: string
+        stacksAssociated:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        systemDefined:
+          type: boolean
+        uri:
+          type: string
+        versioningKey:
+          type: string
+    ArtifactoryLinkingRequest:
+      type: object
+      properties:
+        artifactoryName:
+          type: string
+        webhook:
+          $ref: '#/components/schemas/ArtifactoryOneTimeWebhook'
+    AccountLinkingDetails:
+      type: object
+      properties:
+        description:
+          type: string
+        labelIds:
+          type: array
+          items:
+            type: string
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    ExclusionFilter:
+      type: object
+      properties:
+        filter:
+          type: string
+        filterType:
+          type: string
+          enum:
+          - WILDCARD
     OneTimeWebhook:
       type: object
       properties:
@@ -1403,22 +1380,45 @@ components:
           type: string
         sourceArtifactory:
           type: string
-    AccountLinkingDetails:
-      type: object
-      properties:
-        description:
-          type: string
-        labelIds:
-          type: array
-          items:
-            type: string
-    ArtifactoryLinkingRequest:
+    BasicDockerDTO:
+      required:
+      - artifactoryName
+      - artifactoryType
+      - uri
+      - username
       type: object
       properties:
         artifactoryName:
           type: string
-        webhook:
-          $ref: '#/components/schemas/ArtifactoryOneTimeWebhook'
+        artifactoryProject:
+          type: string
+        artifactoryType:
+          type: string
+          enum:
+          - ECR
+          - AZURE_CONTAINER_REGISTRY
+          - GOOGLE_ARTIFACT_REGISTRY
+          - GOOGLE_CONTAINER_REGISTRY
+          - NEXUS
+          - DOCKER_HUB
+          - JFROG
+          - HARBOR
+          - OTHERS
+        description:
+          maxLength: 200
+          minLength: 0
+          type: string
+        password:
+          type: string
+        stacksAssociated:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        uri:
+          type: string
+        username:
+          type: string
   securitySchemes:
     basicAuth:
       description: Basic Authentication

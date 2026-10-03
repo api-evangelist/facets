@@ -2042,42 +2042,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    WorkflowRun:
-      type: object
-      properties:
-        actor:
-          $ref: '#/components/schemas/GithubUser'
-        conclusion:
-          type: string
-        createdAt:
-          type: string
-          format: date-time
-        displayTitle:
-          type: string
-        headBranch:
-          type: string
-        headCommit:
-          $ref: '#/components/schemas/Commit'
-        htmlUrl:
-          type: string
-        name:
-          type: string
-        runNumber:
-          type: integer
-          format: int64
-        runStartedAt:
-          type: string
-          format: date-time
-        status:
-          type: string
-        triggeringActor:
-          $ref: '#/components/schemas/GithubUser'
-        updatedAt:
-          type: string
-          format: date-time
-        workflowId:
-          type: integer
-          format: int64
     Input:
       type: object
       properties:
@@ -2100,6 +2064,133 @@ components:
         type:
           type: string
       description: Input parameters for this module
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    GithubLabel:
+      type: object
+      properties:
+        color:
+          type: string
+        description:
+          type: string
+        name:
+          type: string
+    Workflow:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+    BlueprintValidationError:
+      type: object
+      properties:
+        blueprintErrorLines:
+          type: array
+          items:
+            type: integer
+            format: int32
+        category:
+          type: string
+          enum:
+          - Syntax Error
+          - Non-Existent Resource Reference
+          - Disabled Resource References
+          - Invalid Reference Expression
+          - Schema Compliance Error
+          - GuardRails Compliance Issues
+          - Overrides Syntax Error
+          - Invalid Filename Error
+          - Input Validation Error
+          - Missing Environment Override
+        message:
+          type: string
+        overrideErrorLines:
+          type: array
+          items:
+            type: integer
+            format: int32
+        severity:
+          type: string
+          enum:
+          - ERROR
+          - WARNING
+    AddOnDTO:
+      type: object
+      properties:
+        added:
+          type: boolean
+        flavor:
+          type: string
+        inputs:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Input'
+        intent:
+          type: string
+        resourceName:
+          type: string
+    JsonNode:
+      type: object
+    InputOutputResource:
+      type: object
+      properties:
+        default:
+          type: boolean
+        outputName:
+          type: string
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+    TFProvider:
+      type: object
+      properties:
+        attributes:
+          type: object
+          additionalProperties:
+            type: object
+        name:
+          type: string
+        source:
+          type: string
+        version:
+          type: string
+    RefExpression:
+      type: object
+      properties:
+        expression:
+          type: string
+    Edge:
+      type: object
+      properties:
+        blockEdits:
+          type: boolean
+        id:
+          type: string
+        inputName:
+          type: string
+        isInput:
+          type: boolean
+        outputName:
+          type: string
+        resourceName:
+          type: string
+        resourceType:
+          type: string
     BlueprintFile:
       type: object
       properties:
@@ -2175,70 +2266,6 @@ components:
             type: string
         version:
           type: string
-    BlueprintValidationError:
-      type: object
-      properties:
-        blueprintErrorLines:
-          type: array
-          items:
-            type: integer
-            format: int32
-        category:
-          type: string
-          enum:
-          - Syntax Error
-          - Non-Existent Resource Reference
-          - Disabled Resource References
-          - Invalid Reference Expression
-          - Schema Compliance Error
-          - GuardRails Compliance Issues
-          - Overrides Syntax Error
-          - Invalid Filename Error
-          - Input Validation Error
-          - Missing Environment Override
-        message:
-          type: string
-        overrideErrorLines:
-          type: array
-          items:
-            type: integer
-            format: int32
-        severity:
-          type: string
-          enum:
-          - ERROR
-          - WARNING
-    GithubAppPermissionsPendingErrorDetails:
-      type: object
-      properties:
-        approvalUrl:
-          type: string
-        code:
-          type: string
-        errorCode:
-          type: string
-        message:
-          type: string
-        missingPermissions:
-          type: array
-          items:
-            type: string
-    BranchDTO:
-      type: object
-      properties:
-        branches:
-          type: array
-          items:
-            type: string
-        defaultBranch:
-          type: string
-    GithubUser:
-      type: object
-      properties:
-        htmlUrl:
-          type: string
-        login:
-          type: string
     ResourceInheritFromBaseRequest:
       type: object
       properties:
@@ -2252,61 +2279,15 @@ components:
           type: string
         resourceType:
           type: string
-    PullRequestResponse:
+    BranchDTO:
       type: object
       properties:
-        createdAt:
-          type: string
-          format: date-time
-        htmlUrl:
-          type: string
-        labels:
+        branches:
           type: array
           items:
-            $ref: '#/components/schemas/GithubLabel'
-        mergedAt:
+            type: string
+        defaultBranch:
           type: string
-          format: date-time
-        number:
-          type: string
-        state:
-          type: string
-        title:
-          type: string
-        user:
-          $ref: '#/components/schemas/GithubUser'
-    Workflow:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-    ResourceEnableDisableRequest:
-      type: object
-      properties:
-        directory:
-          type: string
-        disabled:
-          type: boolean
-        filename:
-          type: string
-        resourceName:
-          type: string
-        resourceType:
-          type: string
-    UpdateBlueprintRequest:
-      type: object
-      properties:
-        affectedFiles:
-          type: array
-          items:
-            $ref: '#/components/schemas/ResourceEnableDisableRequest'
-        files:
-          uniqueItems: true
-          type: array
-          items:
-            $ref: '#/components/schemas/ResourceFileRequest'
     ResourceRenameRequest:
       required:
       - newResourceName
@@ -2324,43 +2305,39 @@ components:
           type: string
         resourceType:
           type: string
-    JsonNode:
-      type: object
-    ErrorDetails:
+    ListPullRequestResponse:
       type: object
       properties:
-        code:
-          type: string
-        message:
-          type: string
-    AutocompleteResponseV2:
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        pullRequests:
+          type: array
+          items:
+            $ref: '#/components/schemas/PullRequestResponse'
+        totalCount:
+          type: integer
+          format: int32
+        totalPages:
+          type: integer
+          format: int32
+    VariableUsageResponse:
       type: object
       properties:
-        resourceOutputTrees:
-          type: object
-          additionalProperties:
-            type: object
-            additionalProperties:
-              $ref: '#/components/schemas/JsonNode'
-    Commit:
-      type: object
-      properties:
-        id:
-          type: string
-    AddOnDTO:
-      type: object
-      properties:
-        added:
+        clusterLevelUsages:
+          type: array
+          items:
+            $ref: '#/components/schemas/VariableUsageDTO'
+        secret:
           type: boolean
-        flavor:
-          type: string
-        inputs:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/Input'
-        intent:
-          type: string
-        resourceName:
+        stackLevelUsages:
+          type: array
+          items:
+            $ref: '#/components/schemas/VariableUsageDTO'
+        variableName:
           type: string
     Info:
       type: object
@@ -2416,21 +2393,82 @@ components:
             type: object
         version:
           type: string
-    VariableUsageResponse:
+    Commit:
       type: object
       properties:
-        clusterLevelUsages:
-          type: array
-          items:
-            $ref: '#/components/schemas/VariableUsageDTO'
-        secret:
-          type: boolean
-        stackLevelUsages:
-          type: array
-          items:
-            $ref: '#/components/schemas/VariableUsageDTO'
-        variableName:
+        id:
           type: string
+    PullRequestResponse:
+      type: object
+      properties:
+        createdAt:
+          type: string
+          format: date-time
+        htmlUrl:
+          type: string
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/GithubLabel'
+        mergedAt:
+          type: string
+          format: date-time
+        number:
+          type: string
+        state:
+          type: string
+        title:
+          type: string
+        user:
+          $ref: '#/components/schemas/GithubUser'
+    UpdateBlueprintRequest:
+      type: object
+      properties:
+        affectedFiles:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceEnableDisableRequest'
+        files:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceFileRequest'
+    WorkflowRun:
+      type: object
+      properties:
+        actor:
+          $ref: '#/components/schemas/GithubUser'
+        conclusion:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        displayTitle:
+          type: string
+        headBranch:
+          type: string
+        headCommit:
+          $ref: '#/components/schemas/Commit'
+        htmlUrl:
+          type: string
+        name:
+          type: string
+        runNumber:
+          type: integer
+          format: int64
+        runStartedAt:
+          type: string
+          format: date-time
+        status:
+          type: string
+        triggeringActor:
+          $ref: '#/components/schemas/GithubUser'
+        updatedAt:
+          type: string
+          format: date-time
+        workflowId:
+          type: integer
+          format: int64
     ListWorkflowRunsResponse:
       type: object
       properties:
@@ -2450,6 +2488,37 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/WorkflowRun'
+    VariableUsageDTO:
+      type: object
+      properties:
+        clusterId:
+          type: string
+        clusterName:
+          type: string
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+    ResourceEnableDisableRequest:
+      type: object
+      properties:
+        directory:
+          type: string
+        disabled:
+          type: boolean
+        filename:
+          type: string
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+    GithubUser:
+      type: object
+      properties:
+        htmlUrl:
+          type: string
+        login:
+          type: string
     ResourceFileRequest:
       required:
       - resourceName
@@ -2480,27 +2549,12 @@ components:
           type: string
         resourceType:
           type: string
-    Edge:
+    ErrorDetails:
       type: object
       properties:
-        blockEdits:
-          type: boolean
-        id:
+        code:
           type: string
-        inputName:
-          type: string
-        isInput:
-          type: boolean
-        outputName:
-          type: string
-        resourceName:
-          type: string
-        resourceType:
-          type: string
-    RefExpression:
-      type: object
-      properties:
-        expression:
+        message:
           type: string
     VariableDetails:
       type: object
@@ -2515,69 +2569,6 @@ components:
           type: boolean
         value:
           type: string
-    InputOutputResource:
-      type: object
-      properties:
-        default:
-          type: boolean
-        outputName:
-          type: string
-        resourceName:
-          type: string
-        resourceType:
-          type: string
-    TFProvider:
-      type: object
-      properties:
-        attributes:
-          type: object
-          additionalProperties:
-            type: object
-        name:
-          type: string
-        source:
-          type: string
-        version:
-          type: string
-    VariableUsageDTO:
-      type: object
-      properties:
-        clusterId:
-          type: string
-        clusterName:
-          type: string
-        resourceName:
-          type: string
-        resourceType:
-          type: string
-    GithubLabel:
-      type: object
-      properties:
-        color:
-          type: string
-        description:
-          type: string
-        name:
-          type: string
-    ListPullRequestResponse:
-      type: object
-      properties:
-        pageNumber:
-          type: integer
-          format: int32
-        pageSize:
-          type: integer
-          format: int32
-        pullRequests:
-          type: array
-          items:
-            $ref: '#/components/schemas/PullRequestResponse'
-        totalCount:
-          type: integer
-          format: int32
-        totalPages:
-          type: integer
-          format: int32
     ModuleInputDTO:
       type: object
       properties:
@@ -2594,6 +2585,15 @@ components:
           type: boolean
         type:
           type: string
+    AutocompleteResponseV2:
+      type: object
+      properties:
+        resourceOutputTrees:
+          type: object
+          additionalProperties:
+            type: object
+            additionalProperties:
+              $ref: '#/components/schemas/JsonNode'
   securitySchemes:
     basicAuth:
       description: Basic Authentication

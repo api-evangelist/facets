@@ -487,50 +487,6 @@ components:
           type: array
           items:
             type: string
-    MigrationScriptMetadata:
-      type: object
-      properties:
-        clouds:
-          type: array
-          items:
-            type: string
-        description:
-          type: string
-        downtime:
-          type: boolean
-        sequenceNumber:
-          type: integer
-          format: int32
-    TfVersion:
-      required:
-      - majorVersion
-      - minorVersion
-      - tfStream
-      type: object
-      properties:
-        lastModified:
-          type: string
-          format: date-time
-        majorVersion:
-          type: integer
-          format: int32
-        minorVersion:
-          type: string
-          description: LATEST
-          example: LATEST
-        tfStream:
-          type: string
-    PendingMigrationDetails:
-      type: object
-      properties:
-        blockReleases:
-          type: boolean
-        migrationStatusAvailable:
-          type: boolean
-        pendingMigrations:
-          type: array
-          items:
-            $ref: '#/components/schemas/MigrationScriptMetadata'
     ErrorDetails:
       type: object
       properties:
@@ -560,6 +516,50 @@ components:
           format: date-time
         version:
           $ref: '#/components/schemas/TfVersion'
+    PendingMigrationDetails:
+      type: object
+      properties:
+        blockReleases:
+          type: boolean
+        migrationStatusAvailable:
+          type: boolean
+        pendingMigrations:
+          type: array
+          items:
+            $ref: '#/components/schemas/MigrationScriptMetadata'
+    TfVersion:
+      required:
+      - majorVersion
+      - minorVersion
+      - tfStream
+      type: object
+      properties:
+        lastModified:
+          type: string
+          format: date-time
+        majorVersion:
+          type: integer
+          format: int32
+        minorVersion:
+          type: string
+          description: LATEST
+          example: LATEST
+        tfStream:
+          type: string
+    MigrationScriptMetadata:
+      type: object
+      properties:
+        clouds:
+          type: array
+          items:
+            type: string
+        description:
+          type: string
+        downtime:
+          type: boolean
+        sequenceNumber:
+          type: integer
+          format: int32
   securitySchemes:
     basicAuth:
       description: Basic Authentication

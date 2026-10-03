@@ -251,13 +251,6 @@ components:
           type: array
           items:
             type: string
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
     BillingMetadata:
       type: object
       properties:
@@ -266,6 +259,13 @@ components:
         status:
           type: string
         trialEnd:
+          type: string
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
           type: string
   securitySchemes:
     basicAuth:

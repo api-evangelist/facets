@@ -256,21 +256,27 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    Variables:
+    GithubAppPermissionsPendingErrorDetails:
       type: object
       properties:
-        description:
+        approvalUrl:
           type: string
-        global:
-          type: boolean
-        secret:
-          type: boolean
-        status:
+        code:
           type: string
-          enum:
-          - DEFAULT
-          - OVERRIDDEN
-        value:
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
           type: string
     KubernetesCluster:
       required:
@@ -393,28 +399,6 @@ components:
             $ref: '#/components/schemas/Variables'
         versioningKey:
           type: string
-    GithubAppPermissionsPendingErrorDetails:
-      type: object
-      properties:
-        approvalUrl:
-          type: string
-        code:
-          type: string
-        errorCode:
-          type: string
-        message:
-          type: string
-        missingPermissions:
-          type: array
-          items:
-            type: string
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
     KubernetesClusterRequest:
       required:
       - clusterName
@@ -478,6 +462,22 @@ components:
             rawOffset:
               type: integer
               format: int32
+    Variables:
+      type: object
+      properties:
+        description:
+          type: string
+        global:
+          type: boolean
+        secret:
+          type: boolean
+        status:
+          type: string
+          enum:
+          - DEFAULT
+          - OVERRIDDEN
+        value:
+          type: string
   securitySchemes:
     basicAuth:
       description: Basic Authentication

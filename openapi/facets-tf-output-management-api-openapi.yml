@@ -314,54 +314,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    OutputModuleUsageDTO:
-      type: object
-      properties:
-        fieldName:
-          type: string
-        flavor:
-          type: string
-        intent:
-          type: string
-        moduleIdentifier:
-          type: string
-        usageType:
-          type: string
-          enum:
-          - INPUT
-          - OUTPUT
-        version:
-          type: string
-    TFProvider:
-      type: object
-      properties:
-        attributes:
-          type: object
-          additionalProperties:
-            type: object
-        name:
-          type: string
-        source:
-          type: string
-        version:
-          type: string
-    GithubAppPermissionsPendingErrorDetails:
-      type: object
-      properties:
-        approvalUrl:
-          type: string
-        code:
-          type: string
-        errorCode:
-          type: string
-        message:
-          type: string
-        missingPermissions:
-          type: array
-          items:
-            type: string
-    JsonNode:
-      type: object
     TFOutputUsageDTO:
       type: object
       properties:
@@ -391,6 +343,30 @@ components:
           type: string
         outputAlias:
           type: string
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    JsonNode:
+      type: object
     TFOutputResponseDTO:
       type: object
       properties:
@@ -418,12 +394,18 @@ components:
           - CUSTOM
         usage:
           $ref: '#/components/schemas/TFOutputUsageDTO'
-    ErrorDetails:
+    TFProvider:
       type: object
       properties:
-        code:
+        attributes:
+          type: object
+          additionalProperties:
+            type: object
+        name:
           type: string
-        message:
+        source:
+          type: string
+        version:
           type: string
     TFOutputRequestDTO:
       required:
@@ -443,6 +425,24 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/TFProvider'
+    OutputModuleUsageDTO:
+      type: object
+      properties:
+        fieldName:
+          type: string
+        flavor:
+          type: string
+        intent:
+          type: string
+        moduleIdentifier:
+          type: string
+        usageType:
+          type: string
+          enum:
+          - INPUT
+          - OUTPUT
+        version:
+          type: string
   securitySchemes:
     basicAuth:
       description: Basic Authentication

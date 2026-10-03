@@ -100,13 +100,6 @@ components:
           type: array
           items:
             type: string
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
     BlueprintFileContent:
       type: object
       properties:
@@ -121,6 +114,13 @@ components:
           enum:
           - FOUND
           - NOT_FOUND
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
   securitySchemes:
     basicAuth:
       description: Basic Authentication

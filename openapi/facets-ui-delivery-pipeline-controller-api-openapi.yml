@@ -140,6 +140,13 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    Config:
+      type: object
+      properties:
+        autoPromoteArtifact:
+          type: boolean
+        requiresSignOff:
+          type: boolean
     GithubAppPermissionsPendingErrorDetails:
       type: object
       properties:
@@ -155,20 +162,6 @@ components:
           type: array
           items:
             type: string
-    Config:
-      type: object
-      properties:
-        autoPromoteArtifact:
-          type: boolean
-        requiresSignOff:
-          type: boolean
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
     PipelineNode:
       type: object
       properties:
@@ -183,6 +176,13 @@ components:
         parentClusterId:
           type: string
         stackName:
+          type: string
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
           type: string
   securitySchemes:
     basicAuth:

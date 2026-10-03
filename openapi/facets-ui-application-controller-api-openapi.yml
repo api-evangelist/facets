@@ -1416,80 +1416,353 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    QuobyteVolumeSource:
+    PodStatus:
       type: object
       properties:
-        group:
+        allocatedResources:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Quantity'
+        conditions:
+          type: array
+          items:
+            $ref: '#/components/schemas/PodCondition'
+        containerStatuses:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContainerStatus'
+        ephemeralContainerStatuses:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContainerStatus'
+        extendedResourceClaimStatus:
+          $ref: '#/components/schemas/PodExtendedResourceClaimStatus'
+        hostIP:
           type: string
-        readOnly:
-          type: boolean
-        registry:
+        hostIPs:
+          type: array
+          items:
+            $ref: '#/components/schemas/HostIP'
+        initContainerStatuses:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContainerStatus'
+        message:
           type: string
-        tenant:
+        nodeAllocatableResourceClaimStatuses:
+          type: array
+          items:
+            $ref: '#/components/schemas/NodeAllocatableResourceClaimStatus'
+        nominatedNodeName:
           type: string
-        user:
+        observedGeneration:
+          type: integer
+          format: int64
+        phase:
           type: string
-        volume:
+        podIP:
           type: string
-    GitRepoVolumeSource:
+        podIPs:
+          type: array
+          items:
+            $ref: '#/components/schemas/PodIP'
+        qosClass:
+          type: string
+        reason:
+          type: string
+        resize:
+          type: string
+        resourceClaimStatuses:
+          type: array
+          items:
+            $ref: '#/components/schemas/PodResourceClaimStatus'
+        resources:
+          $ref: '#/components/schemas/ResourceRequirements'
+        startTime:
+          type: string
+    PodDNSConfigOption:
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+    ObjectMetricStatus:
+      type: object
+      properties:
+        current:
+          $ref: '#/components/schemas/MetricValueStatus'
+        describedObject:
+          $ref: '#/components/schemas/CrossVersionObjectReference'
+        metric:
+          $ref: '#/components/schemas/MetricIdentifier'
+    IngressTLS:
+      type: object
+      properties:
+        hosts:
+          type: array
+          items:
+            type: string
+        secretName:
+          type: string
+    IntOrString:
+      type: object
+      properties:
+        intVal:
+          type: integer
+          format: int32
+        strVal:
+          type: string
+        value:
+          type: object
+    ValidationResponse:
       type: object
       properties:
         directory:
           type: string
-        repository:
-          type: string
-        revision:
-          type: string
-    IngressLoadBalancerStatus:
-      type: object
-      properties:
-        ingress:
+        errors:
           type: array
           items:
-            $ref: '#/components/schemas/IngressLoadBalancerIngress'
-    ScaleIOVolumeSource:
+            $ref: '#/components/schemas/BlueprintValidationError'
+        filename:
+          type: string
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+    EventSource:
+      type: object
+      properties:
+        component:
+          type: string
+        host:
+          type: string
+    Probe:
+      type: object
+      properties:
+        exec:
+          $ref: '#/components/schemas/ExecAction'
+        failureThreshold:
+          type: integer
+          format: int32
+        grpc:
+          $ref: '#/components/schemas/GRPCAction'
+        httpGet:
+          $ref: '#/components/schemas/HTTPGetAction'
+        initialDelaySeconds:
+          type: integer
+          format: int32
+        periodSeconds:
+          type: integer
+          format: int32
+        successThreshold:
+          type: integer
+          format: int32
+        tcpSocket:
+          $ref: '#/components/schemas/TCPSocketAction'
+        terminationGracePeriodSeconds:
+          type: integer
+          format: int64
+        timeoutSeconds:
+          type: integer
+          format: int32
+    ManagedFieldsEntry:
+      type: object
+      properties:
+        apiVersion:
+          type: string
+        fieldsType:
+          type: string
+        fieldsV1:
+          $ref: '#/components/schemas/FieldsV1'
+        manager:
+          type: string
+        operation:
+          type: string
+        subresource:
+          type: string
+        time:
+          type: string
+    BlueprintValidationError:
+      type: object
+      properties:
+        blueprintErrorLines:
+          type: array
+          items:
+            type: integer
+            format: int32
+        category:
+          type: string
+          enum:
+          - Syntax Error
+          - Non-Existent Resource Reference
+          - Disabled Resource References
+          - Invalid Reference Expression
+          - Schema Compliance Error
+          - GuardRails Compliance Issues
+          - Overrides Syntax Error
+          - Invalid Filename Error
+          - Input Validation Error
+          - Missing Environment Override
+        message:
+          type: string
+        overrideErrorLines:
+          type: array
+          items:
+            type: integer
+            format: int32
+        severity:
+          type: string
+          enum:
+          - ERROR
+          - WARNING
+    RBDVolumeSource:
       type: object
       properties:
         fsType:
           type: string
-        gateway:
+        image:
           type: string
-        protectionDomain:
+        keyring:
+          type: string
+        monitors:
+          type: array
+          items:
+            type: string
+        pool:
           type: string
         readOnly:
           type: boolean
         secretRef:
           $ref: '#/components/schemas/LocalObjectReference'
-        sslEnabled:
-          type: boolean
-        storageMode:
+        user:
           type: string
-        storagePool:
-          type: string
-        system:
-          type: string
-        volumeName:
-          type: string
-    OverrideRequest:
-      required:
-      - resourceName
-      - resourceType
+    HPAScalingPolicy:
       type: object
       properties:
-        affectedResources:
-          type: array
-          items:
-            $ref: '#/components/schemas/ResourceEnableDisableRequest'
-        changeLog:
+        periodSeconds:
+          type: integer
+          format: int32
+        type:
           type: string
-        overrides:
-          type: object
-          additionalProperties:
-            type: object
+        value:
+          type: integer
+          format: int32
+    ResourceStatus:
+      type: object
+      properties:
+        artifactory:
+          type: string
+        ciName:
+          type: string
+        clusterId:
+          type: string
+        currentArtifactBuildId:
+          type: string
+        currentArtifactUrl:
+          type: string
+        currentBPVersion:
+          type: string
+        currentModuleVersion:
+          type: string
+        currentOverrideVersion:
+          type: string
+        currentState:
+          type: string
+          enum:
+          - ENABLED
+          - DISABLED
+        deployed:
+          type: boolean
+        disabled:
+          type: boolean
+        flavor:
+          type: string
+        hasStateChange:
+          type: boolean
+        healthStatus:
+          type: string
+        id:
+          type: string
+        isAlpha:
+          type: boolean
+        liveArtifactBuildId:
+          type: string
+        liveArtifactUrl:
+          type: string
+        liveBPVersion:
+          type: string
+        liveModuleVersion:
+          type: string
+        liveOverrideVersion:
+          type: string
+        previousState:
+          type: string
+          enum:
+          - ENABLED
+          - DISABLED
+        releaseStatus:
+          type: string
+          enum:
+          - QUEUED
+          - FAILED
+          - IN_PROGRESS
+          - COMPLETED
+        releaseTraceId:
+          type: string
         resourceName:
           type: string
         resourceType:
           type: string
+        syncStatus:
+          type: string
+          enum:
+          - IN_SYNC
+          - OUT_OF_SYNC
+    ResourceClaim:
+      type: object
+      properties:
+        name:
+          type: string
+        request:
+          type: string
+    PodOS:
+      type: object
+      properties:
+        name:
+          type: string
+    ResourceMetricSource:
+      type: object
+      properties:
+        name:
+          type: string
+        target:
+          $ref: '#/components/schemas/MetricTarget'
+    PodCondition:
+      type: object
+      properties:
+        lastProbeTime:
+          type: string
+        lastTransitionTime:
+          type: string
+        message:
+          type: string
+        observedGeneration:
+          type: integer
+          format: int64
+        reason:
+          type: string
+        status:
+          type: string
+        type:
+          type: string
+    ConfigMapEnvSource:
+      type: object
+      properties:
+        name:
+          type: string
+        optional:
+          type: boolean
     PodSpec:
       type: object
       properties:
@@ -1606,89 +1879,83 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Volume'
-    PodDNSConfigOption:
+    MetricSpec:
       type: object
       properties:
-        name:
+        containerResource:
+          $ref: '#/components/schemas/ContainerResourceMetricSource'
+        external:
+          $ref: '#/components/schemas/ExternalMetricSource'
+        object:
+          $ref: '#/components/schemas/ObjectMetricSource'
+        pods:
+          $ref: '#/components/schemas/PodsMetricSource'
+        resource:
+          $ref: '#/components/schemas/ResourceMetricSource'
+        type:
           type: string
-        value:
-          type: string
-    ObjectFieldSelector:
+    ExternalMetricStatus:
       type: object
       properties:
-        apiVersion:
-          type: string
-        fieldPath:
-          type: string
-    PodStatus:
+        current:
+          $ref: '#/components/schemas/MetricValueStatus'
+        metric:
+          $ref: '#/components/schemas/MetricIdentifier'
+    WeightedPodAffinityTerm:
       type: object
       properties:
-        allocatedResources:
+        podAffinityTerm:
+          $ref: '#/components/schemas/PodAffinityTerm'
+        weight:
+          type: integer
+          format: int32
+    OverrideObject:
+      type: object
+      properties:
+        changeLog:
+          type: string
+        commitId:
+          type: string
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        id:
+          type: string
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        overrides:
           type: object
           additionalProperties:
-            $ref: '#/components/schemas/Quantity'
-        conditions:
-          type: array
-          items:
-            $ref: '#/components/schemas/PodCondition'
-        containerStatuses:
-          type: array
-          items:
-            $ref: '#/components/schemas/ContainerStatus'
-        ephemeralContainerStatuses:
-          type: array
-          items:
-            $ref: '#/components/schemas/ContainerStatus'
-        extendedResourceClaimStatus:
-          $ref: '#/components/schemas/PodExtendedResourceClaimStatus'
-        hostIP:
+            type: object
+        resourceName:
           type: string
-        hostIPs:
-          type: array
-          items:
-            $ref: '#/components/schemas/HostIP'
-        initContainerStatuses:
-          type: array
-          items:
-            $ref: '#/components/schemas/ContainerStatus'
-        message:
+        resourceType:
           type: string
-        nodeAllocatableResourceClaimStatuses:
-          type: array
-          items:
-            $ref: '#/components/schemas/NodeAllocatableResourceClaimStatus'
-        nominatedNodeName:
+        versioningKey:
           type: string
-        observedGeneration:
-          type: integer
-          format: int64
-        phase:
-          type: string
-        podIP:
-          type: string
-        podIPs:
-          type: array
-          items:
-            $ref: '#/components/schemas/PodIP'
-        qosClass:
-          type: string
-        reason:
-          type: string
-        resize:
-          type: string
-        resourceClaimStatuses:
-          type: array
-          items:
-            $ref: '#/components/schemas/PodResourceClaimStatus'
-        resources:
-          $ref: '#/components/schemas/ResourceRequirements'
-        startTime:
-          type: string
-    IngressStatus:
+    HostPathVolumeSource:
       type: object
       properties:
-        loadBalancer:
-          $ref: '#/components/schemas/IngressLoadBalancerStatus'
+        path:
+          type: string
+        type:
+          type: string
+    FileKeySelector:
+      type: object
+      properties:
+        key:
+          type: string
+        optional:
+          type: boolean
+        path:
+          type: string
+        volumeName:
+          type: string
     EnvVar:
       type: object
       properties:
@@ -1698,134 +1965,15 @@ components:
           type: string
         valueFrom:
           $ref: '#/components/schemas/EnvVarSource'
-    ResourceStatus:
+    ContainerResourceMetricSource:
       type: object
       properties:
-        artifactory:
-          type: string
-        ciName:
-          type: string
-        clusterId:
-          type: string
-        currentArtifactBuildId:
-          type: string
-        currentArtifactUrl:
-          type: string
-        currentBPVersion:
-          type: string
-        currentModuleVersion:
-          type: string
-        currentOverrideVersion:
-          type: string
-        currentState:
-          type: string
-          enum:
-          - ENABLED
-          - DISABLED
-        deployed:
-          type: boolean
-        disabled:
-          type: boolean
-        flavor:
-          type: string
-        hasStateChange:
-          type: boolean
-        healthStatus:
-          type: string
-        id:
-          type: string
-        isAlpha:
-          type: boolean
-        liveArtifactBuildId:
-          type: string
-        liveArtifactUrl:
-          type: string
-        liveBPVersion:
-          type: string
-        liveModuleVersion:
-          type: string
-        liveOverrideVersion:
-          type: string
-        previousState:
-          type: string
-          enum:
-          - ENABLED
-          - DISABLED
-        releaseStatus:
-          type: string
-          enum:
-          - QUEUED
-          - FAILED
-          - IN_PROGRESS
-          - COMPLETED
-        releaseTraceId:
-          type: string
-        resourceName:
-          type: string
-        resourceType:
-          type: string
-        syncStatus:
-          type: string
-          enum:
-          - IN_SYNC
-          - OUT_OF_SYNC
-    ObjectReference:
-      type: object
-      properties:
-        apiVersion:
-          type: string
-        fieldPath:
-          type: string
-        kind:
+        container:
           type: string
         name:
           type: string
-        namespace:
-          type: string
-        resourceVersion:
-          type: string
-        uid:
-          type: string
-    MetricIdentifier:
-      type: object
-      properties:
-        name:
-          type: string
-        selector:
-          $ref: '#/components/schemas/LabelSelector'
-    ExecAction:
-      type: object
-      properties:
-        command:
-          type: array
-          items:
-            type: string
-    CrossVersionObjectReference:
-      type: object
-      properties:
-        apiVersion:
-          type: string
-        kind:
-          type: string
-        name:
-          type: string
-    IngressServiceBackend:
-      type: object
-      properties:
-        name:
-          type: string
-        port:
-          $ref: '#/components/schemas/ServiceBackendPort'
-    ServiceAccountTokenProjection:
-      type: object
-      properties:
-        audience:
-          type: string
-        expirationSeconds:
-          type: integer
-          format: int64
-        path:
-          type: string
+        target:
+          $ref: '#/components/schemas/MetricTarget'
     Toleration:
       type: object
       properties:
@@ -1840,52 +1988,194 @@ components:
           format: int64
         value:
           type: string
-    ContainerStateTerminated:
+    PodReadinessGate:
       type: object
       properties:
-        containerID:
+        conditionType:
           type: string
-        exitCode:
+    Versioned:
+      type: object
+      properties:
+        changeLog:
+          type: string
+          writeOnly: true
+        versioningKey:
+          type: string
+    PodAntiAffinity:
+      type: object
+      properties:
+        preferredDuringSchedulingIgnoredDuringExecution:
+          type: array
+          items:
+            $ref: '#/components/schemas/WeightedPodAffinityTerm'
+        requiredDuringSchedulingIgnoredDuringExecution:
+          type: array
+          items:
+            $ref: '#/components/schemas/PodAffinityTerm'
+    DownwardAPIVolumeSource:
+      type: object
+      properties:
+        defaultMode:
           type: integer
           format: int32
-        finishedAt:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/DownwardAPIVolumeFile'
+    NodeSelector:
+      type: object
+      properties:
+        nodeSelectorTerms:
+          type: array
+          items:
+            $ref: '#/components/schemas/NodeSelectorTerm'
+    Ingress:
+      type: object
+      properties:
+        apiVersion:
           type: string
-        message:
+        kind:
           type: string
-        reason:
+        metadata:
+          $ref: '#/components/schemas/ObjectMeta'
+        spec:
+          $ref: '#/components/schemas/IngressSpec'
+        status:
+          $ref: '#/components/schemas/IngressStatus'
+    AzureFileVolumeSource:
+      type: object
+      properties:
+        readOnly:
+          type: boolean
+        secretName:
           type: string
-        signal:
+        shareName:
+          type: string
+    SleepAction:
+      type: object
+      properties:
+        seconds:
+          type: integer
+          format: int64
+    ContainerPort:
+      type: object
+      properties:
+        containerPort:
           type: integer
           format: int32
-        startedAt:
+        hostIP:
           type: string
-    FlockerVolumeSource:
+        hostPort:
+          type: integer
+          format: int32
+        name:
+          type: string
+        protocol:
+          type: string
+    AzureDiskVolumeSource:
       type: object
       properties:
-        datasetName:
+        cachingMode:
           type: string
-        datasetUUID:
+        diskName:
           type: string
-    GlusterfsVolumeSource:
-      type: object
-      properties:
-        endpoints:
+        diskURI:
           type: string
-        path:
+        fsType:
+          type: string
+        kind:
           type: string
         readOnly:
           type: boolean
-    NodeSelectorTerm:
+    ConfigMapVolumeSource:
       type: object
       properties:
-        matchExpressions:
+        defaultMode:
+          type: integer
+          format: int32
+        items:
           type: array
           items:
-            $ref: '#/components/schemas/NodeSelectorRequirement'
-        matchFields:
+            $ref: '#/components/schemas/KeyToPath'
+        name:
+          type: string
+        optional:
+          type: boolean
+    HorizontalPodAutoscalerStatus:
+      type: object
+      properties:
+        conditions:
           type: array
           items:
-            $ref: '#/components/schemas/NodeSelectorRequirement'
+            $ref: '#/components/schemas/HorizontalPodAutoscalerCondition'
+        currentMetrics:
+          type: array
+          items:
+            $ref: '#/components/schemas/MetricStatus'
+        currentReplicas:
+          type: integer
+          format: int32
+        desiredReplicas:
+          type: integer
+          format: int32
+        lastScaleTime:
+          type: string
+        observedGeneration:
+          type: integer
+          format: int64
+    HorizontalPodAutoscaler:
+      type: object
+      properties:
+        apiVersion:
+          type: string
+        kind:
+          type: string
+        metadata:
+          $ref: '#/components/schemas/ObjectMeta'
+        spec:
+          $ref: '#/components/schemas/HorizontalPodAutoscalerSpec'
+        status:
+          $ref: '#/components/schemas/HorizontalPodAutoscalerStatus'
+    LifecycleHandler:
+      type: object
+      properties:
+        exec:
+          $ref: '#/components/schemas/ExecAction'
+        httpGet:
+          $ref: '#/components/schemas/HTTPGetAction'
+        sleep:
+          $ref: '#/components/schemas/SleepAction'
+        tcpSocket:
+          $ref: '#/components/schemas/TCPSocketAction'
+    IngressBackend:
+      type: object
+      properties:
+        resource:
+          $ref: '#/components/schemas/TypedLocalObjectReference'
+        service:
+          $ref: '#/components/schemas/IngressServiceBackend'
+    ExternalMetricSource:
+      type: object
+      properties:
+        metric:
+          $ref: '#/components/schemas/MetricIdentifier'
+        target:
+          $ref: '#/components/schemas/MetricTarget'
+    VolumeProjection:
+      type: object
+      properties:
+        clusterTrustBundle:
+          $ref: '#/components/schemas/ClusterTrustBundleProjection'
+        configMap:
+          $ref: '#/components/schemas/ConfigMapProjection'
+        downwardAPI:
+          $ref: '#/components/schemas/DownwardAPIProjection'
+        podCertificate:
+          $ref: '#/components/schemas/PodCertificateProjection'
+        secret:
+          $ref: '#/components/schemas/SecretProjection'
+        serviceAccountToken:
+          $ref: '#/components/schemas/ServiceAccountTokenProjection'
     ContainerStatus:
       type: object
       properties:
@@ -1926,33 +2216,45 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/VolumeMountStatus'
-    SeccompProfile:
+    ContainerStateTerminated:
       type: object
       properties:
-        localhostProfile:
+        containerID:
           type: string
-        type:
+        exitCode:
+          type: integer
+          format: int32
+        finishedAt:
           type: string
-    HTTPGetAction:
+        message:
+          type: string
+        reason:
+          type: string
+        signal:
+          type: integer
+          format: int32
+        startedAt:
+          type: string
+    ContainerResizePolicy:
       type: object
       properties:
-        host:
+        resourceName:
           type: string
-        httpHeaders:
+        restartPolicy:
+          type: string
+    NodeAllocatableResourceClaimStatus:
+      type: object
+      properties:
+        containers:
           type: array
           items:
-            $ref: '#/components/schemas/HTTPHeader'
-        path:
+            type: string
+        resourceClaimName:
           type: string
-        port:
-          $ref: '#/components/schemas/IntOrString'
-        scheme:
-          type: string
-    PodReadinessGate:
-      type: object
-      properties:
-        conditionType:
-          type: string
+        resources:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Quantity'
     ClusterTrustBundleProjection:
       type: object
       properties:
@@ -1966,6 +2268,37 @@ components:
           type: string
         signerName:
           type: string
+    FieldsV1:
+      type: object
+    ContainerStateWaiting:
+      type: object
+      properties:
+        message:
+          type: string
+        reason:
+          type: string
+    MetricStatus:
+      type: object
+      properties:
+        containerResource:
+          $ref: '#/components/schemas/ContainerResourceMetricStatus'
+        external:
+          $ref: '#/components/schemas/ExternalMetricStatus'
+        object:
+          $ref: '#/components/schemas/ObjectMetricStatus'
+        pods:
+          $ref: '#/components/schemas/PodsMetricStatus'
+        resource:
+          $ref: '#/components/schemas/ResourceMetricStatus'
+        type:
+          type: string
+    IngressLoadBalancerStatus:
+      type: object
+      properties:
+        ingress:
+          type: array
+          items:
+            $ref: '#/components/schemas/IngressLoadBalancerIngress'
     VolumeResourceRequirements:
       type: object
       properties:
@@ -1977,83 +2310,76 @@ components:
           type: object
           additionalProperties:
             $ref: '#/components/schemas/Quantity'
-    HTTPIngressPath:
+    TypedLocalObjectReference:
       type: object
       properties:
-        backend:
-          $ref: '#/components/schemas/IngressBackend'
-        path:
+        apiGroup:
           type: string
-        pathType:
+        kind:
           type: string
-    ServiceBackendPort:
+        name:
+          type: string
+    Sysctl:
       type: object
       properties:
         name:
           type: string
-        number:
-          type: integer
-          format: int32
-    ContainerExtendedResourceRequest:
+        value:
+          type: string
+    NodeSelectorTerm:
       type: object
       properties:
-        containerName:
-          type: string
-        requestName:
-          type: string
-        resourceName:
-          type: string
-    ContainerUser:
-      type: object
-      properties:
-        linux:
-          $ref: '#/components/schemas/LinuxContainerUser'
-    ContainerRestartRuleOnExitCodes:
-      type: object
-      properties:
-        operator:
-          type: string
-        values:
+        matchExpressions:
           type: array
           items:
-            type: integer
-            format: int32
-    PreferredSchedulingTerm:
+            $ref: '#/components/schemas/NodeSelectorRequirement'
+        matchFields:
+          type: array
+          items:
+            $ref: '#/components/schemas/NodeSelectorRequirement'
+    HTTPHeader:
       type: object
       properties:
-        preference:
-          $ref: '#/components/schemas/NodeSelectorTerm'
-        weight:
-          type: integer
-          format: int32
-    PodCertificateProjection:
+        name:
+          type: string
+        value:
+          type: string
+    HistoryMetadata:
       type: object
       properties:
-        certificateChainPath:
+        liveVersionId:
           type: string
-        credentialBundlePath:
+        previewVersionId:
           type: string
-        keyPath:
-          type: string
-        keyType:
-          type: string
-        maxExpirationSeconds:
-          type: integer
-          format: int32
-        signerName:
-          type: string
-        userAnnotations:
-          type: object
-          additionalProperties:
-            type: string
-    EventSeries:
+        versions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Version'
+    NFSVolumeSource:
       type: object
       properties:
-        count:
-          type: integer
-          format: int32
-        lastObservedTime:
-          $ref: '#/components/schemas/MicroTime'
+        path:
+          type: string
+        readOnly:
+          type: boolean
+        server:
+          type: string
+    PodResourceClaimStatus:
+      type: object
+      properties:
+        name:
+          type: string
+        resourceClaimName:
+          type: string
+    PortworxVolumeSource:
+      type: object
+      properties:
+        fsType:
+          type: string
+        readOnly:
+          type: boolean
+        volumeID:
+          type: string
     SecurityContext:
       type: object
       properties:
@@ -2083,18 +2409,154 @@ components:
           $ref: '#/components/schemas/SeccompProfile'
         windowsOptions:
           $ref: '#/components/schemas/WindowsSecurityContextOptions'
-    TCPSocketAction:
+    ConfigMapKeySelector:
       type: object
       properties:
-        host:
+        key:
           type: string
-        port:
-          $ref: '#/components/schemas/IntOrString'
-    PodSchedulingGroup:
+        name:
+          type: string
+        optional:
+          type: boolean
+    ScaleIOVolumeSource:
       type: object
       properties:
-        podGroupName:
+        fsType:
           type: string
+        gateway:
+          type: string
+        protectionDomain:
+          type: string
+        readOnly:
+          type: boolean
+        secretRef:
+          $ref: '#/components/schemas/LocalObjectReference'
+        sslEnabled:
+          type: boolean
+        storageMode:
+          type: string
+        storagePool:
+          type: string
+        system:
+          type: string
+        volumeName:
+          type: string
+    HostAlias:
+      type: object
+      properties:
+        hostnames:
+          type: array
+          items:
+            type: string
+        ip:
+          type: string
+    Pod:
+      type: object
+      properties:
+        apiVersion:
+          type: string
+        kind:
+          type: string
+        metadata:
+          $ref: '#/components/schemas/ObjectMeta'
+        spec:
+          $ref: '#/components/schemas/PodSpec'
+        status:
+          $ref: '#/components/schemas/PodStatus'
+    PodsMetricStatus:
+      type: object
+      properties:
+        current:
+          $ref: '#/components/schemas/MetricValueStatus'
+        metric:
+          $ref: '#/components/schemas/MetricIdentifier'
+    ObjectFieldSelector:
+      type: object
+      properties:
+        apiVersion:
+          type: string
+        fieldPath:
+          type: string
+    PersistentVolumeClaimVolumeSource:
+      type: object
+      properties:
+        claimName:
+          type: string
+        readOnly:
+          type: boolean
+    GlusterfsVolumeSource:
+      type: object
+      properties:
+        endpoints:
+          type: string
+        path:
+          type: string
+        readOnly:
+          type: boolean
+    PodsMetricSource:
+      type: object
+      properties:
+        metric:
+          $ref: '#/components/schemas/MetricIdentifier'
+        target:
+          $ref: '#/components/schemas/MetricTarget'
+    AppArmorProfile:
+      type: object
+      properties:
+        localhostProfile:
+          type: string
+        type:
+          type: string
+    HPAScalingRules:
+      type: object
+      properties:
+        policies:
+          type: array
+          items:
+            $ref: '#/components/schemas/HPAScalingPolicy'
+        selectPolicy:
+          type: string
+        stabilizationWindowSeconds:
+          type: integer
+          format: int32
+        tolerance:
+          $ref: '#/components/schemas/Quantity'
+    ContainerUser:
+      type: object
+      properties:
+        linux:
+          $ref: '#/components/schemas/LinuxContainerUser'
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    KeyToPath:
+      type: object
+      properties:
+        key:
+          type: string
+        mode:
+          type: integer
+          format: int32
+        path:
+          type: string
+    GCEPersistentDiskVolumeSource:
+      type: object
+      properties:
+        fsType:
+          type: string
+        partition:
+          type: integer
+          format: int32
+        pdName:
+          type: string
+        readOnly:
+          type: boolean
+    StreamingResponseBody:
+      type: object
     HorizontalPodAutoscalerBehavior:
       type: object
       properties:
@@ -2102,16 +2564,841 @@ components:
           $ref: '#/components/schemas/HPAScalingRules'
         scaleUp:
           $ref: '#/components/schemas/HPAScalingRules'
-    ProjectedVolumeSource:
+    WindowsSecurityContextOptions:
       type: object
       properties:
-        defaultMode:
-          type: integer
-          format: int32
-        sources:
+        gmsaCredentialSpec:
+          type: string
+        gmsaCredentialSpecName:
+          type: string
+        hostProcess:
+          type: boolean
+        runAsUserName:
+          type: string
+    NodeAffinity:
+      type: object
+      properties:
+        preferredDuringSchedulingIgnoredDuringExecution:
           type: array
           items:
-            $ref: '#/components/schemas/VolumeProjection'
+            $ref: '#/components/schemas/PreferredSchedulingTerm'
+        requiredDuringSchedulingIgnoredDuringExecution:
+          $ref: '#/components/schemas/NodeSelector'
+    ConfigMapProjection:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/KeyToPath'
+        name:
+          type: string
+        optional:
+          type: boolean
+    CinderVolumeSource:
+      type: object
+      properties:
+        fsType:
+          type: string
+        readOnly:
+          type: boolean
+        secretRef:
+          $ref: '#/components/schemas/LocalObjectReference'
+        volumeID:
+          type: string
+    EnvVarSource:
+      type: object
+      properties:
+        configMapKeyRef:
+          $ref: '#/components/schemas/ConfigMapKeySelector'
+        fieldRef:
+          $ref: '#/components/schemas/ObjectFieldSelector'
+        fileKeyRef:
+          $ref: '#/components/schemas/FileKeySelector'
+        resourceFieldRef:
+          $ref: '#/components/schemas/ResourceFieldSelector'
+        secretKeyRef:
+          $ref: '#/components/schemas/SecretKeySelector'
+    ObjectMeta:
+      type: object
+      properties:
+        annotations:
+          type: object
+          additionalProperties:
+            type: string
+        creationTimestamp:
+          type: string
+        deletionGracePeriodSeconds:
+          type: integer
+          format: int64
+        deletionTimestamp:
+          type: string
+        finalizers:
+          type: array
+          items:
+            type: string
+        generateName:
+          type: string
+        generation:
+          type: integer
+          format: int64
+        labels:
+          type: object
+          additionalProperties:
+            type: string
+        managedFields:
+          type: array
+          items:
+            $ref: '#/components/schemas/ManagedFieldsEntry'
+        name:
+          type: string
+        namespace:
+          type: string
+        ownerReferences:
+          type: array
+          items:
+            $ref: '#/components/schemas/OwnerReference'
+        resourceVersion:
+          type: string
+        selfLink:
+          type: string
+        uid:
+          type: string
+    ContainerResourceMetricStatus:
+      type: object
+      properties:
+        container:
+          type: string
+        current:
+          $ref: '#/components/schemas/MetricValueStatus'
+        name:
+          type: string
+    LabelSelector:
+      type: object
+      properties:
+        matchExpressions:
+          type: array
+          items:
+            $ref: '#/components/schemas/LabelSelectorRequirement'
+        matchLabels:
+          type: object
+          additionalProperties:
+            type: string
+    VolumeMount:
+      type: object
+      properties:
+        mountPath:
+          type: string
+        mountPropagation:
+          type: string
+        name:
+          type: string
+        readOnly:
+          type: boolean
+        recursiveReadOnly:
+          type: string
+        subPath:
+          type: string
+        subPathExpr:
+          type: string
+    MicroTime:
+      type: object
+      properties:
+        Time:
+          type: string
+    ServiceAccountTokenProjection:
+      type: object
+      properties:
+        audience:
+          type: string
+        expirationSeconds:
+          type: integer
+          format: int64
+        path:
+          type: string
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    OverrideRequest:
+      required:
+      - resourceName
+      - resourceType
+      type: object
+      properties:
+        affectedResources:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceEnableDisableRequest'
+        changeLog:
+          type: string
+        overrides:
+          type: object
+          additionalProperties:
+            type: object
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+    IngressRule:
+      type: object
+      properties:
+        host:
+          type: string
+        http:
+          $ref: '#/components/schemas/HTTPIngressRuleValue'
+    EventSeries:
+      type: object
+      properties:
+        count:
+          type: integer
+          format: int32
+        lastObservedTime:
+          $ref: '#/components/schemas/MicroTime'
+    Quantity:
+      type: object
+      properties:
+        amount:
+          type: string
+        format:
+          type: string
+    QuobyteVolumeSource:
+      type: object
+      properties:
+        group:
+          type: string
+        readOnly:
+          type: boolean
+        registry:
+          type: string
+        tenant:
+          type: string
+        user:
+          type: string
+        volume:
+          type: string
+    GRPCAction:
+      type: object
+      properties:
+        port:
+          type: integer
+          format: int32
+        service:
+          type: string
+    EphemeralVolumeSource:
+      type: object
+      properties:
+        volumeClaimTemplate:
+          $ref: '#/components/schemas/PersistentVolumeClaimTemplate'
+    Affinity:
+      type: object
+      properties:
+        nodeAffinity:
+          $ref: '#/components/schemas/NodeAffinity'
+        podAffinity:
+          $ref: '#/components/schemas/PodAffinity'
+        podAntiAffinity:
+          $ref: '#/components/schemas/PodAntiAffinity'
+    PersistentVolumeClaimTemplate:
+      type: object
+      properties:
+        metadata:
+          $ref: '#/components/schemas/ObjectMeta'
+        spec:
+          $ref: '#/components/schemas/PersistentVolumeClaimSpec'
+    SecretEnvSource:
+      type: object
+      properties:
+        name:
+          type: string
+        optional:
+          type: boolean
+    ContainerState:
+      type: object
+      properties:
+        running:
+          $ref: '#/components/schemas/ContainerStateRunning'
+        terminated:
+          $ref: '#/components/schemas/ContainerStateTerminated'
+        waiting:
+          $ref: '#/components/schemas/ContainerStateWaiting'
+    HTTPIngressPath:
+      type: object
+      properties:
+        backend:
+          $ref: '#/components/schemas/IngressBackend'
+        path:
+          type: string
+        pathType:
+          type: string
+    ContainerRestartRule:
+      type: object
+      properties:
+        action:
+          type: string
+        exitCodes:
+          $ref: '#/components/schemas/ContainerRestartRuleOnExitCodes'
+    PodCertificateProjection:
+      type: object
+      properties:
+        certificateChainPath:
+          type: string
+        credentialBundlePath:
+          type: string
+        keyPath:
+          type: string
+        keyType:
+          type: string
+        maxExpirationSeconds:
+          type: integer
+          format: int32
+        signerName:
+          type: string
+        userAnnotations:
+          type: object
+          additionalProperties:
+            type: string
+    VsphereVirtualDiskVolumeSource:
+      type: object
+      properties:
+        fsType:
+          type: string
+        storagePolicyID:
+          type: string
+        storagePolicyName:
+          type: string
+        volumePath:
+          type: string
+    LinuxContainerUser:
+      type: object
+      properties:
+        gid:
+          type: integer
+          format: int64
+        supplementalGroups:
+          type: array
+          items:
+            type: integer
+            format: int64
+        uid:
+          type: integer
+          format: int64
+    PodExtendedResourceClaimStatus:
+      type: object
+      properties:
+        requestMappings:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContainerExtendedResourceRequest'
+        resourceClaimName:
+          type: string
+    ISCSIVolumeSource:
+      type: object
+      properties:
+        chapAuthDiscovery:
+          type: boolean
+        chapAuthSession:
+          type: boolean
+        fsType:
+          type: string
+        initiatorName:
+          type: string
+        iqn:
+          type: string
+        iscsiInterface:
+          type: string
+        lun:
+          type: integer
+          format: int32
+        portals:
+          type: array
+          items:
+            type: string
+        readOnly:
+          type: boolean
+        secretRef:
+          $ref: '#/components/schemas/LocalObjectReference'
+        targetPortal:
+          type: string
+    AWSElasticBlockStoreVolumeSource:
+      type: object
+      properties:
+        fsType:
+          type: string
+        partition:
+          type: integer
+          format: int32
+        readOnly:
+          type: boolean
+        volumeID:
+          type: string
+    HTTPGetAction:
+      type: object
+      properties:
+        host:
+          type: string
+        httpHeaders:
+          type: array
+          items:
+            $ref: '#/components/schemas/HTTPHeader'
+        path:
+          type: string
+        port:
+          $ref: '#/components/schemas/IntOrString'
+        scheme:
+          type: string
+    SeccompProfile:
+      type: object
+      properties:
+        localhostProfile:
+          type: string
+        type:
+          type: string
+    ContainerExtendedResourceRequest:
+      type: object
+      properties:
+        containerName:
+          type: string
+        requestName:
+          type: string
+        resourceName:
+          type: string
+    PodAffinity:
+      type: object
+      properties:
+        preferredDuringSchedulingIgnoredDuringExecution:
+          type: array
+          items:
+            $ref: '#/components/schemas/WeightedPodAffinityTerm'
+        requiredDuringSchedulingIgnoredDuringExecution:
+          type: array
+          items:
+            $ref: '#/components/schemas/PodAffinityTerm'
+    ObjectReference:
+      type: object
+      properties:
+        apiVersion:
+          type: string
+        fieldPath:
+          type: string
+        kind:
+          type: string
+        name:
+          type: string
+        namespace:
+          type: string
+        resourceVersion:
+          type: string
+        uid:
+          type: string
+    ResourceMetricStatus:
+      type: object
+      properties:
+        current:
+          $ref: '#/components/schemas/MetricValueStatus'
+        name:
+          type: string
+    IngressLoadBalancerIngress:
+      type: object
+      properties:
+        hostname:
+          type: string
+        ip:
+          type: string
+        ports:
+          type: array
+          items:
+            $ref: '#/components/schemas/IngressPortStatus'
+    ResourceOutProperties:
+      type: object
+      properties:
+        attributes:
+          type: object
+          additionalProperties:
+            type: object
+        clusterId:
+          type: string
+        id:
+          type: string
+        interfaces:
+          type: object
+          additionalProperties:
+            type: object
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+        updatedAt:
+          type: string
+          format: date-time
+    IngressPortStatus:
+      type: object
+      properties:
+        error:
+          type: string
+        port:
+          type: integer
+          format: int32
+        protocol:
+          type: string
+    PodResourceClaim:
+      type: object
+      properties:
+        name:
+          type: string
+        resourceClaimName:
+          type: string
+        resourceClaimTemplateName:
+          type: string
+    TCPSocketAction:
+      type: object
+      properties:
+        host:
+          type: string
+        port:
+          $ref: '#/components/schemas/IntOrString'
+    Volume:
+      type: object
+      properties:
+        awsElasticBlockStore:
+          $ref: '#/components/schemas/AWSElasticBlockStoreVolumeSource'
+        azureDisk:
+          $ref: '#/components/schemas/AzureDiskVolumeSource'
+        azureFile:
+          $ref: '#/components/schemas/AzureFileVolumeSource'
+        cephfs:
+          $ref: '#/components/schemas/CephFSVolumeSource'
+        cinder:
+          $ref: '#/components/schemas/CinderVolumeSource'
+        configMap:
+          $ref: '#/components/schemas/ConfigMapVolumeSource'
+        csi:
+          $ref: '#/components/schemas/CSIVolumeSource'
+        downwardAPI:
+          $ref: '#/components/schemas/DownwardAPIVolumeSource'
+        emptyDir:
+          $ref: '#/components/schemas/EmptyDirVolumeSource'
+        ephemeral:
+          $ref: '#/components/schemas/EphemeralVolumeSource'
+        fc:
+          $ref: '#/components/schemas/FCVolumeSource'
+        flexVolume:
+          $ref: '#/components/schemas/FlexVolumeSource'
+        flocker:
+          $ref: '#/components/schemas/FlockerVolumeSource'
+        gcePersistentDisk:
+          $ref: '#/components/schemas/GCEPersistentDiskVolumeSource'
+        gitRepo:
+          $ref: '#/components/schemas/GitRepoVolumeSource'
+        glusterfs:
+          $ref: '#/components/schemas/GlusterfsVolumeSource'
+        hostPath:
+          $ref: '#/components/schemas/HostPathVolumeSource'
+        image:
+          $ref: '#/components/schemas/ImageVolumeSource'
+        iscsi:
+          $ref: '#/components/schemas/ISCSIVolumeSource'
+        name:
+          type: string
+        nfs:
+          $ref: '#/components/schemas/NFSVolumeSource'
+        persistentVolumeClaim:
+          $ref: '#/components/schemas/PersistentVolumeClaimVolumeSource'
+        photonPersistentDisk:
+          $ref: '#/components/schemas/PhotonPersistentDiskVolumeSource'
+        portworxVolume:
+          $ref: '#/components/schemas/PortworxVolumeSource'
+        projected:
+          $ref: '#/components/schemas/ProjectedVolumeSource'
+        quobyte:
+          $ref: '#/components/schemas/QuobyteVolumeSource'
+        rbd:
+          $ref: '#/components/schemas/RBDVolumeSource'
+        scaleIO:
+          $ref: '#/components/schemas/ScaleIOVolumeSource'
+        secret:
+          $ref: '#/components/schemas/SecretVolumeSource'
+        storageos:
+          $ref: '#/components/schemas/StorageOSVolumeSource'
+        vsphereVolume:
+          $ref: '#/components/schemas/VsphereVirtualDiskVolumeSource'
+    Version:
+      type: object
+      properties:
+        archiveDate:
+          type: string
+          format: date-time
+        entity:
+          $ref: '#/components/schemas/Versioned'
+        id:
+          type: string
+        sequence:
+          type: integer
+          format: int64
+          writeOnly: true
+        sequenceKey:
+          type: string
+        version:
+          type: integer
+          format: int64
+        versioningKey:
+          type: string
+    VolumeDevice:
+      type: object
+      properties:
+        devicePath:
+          type: string
+        name:
+          type: string
+    CrossVersionObjectReference:
+      type: object
+      properties:
+        apiVersion:
+          type: string
+        kind:
+          type: string
+        name:
+          type: string
+    ContainerRestartRuleOnExitCodes:
+      type: object
+      properties:
+        operator:
+          type: string
+        values:
+          type: array
+          items:
+            type: integer
+            format: int32
+    DownwardAPIVolumeFile:
+      type: object
+      properties:
+        fieldRef:
+          $ref: '#/components/schemas/ObjectFieldSelector'
+        mode:
+          type: integer
+          format: int32
+        path:
+          type: string
+        resourceFieldRef:
+          $ref: '#/components/schemas/ResourceFieldSelector'
+    PodSchedulingGate:
+      type: object
+      properties:
+        name:
+          type: string
+    CephFSVolumeSource:
+      type: object
+      properties:
+        monitors:
+          type: array
+          items:
+            type: string
+        path:
+          type: string
+        readOnly:
+          type: boolean
+        secretFile:
+          type: string
+        secretRef:
+          $ref: '#/components/schemas/LocalObjectReference'
+        user:
+          type: string
+    DownwardAPIProjection:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/DownwardAPIVolumeFile'
+    SecretProjection:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/KeyToPath'
+        name:
+          type: string
+        optional:
+          type: boolean
+    PersistentVolumeClaimSpec:
+      type: object
+      properties:
+        accessModes:
+          type: array
+          items:
+            type: string
+        dataSource:
+          $ref: '#/components/schemas/TypedLocalObjectReference'
+        dataSourceRef:
+          $ref: '#/components/schemas/TypedObjectReference'
+        resources:
+          $ref: '#/components/schemas/VolumeResourceRequirements'
+        selector:
+          $ref: '#/components/schemas/LabelSelector'
+        storageClassName:
+          type: string
+        volumeAttributesClassName:
+          type: string
+        volumeMode:
+          type: string
+        volumeName:
+          type: string
+    FCVolumeSource:
+      type: object
+      properties:
+        fsType:
+          type: string
+        lun:
+          type: integer
+          format: int32
+        readOnly:
+          type: boolean
+        targetWWNs:
+          type: array
+          items:
+            type: string
+        wwids:
+          type: array
+          items:
+            type: string
+    Container:
+      type: object
+      properties:
+        args:
+          type: array
+          items:
+            type: string
+        command:
+          type: array
+          items:
+            type: string
+        env:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnvVar'
+        envFrom:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnvFromSource'
+        image:
+          type: string
+        imagePullPolicy:
+          type: string
+        lifecycle:
+          $ref: '#/components/schemas/Lifecycle'
+        livenessProbe:
+          $ref: '#/components/schemas/Probe'
+        name:
+          type: string
+        ports:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContainerPort'
+        readinessProbe:
+          $ref: '#/components/schemas/Probe'
+        resizePolicy:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContainerResizePolicy'
+        resources:
+          $ref: '#/components/schemas/ResourceRequirements'
+        restartPolicy:
+          type: string
+        restartPolicyRules:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContainerRestartRule'
+        securityContext:
+          $ref: '#/components/schemas/SecurityContext'
+        startupProbe:
+          $ref: '#/components/schemas/Probe'
+        stdin:
+          type: boolean
+        stdinOnce:
+          type: boolean
+        terminationMessagePath:
+          type: string
+        terminationMessagePolicy:
+          type: string
+        tty:
+          type: boolean
+        volumeDevices:
+          type: array
+          items:
+            $ref: '#/components/schemas/VolumeDevice'
+        volumeMounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/VolumeMount'
+        workingDir:
+          type: string
+    PhotonPersistentDiskVolumeSource:
+      type: object
+      properties:
+        fsType:
+          type: string
+        pdID:
+          type: string
+    NodeSelectorRequirement:
+      type: object
+      properties:
+        key:
+          type: string
+        operator:
+          type: string
+        values:
+          type: array
+          items:
+            type: string
+    ContainerStateRunning:
+      type: object
+      properties:
+        startedAt:
+          type: string
+    ExecAction:
+      type: object
+      properties:
+        command:
+          type: array
+          items:
+            type: string
+    PodIP:
+      type: object
+      properties:
+        ip:
+          type: string
+    CSIVolumeSource:
+      type: object
+      properties:
+        driver:
+          type: string
+        fsType:
+          type: string
+        nodePublishSecretRef:
+          $ref: '#/components/schemas/LocalObjectReference'
+        readOnly:
+          type: boolean
+        volumeAttributes:
+          type: object
+          additionalProperties:
+            type: string
+    LocalObjectReference:
+      type: object
+      properties:
+        name:
+          type: string
     PodSecurityContext:
       type: object
       properties:
@@ -2149,37 +3436,43 @@ components:
             $ref: '#/components/schemas/Sysctl'
         windowsOptions:
           $ref: '#/components/schemas/WindowsSecurityContextOptions'
-    ResourceFieldSelector:
+    PodSchedulingGroup:
       type: object
       properties:
-        containerName:
+        podGroupName:
           type: string
-        divisor:
-          $ref: '#/components/schemas/Quantity'
-        resource:
-          type: string
-    PersistentVolumeClaimVolumeSource:
+    ImageVolumeStatus:
       type: object
       properties:
-        claimName:
+        imageRef:
           type: string
-        readOnly:
+    OwnerReference:
+      type: object
+      properties:
+        apiVersion:
+          type: string
+        blockOwnerDeletion:
           type: boolean
-    ValidationResponse:
+        controller:
+          type: boolean
+        kind:
+          type: string
+        name:
+          type: string
+        uid:
+          type: string
+    MetricTarget:
       type: object
       properties:
-        directory:
+        averageUtilization:
+          type: integer
+          format: int32
+        averageValue:
+          $ref: '#/components/schemas/Quantity'
+        type:
           type: string
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/BlueprintValidationError'
-        filename:
-          type: string
-        resourceName:
-          type: string
-        resourceType:
-          type: string
+        value:
+          $ref: '#/components/schemas/Quantity'
     VolumeMountStatus:
       type: object
       properties:
@@ -2193,6 +3486,144 @@ components:
           type: string
         volumeStatus:
           $ref: '#/components/schemas/VolumeStatus'
+    HostIP:
+      type: object
+      properties:
+        ip:
+          type: string
+    ProjectedVolumeSource:
+      type: object
+      properties:
+        defaultMode:
+          type: integer
+          format: int32
+        sources:
+          type: array
+          items:
+            $ref: '#/components/schemas/VolumeProjection'
+    IngressStatus:
+      type: object
+      properties:
+        loadBalancer:
+          $ref: '#/components/schemas/IngressLoadBalancerStatus'
+    SELinuxOptions:
+      type: object
+      properties:
+        level:
+          type: string
+        role:
+          type: string
+        type:
+          type: string
+        user:
+          type: string
+    EnvFromSource:
+      type: object
+      properties:
+        configMapRef:
+          $ref: '#/components/schemas/ConfigMapEnvSource'
+        prefix:
+          type: string
+        secretRef:
+          $ref: '#/components/schemas/SecretEnvSource'
+    HTTPIngressRuleValue:
+      type: object
+      properties:
+        paths:
+          type: array
+          items:
+            $ref: '#/components/schemas/HTTPIngressPath'
+    GitRepoVolumeSource:
+      type: object
+      properties:
+        directory:
+          type: string
+        repository:
+          type: string
+        revision:
+          type: string
+    IngressServiceBackend:
+      type: object
+      properties:
+        name:
+          type: string
+        port:
+          $ref: '#/components/schemas/ServiceBackendPort'
+    VolumeStatus:
+      type: object
+      properties:
+        image:
+          $ref: '#/components/schemas/ImageVolumeStatus'
+    SecretVolumeSource:
+      type: object
+      properties:
+        defaultMode:
+          type: integer
+          format: int32
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/KeyToPath'
+        optional:
+          type: boolean
+        secretName:
+          type: string
+    MetricIdentifier:
+      type: object
+      properties:
+        name:
+          type: string
+        selector:
+          $ref: '#/components/schemas/LabelSelector'
+    TypedObjectReference:
+      type: object
+      properties:
+        apiGroup:
+          type: string
+        kind:
+          type: string
+        name:
+          type: string
+        namespace:
+          type: string
+    PodAffinityTerm:
+      type: object
+      properties:
+        labelSelector:
+          $ref: '#/components/schemas/LabelSelector'
+        matchLabelKeys:
+          type: array
+          items:
+            type: string
+        mismatchLabelKeys:
+          type: array
+          items:
+            type: string
+        namespaceSelector:
+          $ref: '#/components/schemas/LabelSelector'
+        namespaces:
+          type: array
+          items:
+            type: string
+        topologyKey:
+          type: string
+    HorizontalPodAutoscalerSpec:
+      type: object
+      properties:
+        behavior:
+          $ref: '#/components/schemas/HorizontalPodAutoscalerBehavior'
+        maxReplicas:
+          type: integer
+          format: int32
+        metrics:
+          type: array
+          items:
+            $ref: '#/components/schemas/MetricSpec'
+        minReplicas:
+          type: integer
+          format: int32
+        scaleTargetRef:
+          $ref: '#/components/schemas/CrossVersionObjectReference'
     ResourceHistory:
       type: object
       properties:
@@ -2220,42 +3651,6 @@ components:
           - RUNNING
           - STOPPED
         resourceType:
-          type: string
-    KeyToPath:
-      type: object
-      properties:
-        key:
-          type: string
-        mode:
-          type: integer
-          format: int32
-        path:
-          type: string
-    ManagedFieldsEntry:
-      type: object
-      properties:
-        apiVersion:
-          type: string
-        fieldsType:
-          type: string
-        fieldsV1:
-          $ref: '#/components/schemas/FieldsV1'
-        manager:
-          type: string
-        operation:
-          type: string
-        subresource:
-          type: string
-        time:
-          type: string
-    HostAlias:
-      type: object
-      properties:
-        hostnames:
-          type: array
-          items:
-            type: string
-        ip:
           type: string
     Event:
       type: object
@@ -2295,46 +3690,31 @@ components:
           $ref: '#/components/schemas/EventSource'
         type:
           type: string
-    HPAScalingPolicy:
+    ResourceFieldSelector:
       type: object
       properties:
-        periodSeconds:
-          type: integer
-          format: int32
-        type:
+        containerName:
           type: string
-        value:
-          type: integer
-          format: int32
-    WindowsSecurityContextOptions:
+        divisor:
+          $ref: '#/components/schemas/Quantity'
+        resource:
+          type: string
+    FlockerVolumeSource:
       type: object
       properties:
-        gmsaCredentialSpec:
+        datasetName:
           type: string
-        gmsaCredentialSpecName:
+        datasetUUID:
           type: string
-        hostProcess:
+    SecretKeySelector:
+      type: object
+      properties:
+        key:
+          type: string
+        name:
+          type: string
+        optional:
           type: boolean
-        runAsUserName:
-          type: string
-    VsphereVirtualDiskVolumeSource:
-      type: object
-      properties:
-        fsType:
-          type: string
-        storagePolicyID:
-          type: string
-        storagePolicyName:
-          type: string
-        volumePath:
-          type: string
-    EventSource:
-      type: object
-      properties:
-        component:
-          type: string
-        host:
-          type: string
     EmptyDirVolumeSource:
       type: object
       properties:
@@ -2342,294 +3722,6 @@ components:
           type: string
         sizeLimit:
           $ref: '#/components/schemas/Quantity'
-    AzureDiskVolumeSource:
-      type: object
-      properties:
-        cachingMode:
-          type: string
-        diskName:
-          type: string
-        diskURI:
-          type: string
-        fsType:
-          type: string
-        kind:
-          type: string
-        readOnly:
-          type: boolean
-    CephFSVolumeSource:
-      type: object
-      properties:
-        monitors:
-          type: array
-          items:
-            type: string
-        path:
-          type: string
-        readOnly:
-          type: boolean
-        secretFile:
-          type: string
-        secretRef:
-          $ref: '#/components/schemas/LocalObjectReference'
-        user:
-          type: string
-    BlueprintValidationError:
-      type: object
-      properties:
-        blueprintErrorLines:
-          type: array
-          items:
-            type: integer
-            format: int32
-        category:
-          type: string
-          enum:
-          - Syntax Error
-          - Non-Existent Resource Reference
-          - Disabled Resource References
-          - Invalid Reference Expression
-          - Schema Compliance Error
-          - GuardRails Compliance Issues
-          - Overrides Syntax Error
-          - Invalid Filename Error
-          - Input Validation Error
-          - Missing Environment Override
-        message:
-          type: string
-        overrideErrorLines:
-          type: array
-          items:
-            type: integer
-            format: int32
-        severity:
-          type: string
-          enum:
-          - ERROR
-          - WARNING
-    NodeSelector:
-      type: object
-      properties:
-        nodeSelectorTerms:
-          type: array
-          items:
-            $ref: '#/components/schemas/NodeSelectorTerm'
-    SleepAction:
-      type: object
-      properties:
-        seconds:
-          type: integer
-          format: int64
-    TypedObjectReference:
-      type: object
-      properties:
-        apiGroup:
-          type: string
-        kind:
-          type: string
-        name:
-          type: string
-        namespace:
-          type: string
-    ResourceMetricSource:
-      type: object
-      properties:
-        name:
-          type: string
-        target:
-          $ref: '#/components/schemas/MetricTarget'
-    HorizontalPodAutoscalerCondition:
-      type: object
-      properties:
-        lastTransitionTime:
-          type: string
-        message:
-          type: string
-        reason:
-          type: string
-        status:
-          type: string
-        type:
-          type: string
-    ResourceMetricStatus:
-      type: object
-      properties:
-        current:
-          $ref: '#/components/schemas/MetricValueStatus'
-        name:
-          type: string
-    ResourceEnableDisableRequest:
-      type: object
-      properties:
-        directory:
-          type: string
-        disabled:
-          type: boolean
-        filename:
-          type: string
-        resourceName:
-          type: string
-        resourceType:
-          type: string
-    ConfigMapVolumeSource:
-      type: object
-      properties:
-        defaultMode:
-          type: integer
-          format: int32
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/KeyToPath'
-        name:
-          type: string
-        optional:
-          type: boolean
-    PersistentVolumeClaimTemplate:
-      type: object
-      properties:
-        metadata:
-          $ref: '#/components/schemas/ObjectMeta'
-        spec:
-          $ref: '#/components/schemas/PersistentVolumeClaimSpec'
-    IngressTLS:
-      type: object
-      properties:
-        hosts:
-          type: array
-          items:
-            type: string
-        secretName:
-          type: string
-    SecretVolumeSource:
-      type: object
-      properties:
-        defaultMode:
-          type: integer
-          format: int32
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/KeyToPath'
-        optional:
-          type: boolean
-        secretName:
-          type: string
-    Affinity:
-      type: object
-      properties:
-        nodeAffinity:
-          $ref: '#/components/schemas/NodeAffinity'
-        podAffinity:
-          $ref: '#/components/schemas/PodAffinity'
-        podAntiAffinity:
-          $ref: '#/components/schemas/PodAntiAffinity'
-    RBDVolumeSource:
-      type: object
-      properties:
-        fsType:
-          type: string
-        image:
-          type: string
-        keyring:
-          type: string
-        monitors:
-          type: array
-          items:
-            type: string
-        pool:
-          type: string
-        readOnly:
-          type: boolean
-        secretRef:
-          $ref: '#/components/schemas/LocalObjectReference'
-        user:
-          type: string
-    FlexVolumeSource:
-      type: object
-      properties:
-        driver:
-          type: string
-        fsType:
-          type: string
-        options:
-          type: object
-          additionalProperties:
-            type: string
-        readOnly:
-          type: boolean
-        secretRef:
-          $ref: '#/components/schemas/LocalObjectReference'
-    IngressBackend:
-      type: object
-      properties:
-        resource:
-          $ref: '#/components/schemas/TypedLocalObjectReference'
-        service:
-          $ref: '#/components/schemas/IngressServiceBackend'
-    IntOrString:
-      type: object
-      properties:
-        intVal:
-          type: integer
-          format: int32
-        strVal:
-          type: string
-        value:
-          type: object
-    DownwardAPIVolumeSource:
-      type: object
-      properties:
-        defaultMode:
-          type: integer
-          format: int32
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/DownwardAPIVolumeFile'
-    PodsMetricStatus:
-      type: object
-      properties:
-        current:
-          $ref: '#/components/schemas/MetricValueStatus'
-        metric:
-          $ref: '#/components/schemas/MetricIdentifier'
-    GCEPersistentDiskVolumeSource:
-      type: object
-      properties:
-        fsType:
-          type: string
-        partition:
-          type: integer
-          format: int32
-        pdName:
-          type: string
-        readOnly:
-          type: boolean
-    ContainerPort:
-      type: object
-      properties:
-        containerPort:
-          type: integer
-          format: int32
-        hostIP:
-          type: string
-        hostPort:
-          type: integer
-          format: int32
-        name:
-          type: string
-        protocol:
-          type: string
-    ObjectMetricSource:
-      type: object
-      properties:
-        describedObject:
-          $ref: '#/components/schemas/CrossVersionObjectReference'
-        metric:
-          $ref: '#/components/schemas/MetricIdentifier'
-        target:
-          $ref: '#/components/schemas/MetricTarget'
     EphemeralContainer:
       type: object
       properties:
@@ -2703,157 +3795,95 @@ components:
             $ref: '#/components/schemas/VolumeMount'
         workingDir:
           type: string
-    LabelSelector:
+    HorizontalPodAutoscalerCondition:
       type: object
       properties:
-        matchExpressions:
-          type: array
-          items:
-            $ref: '#/components/schemas/LabelSelectorRequirement'
-        matchLabels:
+        lastTransitionTime:
+          type: string
+        message:
+          type: string
+        reason:
+          type: string
+        status:
+          type: string
+        type:
+          type: string
+    FlexVolumeSource:
+      type: object
+      properties:
+        driver:
+          type: string
+        fsType:
+          type: string
+        options:
           type: object
           additionalProperties:
             type: string
-    LocalObjectReference:
+        readOnly:
+          type: boolean
+        secretRef:
+          $ref: '#/components/schemas/LocalObjectReference'
+    ServiceBackendPort:
       type: object
       properties:
         name:
           type: string
-    ConfigMapKeySelector:
+        number:
+          type: integer
+          format: int32
+    ObjectMetricSource:
+      type: object
+      properties:
+        describedObject:
+          $ref: '#/components/schemas/CrossVersionObjectReference'
+        metric:
+          $ref: '#/components/schemas/MetricIdentifier'
+        target:
+          $ref: '#/components/schemas/MetricTarget'
+    Lifecycle:
+      type: object
+      properties:
+        postStart:
+          $ref: '#/components/schemas/LifecycleHandler'
+        preStop:
+          $ref: '#/components/schemas/LifecycleHandler'
+        stopSignal:
+          type: string
+    ResourceEnableDisableRequest:
+      type: object
+      properties:
+        directory:
+          type: string
+        disabled:
+          type: boolean
+        filename:
+          type: string
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+    Capabilities:
+      type: object
+      properties:
+        add:
+          type: array
+          items:
+            type: string
+        drop:
+          type: array
+          items:
+            type: string
+    LabelSelectorRequirement:
       type: object
       properties:
         key:
           type: string
-        name:
+        operator:
           type: string
-        optional:
-          type: boolean
-    ObjectMeta:
-      type: object
-      properties:
-        annotations:
-          type: object
-          additionalProperties:
-            type: string
-        creationTimestamp:
-          type: string
-        deletionGracePeriodSeconds:
-          type: integer
-          format: int64
-        deletionTimestamp:
-          type: string
-        finalizers:
+        values:
           type: array
           items:
             type: string
-        generateName:
-          type: string
-        generation:
-          type: integer
-          format: int64
-        labels:
-          type: object
-          additionalProperties:
-            type: string
-        managedFields:
-          type: array
-          items:
-            $ref: '#/components/schemas/ManagedFieldsEntry'
-        name:
-          type: string
-        namespace:
-          type: string
-        ownerReferences:
-          type: array
-          items:
-            $ref: '#/components/schemas/OwnerReference'
-        resourceVersion:
-          type: string
-        selfLink:
-          type: string
-        uid:
-          type: string
-    PhotonPersistentDiskVolumeSource:
-      type: object
-      properties:
-        fsType:
-          type: string
-        pdID:
-          type: string
-    HorizontalPodAutoscaler:
-      type: object
-      properties:
-        apiVersion:
-          type: string
-        kind:
-          type: string
-        metadata:
-          $ref: '#/components/schemas/ObjectMeta'
-        spec:
-          $ref: '#/components/schemas/HorizontalPodAutoscalerSpec'
-        status:
-          $ref: '#/components/schemas/HorizontalPodAutoscalerStatus'
-    EnvVarSource:
-      type: object
-      properties:
-        configMapKeyRef:
-          $ref: '#/components/schemas/ConfigMapKeySelector'
-        fieldRef:
-          $ref: '#/components/schemas/ObjectFieldSelector'
-        fileKeyRef:
-          $ref: '#/components/schemas/FileKeySelector'
-        resourceFieldRef:
-          $ref: '#/components/schemas/ResourceFieldSelector'
-        secretKeyRef:
-          $ref: '#/components/schemas/SecretKeySelector'
-    HTTPHeader:
-      type: object
-      properties:
-        name:
-          type: string
-        value:
-          type: string
-    PodSchedulingGate:
-      type: object
-      properties:
-        name:
-          type: string
-    PodResourceClaim:
-      type: object
-      properties:
-        name:
-          type: string
-        resourceClaimName:
-          type: string
-        resourceClaimTemplateName:
-          type: string
-    Pod:
-      type: object
-      properties:
-        apiVersion:
-          type: string
-        kind:
-          type: string
-        metadata:
-          $ref: '#/components/schemas/ObjectMeta'
-        spec:
-          $ref: '#/components/schemas/PodSpec'
-        status:
-          $ref: '#/components/schemas/PodStatus'
-    ExternalMetricStatus:
-      type: object
-      properties:
-        current:
-          $ref: '#/components/schemas/MetricValueStatus'
-        metric:
-          $ref: '#/components/schemas/MetricIdentifier'
-    ContainerResizePolicy:
-      type: object
-      properties:
-        resourceName:
-          type: string
-        restartPolicy:
-          type: string
     StorageOSVolumeSource:
       type: object
       properties:
@@ -2867,81 +3897,6 @@ components:
           type: string
         volumeNamespace:
           type: string
-    PodIP:
-      type: object
-      properties:
-        ip:
-          type: string
-    Ingress:
-      type: object
-      properties:
-        apiVersion:
-          type: string
-        kind:
-          type: string
-        metadata:
-          $ref: '#/components/schemas/ObjectMeta'
-        spec:
-          $ref: '#/components/schemas/IngressSpec'
-        status:
-          $ref: '#/components/schemas/IngressStatus'
-    PodAffinityTerm:
-      type: object
-      properties:
-        labelSelector:
-          $ref: '#/components/schemas/LabelSelector'
-        matchLabelKeys:
-          type: array
-          items:
-            type: string
-        mismatchLabelKeys:
-          type: array
-          items:
-            type: string
-        namespaceSelector:
-          $ref: '#/components/schemas/LabelSelector'
-        namespaces:
-          type: array
-          items:
-            type: string
-        topologyKey:
-          type: string
-    AzureFileVolumeSource:
-      type: object
-      properties:
-        readOnly:
-          type: boolean
-        secretName:
-          type: string
-        shareName:
-          type: string
-    IngressRule:
-      type: object
-      properties:
-        host:
-          type: string
-        http:
-          $ref: '#/components/schemas/HTTPIngressRuleValue'
-    ContainerResourceMetricStatus:
-      type: object
-      properties:
-        container:
-          type: string
-        current:
-          $ref: '#/components/schemas/MetricValueStatus'
-        name:
-          type: string
-    SELinuxOptions:
-      type: object
-      properties:
-        level:
-          type: string
-        role:
-          type: string
-        type:
-          type: string
-        user:
-          type: string
     MetricValueStatus:
       type: object
       properties:
@@ -2952,143 +3907,6 @@ components:
           $ref: '#/components/schemas/Quantity'
         value:
           $ref: '#/components/schemas/Quantity'
-    HistoryMetadata:
-      type: object
-      properties:
-        liveVersionId:
-          type: string
-        previewVersionId:
-          type: string
-        versions:
-          type: array
-          items:
-            $ref: '#/components/schemas/Version'
-    HorizontalPodAutoscalerSpec:
-      type: object
-      properties:
-        behavior:
-          $ref: '#/components/schemas/HorizontalPodAutoscalerBehavior'
-        maxReplicas:
-          type: integer
-          format: int32
-        metrics:
-          type: array
-          items:
-            $ref: '#/components/schemas/MetricSpec'
-        minReplicas:
-          type: integer
-          format: int32
-        scaleTargetRef:
-          $ref: '#/components/schemas/CrossVersionObjectReference'
-    SecretProjection:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/KeyToPath'
-        name:
-          type: string
-        optional:
-          type: boolean
-    TypedLocalObjectReference:
-      type: object
-      properties:
-        apiGroup:
-          type: string
-        kind:
-          type: string
-        name:
-          type: string
-    EnvFromSource:
-      type: object
-      properties:
-        configMapRef:
-          $ref: '#/components/schemas/ConfigMapEnvSource'
-        prefix:
-          type: string
-        secretRef:
-          $ref: '#/components/schemas/SecretEnvSource'
-    IngressPortStatus:
-      type: object
-      properties:
-        error:
-          type: string
-        port:
-          type: integer
-          format: int32
-        protocol:
-          type: string
-    ContainerStateWaiting:
-      type: object
-      properties:
-        message:
-          type: string
-        reason:
-          type: string
-    ImageVolumeStatus:
-      type: object
-      properties:
-        imageRef:
-          type: string
-    NodeAllocatableResourceClaimStatus:
-      type: object
-      properties:
-        containers:
-          type: array
-          items:
-            type: string
-        resourceClaimName:
-          type: string
-        resources:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/Quantity'
-    VolumeDevice:
-      type: object
-      properties:
-        devicePath:
-          type: string
-        name:
-          type: string
-    SecretEnvSource:
-      type: object
-      properties:
-        name:
-          type: string
-        optional:
-          type: boolean
-    ContainerRestartRule:
-      type: object
-      properties:
-        action:
-          type: string
-        exitCodes:
-          $ref: '#/components/schemas/ContainerRestartRuleOnExitCodes'
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-    Versioned:
-      type: object
-      properties:
-        changeLog:
-          type: string
-          writeOnly: true
-        versioningKey:
-          type: string
-    ContainerState:
-      type: object
-      properties:
-        running:
-          $ref: '#/components/schemas/ContainerStateRunning'
-        terminated:
-          $ref: '#/components/schemas/ContainerStateTerminated'
-        waiting:
-          $ref: '#/components/schemas/ContainerStateWaiting'
     IngressSpec:
       type: object
       properties:
@@ -3104,67 +3922,43 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/IngressTLS'
-    Quantity:
+    PodDNSConfig:
       type: object
       properties:
-        amount:
-          type: string
-        format:
-          type: string
-    ResourceClaim:
-      type: object
-      properties:
-        name:
-          type: string
-        request:
-          type: string
-    Sysctl:
-      type: object
-      properties:
-        name:
-          type: string
-        value:
-          type: string
-    MetricStatus:
-      type: object
-      properties:
-        containerResource:
-          $ref: '#/components/schemas/ContainerResourceMetricStatus'
-        external:
-          $ref: '#/components/schemas/ExternalMetricStatus'
-        object:
-          $ref: '#/components/schemas/ObjectMetricStatus'
-        pods:
-          $ref: '#/components/schemas/PodsMetricStatus'
-        resource:
-          $ref: '#/components/schemas/ResourceMetricStatus'
-        type:
-          type: string
-    NodeSelectorRequirement:
-      type: object
-      properties:
-        key:
-          type: string
-        operator:
-          type: string
-        values:
+        nameservers:
           type: array
           items:
             type: string
-    PodOS:
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/PodDNSConfigOption'
+        searches:
+          type: array
+          items:
+            type: string
+    ImageVolumeSource:
       type: object
       properties:
-        name:
+        pullPolicy:
           type: string
-    ObjectMetricStatus:
+        reference:
+          type: string
+    ResourceRequirements:
       type: object
       properties:
-        current:
-          $ref: '#/components/schemas/MetricValueStatus'
-        describedObject:
-          $ref: '#/components/schemas/CrossVersionObjectReference'
-        metric:
-          $ref: '#/components/schemas/MetricIdentifier'
+        claims:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceClaim'
+        limits:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Quantity'
+        requests:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Quantity'
     TopologySpreadConstraint:
       type: object
       properties:
@@ -3188,808 +3982,14 @@ components:
           type: string
         whenUnsatisfiable:
           type: string
-    HPAScalingRules:
+    PreferredSchedulingTerm:
       type: object
       properties:
-        policies:
-          type: array
-          items:
-            $ref: '#/components/schemas/HPAScalingPolicy'
-        selectPolicy:
-          type: string
-        stabilizationWindowSeconds:
-          type: integer
-          format: int32
-        tolerance:
-          $ref: '#/components/schemas/Quantity'
-    VolumeStatus:
-      type: object
-      properties:
-        image:
-          $ref: '#/components/schemas/ImageVolumeStatus'
-    EphemeralVolumeSource:
-      type: object
-      properties:
-        volumeClaimTemplate:
-          $ref: '#/components/schemas/PersistentVolumeClaimTemplate'
-    NFSVolumeSource:
-      type: object
-      properties:
-        path:
-          type: string
-        readOnly:
-          type: boolean
-        server:
-          type: string
-    PodsMetricSource:
-      type: object
-      properties:
-        metric:
-          $ref: '#/components/schemas/MetricIdentifier'
-        target:
-          $ref: '#/components/schemas/MetricTarget'
-    HostIP:
-      type: object
-      properties:
-        ip:
-          type: string
-    OverrideObject:
-      type: object
-      properties:
-        changeLog:
-          type: string
-        commitId:
-          type: string
-        createdBy:
-          type: string
-        creationDate:
-          type: string
-          format: date-time
-        id:
-          type: string
-        lastModifiedBy:
-          type: string
-        lastModifiedDate:
-          type: string
-          format: date-time
-        overrides:
-          type: object
-          additionalProperties:
-            type: object
-        resourceName:
-          type: string
-        resourceType:
-          type: string
-        versioningKey:
-          type: string
-    LifecycleHandler:
-      type: object
-      properties:
-        exec:
-          $ref: '#/components/schemas/ExecAction'
-        httpGet:
-          $ref: '#/components/schemas/HTTPGetAction'
-        sleep:
-          $ref: '#/components/schemas/SleepAction'
-        tcpSocket:
-          $ref: '#/components/schemas/TCPSocketAction'
-    GRPCAction:
-      type: object
-      properties:
-        port:
-          type: integer
-          format: int32
-        service:
-          type: string
-    LinuxContainerUser:
-      type: object
-      properties:
-        gid:
-          type: integer
-          format: int64
-        supplementalGroups:
-          type: array
-          items:
-            type: integer
-            format: int64
-        uid:
-          type: integer
-          format: int64
-    PodCondition:
-      type: object
-      properties:
-        lastProbeTime:
-          type: string
-        lastTransitionTime:
-          type: string
-        message:
-          type: string
-        observedGeneration:
-          type: integer
-          format: int64
-        reason:
-          type: string
-        status:
-          type: string
-        type:
-          type: string
-    ConfigMapEnvSource:
-      type: object
-      properties:
-        name:
-          type: string
-        optional:
-          type: boolean
-    PodExtendedResourceClaimStatus:
-      type: object
-      properties:
-        requestMappings:
-          type: array
-          items:
-            $ref: '#/components/schemas/ContainerExtendedResourceRequest'
-        resourceClaimName:
-          type: string
-    HostPathVolumeSource:
-      type: object
-      properties:
-        path:
-          type: string
-        type:
-          type: string
-    MetricSpec:
-      type: object
-      properties:
-        containerResource:
-          $ref: '#/components/schemas/ContainerResourceMetricSource'
-        external:
-          $ref: '#/components/schemas/ExternalMetricSource'
-        object:
-          $ref: '#/components/schemas/ObjectMetricSource'
-        pods:
-          $ref: '#/components/schemas/PodsMetricSource'
-        resource:
-          $ref: '#/components/schemas/ResourceMetricSource'
-        type:
-          type: string
-    ISCSIVolumeSource:
-      type: object
-      properties:
-        chapAuthDiscovery:
-          type: boolean
-        chapAuthSession:
-          type: boolean
-        fsType:
-          type: string
-        initiatorName:
-          type: string
-        iqn:
-          type: string
-        iscsiInterface:
-          type: string
-        lun:
-          type: integer
-          format: int32
-        portals:
-          type: array
-          items:
-            type: string
-        readOnly:
-          type: boolean
-        secretRef:
-          $ref: '#/components/schemas/LocalObjectReference'
-        targetPortal:
-          type: string
-    PodAffinity:
-      type: object
-      properties:
-        preferredDuringSchedulingIgnoredDuringExecution:
-          type: array
-          items:
-            $ref: '#/components/schemas/WeightedPodAffinityTerm'
-        requiredDuringSchedulingIgnoredDuringExecution:
-          type: array
-          items:
-            $ref: '#/components/schemas/PodAffinityTerm'
-    GithubAppPermissionsPendingErrorDetails:
-      type: object
-      properties:
-        approvalUrl:
-          type: string
-        code:
-          type: string
-        errorCode:
-          type: string
-        message:
-          type: string
-        missingPermissions:
-          type: array
-          items:
-            type: string
-    SecretKeySelector:
-      type: object
-      properties:
-        key:
-          type: string
-        name:
-          type: string
-        optional:
-          type: boolean
-    Container:
-      type: object
-      properties:
-        args:
-          type: array
-          items:
-            type: string
-        command:
-          type: array
-          items:
-            type: string
-        env:
-          type: array
-          items:
-            $ref: '#/components/schemas/EnvVar'
-        envFrom:
-          type: array
-          items:
-            $ref: '#/components/schemas/EnvFromSource'
-        image:
-          type: string
-        imagePullPolicy:
-          type: string
-        lifecycle:
-          $ref: '#/components/schemas/Lifecycle'
-        livenessProbe:
-          $ref: '#/components/schemas/Probe'
-        name:
-          type: string
-        ports:
-          type: array
-          items:
-            $ref: '#/components/schemas/ContainerPort'
-        readinessProbe:
-          $ref: '#/components/schemas/Probe'
-        resizePolicy:
-          type: array
-          items:
-            $ref: '#/components/schemas/ContainerResizePolicy'
-        resources:
-          $ref: '#/components/schemas/ResourceRequirements'
-        restartPolicy:
-          type: string
-        restartPolicyRules:
-          type: array
-          items:
-            $ref: '#/components/schemas/ContainerRestartRule'
-        securityContext:
-          $ref: '#/components/schemas/SecurityContext'
-        startupProbe:
-          $ref: '#/components/schemas/Probe'
-        stdin:
-          type: boolean
-        stdinOnce:
-          type: boolean
-        terminationMessagePath:
-          type: string
-        terminationMessagePolicy:
-          type: string
-        tty:
-          type: boolean
-        volumeDevices:
-          type: array
-          items:
-            $ref: '#/components/schemas/VolumeDevice'
-        volumeMounts:
-          type: array
-          items:
-            $ref: '#/components/schemas/VolumeMount'
-        workingDir:
-          type: string
-    ExternalMetricSource:
-      type: object
-      properties:
-        metric:
-          $ref: '#/components/schemas/MetricIdentifier'
-        target:
-          $ref: '#/components/schemas/MetricTarget'
-    MetricTarget:
-      type: object
-      properties:
-        averageUtilization:
-          type: integer
-          format: int32
-        averageValue:
-          $ref: '#/components/schemas/Quantity'
-        type:
-          type: string
-        value:
-          $ref: '#/components/schemas/Quantity'
-    DownwardAPIProjection:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/DownwardAPIVolumeFile'
-    LabelSelectorRequirement:
-      type: object
-      properties:
-        key:
-          type: string
-        operator:
-          type: string
-        values:
-          type: array
-          items:
-            type: string
-    MicroTime:
-      type: object
-      properties:
-        Time:
-          type: string
-    ImageVolumeSource:
-      type: object
-      properties:
-        pullPolicy:
-          type: string
-        reference:
-          type: string
-    PodResourceClaimStatus:
-      type: object
-      properties:
-        name:
-          type: string
-        resourceClaimName:
-          type: string
-    StreamingResponseBody:
-      type: object
-    DownwardAPIVolumeFile:
-      type: object
-      properties:
-        fieldRef:
-          $ref: '#/components/schemas/ObjectFieldSelector'
-        mode:
-          type: integer
-          format: int32
-        path:
-          type: string
-        resourceFieldRef:
-          $ref: '#/components/schemas/ResourceFieldSelector'
-    PortworxVolumeSource:
-      type: object
-      properties:
-        fsType:
-          type: string
-        readOnly:
-          type: boolean
-        volumeID:
-          type: string
-    AWSElasticBlockStoreVolumeSource:
-      type: object
-      properties:
-        fsType:
-          type: string
-        partition:
-          type: integer
-          format: int32
-        readOnly:
-          type: boolean
-        volumeID:
-          type: string
-    AppArmorProfile:
-      type: object
-      properties:
-        localhostProfile:
-          type: string
-        type:
-          type: string
-    CSIVolumeSource:
-      type: object
-      properties:
-        driver:
-          type: string
-        fsType:
-          type: string
-        nodePublishSecretRef:
-          $ref: '#/components/schemas/LocalObjectReference'
-        readOnly:
-          type: boolean
-        volumeAttributes:
-          type: object
-          additionalProperties:
-            type: string
-    VolumeMount:
-      type: object
-      properties:
-        mountPath:
-          type: string
-        mountPropagation:
-          type: string
-        name:
-          type: string
-        readOnly:
-          type: boolean
-        recursiveReadOnly:
-          type: string
-        subPath:
-          type: string
-        subPathExpr:
-          type: string
-    Probe:
-      type: object
-      properties:
-        exec:
-          $ref: '#/components/schemas/ExecAction'
-        failureThreshold:
-          type: integer
-          format: int32
-        grpc:
-          $ref: '#/components/schemas/GRPCAction'
-        httpGet:
-          $ref: '#/components/schemas/HTTPGetAction'
-        initialDelaySeconds:
-          type: integer
-          format: int32
-        periodSeconds:
-          type: integer
-          format: int32
-        successThreshold:
-          type: integer
-          format: int32
-        tcpSocket:
-          $ref: '#/components/schemas/TCPSocketAction'
-        terminationGracePeriodSeconds:
-          type: integer
-          format: int64
-        timeoutSeconds:
-          type: integer
-          format: int32
-    Lifecycle:
-      type: object
-      properties:
-        postStart:
-          $ref: '#/components/schemas/LifecycleHandler'
-        preStop:
-          $ref: '#/components/schemas/LifecycleHandler'
-        stopSignal:
-          type: string
-    NodeAffinity:
-      type: object
-      properties:
-        preferredDuringSchedulingIgnoredDuringExecution:
-          type: array
-          items:
-            $ref: '#/components/schemas/PreferredSchedulingTerm'
-        requiredDuringSchedulingIgnoredDuringExecution:
-          $ref: '#/components/schemas/NodeSelector'
-    PodDNSConfig:
-      type: object
-      properties:
-        nameservers:
-          type: array
-          items:
-            type: string
-        options:
-          type: array
-          items:
-            $ref: '#/components/schemas/PodDNSConfigOption'
-        searches:
-          type: array
-          items:
-            type: string
-    HTTPIngressRuleValue:
-      type: object
-      properties:
-        paths:
-          type: array
-          items:
-            $ref: '#/components/schemas/HTTPIngressPath'
-    VolumeProjection:
-      type: object
-      properties:
-        clusterTrustBundle:
-          $ref: '#/components/schemas/ClusterTrustBundleProjection'
-        configMap:
-          $ref: '#/components/schemas/ConfigMapProjection'
-        downwardAPI:
-          $ref: '#/components/schemas/DownwardAPIProjection'
-        podCertificate:
-          $ref: '#/components/schemas/PodCertificateProjection'
-        secret:
-          $ref: '#/components/schemas/SecretProjection'
-        serviceAccountToken:
-          $ref: '#/components/schemas/ServiceAccountTokenProjection'
-    FCVolumeSource:
-      type: object
-      properties:
-        fsType:
-          type: string
-        lun:
-          type: integer
-          format: int32
-        readOnly:
-          type: boolean
-        targetWWNs:
-          type: array
-          items:
-            type: string
-        wwids:
-          type: array
-          items:
-            type: string
-    ResourceRequirements:
-      type: object
-      properties:
-        claims:
-          type: array
-          items:
-            $ref: '#/components/schemas/ResourceClaim'
-        limits:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/Quantity'
-        requests:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/Quantity'
-    Capabilities:
-      type: object
-      properties:
-        add:
-          type: array
-          items:
-            type: string
-        drop:
-          type: array
-          items:
-            type: string
-    Volume:
-      type: object
-      properties:
-        awsElasticBlockStore:
-          $ref: '#/components/schemas/AWSElasticBlockStoreVolumeSource'
-        azureDisk:
-          $ref: '#/components/schemas/AzureDiskVolumeSource'
-        azureFile:
-          $ref: '#/components/schemas/AzureFileVolumeSource'
-        cephfs:
-          $ref: '#/components/schemas/CephFSVolumeSource'
-        cinder:
-          $ref: '#/components/schemas/CinderVolumeSource'
-        configMap:
-          $ref: '#/components/schemas/ConfigMapVolumeSource'
-        csi:
-          $ref: '#/components/schemas/CSIVolumeSource'
-        downwardAPI:
-          $ref: '#/components/schemas/DownwardAPIVolumeSource'
-        emptyDir:
-          $ref: '#/components/schemas/EmptyDirVolumeSource'
-        ephemeral:
-          $ref: '#/components/schemas/EphemeralVolumeSource'
-        fc:
-          $ref: '#/components/schemas/FCVolumeSource'
-        flexVolume:
-          $ref: '#/components/schemas/FlexVolumeSource'
-        flocker:
-          $ref: '#/components/schemas/FlockerVolumeSource'
-        gcePersistentDisk:
-          $ref: '#/components/schemas/GCEPersistentDiskVolumeSource'
-        gitRepo:
-          $ref: '#/components/schemas/GitRepoVolumeSource'
-        glusterfs:
-          $ref: '#/components/schemas/GlusterfsVolumeSource'
-        hostPath:
-          $ref: '#/components/schemas/HostPathVolumeSource'
-        image:
-          $ref: '#/components/schemas/ImageVolumeSource'
-        iscsi:
-          $ref: '#/components/schemas/ISCSIVolumeSource'
-        name:
-          type: string
-        nfs:
-          $ref: '#/components/schemas/NFSVolumeSource'
-        persistentVolumeClaim:
-          $ref: '#/components/schemas/PersistentVolumeClaimVolumeSource'
-        photonPersistentDisk:
-          $ref: '#/components/schemas/PhotonPersistentDiskVolumeSource'
-        portworxVolume:
-          $ref: '#/components/schemas/PortworxVolumeSource'
-        projected:
-          $ref: '#/components/schemas/ProjectedVolumeSource'
-        quobyte:
-          $ref: '#/components/schemas/QuobyteVolumeSource'
-        rbd:
-          $ref: '#/components/schemas/RBDVolumeSource'
-        scaleIO:
-          $ref: '#/components/schemas/ScaleIOVolumeSource'
-        secret:
-          $ref: '#/components/schemas/SecretVolumeSource'
-        storageos:
-          $ref: '#/components/schemas/StorageOSVolumeSource'
-        vsphereVolume:
-          $ref: '#/components/schemas/VsphereVirtualDiskVolumeSource'
-    ResourceOutProperties:
-      type: object
-      properties:
-        attributes:
-          type: object
-          additionalProperties:
-            type: object
-        clusterId:
-          type: string
-        id:
-          type: string
-        interfaces:
-          type: object
-          additionalProperties:
-            type: object
-        resourceName:
-          type: string
-        resourceType:
-          type: string
-        updatedAt:
-          type: string
-          format: date-time
-    IngressLoadBalancerIngress:
-      type: object
-      properties:
-        hostname:
-          type: string
-        ip:
-          type: string
-        ports:
-          type: array
-          items:
-            $ref: '#/components/schemas/IngressPortStatus'
-    PodAntiAffinity:
-      type: object
-      properties:
-        preferredDuringSchedulingIgnoredDuringExecution:
-          type: array
-          items:
-            $ref: '#/components/schemas/WeightedPodAffinityTerm'
-        requiredDuringSchedulingIgnoredDuringExecution:
-          type: array
-          items:
-            $ref: '#/components/schemas/PodAffinityTerm'
-    PersistentVolumeClaimSpec:
-      type: object
-      properties:
-        accessModes:
-          type: array
-          items:
-            type: string
-        dataSource:
-          $ref: '#/components/schemas/TypedLocalObjectReference'
-        dataSourceRef:
-          $ref: '#/components/schemas/TypedObjectReference'
-        resources:
-          $ref: '#/components/schemas/VolumeResourceRequirements'
-        selector:
-          $ref: '#/components/schemas/LabelSelector'
-        storageClassName:
-          type: string
-        volumeAttributesClassName:
-          type: string
-        volumeMode:
-          type: string
-        volumeName:
-          type: string
-    ContainerResourceMetricSource:
-      type: object
-      properties:
-        container:
-          type: string
-        name:
-          type: string
-        target:
-          $ref: '#/components/schemas/MetricTarget'
-    ConfigMapProjection:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/KeyToPath'
-        name:
-          type: string
-        optional:
-          type: boolean
-    ContainerStateRunning:
-      type: object
-      properties:
-        startedAt:
-          type: string
-    WeightedPodAffinityTerm:
-      type: object
-      properties:
-        podAffinityTerm:
-          $ref: '#/components/schemas/PodAffinityTerm'
+        preference:
+          $ref: '#/components/schemas/NodeSelectorTerm'
         weight:
           type: integer
           format: int32
-    FieldsV1:
-      type: object
-    OwnerReference:
-      type: object
-      properties:
-        apiVersion:
-          type: string
-        blockOwnerDeletion:
-          type: boolean
-        controller:
-          type: boolean
-        kind:
-          type: string
-        name:
-          type: string
-        uid:
-          type: string
-    FileKeySelector:
-      type: object
-      properties:
-        key:
-          type: string
-        optional:
-          type: boolean
-        path:
-          type: string
-        volumeName:
-          type: string
-    HorizontalPodAutoscalerStatus:
-      type: object
-      properties:
-        conditions:
-          type: array
-          items:
-            $ref: '#/components/schemas/HorizontalPodAutoscalerCondition'
-        currentMetrics:
-          type: array
-          items:
-            $ref: '#/components/schemas/MetricStatus'
-        currentReplicas:
-          type: integer
-          format: int32
-        desiredReplicas:
-          type: integer
-          format: int32
-        lastScaleTime:
-          type: string
-        observedGeneration:
-          type: integer
-          format: int64
-    Version:
-      type: object
-      properties:
-        archiveDate:
-          type: string
-          format: date-time
-        entity:
-          $ref: '#/components/schemas/Versioned'
-        id:
-          type: string
-        sequence:
-          type: integer
-          format: int64
-          writeOnly: true
-        sequenceKey:
-          type: string
-        version:
-          type: integer
-          format: int64
-        versioningKey:
-          type: string
-    CinderVolumeSource:
-      type: object
-      properties:
-        fsType:
-          type: string
-        readOnly:
-          type: boolean
-        secretRef:
-          $ref: '#/components/schemas/LocalObjectReference'
-        volumeID:
-          type: string
   securitySchemes:
     basicAuth:
       description: Basic Authentication

@@ -277,6 +277,19 @@ components:
           type: array
           items:
             type: string
+    CostDTO:
+      type: object
+      properties:
+        amount:
+          type: number
+          format: double
+        date:
+          type: string
+          format: date-time
+        serviceCost:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceCostDTO'
     DailyCloudCostDTO:
       type: object
       properties:
@@ -301,19 +314,6 @@ components:
           format: double
         unit:
           type: string
-    CostDTO:
-      type: object
-      properties:
-        amount:
-          type: number
-          format: double
-        date:
-          type: string
-          format: date-time
-        serviceCost:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceCostDTO'
     ServiceCostDTO:
       type: object
       properties:
@@ -332,20 +332,6 @@ components:
           type: string
         message:
           type: string
-    ClusterCostDTO:
-      type: object
-      properties:
-        clusterId:
-          type: string
-        clusterName:
-          type: string
-        costs:
-          type: array
-          items:
-            $ref: '#/components/schemas/CostDTO'
-        total:
-          type: number
-          format: double
     ServiceCost:
       type: object
       properties:
@@ -374,6 +360,20 @@ components:
             $ref: '#/components/schemas/ServiceCost'
         unit:
           type: string
+    ClusterCostDTO:
+      type: object
+      properties:
+        clusterId:
+          type: string
+        clusterName:
+          type: string
+        costs:
+          type: array
+          items:
+            $ref: '#/components/schemas/CostDTO'
+        total:
+          type: number
+          format: double
   securitySchemes:
     basicAuth:
       description: Basic Authentication

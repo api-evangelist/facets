@@ -534,6 +534,60 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    ArtifactCI:
+      required:
+      - ciName
+      - registrationType
+      type: object
+      properties:
+        ciName:
+          type: string
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        id:
+          type: string
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        promotionWorkflowId:
+          type: string
+        registrationType:
+          type: string
+          enum:
+          - ENVIRONMENT
+          - RELEASE_STREAM
+          - HYBRID
+        ruleId:
+          type: string
+        stackName:
+          type: string
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
     CiArtifactResponse:
       type: object
       properties:
@@ -582,21 +636,6 @@ components:
           type: string
         versioningKey:
           type: string
-    GithubAppPermissionsPendingErrorDetails:
-      type: object
-      properties:
-        approvalUrl:
-          type: string
-        code:
-          type: string
-        errorCode:
-          type: string
-        message:
-          type: string
-        missingPermissions:
-          type: array
-          items:
-            type: string
     BulkWorkflowAttachRequest:
       type: object
       properties:
@@ -605,45 +644,6 @@ components:
           items:
             type: string
         workflowId:
-          type: string
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-    ArtifactCI:
-      required:
-      - ciName
-      - registrationType
-      type: object
-      properties:
-        ciName:
-          type: string
-        createdBy:
-          type: string
-        creationDate:
-          type: string
-          format: date-time
-        id:
-          type: string
-        lastModifiedBy:
-          type: string
-        lastModifiedDate:
-          type: string
-          format: date-time
-        promotionWorkflowId:
-          type: string
-        registrationType:
-          type: string
-          enum:
-          - ENVIRONMENT
-          - RELEASE_STREAM
-          - HYBRID
-        ruleId:
-          type: string
-        stackName:
           type: string
   securitySchemes:
     basicAuth:

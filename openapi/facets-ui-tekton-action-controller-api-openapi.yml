@@ -378,6 +378,68 @@ components:
           - string
           - array
       description: Represents the value of an action parameter
+    ActionStepDto:
+      required:
+      - name
+      - status
+      type: object
+      properties:
+        containerName:
+          type: string
+          description: Name of the container running this step
+          example: step-build
+        exitCode:
+          type: integer
+          description: Exit code of the step
+          format: int32
+          example: 0
+        finishedAt:
+          type: string
+          description: Timestamp when the step finished
+          format: date-time
+          example: '2024-01-15T10:35:00Z'
+        name:
+          type: string
+          description: Name of the step
+          example: build-step
+        podName:
+          type: string
+          description: Name of the pod running this step
+          example: build-action-run-xyz123-pod-abc456
+        startTime:
+          type: string
+          description: Timestamp when the step started
+          format: date-time
+          example: '2024-01-15T10:30:00Z'
+        status:
+          type: string
+          description: Represents the status of a step within an action run
+          example: COMPLETED
+          enum:
+          - WAITING
+          - RUNNING
+          - COMPLETED
+          - ERROR
+          - PENDING
+        terminationReason:
+          type: string
+          description: Reason for termination if the step did not complete successfully
+          example: Error
+      description: Represents a single step within an action run
+    StepLogDto:
+      required:
+      - stepName
+      type: object
+      properties:
+        logs:
+          type: string
+          description: Log output from the step execution
+          example: Building application...
+        stepName:
+          type: string
+          description: Name of the step
+          example: build-step
+      description: Contains logs for a specific step in a Tekton task run
     ActionDto:
       required:
       - name
@@ -413,20 +475,53 @@ components:
           type: string
           description: Resource type associated with the action
       description: Represents an action definition
-    StepLogDto:
-      required:
-      - stepName
+    GithubAppPermissionsPendingErrorDetails:
       type: object
       properties:
-        logs:
+        approvalUrl:
           type: string
-          description: Log output from the step execution
-          example: Building application...
-        stepName:
+        code:
           type: string
-          description: Name of the step
-          example: build-step
-      description: Contains logs for a specific step in a Tekton task run
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    ActionParameterDto:
+      required:
+      - name
+      - type
+      type: object
+      properties:
+        defaultValue:
+          $ref: '#/components/schemas/ActionParameterValueDto'
+        description:
+          type: string
+          description: Description of the parameter
+          example: Docker image name to build
+        name:
+          type: string
+          description: Name of the parameter
+          example: image-name
+        properties:
+          uniqueItems: true
+          type: array
+          description: Properties for object type parameters. Only applicable when type is 'object'
+          items:
+            type: string
+            description: Properties for object type parameters. Only applicable when type is 'object'
+        type:
+          type: string
+          description: Type of the parameter
+          example: string
+          enum:
+          - string
+          - array
+          - object
+      description: Defines a parameter that can be passed to an action
     ActionRunDto:
       required:
       - actionName
@@ -507,69 +602,6 @@ components:
           description: User who triggered this action run
           example: user@example.com
       description: Represents an action run instance with its execution details
-    GithubAppPermissionsPendingErrorDetails:
-      type: object
-      properties:
-        approvalUrl:
-          type: string
-        code:
-          type: string
-        errorCode:
-          type: string
-        message:
-          type: string
-        missingPermissions:
-          type: array
-          items:
-            type: string
-    ActionStepDto:
-      required:
-      - name
-      - status
-      type: object
-      properties:
-        containerName:
-          type: string
-          description: Name of the container running this step
-          example: step-build
-        exitCode:
-          type: integer
-          description: Exit code of the step
-          format: int32
-          example: 0
-        finishedAt:
-          type: string
-          description: Timestamp when the step finished
-          format: date-time
-          example: '2024-01-15T10:35:00Z'
-        name:
-          type: string
-          description: Name of the step
-          example: build-step
-        podName:
-          type: string
-          description: Name of the pod running this step
-          example: build-action-run-xyz123-pod-abc456
-        startTime:
-          type: string
-          description: Timestamp when the step started
-          format: date-time
-          example: '2024-01-15T10:30:00Z'
-        status:
-          type: string
-          description: Represents the status of a step within an action run
-          example: COMPLETED
-          enum:
-          - WAITING
-          - RUNNING
-          - COMPLETED
-          - ERROR
-          - PENDING
-        terminationReason:
-          type: string
-          description: Reason for termination if the step did not complete successfully
-          example: Error
-      description: Represents a single step within an action run
     ErrorDetails:
       type: object
       properties:
@@ -577,38 +609,6 @@ components:
           type: string
         message:
           type: string
-    ActionParameterDto:
-      required:
-      - name
-      - type
-      type: object
-      properties:
-        defaultValue:
-          $ref: '#/components/schemas/ActionParameterValueDto'
-        description:
-          type: string
-          description: Description of the parameter
-          example: Docker image name to build
-        name:
-          type: string
-          description: Name of the parameter
-          example: image-name
-        properties:
-          uniqueItems: true
-          type: array
-          description: Properties for object type parameters. Only applicable when type is 'object'
-          items:
-            type: string
-            description: Properties for object type parameters. Only applicable when type is 'object'
-        type:
-          type: string
-          description: Type of the parameter
-          example: string
-          enum:
-          - string
-          - array
-          - object
-      description: Defines a parameter that can be passed to an action
     BulkActionRunRequestDto:
       required:
       - actions

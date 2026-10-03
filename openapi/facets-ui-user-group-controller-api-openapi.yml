@@ -434,6 +434,62 @@ components:
           type: string
         groupName:
           type: string
+    EnvInfo:
+      type: object
+      properties:
+        clusterId:
+          type: string
+        envName:
+          type: string
+        project:
+          type: string
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    IdName:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+    EnvSpecificAccess:
+      type: object
+      properties:
+        clusterId:
+          type: string
+        envName:
+          type: string
+        project:
+          type: string
+        roleInfo:
+          $ref: '#/components/schemas/RoleInfo'
+    RoleInfo:
+      type: object
+      properties:
+        label:
+          type: string
+        roleName:
+          type: string
     UserGroup:
       type: object
       properties:
@@ -479,62 +535,6 @@ components:
             type: string
         versioningKey:
           type: string
-    GithubAppPermissionsPendingErrorDetails:
-      type: object
-      properties:
-        approvalUrl:
-          type: string
-        code:
-          type: string
-        errorCode:
-          type: string
-        message:
-          type: string
-        missingPermissions:
-          type: array
-          items:
-            type: string
-    RoleInfo:
-      type: object
-      properties:
-        label:
-          type: string
-        roleName:
-          type: string
-    EnvInfo:
-      type: object
-      properties:
-        clusterId:
-          type: string
-        envName:
-          type: string
-        project:
-          type: string
-    IdName:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-    EnvSpecificAccess:
-      type: object
-      properties:
-        clusterId:
-          type: string
-        envName:
-          type: string
-        project:
-          type: string
-        roleInfo:
-          $ref: '#/components/schemas/RoleInfo'
   securitySchemes:
     basicAuth:
       description: Basic Authentication
