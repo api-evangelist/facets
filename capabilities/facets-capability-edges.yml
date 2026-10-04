@@ -1,0 +1,147 @@
+slug: facets
+provider: Facets
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 13
+edges:
+- tag: ui-deployment-controller
+  spec_file: facets-ui-deployment-controller-api-openapi.yml
+  capability_id: BC-4210.40
+  capability_id_l1: BC-4210
+  capability_name: Deployment Orchestration
+  confidence: 0.85
+  evidence: '"POST /cc-ui/v1/clusters/{clusterId}/deployments createDeployment Create deployment"; "runHotfixDeploymentRecipe
+    Run hotfix deployment recipe"; "PUT .../deployments/release release Release"; schema "QueuedRelease"'
+  reason: Operations create, launch and release deployments to clusters, including hotfix and maintenance
+    releases — software release/deployment orchestration rather than any business-domain function.
+- tag: ui-cloud-cost-explorer-controller
+  spec_file: facets-ui-cloud-cost-explorer-controller-api-openapi.yml
+  capability_id: BC-600.80
+  capability_id_l1: BC-600
+  capability_name: IT Financial Management
+  confidence: 0.8
+  evidence: GET /cc-ui/v1/cost-explorer/stack/{stackName}/daily-cost  getDailyCloudCost; GET /cc-ui/v1/cost-explorer/service-wise-cost/{clusterId}  getServiceWiseCost
+  reason: Reports daily and service-wise cloud spend per environment and syncs cost data — IT spend visibility,
+    showback and cost optimisation, which is IT Financial Management.
+- tag: ui-user-controller
+  spec_file: facets-ui-user-controller-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.8
+  evidence: GET /cc-ui/v1/users/roles  getAllSystemRoles; POST /cc-ui/v1/users/invite-users; GET /cc-ui/v1/users/analyze-access  Analyze
+    access; schemas AccessRoleDetails, UserAccessToken, EnvSpecificAccess
+  reason: Operations create/delete platform users, invite them, manage system roles, access tokens, passwords
+    and analyse per-environment access — identity and access administration for the control plane, not
+    HR employee records.
+- tag: ui-ci-cd-controller
+  spec_file: facets-ui-ci-cd-controller-api-openapi.yml
+  capability_id: BC-4210.10
+  capability_id_l1: BC-4210
+  capability_name: Continuous Integration Management
+  confidence: 0.78
+  evidence: POST /cc-ui/v1/ci-cd  saveCiCdDetails  Save CI/CD Details; POST /cc-ui/v1/ci-cd/pushCredentials  generateArtifactPushCredentials  Generate
+    Artifact Push Credentials
+  reason: Configures CI integrations, workflow/rule attachment and artefact push credentials — build pipeline
+    and artefact production governance, i.e. continuous integration management within release and deployment.
+- tag: ui-custom-role-controller
+  spec_file: facets-ui-custom-role-controller-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.78
+  evidence: POST /cc-ui/v1/custom-role  createCustomRole; GET /cc-ui/v1/custom-role/roles  getAllRoles;
+    schemas CustomRoleRequest, RoleMapping
+  reason: Full CRUD over custom roles and role mappings governing access to the control plane — role-based
+    access administration, i.e. identity and access management.
+- tag: ui-user-group-controller
+  spec_file: facets-ui-user-group-controller-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.78
+  evidence: POST /cc-ui/v1/user-groups/  createUserGroup; schemas ExpandedUserGroup, EnvSpecificAccess,
+    RoleInfo
+  reason: CRUD over user groups carrying role and environment-specific access information — group-based
+    authorisation administration, i.e. identity & access management.
+- tag: Variable Management
+  spec_file: facets-variable-management-api-openapi.yml
+  capability_id: BC-4210.60
+  capability_id_l1: BC-4210
+  capability_name: Configuration & Secrets Management
+  confidence: 0.74
+  evidence: POST /cc-ui/v1/stacks/{stackName}/variables  addVariable  Add new variable/secret; GET .../variables/{variableName}/environments  Get
+    variable/secret across environments
+  reason: Operations create, update and resolve configuration variables and secrets per stack and per
+    environment (schema EnvironmentVariableValue). That is squarely runtime configuration and secrets
+    management for deployed services.
+- tag: application controller
+  spec_file: facets-application-controller-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.72
+  evidence: POST /api/users  createUser  Create user; PUT /api/users/{userId}/changePassword  changePassword  Change
+    password; GET /api/login  login
+  reason: Despite the generic 'application controller' tag, the operations are user account administration
+    and authentication (login, create/update user, password change, granted authorities, SimpleOauth2User).
+    This is identity and access administration for the platform.
+- tag: ui-artifact-ci-controller
+  spec_file: facets-ui-artifact-ci-controller-api-openapi.yml
+  capability_id: BC-4210.10
+  capability_id_l1: BC-4210
+  capability_name: Continuous Integration Management
+  confidence: 0.72
+  evidence: POST /cc-ui/v1/artifacts-ci  createArtifactCI  Create artifact CI; POST /cc-ui/v1/artifacts-ci/bulk-edit-workflow  bulkEditWorkflow;
+    GET /cc-ui/v1/artifacts-ci/{ciName}/artifacts  Get artifacts for CI
+  reason: Defines and maintains continuous-integration configurations that produce build artefacts, including
+    attaching CI workflows in bulk. That is build pipeline / artefact production management.
+- tag: ui-billing-controller
+  spec_file: facets-ui-billing-controller-api-openapi.yml
+  capability_id: BC-4250
+  capability_id_l1: BC-4250
+  capability_name: Subscription Billing & Revenue Management
+  confidence: 0.7
+  evidence: POST /cc-ui/v1/billing/buy-support-plan  buySupportPlan; GET /cc-ui/v1/billing/manage-billing  startStripeCustomerPortalSession;
+    GET /cc-ui/v1/billing/report-usage  reportUsage
+  reason: 'Vendor''s own SaaS commercial surface: purchasing a support plan, opening the Stripe customer
+    billing portal, and reporting usage for charging. That is subscription billing and usage metering;
+    the mix of metering, plan purchase and payment-portal management means no single sub-capability dominates.'
+- tag: ui-gcp-cluster-controller
+  spec_file: facets-ui-gcp-cluster-controller-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.7
+  evidence: '"POST /cc-ui/v1/gcp/clusters createGCPCluster Create GCP cluster"; "validateVpcId Validate
+    vpc id"; schema "GCPClusterRequest"'
+  reason: Creates and configures GCP clusters and validates VPC identifiers — provisioning of cloud compute/network
+    infrastructure, i.e. IT infrastructure management.
+- tag: ui-k-8s-cluster-controller
+  spec_file: facets-ui-k-8s-cluster-controller-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.7
+  evidence: '"POST /cc-ui/v1/kubernetes/clusters createK8sCluster Create k8s cluster"; schema "KubernetesClusterRequest"'
+  reason: Creation and update of Kubernetes clusters is cloud compute infrastructure provisioning and
+    stewardship.
+- tag: ui-saml-controller
+  spec_file: facets-ui-saml-controller-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.7
+  evidence: GET /cc-ui/v1/saml getAllIntegrations; schema CustomSamlRegistration
+  reason: CRUD over SAML identity-provider registrations, i.e. SSO/identity federation configuration for
+    the control plane. Maps to Identity & Access Management (federation); an alternative reading as tenant
+    identity federation (BC-4230.50) exists, which is why confidence is not higher.

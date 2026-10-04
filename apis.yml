@@ -1832,6 +1832,9 @@ apis:
   - type: Webhooks
     url: asyncapi/facets-webhooks.yml
 common:
+  - type: CapabilityMap
+    url: capabilities/facets-capability-edges.yml
+    name: Facets Business Capability Map
   - type: Overlay
     url: overlays/facets-control-plane-overlay.yaml
   - type: MCPServer
