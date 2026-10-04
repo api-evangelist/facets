@@ -541,6 +541,29 @@ components:
           type: string
         vpcCIDR:
           type: string
+    Variables:
+      type: object
+      properties:
+        description:
+          type: string
+        global:
+          type: boolean
+        secret:
+          type: boolean
+        status:
+          type: string
+          enum:
+          - DEFAULT
+          - OVERRIDDEN
+        value:
+          type: string
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
     GithubAppPermissionsPendingErrorDetails:
       type: object
       properties:
@@ -636,29 +659,6 @@ components:
               type: integer
               format: int32
         vpcCIDR:
-          type: string
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-    Variables:
-      type: object
-      properties:
-        description:
-          type: string
-        global:
-          type: boolean
-        secret:
-          type: boolean
-        status:
-          type: string
-          enum:
-          - DEFAULT
-          - OVERRIDDEN
-        value:
           type: string
   securitySchemes:
     basicAuth:

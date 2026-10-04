@@ -341,6 +341,13 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
     GithubAppPermissionsPendingErrorDetails:
       type: object
       properties:
@@ -356,21 +363,6 @@ components:
           type: array
           items:
             type: string
-    Selectors:
-      type: object
-      properties:
-        displayType:
-          type: string
-          enum:
-          - INLINE
-          - TAB
-          - PAGE
-        resourceName:
-          type: string
-        resourceType:
-          type: string
-        subType:
-          type: string
     ContentFile:
       type: object
       properties:
@@ -403,12 +395,20 @@ components:
           enum:
           - CI
           - DOCUMENTATION
-    ErrorDetails:
+    Selectors:
       type: object
       properties:
-        code:
+        displayType:
           type: string
-        message:
+          enum:
+          - INLINE
+          - TAB
+          - PAGE
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+        subType:
           type: string
   securitySchemes:
     basicAuth:

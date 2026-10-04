@@ -441,22 +441,50 @@ components:
       properties:
         routeTo:
           type: string
-    ArtifactRoutingRuleResponse:
+    ErrorDetails:
       type: object
       properties:
-        createdBy:
+        code:
           type: string
-        creationDate:
+        message:
           type: string
-          format: date-time
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    ArtifactRoutingRuleRequest:
+      required:
+      - criteria
+      - registrationType
+      - ruleName
+      - stackName
+      type: object
+      properties:
+        ciSystem:
+          type: string
+          enum:
+          - BRANCH_PER_ENVIRONMENT
+          - SINGLE_BRANCH_PROMOTION
+          - ADVANCED
         criteria:
           type: array
           items:
             $ref: '#/components/schemas/Criterion'
-        default:
-          type: boolean
         id:
           type: string
+        isDefault:
+          type: boolean
         registrationType:
           type: string
           enum:
@@ -491,50 +519,22 @@ components:
           type: string
         value:
           type: string
-    GithubAppPermissionsPendingErrorDetails:
+    ArtifactRoutingRuleResponse:
       type: object
       properties:
-        approvalUrl:
+        createdBy:
           type: string
-        code:
+        creationDate:
           type: string
-        errorCode:
-          type: string
-        message:
-          type: string
-        missingPermissions:
-          type: array
-          items:
-            type: string
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-    ArtifactRoutingRuleRequest:
-      required:
-      - criteria
-      - registrationType
-      - ruleName
-      - stackName
-      type: object
-      properties:
-        ciSystem:
-          type: string
-          enum:
-          - BRANCH_PER_ENVIRONMENT
-          - SINGLE_BRANCH_PROMOTION
-          - ADVANCED
+          format: date-time
         criteria:
           type: array
           items:
             $ref: '#/components/schemas/Criterion'
+        default:
+          type: boolean
         id:
           type: string
-        isDefault:
-          type: boolean
         registrationType:
           type: string
           enum:

@@ -1220,6 +1220,56 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    ECRAuthorizationData:
+      type: object
+      properties:
+        authorizationToken:
+          type: string
+        proxyEndpoint:
+          type: string
+    ArtifactByReleaseStreamRequest:
+      required:
+      - applicationName
+      - artifactUri
+      - releaseStream
+      type: object
+      properties:
+        applicationName:
+          type: string
+        artifactUri:
+          type: string
+        artifactory:
+          type: string
+        description:
+          type: string
+        externalId:
+          type: string
+        releaseStream:
+          type: string
+        stackName:
+          type: string
+    ArtifactByEnvironmentRequest:
+      required:
+      - applicationName
+      - artifactUri
+      - clusterName
+      - stackName
+      type: object
+      properties:
+        applicationName:
+          type: string
+        artifactUri:
+          type: string
+        artifactory:
+          type: string
+        clusterName:
+          type: string
+        description:
+          type: string
+        externalId:
+          type: string
+        stackName:
+          type: string
     ImageOverrideRequest:
       required:
       - resourceName
@@ -1257,42 +1307,6 @@ components:
           type: string
         tag:
           type: string
-    ArtifactByReleaseStreamRequest:
-      required:
-      - applicationName
-      - artifactUri
-      - releaseStream
-      type: object
-      properties:
-        applicationName:
-          type: string
-        artifactUri:
-          type: string
-        artifactory:
-          type: string
-        description:
-          type: string
-        externalId:
-          type: string
-        releaseStream:
-          type: string
-        stackName:
-          type: string
-    GithubAppPermissionsPendingErrorDetails:
-      type: object
-      properties:
-        approvalUrl:
-          type: string
-        code:
-          type: string
-        errorCode:
-          type: string
-        message:
-          type: string
-        missingPermissions:
-          type: array
-          items:
-            type: string
     ErrorDetails:
       type: object
       properties:
@@ -1385,6 +1399,21 @@ components:
           type: string
         versioningKey:
           type: string
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
     ArtifactRequest:
       required:
       - applicationName
@@ -1431,28 +1460,6 @@ components:
         stackName:
           type: string
         tag:
-          type: string
-    ArtifactByEnvironmentRequest:
-      required:
-      - applicationName
-      - artifactUri
-      - clusterName
-      - stackName
-      type: object
-      properties:
-        applicationName:
-          type: string
-        artifactUri:
-          type: string
-        artifactory:
-          type: string
-        clusterName:
-          type: string
-        description:
-          type: string
-        externalId:
-          type: string
-        stackName:
           type: string
     SaasArtifactRequest:
       required:
@@ -1508,13 +1515,6 @@ components:
           description: The tag of the artifact.
           example: v1.0
       description: Request details for registering a SaaS artifact.
-    ECRAuthorizationData:
-      type: object
-      properties:
-        authorizationToken:
-          type: string
-        proxyEndpoint:
-          type: string
   securitySchemes:
     basicAuth:
       description: Basic Authentication

@@ -609,6 +609,40 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    ResourceList:
+      type: object
+      properties:
+        resourceNames:
+          type: array
+          items:
+            type: string
+        resourceType:
+          type: string
+    AddResourceToGroupsRequest:
+      required:
+      - resourceGroupIds
+      - resourceName
+      - resourceType
+      - stackName
+      type: object
+      properties:
+        resourceGroupIds:
+          type: array
+          items:
+            type: string
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+        stackName:
+          type: string
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
     GithubAppPermissionsPendingErrorDetails:
       type: object
       properties:
@@ -624,23 +658,18 @@ components:
           type: array
           items:
             type: string
-    ResourceInfo:
+    ResourceGroupRequest:
       required:
-      - stackName
+      - name
       type: object
       properties:
-        resources:
-          type: array
-          items:
-            $ref: '#/components/schemas/ResourceList'
-        stackName:
+        description:
+          maxLength: 200
+          minLength: 0
           type: string
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
+        name:
+          maxLength: 2147483647
+          minLength: 2
           type: string
     ResourceGroup:
       type: object
@@ -665,24 +694,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ResourceInfo'
-    AddResourceToGroupsRequest:
-      required:
-      - resourceGroupIds
-      - resourceName
-      - resourceType
-      - stackName
-      type: object
-      properties:
-        resourceGroupIds:
-          type: array
-          items:
-            type: string
-        resourceName:
-          type: string
-        resourceType:
-          type: string
-        stackName:
-          type: string
     Response:
       type: object
       properties:
@@ -690,27 +701,16 @@ components:
           type: string
         message:
           type: string
-    ResourceGroupRequest:
+    ResourceInfo:
       required:
-      - name
+      - stackName
       type: object
       properties:
-        description:
-          maxLength: 200
-          minLength: 0
-          type: string
-        name:
-          maxLength: 2147483647
-          minLength: 2
-          type: string
-    ResourceList:
-      type: object
-      properties:
-        resourceNames:
+        resources:
           type: array
           items:
-            type: string
-        resourceType:
+            $ref: '#/components/schemas/ResourceList'
+        stackName:
           type: string
   securitySchemes:
     basicAuth:

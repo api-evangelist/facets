@@ -132,6 +132,13 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
     FacetsResource:
       type: object
       properties:
@@ -139,6 +146,21 @@ components:
           type: string
         resourceType:
           type: string
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
     QueuedRelease:
       type: object
       properties:
@@ -203,28 +225,6 @@ components:
           type: string
         withRefresh:
           type: boolean
-    GithubAppPermissionsPendingErrorDetails:
-      type: object
-      properties:
-        approvalUrl:
-          type: string
-        code:
-          type: string
-        errorCode:
-          type: string
-        message:
-          type: string
-        missingPermissions:
-          type: array
-          items:
-            type: string
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
     TfVersion:
       required:
       - majorVersion

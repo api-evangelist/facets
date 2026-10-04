@@ -472,6 +472,38 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    PendingMigrationDetails:
+      type: object
+      properties:
+        blockReleases:
+          type: boolean
+        migrationStatusAvailable:
+          type: boolean
+        pendingMigrations:
+          type: array
+          items:
+            $ref: '#/components/schemas/MigrationScriptMetadata'
+    MigrationScriptMetadata:
+      type: object
+      properties:
+        clouds:
+          type: array
+          items:
+            type: string
+        description:
+          type: string
+        downtime:
+          type: boolean
+        sequenceNumber:
+          type: integer
+          format: int32
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
     GithubAppPermissionsPendingErrorDetails:
       type: object
       properties:
@@ -487,13 +519,6 @@ components:
           type: array
           items:
             type: string
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
     ClusterTfVersionMapping:
       required:
       - clusterId
@@ -516,17 +541,6 @@ components:
           format: date-time
         version:
           $ref: '#/components/schemas/TfVersion'
-    PendingMigrationDetails:
-      type: object
-      properties:
-        blockReleases:
-          type: boolean
-        migrationStatusAvailable:
-          type: boolean
-        pendingMigrations:
-          type: array
-          items:
-            $ref: '#/components/schemas/MigrationScriptMetadata'
     TfVersion:
       required:
       - majorVersion
@@ -546,20 +560,6 @@ components:
           example: LATEST
         tfStream:
           type: string
-    MigrationScriptMetadata:
-      type: object
-      properties:
-        clouds:
-          type: array
-          items:
-            type: string
-        description:
-          type: string
-        downtime:
-          type: boolean
-        sequenceNumber:
-          type: integer
-          format: int32
   securitySchemes:
     basicAuth:
       description: Basic Authentication

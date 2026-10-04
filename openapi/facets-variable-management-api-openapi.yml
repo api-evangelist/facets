@@ -269,62 +269,6 @@ paths:
       - Variable Management
 components:
   schemas:
-    GithubAppPermissionsPendingErrorDetails:
-      type: object
-      properties:
-        approvalUrl:
-          type: string
-        code:
-          type: string
-        errorCode:
-          type: string
-        message:
-          type: string
-        missingPermissions:
-          type: array
-          items:
-            type: string
-    VariableRequest:
-      required:
-      - variableName
-      type: object
-      properties:
-        clusterIdToValueMap:
-          type: object
-          additionalProperties:
-            type: string
-            description: Environment-specific values
-            example: '{"clusterid1":"prod_password","clusterid2":"staging_password"}'
-          description: Environment-specific values
-          example:
-            clusterid1: prod_password
-            clusterid2: staging_password
-        description:
-          type: string
-          description: Description of the variable/secret
-          example: Database connection password
-        global:
-          type: boolean
-          description: Whether this is a global variable
-          example: false
-        secret:
-          type: boolean
-        stackDefault:
-          type: string
-          description: Default value at stack level
-          example: default_password
-        variableName:
-          type: string
-          description: Name of the variable/secret
-          example: database_password
-      description: Variable request with project default and environment values
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
     EnvironmentVariableValue:
       type: object
       properties:
@@ -377,6 +321,62 @@ components:
           description: Name of the variable/secret
           example: database_password
       description: Variable/secret values across environments
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    VariableRequest:
+      required:
+      - variableName
+      type: object
+      properties:
+        clusterIdToValueMap:
+          type: object
+          additionalProperties:
+            type: string
+            description: Environment-specific values
+            example: '{"clusterid1":"prod_password","clusterid2":"staging_password"}'
+          description: Environment-specific values
+          example:
+            clusterid1: prod_password
+            clusterid2: staging_password
+        description:
+          type: string
+          description: Description of the variable/secret
+          example: Database connection password
+        global:
+          type: boolean
+          description: Whether this is a global variable
+          example: false
+        secret:
+          type: boolean
+        stackDefault:
+          type: string
+          description: Default value at stack level
+          example: default_password
+        variableName:
+          type: string
+          description: Name of the variable/secret
+          example: database_password
+      description: Variable request with project default and environment values
   securitySchemes:
     basicAuth:
       description: Basic Authentication

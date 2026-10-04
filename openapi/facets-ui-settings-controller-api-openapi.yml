@@ -346,6 +346,8 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    JsonNode:
+      type: object
     GithubAppPermissionsPendingErrorDetails:
       type: object
       properties:
@@ -361,8 +363,6 @@ components:
           type: array
           items:
             type: string
-    JsonNode:
-      type: object
     Setting:
       required:
       - defaultValue

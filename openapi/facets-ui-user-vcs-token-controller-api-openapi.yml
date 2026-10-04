@@ -235,18 +235,21 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    UserVCSTokenRequest:
-      required:
-      - hostName
-      - personalAccessToken
-      - userName
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    UserVCSTokenResponse:
       type: object
       properties:
         hostName:
           type: string
         id:
           type: string
-        personalAccessToken:
+        userId:
           type: string
         userName:
           type: string
@@ -265,23 +268,20 @@ components:
           type: array
           items:
             type: string
-    UserVCSTokenResponse:
+    UserVCSTokenRequest:
+      required:
+      - hostName
+      - personalAccessToken
+      - userName
       type: object
       properties:
         hostName:
           type: string
         id:
           type: string
-        userId:
+        personalAccessToken:
           type: string
         userName:
-          type: string
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
           type: string
   securitySchemes:
     basicAuth:

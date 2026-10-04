@@ -720,45 +720,36 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    User:
+    ClusterResourceBinding:
       type: object
       properties:
-        clusterIds:
+        clusterId:
+          type: string
+        resources:
           uniqueItems: true
           type: array
           items:
-            type: string
-        description:
-          maxLength: 200
-          minLength: 0
+            $ref: '#/components/schemas/FacetsResource'
+        stackName:
           type: string
-        groupId:
+    PasswordChange:
+      type: object
+      properties:
+        newPassword:
           type: string
-          deprecated: true
-        groupIds:
-          type: array
-          items:
-            type: string
-        id:
+        oldPassword:
           type: string
-        password:
+    GrantedAuthority:
+      type: object
+      properties:
+        authority:
           type: string
-          writeOnly: true
-        picture:
+    ErrorDetails:
+      type: object
+      properties:
+        code:
           type: string
-        roles:
-          uniqueItems: true
-          type: array
-          items:
-            type: string
-        serviceAccount:
-          type: boolean
-        teams:
-          uniqueItems: true
-          type: array
-          items:
-            type: string
-        userName:
+        message:
           type: string
     FacetsResource:
       type: object
@@ -766,6 +757,31 @@ components:
         resourceName:
           type: string
         resourceType:
+          type: string
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    StackResource:
+      type: object
+      properties:
+        resources:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/FacetsResource'
+        stackName:
           type: string
     SimpleOauth2User:
       type: object
@@ -817,61 +833,45 @@ components:
             $ref: '#/components/schemas/StackResource'
         userId:
           type: string
-    GrantedAuthority:
+    User:
       type: object
       properties:
-        authority:
-          type: string
-    GithubAppPermissionsPendingErrorDetails:
-      type: object
-      properties:
-        approvalUrl:
-          type: string
-        code:
-          type: string
-        errorCode:
-          type: string
-        message:
-          type: string
-        missingPermissions:
+        clusterIds:
+          uniqueItems: true
           type: array
           items:
             type: string
-    PasswordChange:
-      type: object
-      properties:
-        newPassword:
+        description:
+          maxLength: 200
+          minLength: 0
           type: string
-        oldPassword:
+        groupId:
           type: string
-    ErrorDetails:
-      type: object
-      properties:
-        code:
+          deprecated: true
+        groupIds:
+          type: array
+          items:
+            type: string
+        id:
           type: string
-        message:
+        password:
           type: string
-    ClusterResourceBinding:
-      type: object
-      properties:
-        clusterId:
+          writeOnly: true
+        picture:
           type: string
-        resources:
+        roles:
           uniqueItems: true
           type: array
           items:
-            $ref: '#/components/schemas/FacetsResource'
-        stackName:
-          type: string
-    StackResource:
-      type: object
-      properties:
-        resources:
+            type: string
+        serviceAccount:
+          type: boolean
+        teams:
           uniqueItems: true
           type: array
           items:
-            $ref: '#/components/schemas/FacetsResource'
-        stackName:
+            type: string
+        userName:
           type: string
   securitySchemes:
     basicAuth:

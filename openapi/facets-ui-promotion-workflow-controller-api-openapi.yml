@@ -498,6 +498,28 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
     WorkflowHierarchy:
       type: object
       properties:
@@ -539,28 +561,6 @@ components:
         stackName:
           type: string
         workflowName:
-          type: string
-    GithubAppPermissionsPendingErrorDetails:
-      type: object
-      properties:
-        approvalUrl:
-          type: string
-        code:
-          type: string
-        errorCode:
-          type: string
-        message:
-          type: string
-        missingPermissions:
-          type: array
-          items:
-            type: string
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
           type: string
   securitySchemes:
     basicAuth:

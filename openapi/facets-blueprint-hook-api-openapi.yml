@@ -232,21 +232,6 @@ paths:
       - Blueprint Hook
 components:
   schemas:
-    GithubAppPermissionsPendingErrorDetails:
-      type: object
-      properties:
-        approvalUrl:
-          type: string
-        code:
-          type: string
-        errorCode:
-          type: string
-        message:
-          type: string
-        missingPermissions:
-          type: array
-          items:
-            type: string
     HookRequest:
       required:
       - language
@@ -296,6 +281,21 @@ components:
           enum:
           - PRE_RELEASE
       description: Blueprint hook state
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
     ErrorDetails:
       type: object
       properties:

@@ -312,21 +312,6 @@ paths:
       - Label Management
 components:
   schemas:
-    GithubAppPermissionsPendingErrorDetails:
-      type: object
-      properties:
-        approvalUrl:
-          type: string
-        code:
-          type: string
-        errorCode:
-          type: string
-        message:
-          type: string
-        missingPermissions:
-          type: array
-          items:
-            type: string
     Label:
       type: object
       properties:
@@ -372,6 +357,21 @@ components:
           - ACCOUNT
           - RELEASE
       description: Label request with label name and optional color code
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
     ErrorDetails:
       type: object
       properties:

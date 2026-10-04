@@ -215,21 +215,31 @@ components:
           format: int64
         version:
           type: string
-    GithubAppPermissionsPendingErrorDetails:
+    SecurityReportSummary:
       type: object
       properties:
-        approvalUrl:
-          type: string
+        critical:
+          type: integer
+          format: int32
+        high:
+          type: integer
+          format: int32
+        low:
+          type: integer
+          format: int32
+        medium:
+          type: integer
+          format: int32
+        unknown:
+          type: integer
+          format: int32
+    ErrorDetails:
+      type: object
+      properties:
         code:
-          type: string
-        errorCode:
           type: string
         message:
           type: string
-        missingPermissions:
-          type: array
-          items:
-            type: string
     Repository:
       type: object
       properties:
@@ -254,13 +264,21 @@ components:
           type: string
         verified_publisher:
           type: boolean
-    ErrorDetails:
+    GithubAppPermissionsPendingErrorDetails:
       type: object
       properties:
+        approvalUrl:
+          type: string
         code:
+          type: string
+        errorCode:
           type: string
         message:
           type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
     PackageResponse:
       type: object
       properties:
@@ -268,24 +286,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Package'
-    SecurityReportSummary:
-      type: object
-      properties:
-        critical:
-          type: integer
-          format: int32
-        high:
-          type: integer
-          format: int32
-        low:
-          type: integer
-          format: int32
-        medium:
-          type: integer
-          format: int32
-        unknown:
-          type: integer
-          format: int32
   securitySchemes:
     basicAuth:
       description: Basic Authentication

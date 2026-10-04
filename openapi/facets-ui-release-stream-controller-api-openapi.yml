@@ -184,32 +184,26 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    ReleaseStreamRequest:
-      required:
-      - name
+    ReleaseStreamResponse:
       type: object
       properties:
+        builtIn:
+          type: boolean
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
         description:
           type: string
+        mappedClusterNames:
+          type: array
+          items:
+            type: string
         name:
           type: string
         prod:
           type: boolean
-    GithubAppPermissionsPendingErrorDetails:
-      type: object
-      properties:
-        approvalUrl:
-          type: string
-        code:
-          type: string
-        errorCode:
-          type: string
-        message:
-          type: string
-        missingPermissions:
-          type: array
-          items:
-            type: string
     ErrorDetails:
       type: object
       properties:
@@ -234,22 +228,28 @@ components:
         version:
           type: integer
           format: int64
-    ReleaseStreamResponse:
+    GithubAppPermissionsPendingErrorDetails:
       type: object
       properties:
-        builtIn:
-          type: boolean
-        createdBy:
+        approvalUrl:
           type: string
-        creationDate:
+        code:
           type: string
-          format: date-time
-        description:
+        errorCode:
           type: string
-        mappedClusterNames:
+        message:
+          type: string
+        missingPermissions:
           type: array
           items:
             type: string
+    ReleaseStreamRequest:
+      required:
+      - name
+      type: object
+      properties:
+        description:
+          type: string
         name:
           type: string
         prod:

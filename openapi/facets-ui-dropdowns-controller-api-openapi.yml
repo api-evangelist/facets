@@ -2207,48 +2207,53 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    StackResourceLite:
+    OutputReference:
       type: object
       properties:
-        description:
+        outputDescription:
           type: string
-        displayName:
+        outputName:
           type: string
-        flavour:
-          type: string
-        iconUrl:
+        outputTitle:
           type: string
         resourceName:
           type: string
         resourceType:
           type: string
-        templatedResource:
-          type: boolean
-        version:
-          type: string
-    StackGitLog:
+    ResourceAffectedResponse:
       type: object
       properties:
-        changeLog:
-          type: string
-          writeOnly: true
+        affectedResources:
+          type: array
+          items:
+            $ref: '#/components/schemas/AffectedResource'
         clusterId:
           type: string
-        commitLog:
-          $ref: '#/components/schemas/CommitLog'
-        directory:
-          type: string
-        filename:
-          type: string
-        id:
-          type: string
+        referencedResources:
+          type: array
+          items:
+            $ref: '#/components/schemas/AffectedResource'
+        targetResources:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/TargetResource'
+    AffectedResourcesRequest:
+      required:
+      - targetResources
+      type: object
+      properties:
+        targetResources:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/TargetResource'
+    ClusterResourcesResponse.FacetsResource:
+      type: object
+      properties:
         resourceName:
           type: string
         resourceType:
-          type: string
-        stackName:
-          type: string
-        versioningKey:
           type: string
     GithubAppPermissionsPendingErrorDetails:
       type: object
@@ -2265,69 +2270,14 @@ components:
           type: array
           items:
             type: string
-    BlueprintValidationError:
+    RegionAndZone:
       type: object
       properties:
-        blueprintErrorLines:
+        availabilityZones:
           type: array
           items:
-            type: integer
-            format: int32
-        category:
-          type: string
-          enum:
-          - Syntax Error
-          - Non-Existent Resource Reference
-          - Disabled Resource References
-          - Invalid Reference Expression
-          - Schema Compliance Error
-          - GuardRails Compliance Issues
-          - Overrides Syntax Error
-          - Invalid Filename Error
-          - Input Validation Error
-          - Missing Environment Override
-        message:
-          type: string
-        overrideErrorLines:
-          type: array
-          items:
-            type: integer
-            format: int32
-        severity:
-          type: string
-          enum:
-          - ERROR
-          - WARNING
-    JsonNode:
-      type: object
-    TargetResource:
-      type: object
-      properties:
-        resourceName:
-          type: string
-        resourceType:
-          type: string
-    RefExpression:
-      type: object
-      properties:
-        expression:
-          type: string
-    Edge:
-      type: object
-      properties:
-        blockEdits:
-          type: boolean
-        id:
-          type: string
-        inputName:
-          type: string
-        isInput:
-          type: boolean
-        outputName:
-          type: string
-        resourceName:
-          type: string
-        resourceType:
+            type: string
+        region:
           type: string
     BlueprintFile:
       type: object
@@ -2404,14 +2354,25 @@ components:
             type: string
         version:
           type: string
-    ResourceStatusMetadata:
+    AffectedResource:
       type: object
       properties:
-        liveVersion:
+        blueprintFile:
+          $ref: '#/components/schemas/BlueprintFile'
+        parent:
+          type: boolean
+    Versioned:
+      type: object
+      properties:
+        changeLog:
           type: string
-        pendingVersion:
+          writeOnly: true
+        versioningKey:
           type: string
-        previewVersion:
+    PortInfo:
+      type: object
+      properties:
+        port:
           type: string
     ServiceOverview:
       type: object
@@ -2432,15 +2393,85 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ClusterResourcesResponse.FacetsResource'
-    RegionAndZone:
+    StackResourceLite:
       type: object
       properties:
-        availabilityZones:
+        description:
+          type: string
+        displayName:
+          type: string
+        flavour:
+          type: string
+        iconUrl:
+          type: string
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+        templatedResource:
+          type: boolean
+        version:
+          type: string
+    ResourceStatusMetadata:
+      type: object
+      properties:
+        liveVersion:
+          type: string
+        pendingVersion:
+          type: string
+        previewVersion:
+          type: string
+    StackGitLog:
+      type: object
+      properties:
+        changeLog:
+          type: string
+          writeOnly: true
+        clusterId:
+          type: string
+        commitLog:
+          $ref: '#/components/schemas/CommitLog'
+        directory:
+          type: string
+        filename:
+          type: string
+        id:
+          type: string
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+        stackName:
+          type: string
+        versioningKey:
+          type: string
+    ReleaseButtonStatus:
+      type: object
+      properties:
+        disabled:
+          type: boolean
+        nbTooltip:
+          type: string
+    JsonNode:
+      type: object
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    HistoryMetadata:
+      type: object
+      properties:
+        liveVersionId:
+          type: string
+        previewVersionId:
+          type: string
+        versions:
           type: array
           items:
-            type: string
-        region:
-          type: string
+            $ref: '#/components/schemas/Version'
     Info:
       type: object
       properties:
@@ -2495,31 +2526,6 @@ components:
             type: object
         version:
           type: string
-    HistoryMetadata:
-      type: object
-      properties:
-        liveVersionId:
-          type: string
-        previewVersionId:
-          type: string
-        versions:
-          type: array
-          items:
-            $ref: '#/components/schemas/Version'
-    CommitLog:
-      type: object
-      properties:
-        authorEmail:
-          type: string
-        authorName:
-          type: string
-        commitDate:
-          type: string
-          format: date-time
-        commitId:
-          type: string
-        commitMessage:
-          type: string
     ResourceHistory:
       type: object
       properties:
@@ -2548,10 +2554,28 @@ components:
           - STOPPED
         resourceType:
           type: string
-    PortInfo:
+    AllRegionsAndAZ:
       type: object
       properties:
-        port:
+        cloud:
+          type: string
+        regions:
+          type: array
+          items:
+            $ref: '#/components/schemas/RegionAndZone'
+    CommitLog:
+      type: object
+      properties:
+        authorEmail:
+          type: string
+        authorName:
+          type: string
+        commitDate:
+          type: string
+          format: date-time
+        commitId:
+          type: string
+        commitMessage:
           type: string
     ResourceConnectionStringResponse:
       type: object
@@ -2582,6 +2606,39 @@ components:
         secret:
           type: boolean
       description: Connection string information for a resource interface
+    BlueprintValidationError:
+      type: object
+      properties:
+        blueprintErrorLines:
+          type: array
+          items:
+            type: integer
+            format: int32
+        category:
+          type: string
+          enum:
+          - Syntax Error
+          - Non-Existent Resource Reference
+          - Disabled Resource References
+          - Invalid Reference Expression
+          - Schema Compliance Error
+          - GuardRails Compliance Issues
+          - Overrides Syntax Error
+          - Invalid Filename Error
+          - Input Validation Error
+          - Missing Environment Override
+        message:
+          type: string
+        overrideErrorLines:
+          type: array
+          items:
+            type: integer
+            format: int32
+        severity:
+          type: string
+          enum:
+          - ERROR
+          - WARNING
     Version:
       type: object
       properties:
@@ -2602,6 +2659,35 @@ components:
           type: integer
           format: int64
         versioningKey:
+          type: string
+    Edge:
+      type: object
+      properties:
+        blockEdits:
+          type: boolean
+        id:
+          type: string
+        inputName:
+          type: string
+        isInput:
+          type: boolean
+        outputName:
+          type: string
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+    TargetResource:
+      type: object
+      properties:
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+    RefExpression:
+      type: object
+      properties:
+        expression:
           type: string
     ResourceHistoryOverview:
       type: object
@@ -2629,92 +2715,6 @@ components:
           enum:
           - RUNNING
           - STOPPED
-        resourceType:
-          type: string
-    ReleaseButtonStatus:
-      type: object
-      properties:
-        disabled:
-          type: boolean
-        nbTooltip:
-          type: string
-    Versioned:
-      type: object
-      properties:
-        changeLog:
-          type: string
-          writeOnly: true
-        versioningKey:
-          type: string
-    ResourceAffectedResponse:
-      type: object
-      properties:
-        affectedResources:
-          type: array
-          items:
-            $ref: '#/components/schemas/AffectedResource'
-        clusterId:
-          type: string
-        referencedResources:
-          type: array
-          items:
-            $ref: '#/components/schemas/AffectedResource'
-        targetResources:
-          uniqueItems: true
-          type: array
-          items:
-            $ref: '#/components/schemas/TargetResource'
-    AllRegionsAndAZ:
-      type: object
-      properties:
-        cloud:
-          type: string
-        regions:
-          type: array
-          items:
-            $ref: '#/components/schemas/RegionAndZone'
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-    AffectedResourcesRequest:
-      required:
-      - targetResources
-      type: object
-      properties:
-        targetResources:
-          uniqueItems: true
-          type: array
-          items:
-            $ref: '#/components/schemas/TargetResource'
-    ClusterResourcesResponse.FacetsResource:
-      type: object
-      properties:
-        resourceName:
-          type: string
-        resourceType:
-          type: string
-    AffectedResource:
-      type: object
-      properties:
-        blueprintFile:
-          $ref: '#/components/schemas/BlueprintFile'
-        parent:
-          type: boolean
-    OutputReference:
-      type: object
-      properties:
-        outputDescription:
-          type: string
-        outputName:
-          type: string
-        outputTitle:
-          type: string
-        resourceName:
-          type: string
         resourceType:
           type: string
   securitySchemes:

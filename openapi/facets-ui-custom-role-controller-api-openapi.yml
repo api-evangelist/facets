@@ -352,51 +352,12 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    GithubAppPermissionsPendingErrorDetails:
+    ErrorDetails:
       type: object
       properties:
-        approvalUrl:
-          type: string
         code:
           type: string
-        errorCode:
-          type: string
         message:
-          type: string
-        missingPermissions:
-          type: array
-          items:
-            type: string
-    CustomRoleRequest:
-      required:
-      - permissions
-      type: object
-      properties:
-        description:
-          type: string
-        k8sClusterRole:
-          type: string
-        k8sRole:
-          type: string
-        permissions:
-          uniqueItems: true
-          type: array
-          items:
-            type: string
-        raptorMode:
-          type: string
-          description: How raptor resolves this role's permissions. INHERIT uses the default permissions; CUSTOM uses raptorPermissions plus Kubernetes permissions from the default role.
-          enum:
-          - INHERIT
-          - CUSTOM
-        raptorPermissions:
-          uniqueItems: true
-          type: array
-          description: Raptor-only non-Kubernetes permissions. Valid only when raptorMode is CUSTOM and must be a subset of permissions.
-          items:
-            type: string
-            description: Raptor-only non-Kubernetes permissions. Valid only when raptorMode is CUSTOM and must be a subset of permissions.
-        roleName:
           type: string
     RoleMapping:
       type: object
@@ -760,12 +721,51 @@ components:
           enum:
           - SYSTEM_DEFINED
           - USER_DEFINED
-    ErrorDetails:
+    GithubAppPermissionsPendingErrorDetails:
       type: object
       properties:
+        approvalUrl:
+          type: string
         code:
           type: string
+        errorCode:
+          type: string
         message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    CustomRoleRequest:
+      required:
+      - permissions
+      type: object
+      properties:
+        description:
+          type: string
+        k8sClusterRole:
+          type: string
+        k8sRole:
+          type: string
+        permissions:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        raptorMode:
+          type: string
+          description: How raptor resolves this role's permissions. INHERIT uses the default permissions; CUSTOM uses raptorPermissions plus Kubernetes permissions from the default role.
+          enum:
+          - INHERIT
+          - CUSTOM
+        raptorPermissions:
+          uniqueItems: true
+          type: array
+          description: Raptor-only non-Kubernetes permissions. Valid only when raptorMode is CUSTOM and must be a subset of permissions.
+          items:
+            type: string
+            description: Raptor-only non-Kubernetes permissions. Valid only when raptorMode is CUSTOM and must be a subset of permissions.
+        roleName:
           type: string
   securitySchemes:
     basicAuth:

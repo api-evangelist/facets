@@ -394,38 +394,24 @@ paths:
       - ui-audit-logs-controller
 components:
   schemas:
-    PageFacetsAuditLogResponse:
+    PageableObject:
       type: object
       properties:
-        content:
-          type: array
-          items:
-            $ref: '#/components/schemas/FacetsAuditLogResponse'
-        empty:
-          type: boolean
-        first:
-          type: boolean
-        last:
-          type: boolean
-        number:
-          type: integer
-          format: int32
-        numberOfElements:
-          type: integer
-          format: int32
-        pageable:
-          $ref: '#/components/schemas/PageableObject'
-        size:
-          type: integer
-          format: int32
-        sort:
-          $ref: '#/components/schemas/SortObject'
-        totalElements:
+        offset:
           type: integer
           format: int64
-        totalPages:
+        pageNumber:
           type: integer
           format: int32
+        pageSize:
+          type: integer
+          format: int32
+        paged:
+          type: boolean
+        sort:
+          $ref: '#/components/schemas/SortObject'
+        unpaged:
+          type: boolean
     FacetsAuditLogResponse:
       type: object
       properties:
@@ -598,6 +584,61 @@ components:
           type: string
         target:
           type: string
+    AuditEntityActionOption:
+      type: object
+      properties:
+        entity:
+          type: string
+        label:
+          type: string
+        value:
+          type: string
+    AuditEnumOption:
+      type: object
+      properties:
+        label:
+          type: string
+        value:
+          type: string
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    PageFacetsAuditLogResponse:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/FacetsAuditLogResponse'
+        empty:
+          type: boolean
+        first:
+          type: boolean
+        last:
+          type: boolean
+        number:
+          type: integer
+          format: int32
+        numberOfElements:
+          type: integer
+          format: int32
+        pageable:
+          $ref: '#/components/schemas/PageableObject'
+        size:
+          type: integer
+          format: int32
+        sort:
+          $ref: '#/components/schemas/SortObject'
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int32
     GithubAppPermissionsPendingErrorDetails:
       type: object
       properties:
@@ -613,47 +654,6 @@ components:
           type: array
           items:
             type: string
-    AuditEntityActionOption:
-      type: object
-      properties:
-        entity:
-          type: string
-        label:
-          type: string
-        value:
-          type: string
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-    PageableObject:
-      type: object
-      properties:
-        offset:
-          type: integer
-          format: int64
-        pageNumber:
-          type: integer
-          format: int32
-        pageSize:
-          type: integer
-          format: int32
-        paged:
-          type: boolean
-        sort:
-          $ref: '#/components/schemas/SortObject'
-        unpaged:
-          type: boolean
-    AuditEnumOption:
-      type: object
-      properties:
-        label:
-          type: string
-        value:
-          type: string
     SortObject:
       type: object
       properties:

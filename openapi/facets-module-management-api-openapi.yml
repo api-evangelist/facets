@@ -1024,6 +1024,227 @@ paths:
       - Module Management
 components:
   schemas:
+    TFModuleLiteDTO:
+      type: object
+      properties:
+        allowedTestProjects:
+          type: array
+          description: List of test projects where this module will be available
+          items:
+            type: string
+            description: List of test projects where this module will be available
+        clouds:
+          uniqueItems: true
+          type: array
+          description: Supported cloud providers
+          example:
+          - aws
+          - azure
+          items:
+            type: string
+            description: Supported cloud providers
+            example: '["aws","azure"]'
+        flavor:
+          type: string
+          description: Flavor of the TF Module
+          example: small
+        iacTool:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+            enum:
+            - TERRAFORM
+            - OPENTOFU
+        id:
+          type: string
+        inputs:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Input'
+          description: Input parameters for the module
+        intent:
+          type: string
+          description: Intent of the TF Module
+          example: deploy
+        intentType:
+          type: string
+        nameLengthLimit:
+          type: integer
+          description: Maximum allowed length for resource names using this module
+          format: int32
+          example: 40
+        nameRegex:
+          type: string
+          description: Regular expression pattern for validating resource names
+          example: ^[a-z0-9-]+$
+        source:
+          type: string
+          description: Source of the TF Module
+          enum:
+          - BUILT_IN
+          - CUSTOM
+        stage:
+          type: string
+          enum:
+          - PREVIEW
+          - PUBLISHED
+        tags:
+          uniqueItems: true
+          type: array
+          description: Tags associated with the module
+          example:
+          - tag1
+          - tag2
+          items:
+            type: string
+            description: Tags associated with the module
+            example: '["tag1","tag2"]'
+        version:
+          type: string
+          description: Version of the TF Module
+          example: 1.0.0
+      description: Lightweight DTO for TF Modules providing minimal details
+    IntentOutput:
+      type: object
+      properties:
+        description:
+          type: string
+        name:
+          type: string
+        providers:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/TFProvider'
+        title:
+          type: string
+        type:
+          type: string
+    TFModuleListResponseDTO:
+      type: object
+      properties:
+        clouds:
+          uniqueItems: true
+          type: array
+          description: Supported cloud providers
+          example:
+          - aws
+          - azure
+          items:
+            type: string
+            description: Supported cloud providers
+            example: '["aws","azure"]'
+        controlPlaneUISettings:
+          $ref: '#/components/schemas/ControlPlaneUISettings'
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        featureBranch:
+          type: boolean
+        flavor:
+          type: string
+          description: Flavor of the TF Module
+          example: small
+        gitRef:
+          type: string
+        gitUrl:
+          type: string
+        iacTool:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+            enum:
+            - TERRAFORM
+            - OPENTOFU
+        id:
+          type: string
+        intentDetails:
+          $ref: '#/components/schemas/IntentResponseDTO'
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        previewGitRef:
+          type: string
+        previewGitUrl:
+          type: string
+        previewModuleId:
+          type: string
+        source:
+          type: string
+          description: Source of the TF Module
+          enum:
+          - BUILT_IN
+          - CUSTOM
+        stage:
+          type: string
+          description: Stage of the TF Module in its lifecycle
+          example: PUBLISHED
+          enum:
+          - PREVIEW
+          - PUBLISHED
+        tags:
+          uniqueItems: true
+          type: array
+          description: Tags associated with the module
+          example:
+          - tag1
+          - tag2
+          items:
+            type: string
+            description: Tags associated with the module
+            example: '["tag1","tag2"]'
+        type:
+          type: string
+          description: Type of the TF Module
+          example: SIMPLE
+          enum:
+          - SIMPLE
+          - ADD_ON
+        version:
+          type: string
+          description: Version of the TF Module
+          example: 1.0.0
+    ListResourcesResponse:
+      type: object
+      properties:
+        resources:
+          type: object
+          additionalProperties:
+            type: object
+            additionalProperties:
+              $ref: '#/components/schemas/TFModuleLiteListDTO'
+            description: Grouped resources by type and name
+          description: Grouped resources by type and name
+        templates:
+          type: object
+          additionalProperties:
+            type: array
+            description: Templates associated with the resources
+            items:
+              $ref: '#/components/schemas/TemplateResponseDTO'
+          description: Templates associated with the resources
+      description: Response entity containing grouped resources and templates
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
     Input:
       type: object
       properties:
@@ -1046,65 +1267,17 @@ components:
         type:
           type: string
       description: Input parameters for this module
-    GithubAppPermissionsPendingErrorDetails:
+    InputOutputResource:
       type: object
       properties:
-        approvalUrl:
-          type: string
-        code:
-          type: string
-        errorCode:
-          type: string
-        message:
-          type: string
-        missingPermissions:
-          type: array
-          items:
-            type: string
-    ModuleUsageDTO:
-      type: object
-      properties:
-        clusterId:
-          type: string
-        clusterName:
+        default:
+          type: boolean
+        outputName:
           type: string
         resourceName:
           type: string
         resourceType:
           type: string
-        stackName:
-          type: string
-    ListResourcesResponse:
-      type: object
-      properties:
-        resources:
-          type: object
-          additionalProperties:
-            type: object
-            additionalProperties:
-              $ref: '#/components/schemas/TFModuleLiteListDTO'
-            description: Grouped resources by type and name
-          description: Grouped resources by type and name
-        templates:
-          type: object
-          additionalProperties:
-            type: array
-            description: Templates associated with the resources
-            items:
-              $ref: '#/components/schemas/TemplateResponseDTO'
-          description: Templates associated with the resources
-      description: Response entity containing grouped resources and templates
-    ControlPlaneUISettings:
-      type: object
-      properties:
-        enableKubernetesExplorer:
-          type: boolean
-          description: Whether Kubernetes Explorer should be enabled for this resource
-        nameRegex:
-          type: string
-          description: Regular expression pattern for validating resource names
-          example: ^[a-z0-9-]+$
-      description: Control Plane UI specific settings
     TFModuleResponseDTO:
       type: object
       properties:
@@ -1262,65 +1435,59 @@ components:
           example: 1.0.0
         versioningKey:
           type: string
-    InputOutputResource:
+    ErrorDetails:
       type: object
       properties:
-        default:
+        code:
+          type: string
+        message:
+          type: string
+    ControlPlaneUISettings:
+      type: object
+      properties:
+        enableKubernetesExplorer:
           type: boolean
-        outputName:
+          description: Whether Kubernetes Explorer should be enabled for this resource
+        nameRegex:
+          type: string
+          description: Regular expression pattern for validating resource names
+          example: ^[a-z0-9-]+$
+      description: Control Plane UI specific settings
+    TemplateResponseDTO:
+      type: object
+      properties:
+        clouds:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        description:
+          type: string
+        displayName:
+          type: string
+        group:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+          enum:
+          - MULTI_INSTANCE
+          - SINGLE_INSTANCE
+          - AUTO_INJECT
+      description: Templates associated with the resources
+    ModuleUsageDTO:
+      type: object
+      properties:
+        clusterId:
+          type: string
+        clusterName:
           type: string
         resourceName:
           type: string
         resourceType:
           type: string
-    TFProvider:
-      type: object
-      properties:
-        attributes:
-          type: object
-          additionalProperties:
-            type: object
-        name:
-          type: string
-        source:
-          type: string
-        version:
-          type: string
-    TFModulePath:
-      type: object
-      properties:
-        etag:
-          type: string
-        path:
-          type: string
-        pathType:
-          type: string
-          enum:
-          - S3
-          - FACETS_S3
-      description: Path information related to TF Module
-    IntentOutput:
-      type: object
-      properties:
-        description:
-          type: string
-        name:
-          type: string
-        providers:
-          uniqueItems: true
-          type: array
-          items:
-            $ref: '#/components/schemas/TFProvider'
-        title:
-          type: string
-        type:
-          type: string
-    OtherVersion:
-      type: object
-      properties:
-        id:
-          type: string
-        version:
+        stackName:
           type: string
     ModuleMetadata:
       type: object
@@ -1335,6 +1502,42 @@ components:
           type: string
         skipOutputWrite:
           type: boolean
+    IntentResponseDTO:
+      type: object
+      properties:
+        description:
+          type: string
+        displayName:
+          type: string
+        iconUrl:
+          type: string
+        intentOutputs:
+          type: array
+          items:
+            $ref: '#/components/schemas/IntentOutput'
+        name:
+          type: string
+        source:
+          type: string
+          enum:
+          - BUILT_IN
+          - CUSTOM
+        type:
+          type: string
+    TFModuleLiteListDTO:
+      type: object
+      properties:
+        description:
+          type: string
+        displayName:
+          type: string
+        iconUrl:
+          type: string
+        modules:
+          type: array
+          items:
+            $ref: '#/components/schemas/TFModuleLiteDTO'
+      description: Grouped resources by type and name
     TFModule:
       type: object
       properties:
@@ -1498,242 +1701,39 @@ components:
         versioningKey:
           type: string
       description: Model representing a Terraform Module
-    TFModuleLiteDTO:
+    TFModulePath:
       type: object
       properties:
-        allowedTestProjects:
-          type: array
-          description: List of test projects where this module will be available
-          items:
-            type: string
-            description: List of test projects where this module will be available
-        clouds:
-          uniqueItems: true
-          type: array
-          description: Supported cloud providers
-          example:
-          - aws
-          - azure
-          items:
-            type: string
-            description: Supported cloud providers
-            example: '["aws","azure"]'
-        flavor:
+        etag:
           type: string
-          description: Flavor of the TF Module
-          example: small
-        iacTool:
-          uniqueItems: true
-          type: array
-          items:
-            type: string
-            enum:
-            - TERRAFORM
-            - OPENTOFU
+        path:
+          type: string
+        pathType:
+          type: string
+          enum:
+          - S3
+          - FACETS_S3
+      description: Path information related to TF Module
+    OtherVersion:
+      type: object
+      properties:
         id:
           type: string
-        inputs:
+        version:
+          type: string
+    TFProvider:
+      type: object
+      properties:
+        attributes:
           type: object
           additionalProperties:
-            $ref: '#/components/schemas/Input'
-          description: Input parameters for the module
-        intent:
-          type: string
-          description: Intent of the TF Module
-          example: deploy
-        intentType:
-          type: string
-        nameLengthLimit:
-          type: integer
-          description: Maximum allowed length for resource names using this module
-          format: int32
-          example: 40
-        nameRegex:
-          type: string
-          description: Regular expression pattern for validating resource names
-          example: ^[a-z0-9-]+$
-        source:
-          type: string
-          description: Source of the TF Module
-          enum:
-          - BUILT_IN
-          - CUSTOM
-        stage:
-          type: string
-          enum:
-          - PREVIEW
-          - PUBLISHED
-        tags:
-          uniqueItems: true
-          type: array
-          description: Tags associated with the module
-          example:
-          - tag1
-          - tag2
-          items:
-            type: string
-            description: Tags associated with the module
-            example: '["tag1","tag2"]'
-        version:
-          type: string
-          description: Version of the TF Module
-          example: 1.0.0
-      description: Lightweight DTO for TF Modules providing minimal details
-    TemplateResponseDTO:
-      type: object
-      properties:
-        clouds:
-          uniqueItems: true
-          type: array
-          items:
-            type: string
-        description:
-          type: string
-        displayName:
-          type: string
-        group:
-          type: string
-        name:
-          type: string
-        type:
-          type: string
-          enum:
-          - MULTI_INSTANCE
-          - SINGLE_INSTANCE
-          - AUTO_INJECT
-      description: Templates associated with the resources
-    TFModuleLiteListDTO:
-      type: object
-      properties:
-        description:
-          type: string
-        displayName:
-          type: string
-        iconUrl:
-          type: string
-        modules:
-          type: array
-          items:
-            $ref: '#/components/schemas/TFModuleLiteDTO'
-      description: Grouped resources by type and name
-    IntentResponseDTO:
-      type: object
-      properties:
-        description:
-          type: string
-        displayName:
-          type: string
-        iconUrl:
-          type: string
-        intentOutputs:
-          type: array
-          items:
-            $ref: '#/components/schemas/IntentOutput'
+            type: object
         name:
           type: string
         source:
           type: string
-          enum:
-          - BUILT_IN
-          - CUSTOM
-        type:
-          type: string
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-    TFModuleListResponseDTO:
-      type: object
-      properties:
-        clouds:
-          uniqueItems: true
-          type: array
-          description: Supported cloud providers
-          example:
-          - aws
-          - azure
-          items:
-            type: string
-            description: Supported cloud providers
-            example: '["aws","azure"]'
-        controlPlaneUISettings:
-          $ref: '#/components/schemas/ControlPlaneUISettings'
-        createdBy:
-          type: string
-        creationDate:
-          type: string
-          format: date-time
-        featureBranch:
-          type: boolean
-        flavor:
-          type: string
-          description: Flavor of the TF Module
-          example: small
-        gitRef:
-          type: string
-        gitUrl:
-          type: string
-        iacTool:
-          uniqueItems: true
-          type: array
-          items:
-            type: string
-            enum:
-            - TERRAFORM
-            - OPENTOFU
-        id:
-          type: string
-        intentDetails:
-          $ref: '#/components/schemas/IntentResponseDTO'
-        lastModifiedBy:
-          type: string
-        lastModifiedDate:
-          type: string
-          format: date-time
-        previewGitRef:
-          type: string
-        previewGitUrl:
-          type: string
-        previewModuleId:
-          type: string
-        source:
-          type: string
-          description: Source of the TF Module
-          enum:
-          - BUILT_IN
-          - CUSTOM
-        stage:
-          type: string
-          description: Stage of the TF Module in its lifecycle
-          example: PUBLISHED
-          enum:
-          - PREVIEW
-          - PUBLISHED
-        tags:
-          uniqueItems: true
-          type: array
-          description: Tags associated with the module
-          example:
-          - tag1
-          - tag2
-          items:
-            type: string
-            description: Tags associated with the module
-            example: '["tag1","tag2"]'
-        type:
-          type: string
-          description: Type of the TF Module
-          example: SIMPLE
-          enum:
-          - SIMPLE
-          - ADD_ON
         version:
           type: string
-          description: Version of the TF Module
-          example: 1.0.0
   securitySchemes:
     basicAuth:
       description: Basic Authentication

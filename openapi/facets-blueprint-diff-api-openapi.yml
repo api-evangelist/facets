@@ -85,6 +85,13 @@ paths:
       - Blueprint Diff
 components:
   schemas:
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
     GithubAppPermissionsPendingErrorDetails:
       type: object
       properties:
@@ -114,13 +121,6 @@ components:
           enum:
           - FOUND
           - NOT_FOUND
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
   securitySchemes:
     basicAuth:
       description: Basic Authentication

@@ -355,6 +355,41 @@ paths:
       - ui-tekton-action-controller
 components:
   schemas:
+    ActionDto:
+      required:
+      - name
+      type: object
+      properties:
+        cloudAction:
+          type: boolean
+          description: Indicates if this is a cloud action requiring RUN_CLOUD_ACTION permission
+        clusterId:
+          type: string
+          description: Cluster ID associated with the action
+        description:
+          type: string
+          description: Description of what the action does
+          example: Builds and packages the application
+        displayName:
+          type: string
+          description: Display name for the action
+          example: Build and Deploy Action
+        name:
+          type: string
+          description: Name of the action
+          example: build-action
+        params:
+          type: array
+          description: List of parameters that can be passed to the action
+          items:
+            $ref: '#/components/schemas/ActionParameterDto'
+        resourceName:
+          type: string
+          description: Resource name associated with the action
+        resourceType:
+          type: string
+          description: Resource type associated with the action
+      description: Represents an action definition
     ActionParameterValueDto:
       required:
       - type
@@ -378,6 +413,53 @@ components:
           - string
           - array
       description: Represents the value of an action parameter
+    ActionRunRequestDto:
+      required:
+      - actionName
+      type: object
+      properties:
+        actionName:
+          type: string
+          description: Name of the action to run
+          example: build-action
+        params:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ActionParameterValueDto'
+          description: Parameters to pass to the action
+      description: Request for running a single action with parameters
+    ActionParameterDto:
+      required:
+      - name
+      - type
+      type: object
+      properties:
+        defaultValue:
+          $ref: '#/components/schemas/ActionParameterValueDto'
+        description:
+          type: string
+          description: Description of the parameter
+          example: Docker image name to build
+        name:
+          type: string
+          description: Name of the parameter
+          example: image-name
+        properties:
+          uniqueItems: true
+          type: array
+          description: Properties for object type parameters. Only applicable when type is 'object'
+          items:
+            type: string
+            description: Properties for object type parameters. Only applicable when type is 'object'
+        type:
+          type: string
+          description: Type of the parameter
+          example: string
+          enum:
+          - string
+          - array
+          - object
+      description: Defines a parameter that can be passed to an action
     ActionStepDto:
       required:
       - name
@@ -440,41 +522,13 @@ components:
           description: Name of the step
           example: build-step
       description: Contains logs for a specific step in a Tekton task run
-    ActionDto:
-      required:
-      - name
+    ErrorDetails:
       type: object
       properties:
-        cloudAction:
-          type: boolean
-          description: Indicates if this is a cloud action requiring RUN_CLOUD_ACTION permission
-        clusterId:
+        code:
           type: string
-          description: Cluster ID associated with the action
-        description:
+        message:
           type: string
-          description: Description of what the action does
-          example: Builds and packages the application
-        displayName:
-          type: string
-          description: Display name for the action
-          example: Build and Deploy Action
-        name:
-          type: string
-          description: Name of the action
-          example: build-action
-        params:
-          type: array
-          description: List of parameters that can be passed to the action
-          items:
-            $ref: '#/components/schemas/ActionParameterDto'
-        resourceName:
-          type: string
-          description: Resource name associated with the action
-        resourceType:
-          type: string
-          description: Resource type associated with the action
-      description: Represents an action definition
     GithubAppPermissionsPendingErrorDetails:
       type: object
       properties:
@@ -490,38 +544,17 @@ components:
           type: array
           items:
             type: string
-    ActionParameterDto:
+    BulkActionRunRequestDto:
       required:
-      - name
-      - type
+      - actions
       type: object
       properties:
-        defaultValue:
-          $ref: '#/components/schemas/ActionParameterValueDto'
-        description:
-          type: string
-          description: Description of the parameter
-          example: Docker image name to build
-        name:
-          type: string
-          description: Name of the parameter
-          example: image-name
-        properties:
-          uniqueItems: true
+        actions:
           type: array
-          description: Properties for object type parameters. Only applicable when type is 'object'
+          description: List of actions to run with their individual parameters
           items:
-            type: string
-            description: Properties for object type parameters. Only applicable when type is 'object'
-        type:
-          type: string
-          description: Type of the parameter
-          example: string
-          enum:
-          - string
-          - array
-          - object
-      description: Defines a parameter that can be passed to an action
+            $ref: '#/components/schemas/ActionRunRequestDto'
+      description: Request for running multiple actions with individual parameters
     ActionRunDto:
       required:
       - actionName
@@ -602,39 +635,6 @@ components:
           description: User who triggered this action run
           example: user@example.com
       description: Represents an action run instance with its execution details
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-    BulkActionRunRequestDto:
-      required:
-      - actions
-      type: object
-      properties:
-        actions:
-          type: array
-          description: List of actions to run with their individual parameters
-          items:
-            $ref: '#/components/schemas/ActionRunRequestDto'
-      description: Request for running multiple actions with individual parameters
-    ActionRunRequestDto:
-      required:
-      - actionName
-      type: object
-      properties:
-        actionName:
-          type: string
-          description: Name of the action to run
-          example: build-action
-        params:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/ActionParameterValueDto'
-          description: Parameters to pass to the action
-      description: Request for running a single action with parameters
   securitySchemes:
     basicAuth:
       description: Basic Authentication

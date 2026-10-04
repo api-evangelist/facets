@@ -489,76 +489,12 @@ components:
           type: object
         status:
           type: boolean
-    GithubAppPermissionsPendingErrorDetails:
+    EnableDisableOPAPolicy:
       type: object
       properties:
-        approvalUrl:
-          type: string
-        code:
-          type: string
-        errorCode:
-          type: string
-        message:
-          type: string
-        missingPermissions:
-          type: array
-          items:
-            type: string
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-    OpaPolicyRequest:
-      type: object
-      properties:
-        clusterIds:
-          type: array
-          items:
-            type: string
-        description:
-          type: string
         disabled:
           type: boolean
-        flavours:
-          type: array
-          items:
-            type: string
-        inputData:
-          type: object
-          additionalProperties:
-            type: object
-        packageName:
-          type: string
         policyName:
-          type: string
-        policyType:
-          type: string
-          enum:
-          - RAW
-          - TEMPLATED
-        rawPolicy:
-          type: string
-        resourceTypeAndResourceNamesMap:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              type: string
-        resourceTypes:
-          type: array
-          items:
-            type: string
-        severity:
-          type: string
-          enum:
-          - ERROR
-          - WARNING
-        stackName:
-          type: string
-        templateId:
           type: string
     PolicyTemplateDTO:
       type: object
@@ -580,13 +516,6 @@ components:
         templateId:
           type: string
         templateName:
-          type: string
-    EnableDisableOPAPolicy:
-      type: object
-      properties:
-        disabled:
-          type: boolean
-        policyName:
           type: string
     OpaPolicy:
       type: object
@@ -647,6 +576,77 @@ components:
           type: string
         templateId:
           type: string
+    OpaPolicyRequest:
+      type: object
+      properties:
+        clusterIds:
+          type: array
+          items:
+            type: string
+        description:
+          type: string
+        disabled:
+          type: boolean
+        flavours:
+          type: array
+          items:
+            type: string
+        inputData:
+          type: object
+          additionalProperties:
+            type: object
+        packageName:
+          type: string
+        policyName:
+          type: string
+        policyType:
+          type: string
+          enum:
+          - RAW
+          - TEMPLATED
+        rawPolicy:
+          type: string
+        resourceTypeAndResourceNamesMap:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        resourceTypes:
+          type: array
+          items:
+            type: string
+        severity:
+          type: string
+          enum:
+          - ERROR
+          - WARNING
+        stackName:
+          type: string
+        templateId:
+          type: string
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
   securitySchemes:
     basicAuth:
       description: Basic Authentication

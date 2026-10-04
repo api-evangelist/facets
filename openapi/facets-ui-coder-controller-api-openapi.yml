@@ -477,6 +477,32 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    CoderWorkspaceResponse:
+      type: object
+      properties:
+        name:
+          type: string
+        url:
+          type: string
+        workspaceId:
+          type: string
+    CreateWorkspaceExistingBranchRequest:
+      required:
+      - existingBranch
+      - workspaceName
+      type: object
+      properties:
+        existingBranch:
+          type: string
+        workspaceName:
+          type: string
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
     CoderLaunchEligibilityResponse:
       type: object
       properties:
@@ -499,22 +525,6 @@ components:
           type: array
           items:
             type: string
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-    CoderWorkspaceResponse:
-      type: object
-      properties:
-        name:
-          type: string
-        url:
-          type: string
-        workspaceId:
-          type: string
     CreateWorkspaceNewBranchRequest:
       required:
       - newBranch
@@ -525,16 +535,6 @@ components:
         newBranch:
           type: string
         sourceBranch:
-          type: string
-        workspaceName:
-          type: string
-    CreateWorkspaceExistingBranchRequest:
-      required:
-      - existingBranch
-      - workspaceName
-      type: object
-      properties:
-        existingBranch:
           type: string
         workspaceName:
           type: string
