@@ -1832,6 +1832,8 @@ apis:
   - type: Webhooks
     url: asyncapi/facets-webhooks.yml
 common:
+  - type: FinOps
+    url: finops/facets-finops.yml
   - type: CapabilityMap
     url: capabilities/facets-capability-edges.yml
     name: Facets Business Capability Map
