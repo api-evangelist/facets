@@ -534,6 +534,47 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    BulkWorkflowAttachRequest:
+      type: object
+      properties:
+        artifactCiIds:
+          type: array
+          items:
+            type: string
+        workflowId:
+          type: string
+    ArtifactCI:
+      required:
+      - ciName
+      - registrationType
+      type: object
+      properties:
+        ciName:
+          type: string
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        id:
+          type: string
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        promotionWorkflowId:
+          type: string
+        registrationType:
+          type: string
+          enum:
+          - ENVIRONMENT
+          - RELEASE_STREAM
+          - HYBRID
+        ruleId:
+          type: string
+        stackName:
+          type: string
     CiArtifactResponse:
       type: object
       properties:
@@ -604,47 +645,6 @@ components:
           type: array
           items:
             type: string
-    BulkWorkflowAttachRequest:
-      type: object
-      properties:
-        artifactCiIds:
-          type: array
-          items:
-            type: string
-        workflowId:
-          type: string
-    ArtifactCI:
-      required:
-      - ciName
-      - registrationType
-      type: object
-      properties:
-        ciName:
-          type: string
-        createdBy:
-          type: string
-        creationDate:
-          type: string
-          format: date-time
-        id:
-          type: string
-        lastModifiedBy:
-          type: string
-        lastModifiedDate:
-          type: string
-          format: date-time
-        promotionWorkflowId:
-          type: string
-        registrationType:
-          type: string
-          enum:
-          - ENVIRONMENT
-          - RELEASE_STREAM
-          - HYBRID
-        ruleId:
-          type: string
-        stackName:
-          type: string
   securitySchemes:
     basicAuth:
       description: Basic Authentication

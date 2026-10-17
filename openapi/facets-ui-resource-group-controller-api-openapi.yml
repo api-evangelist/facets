@@ -609,6 +609,24 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    Response:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    ResourceInfo:
+      required:
+      - stackName
+      type: object
+      properties:
+        resources:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceList'
+        stackName:
+          type: string
     ResourceList:
       type: object
       properties:
@@ -636,41 +654,6 @@ components:
           type: string
         stackName:
           type: string
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-    GithubAppPermissionsPendingErrorDetails:
-      type: object
-      properties:
-        approvalUrl:
-          type: string
-        code:
-          type: string
-        errorCode:
-          type: string
-        message:
-          type: string
-        missingPermissions:
-          type: array
-          items:
-            type: string
-    ResourceGroupRequest:
-      required:
-      - name
-      type: object
-      properties:
-        description:
-          maxLength: 200
-          minLength: 0
-          type: string
-        name:
-          maxLength: 2147483647
-          minLength: 2
-          type: string
     ResourceGroup:
       type: object
       properties:
@@ -694,24 +677,41 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ResourceInfo'
-    Response:
+    ErrorDetails:
       type: object
       properties:
         code:
           type: string
         message:
           type: string
-    ResourceInfo:
+    ResourceGroupRequest:
       required:
-      - stackName
+      - name
       type: object
       properties:
-        resources:
+        description:
+          maxLength: 200
+          minLength: 0
+          type: string
+        name:
+          maxLength: 2147483647
+          minLength: 2
+          type: string
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
           type: array
           items:
-            $ref: '#/components/schemas/ResourceList'
-        stackName:
-          type: string
+            type: string
   securitySchemes:
     basicAuth:
       description: Basic Authentication

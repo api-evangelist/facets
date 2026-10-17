@@ -204,13 +204,6 @@ components:
           type: string
         prod:
           type: boolean
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
     ReleaseStream:
       type: object
       properties:
@@ -228,6 +221,24 @@ components:
         version:
           type: integer
           format: int64
+    ReleaseStreamRequest:
+      required:
+      - name
+      type: object
+      properties:
+        description:
+          type: string
+        name:
+          type: string
+        prod:
+          type: boolean
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
     GithubAppPermissionsPendingErrorDetails:
       type: object
       properties:
@@ -243,17 +254,6 @@ components:
           type: array
           items:
             type: string
-    ReleaseStreamRequest:
-      required:
-      - name
-      type: object
-      properties:
-        description:
-          type: string
-        name:
-          type: string
-        prod:
-          type: boolean
   securitySchemes:
     basicAuth:
       description: Basic Authentication

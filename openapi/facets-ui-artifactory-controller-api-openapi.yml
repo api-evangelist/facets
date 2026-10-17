@@ -1043,172 +1043,15 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    ArtifactoryOneTimeWebhook:
+    ExclusionFilter:
       type: object
       properties:
-        accountLinkingDetails:
-          $ref: '#/components/schemas/AccountLinkingDetails'
-        createdBy:
+        filter:
           type: string
-        creationDate:
-          type: string
-          format: date-time
-        deleteAt:
-          type: string
-          format: date-time
-          readOnly: true
-        errorMessage:
-          type: string
-        expiresAt:
-          type: string
-          format: date-time
-          readOnly: true
-        id:
-          type: string
-        lastModifiedBy:
-          type: string
-        lastModifiedDate:
-          type: string
-          format: date-time
-        stackAssociated:
-          uniqueItems: true
-          type: array
-          items:
-            type: string
-        status:
-          type: string
-          readOnly: true
-          enum:
-          - WAITING
-          - SUCCESS
-          - FAILED
-          - EXPIRED
-        type:
+        filterType:
           type: string
           enum:
-          - AZURE
-          - GCP
-          - AWS
-          - KUBERNETES
-          - ECR
-          - OTHER_DOCKER_REGISTRY
-          - GITHUB
-          - GITLAB
-          - BITBUCKET
-    Artifactory:
-      required:
-      - name
-      type: object
-      properties:
-        artifactoryType:
-          type: string
-          enum:
-          - ECR
-          - AZURE_CONTAINER_REGISTRY
-          - GOOGLE_ARTIFACT_REGISTRY
-          - GOOGLE_CONTAINER_REGISTRY
-          - NEXUS
-          - DOCKER_HUB
-          - JFROG
-          - HARBOR
-          - OTHERS
-        changeLog:
-          type: string
-        createdBy:
-          type: string
-        creationDate:
-          type: string
-          format: date-time
-        description:
-          maxLength: 200
-          minLength: 0
-          type: string
-        id:
-          type: string
-        lastModifiedBy:
-          type: string
-        lastModifiedDate:
-          type: string
-          format: date-time
-        name:
-          type: string
-        stacksAssociated:
-          uniqueItems: true
-          type: array
-          items:
-            type: string
-        systemDefined:
-          type: boolean
-        uri:
-          type: string
-        versioningKey:
-          type: string
-    ArtifactoryMirror:
-      type: object
-      properties:
-        clusterId:
-          type: string
-        id:
-          type: string
-        mirrorArtifactory:
-          type: string
-        sourceArtifactory:
-          type: string
-    AccountLinkingDetails:
-      type: object
-      properties:
-        description:
-          type: string
-        labelIds:
-          type: array
-          items:
-            type: string
-    BasicDockerDTO:
-      required:
-      - artifactoryName
-      - artifactoryType
-      - uri
-      - username
-      type: object
-      properties:
-        artifactoryName:
-          type: string
-        artifactoryProject:
-          type: string
-        artifactoryType:
-          type: string
-          enum:
-          - ECR
-          - AZURE_CONTAINER_REGISTRY
-          - GOOGLE_ARTIFACT_REGISTRY
-          - GOOGLE_CONTAINER_REGISTRY
-          - NEXUS
-          - DOCKER_HUB
-          - JFROG
-          - HARBOR
-          - OTHERS
-        description:
-          maxLength: 200
-          minLength: 0
-          type: string
-        password:
-          type: string
-        stacksAssociated:
-          uniqueItems: true
-          type: array
-          items:
-            type: string
-        uri:
-          type: string
-        username:
-          type: string
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
+          - WILDCARD
     BasicDockerArtifactory:
       required:
       - name
@@ -1265,37 +1108,153 @@ components:
           type: string
         versioningKey:
           type: string
-    ExclusionFilter:
+    OneTimeWebhook:
       type: object
       properties:
-        filter:
+        accountLinkingDetails:
+          $ref: '#/components/schemas/AccountLinkingDetails'
+        createdBy:
           type: string
-        filterType:
+        creationDate:
+          type: string
+          format: date-time
+        deleteAt:
+          type: string
+          format: date-time
+          readOnly: true
+        errorMessage:
+          type: string
+        expiresAt:
+          type: string
+          format: date-time
+          readOnly: true
+        id:
+          type: string
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        status:
+          type: string
+          readOnly: true
+          enum:
+          - WAITING
+          - SUCCESS
+          - FAILED
+          - EXPIRED
+        type:
           type: string
           enum:
-          - WILDCARD
-    GithubAppPermissionsPendingErrorDetails:
+          - AZURE
+          - GCP
+          - AWS
+          - KUBERNETES
+          - ECR
+          - OTHER_DOCKER_REGISTRY
+          - GITHUB
+          - GITLAB
+          - BITBUCKET
+    ArtifactoryOneTimeWebhook:
       type: object
       properties:
-        approvalUrl:
+        accountLinkingDetails:
+          $ref: '#/components/schemas/AccountLinkingDetails'
+        createdBy:
           type: string
-        code:
+        creationDate:
           type: string
-        errorCode:
+          format: date-time
+        deleteAt:
           type: string
-        message:
+          format: date-time
+          readOnly: true
+        errorMessage:
           type: string
-        missingPermissions:
+        expiresAt:
+          type: string
+          format: date-time
+          readOnly: true
+        id:
+          type: string
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        stackAssociated:
+          uniqueItems: true
           type: array
           items:
             type: string
-    ArtifactoryLinkingRequest:
+        status:
+          type: string
+          readOnly: true
+          enum:
+          - WAITING
+          - SUCCESS
+          - FAILED
+          - EXPIRED
+        type:
+          type: string
+          enum:
+          - AZURE
+          - GCP
+          - AWS
+          - KUBERNETES
+          - ECR
+          - OTHER_DOCKER_REGISTRY
+          - GITHUB
+          - GITLAB
+          - BITBUCKET
+    AccountLinkingDetails:
+      type: object
+      properties:
+        description:
+          type: string
+        labelIds:
+          type: array
+          items:
+            type: string
+    BasicDockerDTO:
+      required:
+      - artifactoryName
+      - artifactoryType
+      - uri
+      - username
       type: object
       properties:
         artifactoryName:
           type: string
-        webhook:
-          $ref: '#/components/schemas/ArtifactoryOneTimeWebhook'
+        artifactoryProject:
+          type: string
+        artifactoryType:
+          type: string
+          enum:
+          - ECR
+          - AZURE_CONTAINER_REGISTRY
+          - GOOGLE_ARTIFACT_REGISTRY
+          - GOOGLE_CONTAINER_REGISTRY
+          - NEXUS
+          - DOCKER_HUB
+          - JFROG
+          - HARBOR
+          - OTHERS
+        description:
+          maxLength: 200
+          minLength: 0
+          type: string
+        password:
+          type: string
+        stacksAssociated:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        uri:
+          type: string
+        username:
+          type: string
     ECRArtifactory:
       required:
       - awsAccountId
@@ -1372,26 +1331,59 @@ components:
           type: string
         versioningKey:
           type: string
-    OneTimeWebhook:
+    ArtifactoryLinkingRequest:
       type: object
       properties:
-        accountLinkingDetails:
-          $ref: '#/components/schemas/AccountLinkingDetails'
+        artifactoryName:
+          type: string
+        webhook:
+          $ref: '#/components/schemas/ArtifactoryOneTimeWebhook'
+    ArtifactoryMirror:
+      type: object
+      properties:
+        clusterId:
+          type: string
+        id:
+          type: string
+        mirrorArtifactory:
+          type: string
+        sourceArtifactory:
+          type: string
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    Artifactory:
+      required:
+      - name
+      type: object
+      properties:
+        artifactoryType:
+          type: string
+          enum:
+          - ECR
+          - AZURE_CONTAINER_REGISTRY
+          - GOOGLE_ARTIFACT_REGISTRY
+          - GOOGLE_CONTAINER_REGISTRY
+          - NEXUS
+          - DOCKER_HUB
+          - JFROG
+          - HARBOR
+          - OTHERS
+        changeLog:
+          type: string
         createdBy:
           type: string
         creationDate:
           type: string
           format: date-time
-        deleteAt:
+        description:
+          maxLength: 200
+          minLength: 0
           type: string
-          format: date-time
-          readOnly: true
-        errorMessage:
-          type: string
-        expiresAt:
-          type: string
-          format: date-time
-          readOnly: true
         id:
           type: string
         lastModifiedBy:
@@ -1399,26 +1391,34 @@ components:
         lastModifiedDate:
           type: string
           format: date-time
-        status:
+        name:
           type: string
-          readOnly: true
-          enum:
-          - WAITING
-          - SUCCESS
-          - FAILED
-          - EXPIRED
-        type:
+        stacksAssociated:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        systemDefined:
+          type: boolean
+        uri:
           type: string
-          enum:
-          - AZURE
-          - GCP
-          - AWS
-          - KUBERNETES
-          - ECR
-          - OTHER_DOCKER_REGISTRY
-          - GITHUB
-          - GITLAB
-          - BITBUCKET
+        versioningKey:
+          type: string
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
   securitySchemes:
     basicAuth:
       description: Basic Authentication

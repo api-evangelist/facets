@@ -334,6 +334,45 @@ paths:
       - ui-project-type-controller
 components:
   schemas:
+    ProjectTypeMappedResource:
+      required:
+      - flavor
+      - intent
+      - intentType
+      type: object
+      properties:
+        flavor:
+          type: string
+        intent:
+          type: string
+        intentType:
+          type: string
+      description: Allowed modules for the project
+    TemplateGitDetails:
+      required:
+      - accountId
+      - gitRef
+      - gitUrl
+      - path
+      type: object
+      properties:
+        accountId:
+          type: string
+          description: Account ID associated with the Git repository
+          example: acct123
+        gitRef:
+          type: string
+          description: Git reference (branch or tag)
+          example: main
+        gitUrl:
+          type: string
+          description: Git repository URL
+          example: https://github.com/example/repo.git
+        path:
+          type: string
+          description: Path within the Git repository
+          example: /templates/project
+      description: Git details for the template used in Project Type
     ProjectTypeRequest:
       required:
       - iacTool
@@ -408,6 +447,13 @@ components:
           description: Whether to use CRD-driven releases
           example: false
       description: Request model for Project Type operations.
+    ProjectTypeFilter:
+      type: object
+      properties:
+        legacy:
+          type: boolean
+        name:
+          type: string
     ProjectTypeResponse:
       type: object
       properties:
@@ -472,27 +518,6 @@ components:
           $ref: '#/components/schemas/TemplateGitDetails'
         useCrdDrivenReleases:
           type: boolean
-    ProjectTypeMappedResource:
-      required:
-      - flavor
-      - intent
-      - intentType
-      type: object
-      properties:
-        flavor:
-          type: string
-        intent:
-          type: string
-        intentType:
-          type: string
-      description: Allowed modules for the project
-    ProjectTypeFilter:
-      type: object
-      properties:
-        legacy:
-          type: boolean
-        name:
-          type: string
     ErrorDetails:
       type: object
       properties:
@@ -515,31 +540,6 @@ components:
           type: array
           items:
             type: string
-    TemplateGitDetails:
-      required:
-      - accountId
-      - gitRef
-      - gitUrl
-      - path
-      type: object
-      properties:
-        accountId:
-          type: string
-          description: Account ID associated with the Git repository
-          example: acct123
-        gitRef:
-          type: string
-          description: Git reference (branch or tag)
-          example: main
-        gitUrl:
-          type: string
-          description: Git repository URL
-          example: https://github.com/example/repo.git
-        path:
-          type: string
-          description: Path within the Git repository
-          example: /templates/project
-      description: Git details for the template used in Project Type
   securitySchemes:
     basicAuth:
       description: Basic Authentication

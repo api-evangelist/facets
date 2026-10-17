@@ -232,6 +232,37 @@ paths:
       - Blueprint Hook
 components:
   schemas:
+    HookResponse:
+      type: object
+      properties:
+        installed:
+          type: boolean
+          description: True when a hook script is present
+        language:
+          type: string
+          description: Language of the installed script, or null if not installed
+          enum:
+          - PYTHON
+          - SHELL
+        script:
+          type: string
+          description: The installed script body, or null if not installed
+        scriptPath:
+          type: string
+          description: Path of the hook script within the blueprint repo
+        type:
+          type: string
+          description: The hook type
+          enum:
+          - PRE_RELEASE
+      description: Blueprint hook state
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
     HookRequest:
       required:
       - language
@@ -257,30 +288,6 @@ components:
           type: string
           description: Full hook script body, written verbatim to the blueprint repo
       description: Install or replace a blueprint hook script
-    HookResponse:
-      type: object
-      properties:
-        installed:
-          type: boolean
-          description: True when a hook script is present
-        language:
-          type: string
-          description: Language of the installed script, or null if not installed
-          enum:
-          - PYTHON
-          - SHELL
-        script:
-          type: string
-          description: The installed script body, or null if not installed
-        scriptPath:
-          type: string
-          description: Path of the hook script within the blueprint repo
-        type:
-          type: string
-          description: The hook type
-          enum:
-          - PRE_RELEASE
-      description: Blueprint hook state
     GithubAppPermissionsPendingErrorDetails:
       type: object
       properties:
@@ -296,13 +303,6 @@ components:
           type: array
           items:
             type: string
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
   securitySchemes:
     basicAuth:
       description: Basic Authentication

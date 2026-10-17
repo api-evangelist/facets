@@ -1648,133 +1648,7 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    FileKeySelector:
-      type: object
-      properties:
-        key:
-          type: string
-        optional:
-          type: boolean
-        path:
-          type: string
-        volumeName:
-          type: string
-    ContainerResizePolicy:
-      type: object
-      properties:
-        resourceName:
-          type: string
-        restartPolicy:
-          type: string
-    HTTPGetAction:
-      type: object
-      properties:
-        host:
-          type: string
-        httpHeaders:
-          type: array
-          items:
-            $ref: '#/components/schemas/HTTPHeader'
-        path:
-          type: string
-        port:
-          $ref: '#/components/schemas/IntOrString'
-        scheme:
-          type: string
-    ServiceDTO:
-      type: object
-      properties:
-        age:
-          type: integer
-          format: int64
-        clusterIp:
-          type: string
-        externalIp:
-          type: string
-        ipFamilies:
-          type: array
-          items:
-            type: string
-        name:
-          type: string
-        port:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServicePortDTO'
-        type:
-          type: string
-    IngressDTO:
-      type: object
-      properties:
-        addresses:
-          type: array
-          items:
-            type: string
-        age:
-          type: integer
-          format: int64
-        ingressClass:
-          type: string
-        name:
-          type: string
-        rules:
-          type: array
-          items:
-            $ref: '#/components/schemas/IngressRulesDTO'
-    ConfigMapEnvSource:
-      type: object
-      properties:
-        name:
-          type: string
-        optional:
-          type: boolean
-    IntOrString:
-      type: object
-      properties:
-        intVal:
-          type: integer
-          format: int32
-        strVal:
-          type: string
-        value:
-          type: object
-    Probe:
-      type: object
-      properties:
-        exec:
-          $ref: '#/components/schemas/ExecAction'
-        failureThreshold:
-          type: integer
-          format: int32
-        grpc:
-          $ref: '#/components/schemas/GRPCAction'
-        httpGet:
-          $ref: '#/components/schemas/HTTPGetAction'
-        initialDelaySeconds:
-          type: integer
-          format: int32
-        periodSeconds:
-          type: integer
-          format: int32
-        successThreshold:
-          type: integer
-          format: int32
-        tcpSocket:
-          $ref: '#/components/schemas/TCPSocketAction'
-        terminationGracePeriodSeconds:
-          type: integer
-          format: int64
-        timeoutSeconds:
-          type: integer
-          format: int32
-    Metric:
-      type: object
-      properties:
-        cpuUtilization:
-          $ref: '#/components/schemas/Utilization'
-        memoryUtilization:
-          $ref: '#/components/schemas/Utilization'
-    ConfigMapKeySelector:
+    SecretKeySelector:
       type: object
       properties:
         key:
@@ -1783,97 +1657,22 @@ components:
           type: string
         optional:
           type: boolean
-    CronJobDTO:
+    EnvFromSource:
       type: object
       properties:
-        active:
-          type: integer
-          format: int32
-        ageInSeconds:
-          type: integer
-          format: int64
-        lastSchedule:
+        configMapRef:
+          $ref: '#/components/schemas/ConfigMapEnvSource'
+        prefix:
           type: string
-        name:
-          type: string
-        schedule:
-          type: string
-        suspend:
-          type: boolean
-    GithubAppPermissionsPendingErrorDetails:
+        secretRef:
+          $ref: '#/components/schemas/SecretEnvSource'
+    Utilization:
       type: object
       properties:
-        approvalUrl:
+        current:
           type: string
-        code:
+        target:
           type: string
-        errorCode:
-          type: string
-        message:
-          type: string
-        missingPermissions:
-          type: array
-          items:
-            type: string
-    ExecAction:
-      type: object
-      properties:
-        command:
-          type: array
-          items:
-            type: string
-    PersistentVolumeClaimDTO:
-      type: object
-      properties:
-        ageInSeconds:
-          type: integer
-          format: int64
-        associatedPods:
-          type: array
-          items:
-            type: string
-        capacity:
-          type: string
-        name:
-          type: string
-        pvcAccessModes:
-          type: array
-          items:
-            type: string
-        status:
-          type: string
-        storageClass:
-          type: string
-        volume:
-          type: string
-    VolumeMount:
-      type: object
-      properties:
-        mountPath:
-          type: string
-        mountPropagation:
-          type: string
-        name:
-          type: string
-        readOnly:
-          type: boolean
-        recursiveReadOnly:
-          type: string
-        subPath:
-          type: string
-        subPathExpr:
-          type: string
-    LifecycleHandler:
-      type: object
-      properties:
-        exec:
-          $ref: '#/components/schemas/ExecAction'
-        httpGet:
-          $ref: '#/components/schemas/HTTPGetAction'
-        sleep:
-          $ref: '#/components/schemas/SleepAction'
-        tcpSocket:
-          $ref: '#/components/schemas/TCPSocketAction'
     ContainerDTO:
       type: object
       properties:
@@ -1887,106 +1686,17 @@ components:
         restartCount:
           type: integer
           format: int32
-    JobDTO:
-      type: object
-      properties:
-        ageInSeconds:
-          type: integer
-          format: int64
-        durationInSeconds:
-          type: integer
-          format: int64
-        name:
-          type: string
-        podStatus:
-          $ref: '#/components/schemas/PodStatusDTO'
-    EnvFromSource:
-      type: object
-      properties:
-        configMapRef:
-          $ref: '#/components/schemas/ConfigMapEnvSource'
-        prefix:
-          type: string
-        secretRef:
-          $ref: '#/components/schemas/SecretEnvSource'
-    Lifecycle:
-      type: object
-      properties:
-        postStart:
-          $ref: '#/components/schemas/LifecycleHandler'
-        preStop:
-          $ref: '#/components/schemas/LifecycleHandler'
-        stopSignal:
-          type: string
-    EnvVarSource:
-      type: object
-      properties:
-        configMapKeyRef:
-          $ref: '#/components/schemas/ConfigMapKeySelector'
-        fieldRef:
-          $ref: '#/components/schemas/ObjectFieldSelector'
-        fileKeyRef:
-          $ref: '#/components/schemas/FileKeySelector'
-        resourceFieldRef:
-          $ref: '#/components/schemas/ResourceFieldSelector'
-        secretKeyRef:
-          $ref: '#/components/schemas/SecretKeySelector'
-    ResourceClaim:
+    ServicePortDTO:
       type: object
       properties:
         name:
           type: string
-        request:
-          type: string
-    SeccompProfile:
-      type: object
-      properties:
-        localhostProfile:
-          type: string
-        type:
-          type: string
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-    StreamingResponseBody:
-      type: object
-    SecretDTO:
-      type: object
-      properties:
-        age:
-          type: integer
-          format: int64
-        dataCount:
+        port:
           type: integer
           format: int32
-        dataKeySet:
-          uniqueItems: true
-          type: array
-          items:
-            type: string
-        name:
+        protocol:
           type: string
-        type:
-          type: string
-    SecretKeySelector:
-      type: object
-      properties:
-        key:
-          type: string
-        name:
-          type: string
-        optional:
-          type: boolean
-    ObjectFieldSelector:
-      type: object
-      properties:
-        apiVersion:
-          type: string
-        fieldPath:
+        targetPort:
           type: string
     HorizontalPodAutoscalerDTO:
       type: object
@@ -2000,287 +1710,8 @@ components:
           type: string
         replicaStatus:
           $ref: '#/components/schemas/ReplicaStatus'
-    Quantity:
+    StreamingResponseBody:
       type: object
-      properties:
-        amount:
-          type: string
-        format:
-          type: string
-    SELinuxOptions:
-      type: object
-      properties:
-        level:
-          type: string
-        role:
-          type: string
-        type:
-          type: string
-        user:
-          type: string
-    IngressRulesDTO:
-      type: object
-      properties:
-        backend:
-          $ref: '#/components/schemas/IngressBackendDTO'
-        hosts:
-          type: string
-        path:
-          type: string
-    HTTPHeader:
-      type: object
-      properties:
-        name:
-          type: string
-        value:
-          type: string
-    ResourceFieldSelector:
-      type: object
-      properties:
-        containerName:
-          type: string
-        divisor:
-          $ref: '#/components/schemas/Quantity'
-        resource:
-          type: string
-    ReplicasetDTO:
-      type: object
-      properties:
-        ageInSeconds:
-          type: integer
-          format: int64
-        current:
-          type: integer
-          format: int32
-        desired:
-          type: integer
-          format: int32
-        name:
-          type: string
-        ready:
-          type: integer
-          format: int32
-        role:
-          type: string
-          enum:
-          - active
-          - preview
-          - na
-    PersistentVolumeDTO:
-      type: object
-      properties:
-        ageInSeconds:
-          type: integer
-          format: int64
-        capacity:
-          type: string
-        claim:
-          type: string
-        name:
-          type: string
-        pvAccessModes:
-          type: array
-          items:
-            type: string
-        reason:
-          type: string
-        reclaimPolicy:
-          type: string
-        status:
-          type: string
-        storageClass:
-          type: string
-    PodDTO:
-      type: object
-      properties:
-        ageInSeconds:
-          type: integer
-          format: int64
-        name:
-          type: string
-        ready:
-          type: string
-        restarts:
-          type: integer
-          format: int32
-        role:
-          type: string
-          enum:
-          - active
-          - preview
-          - na
-        status:
-          type: string
-          enum:
-          - Pending
-          - Running
-          - Succeeded
-          - Failed
-          - Unknown
-          - CrashLoopBackOff
-          - ImagePullBackOff
-          - ContainerCreating
-          - Terminating
-          - Evicted
-          - Completed
-          - Restarting
-          - Error
-          - InvalidImageName
-          - OOMKilled
-    ResourceRequirements:
-      type: object
-      properties:
-        claims:
-          type: array
-          items:
-            $ref: '#/components/schemas/ResourceClaim'
-        limits:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/Quantity'
-        requests:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/Quantity'
-    ContainerRestartRuleOnExitCodes:
-      type: object
-      properties:
-        operator:
-          type: string
-        values:
-          type: array
-          items:
-            type: integer
-            format: int32
-    DeploymentDTO:
-      type: object
-      properties:
-        ageInSeconds:
-          type: integer
-          format: int64
-        available:
-          type: integer
-          format: int32
-        name:
-          type: string
-        ready:
-          type: integer
-          format: int32
-        upToDate:
-          type: integer
-          format: int32
-    SecretEnvSource:
-      type: object
-      properties:
-        name:
-          type: string
-        optional:
-          type: boolean
-    ReplicaStatus:
-      type: object
-      properties:
-        currentReplicas:
-          type: integer
-          format: int32
-        maxReplicas:
-          type: integer
-          format: int32
-        minReplicas:
-          type: integer
-          format: int32
-        targetReplicas:
-          type: integer
-          format: int32
-    SecurityContext:
-      type: object
-      properties:
-        allowPrivilegeEscalation:
-          type: boolean
-        appArmorProfile:
-          $ref: '#/components/schemas/AppArmorProfile'
-        capabilities:
-          $ref: '#/components/schemas/Capabilities'
-        privileged:
-          type: boolean
-        procMount:
-          type: string
-        readOnlyRootFilesystem:
-          type: boolean
-        runAsGroup:
-          type: integer
-          format: int64
-        runAsNonRoot:
-          type: boolean
-        runAsUser:
-          type: integer
-          format: int64
-        seLinuxOptions:
-          $ref: '#/components/schemas/SELinuxOptions'
-        seccompProfile:
-          $ref: '#/components/schemas/SeccompProfile'
-        windowsOptions:
-          $ref: '#/components/schemas/WindowsSecurityContextOptions'
-    ConfigMapDTO:
-      type: object
-      properties:
-        age:
-          type: integer
-          format: int64
-        keys:
-          uniqueItems: true
-          type: array
-          items:
-            type: string
-        name:
-          type: string
-    WindowsSecurityContextOptions:
-      type: object
-      properties:
-        gmsaCredentialSpec:
-          type: string
-        gmsaCredentialSpecName:
-          type: string
-        hostProcess:
-          type: boolean
-        runAsUserName:
-          type: string
-    SleepAction:
-      type: object
-      properties:
-        seconds:
-          type: integer
-          format: int64
-    EventDTO:
-      type: object
-      properties:
-        lastSeen:
-          type: string
-        message:
-          type: string
-        object:
-          type: string
-        reason:
-          type: string
-        type:
-          type: string
-    Capabilities:
-      type: object
-      properties:
-        add:
-          type: array
-          items:
-            type: string
-        drop:
-          type: array
-          items:
-            type: string
-    Utilization:
-      type: object
-      properties:
-        current:
-          type: string
-        target:
-          type: string
     ContainerPort:
       type: object
       properties:
@@ -2296,28 +1727,51 @@ components:
           type: string
         protocol:
           type: string
-    StatefulSetDTO:
+    ResourceRequirements:
+      type: object
+      properties:
+        claims:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceClaim'
+        limits:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Quantity'
+        requests:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Quantity'
+    JobDTO:
       type: object
       properties:
         ageInSeconds:
           type: integer
           format: int64
-        desiredReplicas:
+        durationInSeconds:
           type: integer
-          format: int32
+          format: int64
         name:
           type: string
-        podCount:
-          type: integer
-          format: int32
-        readyReplicas:
-          type: integer
-          format: int32
-        replicas:
-          type: integer
-          format: int32
-        status:
+        podStatus:
+          $ref: '#/components/schemas/PodStatusDTO'
+    ContainerRestartRule:
+      type: object
+      properties:
+        action:
           type: string
+        exitCodes:
+          $ref: '#/components/schemas/ContainerRestartRuleOnExitCodes'
+    ContainerRestartRuleOnExitCodes:
+      type: object
+      properties:
+        operator:
+          type: string
+        values:
+          type: array
+          items:
+            type: integer
+            format: int32
     Container:
       type: object
       properties:
@@ -2389,6 +1843,22 @@ components:
             $ref: '#/components/schemas/VolumeMount'
         workingDir:
           type: string
+    Lifecycle:
+      type: object
+      properties:
+        postStart:
+          $ref: '#/components/schemas/LifecycleHandler'
+        preStop:
+          $ref: '#/components/schemas/LifecycleHandler'
+        stopSignal:
+          type: string
+    ContainerResizePolicy:
+      type: object
+      properties:
+        resourceName:
+          type: string
+        restartPolicy:
+          type: string
     TCPSocketAction:
       type: object
       properties:
@@ -2396,62 +1866,12 @@ components:
           type: string
         port:
           $ref: '#/components/schemas/IntOrString'
-    EnvVar:
+    Quantity:
       type: object
       properties:
-        name:
+        amount:
           type: string
-        value:
-          type: string
-        valueFrom:
-          $ref: '#/components/schemas/EnvVarSource'
-    IngressBackendDTO:
-      type: object
-      properties:
-        port:
-          type: integer
-          format: int32
-        serviceName:
-          type: string
-    VolumeDevice:
-      type: object
-      properties:
-        devicePath:
-          type: string
-        name:
-          type: string
-    PodStatusDTO:
-      type: object
-      properties:
-        active:
-          type: integer
-          format: int32
-        completions:
-          type: string
-        failed:
-          type: integer
-          format: int32
-        succeeded:
-          type: integer
-          format: int32
-    ServicePortDTO:
-      type: object
-      properties:
-        name:
-          type: string
-        port:
-          type: integer
-          format: int32
-        protocol:
-          type: string
-        targetPort:
-          type: string
-    AppArmorProfile:
-      type: object
-      properties:
-        localhostProfile:
-          type: string
-        type:
+        format:
           type: string
     GRPCAction:
       type: object
@@ -2461,6 +1881,541 @@ components:
           format: int32
         service:
           type: string
+    VolumeMount:
+      type: object
+      properties:
+        mountPath:
+          type: string
+        mountPropagation:
+          type: string
+        name:
+          type: string
+        readOnly:
+          type: boolean
+        recursiveReadOnly:
+          type: string
+        subPath:
+          type: string
+        subPathExpr:
+          type: string
+    WindowsSecurityContextOptions:
+      type: object
+      properties:
+        gmsaCredentialSpec:
+          type: string
+        gmsaCredentialSpecName:
+          type: string
+        hostProcess:
+          type: boolean
+        runAsUserName:
+          type: string
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    SELinuxOptions:
+      type: object
+      properties:
+        level:
+          type: string
+        role:
+          type: string
+        type:
+          type: string
+        user:
+          type: string
+    ReplicaStatus:
+      type: object
+      properties:
+        currentReplicas:
+          type: integer
+          format: int32
+        maxReplicas:
+          type: integer
+          format: int32
+        minReplicas:
+          type: integer
+          format: int32
+        targetReplicas:
+          type: integer
+          format: int32
+    SecretEnvSource:
+      type: object
+      properties:
+        name:
+          type: string
+        optional:
+          type: boolean
+    HTTPHeader:
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+    EventDTO:
+      type: object
+      properties:
+        lastSeen:
+          type: string
+        message:
+          type: string
+        object:
+          type: string
+        reason:
+          type: string
+        type:
+          type: string
+    PersistentVolumeClaimDTO:
+      type: object
+      properties:
+        ageInSeconds:
+          type: integer
+          format: int64
+        associatedPods:
+          type: array
+          items:
+            type: string
+        capacity:
+          type: string
+        name:
+          type: string
+        pvcAccessModes:
+          type: array
+          items:
+            type: string
+        status:
+          type: string
+        storageClass:
+          type: string
+        volume:
+          type: string
+    ConfigMapKeySelector:
+      type: object
+      properties:
+        key:
+          type: string
+        name:
+          type: string
+        optional:
+          type: boolean
+    ResourceClaim:
+      type: object
+      properties:
+        name:
+          type: string
+        request:
+          type: string
+    IngressDTO:
+      type: object
+      properties:
+        addresses:
+          type: array
+          items:
+            type: string
+        age:
+          type: integer
+          format: int64
+        ingressClass:
+          type: string
+        name:
+          type: string
+        rules:
+          type: array
+          items:
+            $ref: '#/components/schemas/IngressRulesDTO'
+    AppArmorProfile:
+      type: object
+      properties:
+        localhostProfile:
+          type: string
+        type:
+          type: string
+    FileKeySelector:
+      type: object
+      properties:
+        key:
+          type: string
+        optional:
+          type: boolean
+        path:
+          type: string
+        volumeName:
+          type: string
+    CronJobDTO:
+      type: object
+      properties:
+        active:
+          type: integer
+          format: int32
+        ageInSeconds:
+          type: integer
+          format: int64
+        lastSchedule:
+          type: string
+        name:
+          type: string
+        schedule:
+          type: string
+        suspend:
+          type: boolean
+    ServiceDTO:
+      type: object
+      properties:
+        age:
+          type: integer
+          format: int64
+        clusterIp:
+          type: string
+        externalIp:
+          type: string
+        ipFamilies:
+          type: array
+          items:
+            type: string
+        name:
+          type: string
+        port:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServicePortDTO'
+        type:
+          type: string
+    Probe:
+      type: object
+      properties:
+        exec:
+          $ref: '#/components/schemas/ExecAction'
+        failureThreshold:
+          type: integer
+          format: int32
+        grpc:
+          $ref: '#/components/schemas/GRPCAction'
+        httpGet:
+          $ref: '#/components/schemas/HTTPGetAction'
+        initialDelaySeconds:
+          type: integer
+          format: int32
+        periodSeconds:
+          type: integer
+          format: int32
+        successThreshold:
+          type: integer
+          format: int32
+        tcpSocket:
+          $ref: '#/components/schemas/TCPSocketAction'
+        terminationGracePeriodSeconds:
+          type: integer
+          format: int64
+        timeoutSeconds:
+          type: integer
+          format: int32
+    PersistentVolumeDTO:
+      type: object
+      properties:
+        ageInSeconds:
+          type: integer
+          format: int64
+        capacity:
+          type: string
+        claim:
+          type: string
+        name:
+          type: string
+        pvAccessModes:
+          type: array
+          items:
+            type: string
+        reason:
+          type: string
+        reclaimPolicy:
+          type: string
+        status:
+          type: string
+        storageClass:
+          type: string
+    EnvVar:
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+        valueFrom:
+          $ref: '#/components/schemas/EnvVarSource'
+    DeploymentDTO:
+      type: object
+      properties:
+        ageInSeconds:
+          type: integer
+          format: int64
+        available:
+          type: integer
+          format: int32
+        name:
+          type: string
+        ready:
+          type: integer
+          format: int32
+        upToDate:
+          type: integer
+          format: int32
+    HTTPGetAction:
+      type: object
+      properties:
+        host:
+          type: string
+        httpHeaders:
+          type: array
+          items:
+            $ref: '#/components/schemas/HTTPHeader'
+        path:
+          type: string
+        port:
+          $ref: '#/components/schemas/IntOrString'
+        scheme:
+          type: string
+    SecurityContext:
+      type: object
+      properties:
+        allowPrivilegeEscalation:
+          type: boolean
+        appArmorProfile:
+          $ref: '#/components/schemas/AppArmorProfile'
+        capabilities:
+          $ref: '#/components/schemas/Capabilities'
+        privileged:
+          type: boolean
+        procMount:
+          type: string
+        readOnlyRootFilesystem:
+          type: boolean
+        runAsGroup:
+          type: integer
+          format: int64
+        runAsNonRoot:
+          type: boolean
+        runAsUser:
+          type: integer
+          format: int64
+        seLinuxOptions:
+          $ref: '#/components/schemas/SELinuxOptions'
+        seccompProfile:
+          $ref: '#/components/schemas/SeccompProfile'
+        windowsOptions:
+          $ref: '#/components/schemas/WindowsSecurityContextOptions'
+    ReplicasetDTO:
+      type: object
+      properties:
+        ageInSeconds:
+          type: integer
+          format: int64
+        current:
+          type: integer
+          format: int32
+        desired:
+          type: integer
+          format: int32
+        name:
+          type: string
+        ready:
+          type: integer
+          format: int32
+        role:
+          type: string
+          enum:
+          - active
+          - preview
+          - na
+    VolumeDevice:
+      type: object
+      properties:
+        devicePath:
+          type: string
+        name:
+          type: string
+    StatefulSetDTO:
+      type: object
+      properties:
+        ageInSeconds:
+          type: integer
+          format: int64
+        desiredReplicas:
+          type: integer
+          format: int32
+        name:
+          type: string
+        podCount:
+          type: integer
+          format: int32
+        readyReplicas:
+          type: integer
+          format: int32
+        replicas:
+          type: integer
+          format: int32
+        status:
+          type: string
+    EnvVarSource:
+      type: object
+      properties:
+        configMapKeyRef:
+          $ref: '#/components/schemas/ConfigMapKeySelector'
+        fieldRef:
+          $ref: '#/components/schemas/ObjectFieldSelector'
+        fileKeyRef:
+          $ref: '#/components/schemas/FileKeySelector'
+        resourceFieldRef:
+          $ref: '#/components/schemas/ResourceFieldSelector'
+        secretKeyRef:
+          $ref: '#/components/schemas/SecretKeySelector'
+    Metric:
+      type: object
+      properties:
+        cpuUtilization:
+          $ref: '#/components/schemas/Utilization'
+        memoryUtilization:
+          $ref: '#/components/schemas/Utilization'
+    ExecAction:
+      type: object
+      properties:
+        command:
+          type: array
+          items:
+            type: string
+    SecretDTO:
+      type: object
+      properties:
+        age:
+          type: integer
+          format: int64
+        dataCount:
+          type: integer
+          format: int32
+        dataKeySet:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        name:
+          type: string
+        type:
+          type: string
+    SeccompProfile:
+      type: object
+      properties:
+        localhostProfile:
+          type: string
+        type:
+          type: string
+    IntOrString:
+      type: object
+      properties:
+        intVal:
+          type: integer
+          format: int32
+        strVal:
+          type: string
+        value:
+          type: object
+    ResourceFieldSelector:
+      type: object
+      properties:
+        containerName:
+          type: string
+        divisor:
+          $ref: '#/components/schemas/Quantity'
+        resource:
+          type: string
+    PodDTO:
+      type: object
+      properties:
+        ageInSeconds:
+          type: integer
+          format: int64
+        name:
+          type: string
+        ready:
+          type: string
+        restarts:
+          type: integer
+          format: int32
+        role:
+          type: string
+          enum:
+          - active
+          - preview
+          - na
+        status:
+          type: string
+          enum:
+          - Pending
+          - Running
+          - Succeeded
+          - Failed
+          - Unknown
+          - CrashLoopBackOff
+          - ImagePullBackOff
+          - ContainerCreating
+          - Terminating
+          - Evicted
+          - Completed
+          - Restarting
+          - Error
+          - InvalidImageName
+          - OOMKilled
+    ConfigMapDTO:
+      type: object
+      properties:
+        age:
+          type: integer
+          format: int64
+        keys:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        name:
+          type: string
+    LifecycleHandler:
+      type: object
+      properties:
+        exec:
+          $ref: '#/components/schemas/ExecAction'
+        httpGet:
+          $ref: '#/components/schemas/HTTPGetAction'
+        sleep:
+          $ref: '#/components/schemas/SleepAction'
+        tcpSocket:
+          $ref: '#/components/schemas/TCPSocketAction'
+    SleepAction:
+      type: object
+      properties:
+        seconds:
+          type: integer
+          format: int64
+    Capabilities:
+      type: object
+      properties:
+        add:
+          type: array
+          items:
+            type: string
+        drop:
+          type: array
+          items:
+            type: string
     DaemonSetDTO:
       type: object
       properties:
@@ -2488,13 +2443,58 @@ components:
         upToDate:
           type: integer
           format: int32
-    ContainerRestartRule:
+    PodStatusDTO:
       type: object
       properties:
-        action:
+        active:
+          type: integer
+          format: int32
+        completions:
           type: string
-        exitCodes:
-          $ref: '#/components/schemas/ContainerRestartRuleOnExitCodes'
+        failed:
+          type: integer
+          format: int32
+        succeeded:
+          type: integer
+          format: int32
+    IngressBackendDTO:
+      type: object
+      properties:
+        port:
+          type: integer
+          format: int32
+        serviceName:
+          type: string
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    ConfigMapEnvSource:
+      type: object
+      properties:
+        name:
+          type: string
+        optional:
+          type: boolean
+    ObjectFieldSelector:
+      type: object
+      properties:
+        apiVersion:
+          type: string
+        fieldPath:
+          type: string
+    IngressRulesDTO:
+      type: object
+      properties:
+        backend:
+          $ref: '#/components/schemas/IngressBackendDTO'
+        hosts:
+          type: string
+        path:
+          type: string
   securitySchemes:
     basicAuth:
       description: Basic Authentication

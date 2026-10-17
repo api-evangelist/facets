@@ -2207,19 +2207,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    OutputReference:
-      type: object
-      properties:
-        outputDescription:
-          type: string
-        outputName:
-          type: string
-        outputTitle:
-          type: string
-        resourceName:
-          type: string
-        resourceType:
-          type: string
     ResourceAffectedResponse:
       type: object
       properties:
@@ -2238,46 +2225,33 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/TargetResource'
-    AffectedResourcesRequest:
-      required:
-      - targetResources
+    ResourceHistoryOverview:
       type: object
       properties:
-        targetResources:
-          uniqueItems: true
-          type: array
-          items:
-            $ref: '#/components/schemas/TargetResource'
-    ClusterResourcesResponse.FacetsResource:
-      type: object
-      properties:
+        artifactVersion:
+          $ref: '#/components/schemas/ResourceStatusMetadata'
+        blueprintVersion:
+          $ref: '#/components/schemas/ResourceStatusMetadata'
+        clusterId:
+          type: string
+        clusterName:
+          type: string
+        disabled:
+          type: boolean
+        overridden:
+          type: boolean
+        overrideVersion:
+          $ref: '#/components/schemas/ResourceStatusMetadata'
+        releaseButtonStatus:
+          $ref: '#/components/schemas/ReleaseButtonStatus'
         resourceName:
           type: string
+        resourceStatus:
+          type: string
+          enum:
+          - RUNNING
+          - STOPPED
         resourceType:
-          type: string
-    GithubAppPermissionsPendingErrorDetails:
-      type: object
-      properties:
-        approvalUrl:
-          type: string
-        code:
-          type: string
-        errorCode:
-          type: string
-        message:
-          type: string
-        missingPermissions:
-          type: array
-          items:
-            type: string
-    RegionAndZone:
-      type: object
-      properties:
-        availabilityZones:
-          type: array
-          items:
-            type: string
-        region:
           type: string
     BlueprintFile:
       type: object
@@ -2354,13 +2328,44 @@ components:
             type: string
         version:
           type: string
-    AffectedResource:
+    RegionAndZone:
       type: object
       properties:
-        blueprintFile:
-          $ref: '#/components/schemas/BlueprintFile'
-        parent:
+        availabilityZones:
+          type: array
+          items:
+            type: string
+        region:
+          type: string
+    ResourceConnectionStringResponse:
+      type: object
+      properties:
+        clusterId:
+          type: string
+          description: Cluster ID this resource belongs to
+        connectionString:
+          type: string
+          description: Connection string for this interface. May be null if masked.
+          example: mysql://user:pass@host:3306/db
+        interfaceName:
+          type: string
+          description: Name of the interface (e.g., reader, writer, cluster)
+          example: writer
+        path:
+          type: string
+          description: Path component of the ingress rule, when the interface exposes one. Null for non-ingress resources
+          example: /api
+        resourceName:
+          type: string
+          description: Name of the resource
+          example: my-database
+        resourceType:
+          type: string
+          description: Type of the resource
+          example: mysql
+        secret:
           type: boolean
+      description: Connection string information for a resource interface
     Versioned:
       type: object
       properties:
@@ -2369,58 +2374,42 @@ components:
           writeOnly: true
         versioningKey:
           type: string
-    PortInfo:
+    AllRegionsAndAZ:
       type: object
       properties:
-        port:
+        cloud:
           type: string
-    ServiceOverview:
-      type: object
-      properties:
-        ports:
-          uniqueItems: true
+        regions:
           type: array
           items:
-            $ref: '#/components/schemas/PortInfo'
-    ClusterResourcesResponse:
+            $ref: '#/components/schemas/RegionAndZone'
+    RefExpression:
       type: object
       properties:
-        clusterId:
+        expression:
           type: string
-        clusterName:
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
           type: string
-        resources:
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
           type: array
           items:
-            $ref: '#/components/schemas/ClusterResourcesResponse.FacetsResource'
-    StackResourceLite:
+            type: string
+    AffectedResource:
       type: object
       properties:
-        description:
-          type: string
-        displayName:
-          type: string
-        flavour:
-          type: string
-        iconUrl:
-          type: string
-        resourceName:
-          type: string
-        resourceType:
-          type: string
-        templatedResource:
+        blueprintFile:
+          $ref: '#/components/schemas/BlueprintFile'
+        parent:
           type: boolean
-        version:
-          type: string
-    ResourceStatusMetadata:
-      type: object
-      properties:
-        liveVersion:
-          type: string
-        pendingVersion:
-          type: string
-        previewVersion:
-          type: string
     StackGitLog:
       type: object
       properties:
@@ -2445,6 +2434,141 @@ components:
           type: string
         versioningKey:
           type: string
+    Edge:
+      type: object
+      properties:
+        blockEdits:
+          type: boolean
+        id:
+          type: string
+        inputName:
+          type: string
+        isInput:
+          type: boolean
+        outputName:
+          type: string
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+    ServiceOverview:
+      type: object
+      properties:
+        ports:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/PortInfo'
+    ClusterResourcesResponse:
+      type: object
+      properties:
+        clusterId:
+          type: string
+        clusterName:
+          type: string
+        resources:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClusterResourcesResponse.FacetsResource'
+    Version:
+      type: object
+      properties:
+        archiveDate:
+          type: string
+          format: date-time
+        entity:
+          $ref: '#/components/schemas/Versioned'
+        id:
+          type: string
+        sequence:
+          type: integer
+          format: int64
+          writeOnly: true
+        sequenceKey:
+          type: string
+        version:
+          type: integer
+          format: int64
+        versioningKey:
+          type: string
+    AffectedResourcesRequest:
+      required:
+      - targetResources
+      type: object
+      properties:
+        targetResources:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/TargetResource'
+    ResourceStatusMetadata:
+      type: object
+      properties:
+        liveVersion:
+          type: string
+        pendingVersion:
+          type: string
+        previewVersion:
+          type: string
+    PortInfo:
+      type: object
+      properties:
+        port:
+          type: string
+    ClusterResourcesResponse.FacetsResource:
+      type: object
+      properties:
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+    ResourceHistory:
+      type: object
+      properties:
+        alpha:
+          type: boolean
+        artifactVersion:
+          $ref: '#/components/schemas/HistoryMetadata'
+        blueprintVersion:
+          $ref: '#/components/schemas/HistoryMetadata'
+        clusterId:
+          type: string
+        clusterName:
+          type: string
+        disabled:
+          type: boolean
+        overridden:
+          type: boolean
+        overrideVersion:
+          $ref: '#/components/schemas/HistoryMetadata'
+        resourceName:
+          type: string
+        resourceStatus:
+          type: string
+          enum:
+          - RUNNING
+          - STOPPED
+        resourceType:
+          type: string
+    StackResourceLite:
+      type: object
+      properties:
+        description:
+          type: string
+        displayName:
+          type: string
+        flavour:
+          type: string
+        iconUrl:
+          type: string
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+        templatedResource:
+          type: boolean
+        version:
+          type: string
     ReleaseButtonStatus:
       type: object
       properties:
@@ -2452,26 +2576,6 @@ components:
           type: boolean
         nbTooltip:
           type: string
-    JsonNode:
-      type: object
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-    HistoryMetadata:
-      type: object
-      properties:
-        liveVersionId:
-          type: string
-        previewVersionId:
-          type: string
-        versions:
-          type: array
-          items:
-            $ref: '#/components/schemas/Version'
     Info:
       type: object
       properties:
@@ -2526,86 +2630,30 @@ components:
             type: object
         version:
           type: string
-    ResourceHistory:
+    HistoryMetadata:
       type: object
       properties:
-        alpha:
-          type: boolean
-        artifactVersion:
-          $ref: '#/components/schemas/HistoryMetadata'
-        blueprintVersion:
-          $ref: '#/components/schemas/HistoryMetadata'
-        clusterId:
+        liveVersionId:
           type: string
-        clusterName:
+        previewVersionId:
           type: string
-        disabled:
-          type: boolean
-        overridden:
-          type: boolean
-        overrideVersion:
-          $ref: '#/components/schemas/HistoryMetadata'
-        resourceName:
-          type: string
-        resourceStatus:
-          type: string
-          enum:
-          - RUNNING
-          - STOPPED
-        resourceType:
-          type: string
-    AllRegionsAndAZ:
-      type: object
-      properties:
-        cloud:
-          type: string
-        regions:
+        versions:
           type: array
           items:
-            $ref: '#/components/schemas/RegionAndZone'
-    CommitLog:
+            $ref: '#/components/schemas/Version'
+    OutputReference:
       type: object
       properties:
-        authorEmail:
+        outputDescription:
           type: string
-        authorName:
+        outputName:
           type: string
-        commitDate:
+        outputTitle:
           type: string
-          format: date-time
-        commitId:
-          type: string
-        commitMessage:
-          type: string
-    ResourceConnectionStringResponse:
-      type: object
-      properties:
-        clusterId:
-          type: string
-          description: Cluster ID this resource belongs to
-        connectionString:
-          type: string
-          description: Connection string for this interface. May be null if masked.
-          example: mysql://user:pass@host:3306/db
-        interfaceName:
-          type: string
-          description: Name of the interface (e.g., reader, writer, cluster)
-          example: writer
-        path:
-          type: string
-          description: Path component of the ingress rule, when the interface exposes one. Null for non-ingress resources
-          example: /api
         resourceName:
           type: string
-          description: Name of the resource
-          example: my-database
         resourceType:
           type: string
-          description: Type of the resource
-          example: mysql
-        secret:
-          type: boolean
-      description: Connection string information for a resource interface
     BlueprintValidationError:
       type: object
       properties:
@@ -2639,82 +2687,34 @@ components:
           enum:
           - ERROR
           - WARNING
-    Version:
+    JsonNode:
+      type: object
+    CommitLog:
       type: object
       properties:
-        archiveDate:
+        authorEmail:
+          type: string
+        authorName:
+          type: string
+        commitDate:
           type: string
           format: date-time
-        entity:
-          $ref: '#/components/schemas/Versioned'
-        id:
+        commitId:
           type: string
-        sequence:
-          type: integer
-          format: int64
-          writeOnly: true
-        sequenceKey:
+        commitMessage:
           type: string
-        version:
-          type: integer
-          format: int64
-        versioningKey:
-          type: string
-    Edge:
+    ErrorDetails:
       type: object
       properties:
-        blockEdits:
-          type: boolean
-        id:
+        code:
           type: string
-        inputName:
-          type: string
-        isInput:
-          type: boolean
-        outputName:
-          type: string
-        resourceName:
-          type: string
-        resourceType:
+        message:
           type: string
     TargetResource:
       type: object
       properties:
         resourceName:
           type: string
-        resourceType:
-          type: string
-    RefExpression:
-      type: object
-      properties:
-        expression:
-          type: string
-    ResourceHistoryOverview:
-      type: object
-      properties:
-        artifactVersion:
-          $ref: '#/components/schemas/ResourceStatusMetadata'
-        blueprintVersion:
-          $ref: '#/components/schemas/ResourceStatusMetadata'
-        clusterId:
-          type: string
-        clusterName:
-          type: string
-        disabled:
-          type: boolean
-        overridden:
-          type: boolean
-        overrideVersion:
-          $ref: '#/components/schemas/ResourceStatusMetadata'
-        releaseButtonStatus:
-          $ref: '#/components/schemas/ReleaseButtonStatus'
-        resourceName:
-          type: string
-        resourceStatus:
-          type: string
-          enum:
-          - RUNNING
-          - STOPPED
         resourceType:
           type: string
   securitySchemes:

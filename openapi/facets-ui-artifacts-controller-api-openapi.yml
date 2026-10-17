@@ -1220,100 +1220,60 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    ECRAuthorizationData:
-      type: object
-      properties:
-        authorizationToken:
-          type: string
-        proxyEndpoint:
-          type: string
-    ArtifactByReleaseStreamRequest:
+    SaasArtifactRequest:
       required:
-      - applicationName
+      - artifactRegisterType
+      - artifactRegisterValue
       - artifactUri
-      - releaseStream
+      - artifactory
+      - blueprintName
       type: object
       properties:
         applicationName:
           type: string
-        artifactUri:
+          description: Application name of the artifact.
+          example: my-app
+        artifactRegisterType:
           type: string
-        artifactory:
-          type: string
-        description:
-          type: string
-        externalId:
-          type: string
-        releaseStream:
-          type: string
-        stackName:
-          type: string
-    ArtifactByEnvironmentRequest:
-      required:
-      - applicationName
-      - artifactUri
-      - clusterName
-      - stackName
-      type: object
-      properties:
-        applicationName:
-          type: string
-        artifactUri:
-          type: string
-        artifactory:
-          type: string
-        clusterName:
-          type: string
-        description:
-          type: string
-        externalId:
-          type: string
-        stackName:
-          type: string
-    ImageOverrideRequest:
-      required:
-      - resourceName
-      - resourceType
-      type: object
-      properties:
-        artifactType:
-          type: string
-          enum:
-          - docker_image
-          - freestyle
-        artifactUri:
-          type: string
-        artifactory:
-          type: string
-        blueprintName:
-          type: string
-        ciName:
-          type: string
-        externalId:
-          type: string
-        registrationType:
-          type: string
+          description: Type of artifact registration.
+          example: ENVIRONMENT
           enum:
           - GIT_REF
           - ENVIRONMENT
           - RELEASE_STREAM
-        registrationValue:
+        artifactRegisterValue:
           type: string
+          description: Artifact register value dependent on register type.
+          example: release-1.0
+        artifactUri:
+          type: string
+          description: URI of the artifact.
+          example: docker.io/project/image:tag
+        artifactory:
+          type: string
+          description: Name of the artifactory.
+          example: DOCKER
+        blueprintName:
+          type: string
+          description: Blueprint name associated with the artifact.
+          example: blueprint-1
+        ciName:
+          type: string
+          description: Custom CI name if applicationName is not used.
+          example: ci-my-app
+        externalId:
+          type: string
+          description: External identifier for the artifact.
+          example: '12345'
         repositoryName:
           type: string
-        resourceName:
-          type: string
-        resourceType:
-          type: string
+          description: Repository name in the artifactory.
+          example: repo-name
         tag:
           type: string
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
+          description: The tag of the artifact.
+          example: v1.0
+      description: Request details for registering a SaaS artifact.
     Artifact:
       type: object
       properties:
@@ -1399,21 +1359,6 @@ components:
           type: string
         versioningKey:
           type: string
-    GithubAppPermissionsPendingErrorDetails:
-      type: object
-      properties:
-        approvalUrl:
-          type: string
-        code:
-          type: string
-        errorCode:
-          type: string
-        message:
-          type: string
-        missingPermissions:
-          type: array
-          items:
-            type: string
     ArtifactRequest:
       required:
       - applicationName
@@ -1461,60 +1406,115 @@ components:
           type: string
         tag:
           type: string
-    SaasArtifactRequest:
+    ArtifactByEnvironmentRequest:
       required:
-      - artifactRegisterType
-      - artifactRegisterValue
+      - applicationName
       - artifactUri
-      - artifactory
-      - blueprintName
+      - clusterName
+      - stackName
       type: object
       properties:
         applicationName:
           type: string
-          description: Application name of the artifact.
-          example: my-app
-        artifactRegisterType:
+        artifactUri:
           type: string
-          description: Type of artifact registration.
-          example: ENVIRONMENT
+        artifactory:
+          type: string
+        clusterName:
+          type: string
+        description:
+          type: string
+        externalId:
+          type: string
+        stackName:
+          type: string
+    ImageOverrideRequest:
+      required:
+      - resourceName
+      - resourceType
+      type: object
+      properties:
+        artifactType:
+          type: string
+          enum:
+          - docker_image
+          - freestyle
+        artifactUri:
+          type: string
+        artifactory:
+          type: string
+        blueprintName:
+          type: string
+        ciName:
+          type: string
+        externalId:
+          type: string
+        registrationType:
+          type: string
           enum:
           - GIT_REF
           - ENVIRONMENT
           - RELEASE_STREAM
-        artifactRegisterValue:
+        registrationValue:
           type: string
-          description: Artifact register value dependent on register type.
-          example: release-1.0
-        artifactUri:
-          type: string
-          description: URI of the artifact.
-          example: docker.io/project/image:tag
-        artifactory:
-          type: string
-          description: Name of the artifactory.
-          example: DOCKER
-        blueprintName:
-          type: string
-          description: Blueprint name associated with the artifact.
-          example: blueprint-1
-        ciName:
-          type: string
-          description: Custom CI name if applicationName is not used.
-          example: ci-my-app
-        externalId:
-          type: string
-          description: External identifier for the artifact.
-          example: '12345'
         repositoryName:
           type: string
-          description: Repository name in the artifactory.
-          example: repo-name
+        resourceName:
+          type: string
+        resourceType:
+          type: string
         tag:
           type: string
-          description: The tag of the artifact.
-          example: v1.0
-      description: Request details for registering a SaaS artifact.
+    ECRAuthorizationData:
+      type: object
+      properties:
+        authorizationToken:
+          type: string
+        proxyEndpoint:
+          type: string
+    ArtifactByReleaseStreamRequest:
+      required:
+      - applicationName
+      - artifactUri
+      - releaseStream
+      type: object
+      properties:
+        applicationName:
+          type: string
+        artifactUri:
+          type: string
+        artifactory:
+          type: string
+        description:
+          type: string
+        externalId:
+          type: string
+        releaseStream:
+          type: string
+        stackName:
+          type: string
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
   securitySchemes:
     basicAuth:
       description: Basic Authentication

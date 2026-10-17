@@ -761,6 +761,119 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    Response:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    UserAccessToken:
+      required:
+      - name
+      type: object
+      properties:
+        createdOn:
+          type: string
+          format: date-time
+          readOnly: true
+        description:
+          type: string
+        internal:
+          type: boolean
+        name:
+          type: string
+        token:
+          type: string
+          writeOnly: true
+        tokenId:
+          type: string
+          readOnly: true
+        userName:
+          type: string
+          readOnly: true
+    EnvSpecificAccess:
+      type: object
+      properties:
+        clusterId:
+          type: string
+        envName:
+          type: string
+        project:
+          type: string
+        roleInfo:
+          $ref: '#/components/schemas/RoleInfo'
+    AccessAnalyzerResponse:
+      type: object
+      properties:
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccessRoleDetails'
+        userId:
+          type: string
+        username:
+          type: string
+    IdName:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+    RoleInfo:
+      type: object
+      properties:
+        label:
+          type: string
+        roleName:
+          type: string
+    InviteUserRequest:
+      type: object
+      properties:
+        description:
+          maxLength: 200
+          minLength: 0
+          type: string
+        groupId:
+          type: string
+        usersEmailList:
+          type: array
+          items:
+            type: string
+    EnvInfo:
+      type: object
+      properties:
+        clusterId:
+          type: string
+        envName:
+          type: string
+        project:
+          type: string
+    AccessRoleDetails:
+      type: object
+      properties:
+        clusterId:
+          type: string
+        environment:
+          type: string
+        groupId:
+          type: string
+        groupName:
+          type: string
+        roleLabel:
+          type: string
+        roleName:
+          type: string
+        roleType:
+          type: string
+    PasswordChange:
+      type: object
+      properties:
+        newPassword:
+          type: string
+        oldPassword:
+          type: string
     ExpandedUser:
       type: object
       properties:
@@ -806,141 +919,6 @@ components:
             $ref: '#/components/schemas/RoleInfo'
         username:
           type: string
-    PasswordChange:
-      type: object
-      properties:
-        newPassword:
-          type: string
-        oldPassword:
-          type: string
-    RoleInfo:
-      type: object
-      properties:
-        label:
-          type: string
-        roleName:
-          type: string
-    AccessAnalyzerResponse:
-      type: object
-      properties:
-        roles:
-          type: array
-          items:
-            $ref: '#/components/schemas/AccessRoleDetails'
-        userId:
-          type: string
-        username:
-          type: string
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-    InviteUserRequest:
-      type: object
-      properties:
-        description:
-          maxLength: 200
-          minLength: 0
-          type: string
-        groupId:
-          type: string
-        usersEmailList:
-          type: array
-          items:
-            type: string
-    UserAccessToken:
-      required:
-      - name
-      type: object
-      properties:
-        createdOn:
-          type: string
-          format: date-time
-          readOnly: true
-        description:
-          type: string
-        internal:
-          type: boolean
-        name:
-          type: string
-        token:
-          type: string
-          writeOnly: true
-        tokenId:
-          type: string
-          readOnly: true
-        userName:
-          type: string
-          readOnly: true
-    GithubAppPermissionsPendingErrorDetails:
-      type: object
-      properties:
-        approvalUrl:
-          type: string
-        code:
-          type: string
-        errorCode:
-          type: string
-        message:
-          type: string
-        missingPermissions:
-          type: array
-          items:
-            type: string
-    EnvSpecificAccess:
-      type: object
-      properties:
-        clusterId:
-          type: string
-        envName:
-          type: string
-        project:
-          type: string
-        roleInfo:
-          $ref: '#/components/schemas/RoleInfo'
-    IdName:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-    Response:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-    AccessRoleDetails:
-      type: object
-      properties:
-        clusterId:
-          type: string
-        environment:
-          type: string
-        groupId:
-          type: string
-        groupName:
-          type: string
-        roleLabel:
-          type: string
-        roleName:
-          type: string
-        roleType:
-          type: string
-    EnvInfo:
-      type: object
-      properties:
-        clusterId:
-          type: string
-        envName:
-          type: string
-        project:
-          type: string
     User:
       type: object
       properties:
@@ -981,6 +959,28 @@ components:
             type: string
         userName:
           type: string
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
   securitySchemes:
     basicAuth:
       description: Basic Authentication

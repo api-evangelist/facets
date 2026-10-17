@@ -380,21 +380,6 @@ components:
           type: string
         message:
           type: string
-    GithubAppPermissionsPendingErrorDetails:
-      type: object
-      properties:
-        approvalUrl:
-          type: string
-        code:
-          type: string
-        errorCode:
-          type: string
-        message:
-          type: string
-        missingPermissions:
-          type: array
-          items:
-            type: string
     WebComponentDTO:
       required:
       - enabled
@@ -526,6 +511,21 @@ components:
           type: string
           description: Reserved for resource scope, which is not yet supported.
       description: Which blueprint / environment a scoped web component applies to
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
   securitySchemes:
     basicAuth:
       description: Basic Authentication

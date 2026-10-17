@@ -436,18 +436,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    TestRuleResponse:
-      type: object
-      properties:
-        routeTo:
-          type: string
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
     GithubAppPermissionsPendingErrorDetails:
       type: object
       properties:
@@ -463,6 +451,37 @@ components:
           type: array
           items:
             type: string
+    ArtifactRoutingRuleResponse:
+      type: object
+      properties:
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        criteria:
+          type: array
+          items:
+            $ref: '#/components/schemas/Criterion'
+        default:
+          type: boolean
+        id:
+          type: string
+        registrationType:
+          type: string
+          enum:
+          - ENVIRONMENT
+          - RELEASE_STREAM
+          - HYBRID
+        ruleName:
+          type: string
+        stackName:
+          type: string
+    TestRuleResponse:
+      type: object
+      properties:
+        routeTo:
+          type: string
     ArtifactRoutingRuleRequest:
       required:
       - criteria
@@ -495,6 +514,13 @@ components:
           type: string
         stackName:
           type: string
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
     Criterion:
       required:
       - metadataKey
@@ -518,32 +544,6 @@ components:
         routeTo:
           type: string
         value:
-          type: string
-    ArtifactRoutingRuleResponse:
-      type: object
-      properties:
-        createdBy:
-          type: string
-        creationDate:
-          type: string
-          format: date-time
-        criteria:
-          type: array
-          items:
-            $ref: '#/components/schemas/Criterion'
-        default:
-          type: boolean
-        id:
-          type: string
-        registrationType:
-          type: string
-          enum:
-          - ENVIRONMENT
-          - RELEASE_STREAM
-          - HYBRID
-        ruleName:
-          type: string
-        stackName:
           type: string
   securitySchemes:
     basicAuth:

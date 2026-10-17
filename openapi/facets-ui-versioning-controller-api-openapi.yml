@@ -613,23 +613,79 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    PageableObject:
+    VersionVersioned:
       type: object
       properties:
-        offset:
+        archiveDate:
+          type: string
+          format: date-time
+        entity:
+          $ref: '#/components/schemas/Versioned'
+        id:
+          type: string
+        sequence:
           type: integer
           format: int64
-        pageNumber:
+          writeOnly: true
+        sequenceKey:
+          type: string
+        version:
           type: integer
-          format: int32
-        pageSize:
-          type: integer
-          format: int32
-        paged:
+          format: int64
+        versioningKey:
+          type: string
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    DeletedEntitySoftDelete:
+      type: object
+      properties:
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        entity:
+          $ref: '#/components/schemas/SoftDelete'
+        entityType:
+          type: string
+          enum:
+          - CLUSTER
+          - BLUE_PRINT
+          - TEMPLATE_INPUT
+          - CONTROL_PLANE
+          - IAC
+          - ARTIFACT_CI
+          - USER_GROUP
+          - ACCOUNT
+          - ARTIFACTORY
+        id:
+          type: string
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+    SortObject:
+      type: object
+      properties:
+        empty:
           type: boolean
-        sort:
-          $ref: '#/components/schemas/SortObject'
-        unpaged:
+        sorted:
+          type: boolean
+        unsorted:
           type: boolean
     Version:
       type: object
@@ -652,26 +708,25 @@ components:
           format: int64
         versioningKey:
           type: string
-    VersionVersioned:
+    Versioned:
       type: object
       properties:
-        archiveDate:
+        changeLog:
           type: string
-          format: date-time
-        entity:
-          $ref: '#/components/schemas/Versioned'
-        id:
-          type: string
-        sequence:
-          type: integer
-          format: int64
           writeOnly: true
-        sequenceKey:
-          type: string
-        version:
-          type: integer
-          format: int64
         versioningKey:
+          type: string
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    SoftDelete:
+      type: object
+      properties:
+        id:
           type: string
     PageVersionVersioned:
       type: object
@@ -705,79 +760,24 @@ components:
         totalPages:
           type: integer
           format: int32
-    ErrorDetails:
+    PageableObject:
       type: object
       properties:
-        code:
-          type: string
-        message:
-          type: string
-    SoftDelete:
-      type: object
-      properties:
-        id:
-          type: string
-    GithubAppPermissionsPendingErrorDetails:
-      type: object
-      properties:
-        approvalUrl:
-          type: string
-        code:
-          type: string
-        errorCode:
-          type: string
-        message:
-          type: string
-        missingPermissions:
-          type: array
-          items:
-            type: string
-    Versioned:
-      type: object
-      properties:
-        changeLog:
-          type: string
-          writeOnly: true
-        versioningKey:
-          type: string
-    SortObject:
-      type: object
-      properties:
-        empty:
+        offset:
+          type: integer
+          format: int64
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        paged:
           type: boolean
-        sorted:
+        sort:
+          $ref: '#/components/schemas/SortObject'
+        unpaged:
           type: boolean
-        unsorted:
-          type: boolean
-    DeletedEntitySoftDelete:
-      type: object
-      properties:
-        createdBy:
-          type: string
-        creationDate:
-          type: string
-          format: date-time
-        entity:
-          $ref: '#/components/schemas/SoftDelete'
-        entityType:
-          type: string
-          enum:
-          - CLUSTER
-          - BLUE_PRINT
-          - TEMPLATE_INPUT
-          - CONTROL_PLANE
-          - IAC
-          - ARTIFACT_CI
-          - USER_GROUP
-          - ACCOUNT
-          - ARTIFACTORY
-        id:
-          type: string
-        lastModifiedBy:
-          type: string
-        lastModifiedDate:
-          type: string
-          format: date-time
   securitySchemes:
     basicAuth:
       description: Basic Authentication

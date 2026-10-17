@@ -377,33 +377,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    CustomerOnboardRequest:
-      required:
-      - customerName
-      - externalId
-      - region
-      - releaseStream
-      - roleARN
-      type: object
-      properties:
-        azs:
-          type: array
-          items:
-            type: string
-        customerName:
-          maxLength: 50
-          minLength: 3
-          type: string
-        externalId:
-          type: string
-        region:
-          type: string
-        releaseStream:
-          type: string
-        roleARN:
-          type: string
-        timezone:
-          type: string
     AwsCluster:
       required:
       - name
@@ -557,28 +530,6 @@ components:
           - OVERRIDDEN
         value:
           type: string
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-    GithubAppPermissionsPendingErrorDetails:
-      type: object
-      properties:
-        approvalUrl:
-          type: string
-        code:
-          type: string
-        errorCode:
-          type: string
-        message:
-          type: string
-        missingPermissions:
-          type: array
-          items:
-            type: string
     AwsClusterRequest:
       required:
       - clusterName
@@ -660,6 +611,55 @@ components:
               format: int32
         vpcCIDR:
           type: string
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    CustomerOnboardRequest:
+      required:
+      - customerName
+      - externalId
+      - region
+      - releaseStream
+      - roleARN
+      type: object
+      properties:
+        azs:
+          type: array
+          items:
+            type: string
+        customerName:
+          maxLength: 50
+          minLength: 3
+          type: string
+        externalId:
+          type: string
+        region:
+          type: string
+        releaseStream:
+          type: string
+        roleARN:
+          type: string
+        timezone:
+          type: string
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
   securitySchemes:
     basicAuth:
       description: Basic Authentication

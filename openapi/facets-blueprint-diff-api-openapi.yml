@@ -85,6 +85,20 @@ paths:
       - Blueprint Diff
 components:
   schemas:
+    BlueprintFileContent:
+      type: object
+      properties:
+        commitId:
+          type: string
+        content:
+          type: string
+        path:
+          type: string
+        status:
+          type: string
+          enum:
+          - FOUND
+          - NOT_FOUND
     ErrorDetails:
       type: object
       properties:
@@ -107,20 +121,6 @@ components:
           type: array
           items:
             type: string
-    BlueprintFileContent:
-      type: object
-      properties:
-        commitId:
-          type: string
-        content:
-          type: string
-        path:
-          type: string
-        status:
-          type: string
-          enum:
-          - FOUND
-          - NOT_FOUND
   securitySchemes:
     basicAuth:
       description: Basic Authentication

@@ -341,6 +341,21 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    Selectors:
+      type: object
+      properties:
+        displayType:
+          type: string
+          enum:
+          - INLINE
+          - TAB
+          - PAGE
+        resourceName:
+          type: string
+        resourceType:
+          type: string
+        subType:
+          type: string
     ErrorDetails:
       type: object
       properties:
@@ -348,21 +363,6 @@ components:
           type: string
         message:
           type: string
-    GithubAppPermissionsPendingErrorDetails:
-      type: object
-      properties:
-        approvalUrl:
-          type: string
-        code:
-          type: string
-        errorCode:
-          type: string
-        message:
-          type: string
-        missingPermissions:
-          type: array
-          items:
-            type: string
     ContentFile:
       type: object
       properties:
@@ -395,21 +395,21 @@ components:
           enum:
           - CI
           - DOCUMENTATION
-    Selectors:
+    GithubAppPermissionsPendingErrorDetails:
       type: object
       properties:
-        displayType:
+        approvalUrl:
           type: string
-          enum:
-          - INLINE
-          - TAB
-          - PAGE
-        resourceName:
+        code:
           type: string
-        resourceType:
+        errorCode:
           type: string
-        subType:
+        message:
           type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
   securitySchemes:
     basicAuth:
       description: Basic Authentication

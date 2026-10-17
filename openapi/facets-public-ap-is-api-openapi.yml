@@ -1152,16 +1152,82 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    AccountAssociationInfo:
+    OneTimePayloadBasicDockerDTO:
       type: object
       properties:
-        clusters:
+        payload:
+          $ref: '#/components/schemas/BasicDockerDTO'
+        webhookId:
+          type: string
+    GcpAccount:
+      type: object
+      properties:
+        accountType:
+          type: string
+          enum:
+          - VERSION_CONTROL
+          - CLOUD
+          - CODER
+        associatedTo:
           type: array
           items:
-            $ref: '#/components/schemas/ClusterInfo'
-        projectTypeName:
+            $ref: '#/components/schemas/AccountAssociationInfo'
+        changeLog:
           type: string
-        stackName:
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        description:
+          type: string
+        id:
+          type: string
+        inUse:
+          type: boolean
+        labelIds:
+          type: array
+          items:
+            type: string
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        name:
+          type: string
+        project:
+          type: string
+        provider:
+          type: string
+          enum:
+          - GITHUB
+          - BITBUCKET
+          - GITLAB
+          - AWS
+          - AZURE
+          - GCP
+          - KUBERNETES
+          - CODER
+        providerDescription:
+          type: string
+        providerTags:
+          type: object
+          additionalProperties:
+            type: string
+        serviceAccountKey:
+          type: string
+          writeOnly: true
+        systemDefined:
+          type: boolean
+        versioningKey:
+          type: string
+    OneTimePayloadAwsAccount:
+      type: object
+      properties:
+        payload:
+          $ref: '#/components/schemas/AwsAccount'
+        webhookId:
           type: string
     BasicDockerDTO:
       required:
@@ -1201,6 +1267,269 @@ components:
         uri:
           type: string
         username:
+          type: string
+    GithubAppInstallationPayload:
+      type: object
+      properties:
+        accountName:
+          type: string
+        code:
+          type: string
+        enterpriseHostName:
+          type: string
+        installationId:
+          type: integer
+          format: int64
+    AwsAccount:
+      type: object
+      properties:
+        accountType:
+          type: string
+          enum:
+          - VERSION_CONTROL
+          - CLOUD
+          - CODER
+        associatedTo:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountAssociationInfo'
+        changeLog:
+          type: string
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        description:
+          type: string
+        externalId:
+          type: string
+        iamRole:
+          type: string
+        id:
+          type: string
+        inUse:
+          type: boolean
+        labelIds:
+          type: array
+          items:
+            type: string
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        name:
+          type: string
+        provider:
+          type: string
+          enum:
+          - GITHUB
+          - BITBUCKET
+          - GITLAB
+          - AWS
+          - AZURE
+          - GCP
+          - KUBERNETES
+          - CODER
+        providerDescription:
+          type: string
+        providerTags:
+          type: object
+          additionalProperties:
+            type: string
+        systemDefined:
+          type: boolean
+        versioningKey:
+          type: string
+    BitbucketOauthAppPayload:
+      type: object
+      properties:
+        accountName:
+          type: string
+        code:
+          type: string
+    OneTimePayloadGitlabOauthAppPayload:
+      type: object
+      properties:
+        payload:
+          $ref: '#/components/schemas/GitlabOauthAppPayload'
+        webhookId:
+          type: string
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
+    AzureAccount:
+      type: object
+      properties:
+        accountType:
+          type: string
+          enum:
+          - VERSION_CONTROL
+          - CLOUD
+          - CODER
+        associatedTo:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountAssociationInfo'
+        changeLog:
+          type: string
+        clientId:
+          type: string
+        clientSecret:
+          type: string
+          writeOnly: true
+        createdBy:
+          type: string
+        creationDate:
+          type: string
+          format: date-time
+        description:
+          type: string
+        id:
+          type: string
+        inUse:
+          type: boolean
+        labelIds:
+          type: array
+          items:
+            type: string
+        lastModifiedBy:
+          type: string
+        lastModifiedDate:
+          type: string
+          format: date-time
+        name:
+          type: string
+        provider:
+          type: string
+          enum:
+          - GITHUB
+          - BITBUCKET
+          - GITLAB
+          - AWS
+          - AZURE
+          - GCP
+          - KUBERNETES
+          - CODER
+        providerDescription:
+          type: string
+        providerTags:
+          type: object
+          additionalProperties:
+            type: string
+        subscriptionId:
+          type: string
+        systemDefined:
+          type: boolean
+        tenantId:
+          type: string
+        versioningKey:
+          type: string
+    OneTimePayloadECRArtifactory:
+      type: object
+      properties:
+        payload:
+          $ref: '#/components/schemas/ECRArtifactory'
+        webhookId:
+          type: string
+    OneTimePayloadKubernetesAccount:
+      type: object
+      properties:
+        payload:
+          $ref: '#/components/schemas/KubernetesAccount'
+        webhookId:
+          type: string
+    CustomOAuth2ClientRegistration:
+      required:
+      - clientId
+      - clientSecret
+      - loginButtonText
+      - provider
+      - registrationId
+      - scope
+      type: object
+      properties:
+        clientId:
+          type: string
+        clientSecret:
+          type: string
+          writeOnly: true
+        description:
+          maxLength: 200
+          minLength: 0
+          type: string
+        isSystemConfigured:
+          type: boolean
+          readOnly: true
+        issuerUrl:
+          type: string
+        loginButtonText:
+          type: string
+        provider:
+          type: string
+          enum:
+          - GOOGLE
+          - OKTA
+          - ONE_LOGIN
+          - AZURE_AD
+          - JUMP_CLOUD
+          - OPEN_ID
+        registrationId:
+          type: string
+        scope:
+          type: string
+        systemConfigured:
+          type: boolean
+    OneTimePayloadGcpAccount:
+      type: object
+      properties:
+        payload:
+          $ref: '#/components/schemas/GcpAccount'
+        webhookId:
+          type: string
+    GithubAppInstallationRequestResponse:
+      type: object
+      properties:
+        targetId:
+          type: integer
+          format: int64
+    GitlabOauthAppPayload:
+      type: object
+      properties:
+        accountName:
+          type: string
+        code:
+          type: string
+        redirectUrl:
+          type: string
+    ExclusionFilter:
+      type: object
+      properties:
+        filter:
+          type: string
+        filterType:
+          type: string
+          enum:
+          - WILDCARD
+    ClusterInfo:
+      type: object
+      properties:
+        clusterId:
+          type: string
+        clusterName:
           type: string
     KubernetesAccount:
       type: object
@@ -1268,116 +1597,28 @@ components:
           writeOnly: true
         versioningKey:
           type: string
-    GithubAppInstallationRequestResponse:
+    AccountAssociationInfo:
       type: object
       properties:
-        targetId:
-          type: integer
-          format: int64
-    GithubAppPermissionsPendingErrorDetails:
-      type: object
-      properties:
-        approvalUrl:
-          type: string
-        code:
-          type: string
-        errorCode:
-          type: string
-        message:
-          type: string
-        missingPermissions:
+        clusters:
           type: array
           items:
-            type: string
-    OneTimePayloadECRArtifactory:
+            $ref: '#/components/schemas/ClusterInfo'
+        projectTypeName:
+          type: string
+        stackName:
+          type: string
+    OneTimePayloadAzureAccount:
       type: object
       properties:
         payload:
-          $ref: '#/components/schemas/ECRArtifactory'
+          $ref: '#/components/schemas/AzureAccount'
         webhookId:
           type: string
-    ClusterInfo:
+    ThemeFileResponse:
       type: object
       properties:
-        clusterId:
-          type: string
-        clusterName:
-          type: string
-    AwsAccount:
-      type: object
-      properties:
-        accountType:
-          type: string
-          enum:
-          - VERSION_CONTROL
-          - CLOUD
-          - CODER
-        associatedTo:
-          type: array
-          items:
-            $ref: '#/components/schemas/AccountAssociationInfo'
-        changeLog:
-          type: string
-        createdBy:
-          type: string
-        creationDate:
-          type: string
-          format: date-time
-        description:
-          type: string
-        externalId:
-          type: string
-        iamRole:
-          type: string
-        id:
-          type: string
-        inUse:
-          type: boolean
-        labelIds:
-          type: array
-          items:
-            type: string
-        lastModifiedBy:
-          type: string
-        lastModifiedDate:
-          type: string
-          format: date-time
-        name:
-          type: string
-        provider:
-          type: string
-          enum:
-          - GITHUB
-          - BITBUCKET
-          - GITLAB
-          - AWS
-          - AZURE
-          - GCP
-          - KUBERNETES
-          - CODER
-        providerDescription:
-          type: string
-        providerTags:
-          type: object
-          additionalProperties:
-            type: string
-        systemDefined:
-          type: boolean
-        versioningKey:
-          type: string
-    OneTimePayloadGcpAccount:
-      type: object
-      properties:
-        payload:
-          $ref: '#/components/schemas/GcpAccount'
-        webhookId:
-          type: string
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
+        content:
           type: string
     GithubAppInstallationRequest:
       type: object
@@ -1421,52 +1662,11 @@ components:
         verificationX509Certificate:
           type: string
           writeOnly: true
-    CustomOAuth2ClientRegistration:
-      required:
-      - clientId
-      - clientSecret
-      - loginButtonText
-      - provider
-      - registrationId
-      - scope
-      type: object
-      properties:
-        clientId:
-          type: string
-        clientSecret:
-          type: string
-          writeOnly: true
-        description:
-          maxLength: 200
-          minLength: 0
-          type: string
-        isSystemConfigured:
-          type: boolean
-          readOnly: true
-        issuerUrl:
-          type: string
-        loginButtonText:
-          type: string
-        provider:
-          type: string
-          enum:
-          - GOOGLE
-          - OKTA
-          - ONE_LOGIN
-          - AZURE_AD
-          - JUMP_CLOUD
-          - OPEN_ID
-        registrationId:
-          type: string
-        scope:
-          type: string
-        systemConfigured:
-          type: boolean
-    OneTimePayloadBasicDockerDTO:
+    OneTimePayloadGithubAppInstallationPayload:
       type: object
       properties:
         payload:
-          $ref: '#/components/schemas/BasicDockerDTO'
+          $ref: '#/components/schemas/GithubAppInstallationPayload'
         webhookId:
           type: string
     OneTimePayloadBitbucketOauthAppPayload:
@@ -1474,49 +1674,6 @@ components:
       properties:
         payload:
           $ref: '#/components/schemas/BitbucketOauthAppPayload'
-        webhookId:
-          type: string
-    ModuleSchemaResponseDTO:
-      type: object
-      properties:
-        $schema:
-          type: string
-          description: JSON Schema URL
-        additionalProperties:
-          type: boolean
-          description: Allow additional properties
-          example: true
-        properties:
-          type: object
-          additionalProperties:
-            type: object
-            description: Schema properties
-          description: Schema properties
-        required:
-          type: array
-          description: Required fields
-          items:
-            type: string
-            description: Required fields
-        type:
-          type: string
-          description: Schema type
-          example: object
-      description: Response containing complete JSON schema for module configuration
-    ExclusionFilter:
-      type: object
-      properties:
-        filter:
-          type: string
-        filterType:
-          type: string
-          enum:
-          - WILDCARD
-    OneTimePayloadAzureAccount:
-      type: object
-      properties:
-        payload:
-          $ref: '#/components/schemas/AzureAccount'
         webhookId:
           type: string
     ECRArtifactory:
@@ -1595,197 +1752,40 @@ components:
           type: string
         versioningKey:
           type: string
-    ThemeFileResponse:
+    ErrorDetails:
       type: object
       properties:
-        content:
+        code:
           type: string
-    OneTimePayloadGitlabOauthAppPayload:
+        message:
+          type: string
+    ModuleSchemaResponseDTO:
       type: object
       properties:
-        payload:
-          $ref: '#/components/schemas/GitlabOauthAppPayload'
-        webhookId:
+        $schema:
           type: string
-    OneTimePayloadKubernetesAccount:
-      type: object
-      properties:
-        payload:
-          $ref: '#/components/schemas/KubernetesAccount'
-        webhookId:
-          type: string
-    GcpAccount:
-      type: object
-      properties:
-        accountType:
-          type: string
-          enum:
-          - VERSION_CONTROL
-          - CLOUD
-          - CODER
-        associatedTo:
-          type: array
-          items:
-            $ref: '#/components/schemas/AccountAssociationInfo'
-        changeLog:
-          type: string
-        createdBy:
-          type: string
-        creationDate:
-          type: string
-          format: date-time
-        description:
-          type: string
-        id:
-          type: string
-        inUse:
+          description: JSON Schema URL
+        additionalProperties:
           type: boolean
-        labelIds:
-          type: array
-          items:
-            type: string
-        lastModifiedBy:
-          type: string
-        lastModifiedDate:
-          type: string
-          format: date-time
-        name:
-          type: string
-        project:
-          type: string
-        provider:
-          type: string
-          enum:
-          - GITHUB
-          - BITBUCKET
-          - GITLAB
-          - AWS
-          - AZURE
-          - GCP
-          - KUBERNETES
-          - CODER
-        providerDescription:
-          type: string
-        providerTags:
+          description: Allow additional properties
+          example: true
+        properties:
           type: object
           additionalProperties:
-            type: string
-        serviceAccountKey:
-          type: string
-          writeOnly: true
-        systemDefined:
-          type: boolean
-        versioningKey:
-          type: string
-    GitlabOauthAppPayload:
-      type: object
-      properties:
-        accountName:
-          type: string
-        code:
-          type: string
-        redirectUrl:
-          type: string
-    OneTimePayloadAwsAccount:
-      type: object
-      properties:
-        payload:
-          $ref: '#/components/schemas/AwsAccount'
-        webhookId:
-          type: string
-    BitbucketOauthAppPayload:
-      type: object
-      properties:
-        accountName:
-          type: string
-        code:
-          type: string
-    GithubAppInstallationPayload:
-      type: object
-      properties:
-        accountName:
-          type: string
-        code:
-          type: string
-        enterpriseHostName:
-          type: string
-        installationId:
-          type: integer
-          format: int64
-    OneTimePayloadGithubAppInstallationPayload:
-      type: object
-      properties:
-        payload:
-          $ref: '#/components/schemas/GithubAppInstallationPayload'
-        webhookId:
-          type: string
-    AzureAccount:
-      type: object
-      properties:
-        accountType:
-          type: string
-          enum:
-          - VERSION_CONTROL
-          - CLOUD
-          - CODER
-        associatedTo:
+            type: object
+            description: Schema properties
+          description: Schema properties
+        required:
           type: array
-          items:
-            $ref: '#/components/schemas/AccountAssociationInfo'
-        changeLog:
-          type: string
-        clientId:
-          type: string
-        clientSecret:
-          type: string
-          writeOnly: true
-        createdBy:
-          type: string
-        creationDate:
-          type: string
-          format: date-time
-        description:
-          type: string
-        id:
-          type: string
-        inUse:
-          type: boolean
-        labelIds:
-          type: array
+          description: Required fields
           items:
             type: string
-        lastModifiedBy:
+            description: Required fields
+        type:
           type: string
-        lastModifiedDate:
-          type: string
-          format: date-time
-        name:
-          type: string
-        provider:
-          type: string
-          enum:
-          - GITHUB
-          - BITBUCKET
-          - GITLAB
-          - AWS
-          - AZURE
-          - GCP
-          - KUBERNETES
-          - CODER
-        providerDescription:
-          type: string
-        providerTags:
-          type: object
-          additionalProperties:
-            type: string
-        subscriptionId:
-          type: string
-        systemDefined:
-          type: boolean
-        tenantId:
-          type: string
-        versioningKey:
-          type: string
+          description: Schema type
+          example: object
+      description: Response containing complete JSON schema for module configuration
   securitySchemes:
     basicAuth:
       description: Basic Authentication

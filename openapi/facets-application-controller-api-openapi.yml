@@ -720,6 +720,21 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    GrantedAuthority:
+      type: object
+      properties:
+        authority:
+          type: string
+    StackResource:
+      type: object
+      properties:
+        resources:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/FacetsResource'
+        stackName:
+          type: string
     ClusterResourceBinding:
       type: object
       properties:
@@ -732,56 +747,12 @@ components:
             $ref: '#/components/schemas/FacetsResource'
         stackName:
           type: string
-    PasswordChange:
-      type: object
-      properties:
-        newPassword:
-          type: string
-        oldPassword:
-          type: string
-    GrantedAuthority:
-      type: object
-      properties:
-        authority:
-          type: string
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
     FacetsResource:
       type: object
       properties:
         resourceName:
           type: string
         resourceType:
-          type: string
-    GithubAppPermissionsPendingErrorDetails:
-      type: object
-      properties:
-        approvalUrl:
-          type: string
-        code:
-          type: string
-        errorCode:
-          type: string
-        message:
-          type: string
-        missingPermissions:
-          type: array
-          items:
-            type: string
-    StackResource:
-      type: object
-      properties:
-        resources:
-          uniqueItems: true
-          type: array
-          items:
-            $ref: '#/components/schemas/FacetsResource'
-        stackName:
           type: string
     SimpleOauth2User:
       type: object
@@ -833,6 +804,13 @@ components:
             $ref: '#/components/schemas/StackResource'
         userId:
           type: string
+    PasswordChange:
+      type: object
+      properties:
+        newPassword:
+          type: string
+        oldPassword:
+          type: string
     User:
       type: object
       properties:
@@ -873,6 +851,28 @@ components:
             type: string
         userName:
           type: string
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
   securitySchemes:
     basicAuth:
       description: Basic Authentication

@@ -376,11 +376,47 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    ClientAuthenticationMethod:
+    CustomOAuth2ClientRegistration:
+      required:
+      - clientId
+      - clientSecret
+      - loginButtonText
+      - provider
+      - registrationId
+      - scope
       type: object
       properties:
-        value:
+        clientId:
           type: string
+        clientSecret:
+          type: string
+          writeOnly: true
+        description:
+          maxLength: 200
+          minLength: 0
+          type: string
+        isSystemConfigured:
+          type: boolean
+          readOnly: true
+        issuerUrl:
+          type: string
+        loginButtonText:
+          type: string
+        provider:
+          type: string
+          enum:
+          - GOOGLE
+          - OKTA
+          - ONE_LOGIN
+          - AZURE_AD
+          - JUMP_CLOUD
+          - OPEN_ID
+        registrationId:
+          type: string
+        scope:
+          type: string
+        systemConfigured:
+          type: boolean
     GenericOAuth2ClientRegistration:
       required:
       - authorizationUri
@@ -443,6 +479,11 @@ components:
           type: string
         message:
           type: string
+    ClientAuthenticationMethod:
+      type: object
+      properties:
+        value:
+          type: string
     GithubAppPermissionsPendingErrorDetails:
       type: object
       properties:
@@ -458,47 +499,6 @@ components:
           type: array
           items:
             type: string
-    CustomOAuth2ClientRegistration:
-      required:
-      - clientId
-      - clientSecret
-      - loginButtonText
-      - provider
-      - registrationId
-      - scope
-      type: object
-      properties:
-        clientId:
-          type: string
-        clientSecret:
-          type: string
-          writeOnly: true
-        description:
-          maxLength: 200
-          minLength: 0
-          type: string
-        isSystemConfigured:
-          type: boolean
-          readOnly: true
-        issuerUrl:
-          type: string
-        loginButtonText:
-          type: string
-        provider:
-          type: string
-          enum:
-          - GOOGLE
-          - OKTA
-          - ONE_LOGIN
-          - AZURE_AD
-          - JUMP_CLOUD
-          - OPEN_ID
-        registrationId:
-          type: string
-        scope:
-          type: string
-        systemConfigured:
-          type: boolean
   securitySchemes:
     basicAuth:
       description: Basic Authentication

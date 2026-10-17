@@ -334,6 +334,26 @@ paths:
       - Blueprint Pull Requests
 components:
   schemas:
+    CreatePullRequestRequest:
+      required:
+      - sourceBranch
+      type: object
+      properties:
+        description:
+          type: string
+          description: PR description
+        importExisting:
+          type: boolean
+          description: When false (default) a NEW branch is created off the default branch (rejected if it already exists). When true the PR opens on an EXISTING branch (rejected if missing).
+          default: false
+        sourceBranch:
+          type: string
+          description: The git branch carrying the staged changes
+          example: my-feature
+        title:
+          type: string
+          description: PR title (defaults to the source branch name when blank)
+      description: Request to create a blueprint pull request (branch)
     ErrorDetails:
       type: object
       properties:
@@ -405,26 +425,6 @@ components:
           type: array
           items:
             type: string
-    CreatePullRequestRequest:
-      required:
-      - sourceBranch
-      type: object
-      properties:
-        description:
-          type: string
-          description: PR description
-        importExisting:
-          type: boolean
-          description: When false (default) a NEW branch is created off the default branch (rejected if it already exists). When true the PR opens on an EXISTING branch (rejected if missing).
-          default: false
-        sourceBranch:
-          type: string
-          description: The git branch carrying the staged changes
-          example: my-feature
-        title:
-          type: string
-          description: PR title (defaults to the source branch name when blank)
-      description: Request to create a blueprint pull request (branch)
   securitySchemes:
     basicAuth:
       description: Basic Authentication

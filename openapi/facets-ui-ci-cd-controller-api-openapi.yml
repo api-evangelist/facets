@@ -697,6 +697,21 @@ paths:
       - ui-ci-cd-controller
 components:
   schemas:
+    GithubAppPermissionsPendingErrorDetails:
+      type: object
+      properties:
+        approvalUrl:
+          type: string
+        code:
+          type: string
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
+          type: array
+          items:
+            type: string
     CiNameUsageDto:
       type: object
       properties:
@@ -710,26 +725,71 @@ components:
           type: string
         stackName:
           type: string
-    PushCredentialsRequest:
+    PushCredentialsResponse:
+      type: object
+      properties:
+        artifactoryUri:
+          type: string
+        password:
+          type: string
+        repositoryUri:
+          type: string
+        username:
+          type: string
+    SaasArtifactRequest:
       required:
-      - applicationName
+      - artifactRegisterType
+      - artifactRegisterValue
+      - artifactUri
       - artifactory
       - blueprintName
       type: object
       properties:
         applicationName:
           type: string
-          description: Application name associated with the request.
+          description: Application name of the artifact.
           example: my-app
+        artifactRegisterType:
+          type: string
+          description: Type of artifact registration.
+          example: ENVIRONMENT
+          enum:
+          - GIT_REF
+          - ENVIRONMENT
+          - RELEASE_STREAM
+        artifactRegisterValue:
+          type: string
+          description: Artifact register value dependent on register type.
+          example: release-1.0
+        artifactUri:
+          type: string
+          description: URI of the artifact.
+          example: docker.io/project/image:tag
         artifactory:
           type: string
           description: Name of the artifactory.
           example: DOCKER
         blueprintName:
           type: string
-          description: Blueprint name for which credentials are requested.
+          description: Blueprint name associated with the artifact.
           example: blueprint-1
-      description: Request details for generating push credentials for an artifact.
+        ciName:
+          type: string
+          description: Custom CI name if applicationName is not used.
+          example: ci-my-app
+        externalId:
+          type: string
+          description: External identifier for the artifact.
+          example: '12345'
+        repositoryName:
+          type: string
+          description: Repository name in the artifactory.
+          example: repo-name
+        tag:
+          type: string
+          description: The tag of the artifact.
+          example: v1.0
+      description: Request details for registering a SaaS artifact.
     CiCustomCiCdRequest:
       required:
       - promotionHierarchies
@@ -793,125 +853,6 @@ components:
           - RELEASE_STREAM
           - HYBRID
       description: Request details for attaching or detaching a rule and workflow to/from a CI.
-    WorkflowHierarchy:
-      type: object
-      properties:
-        registrationValue:
-          type: string
-        sequence:
-          type: integer
-          format: int32
-    ErrorDetails:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-    Criterion:
-      required:
-      - metadataKey
-      - operator
-      - routeTo
-      - value
-      type: object
-      properties:
-        metadataKey:
-          type: string
-        operator:
-          type: string
-          enum:
-          - EQUALS
-          - STARTS_WITH
-          - ENDS_WITH
-          - CONTAINS
-        priority:
-          type: integer
-          format: int32
-        routeTo:
-          type: string
-        value:
-          type: string
-    GithubAppPermissionsPendingErrorDetails:
-      type: object
-      properties:
-        approvalUrl:
-          type: string
-        code:
-          type: string
-        errorCode:
-          type: string
-        message:
-          type: string
-        missingPermissions:
-          type: array
-          items:
-            type: string
-    SaasArtifactRequest:
-      required:
-      - artifactRegisterType
-      - artifactRegisterValue
-      - artifactUri
-      - artifactory
-      - blueprintName
-      type: object
-      properties:
-        applicationName:
-          type: string
-          description: Application name of the artifact.
-          example: my-app
-        artifactRegisterType:
-          type: string
-          description: Type of artifact registration.
-          example: ENVIRONMENT
-          enum:
-          - GIT_REF
-          - ENVIRONMENT
-          - RELEASE_STREAM
-        artifactRegisterValue:
-          type: string
-          description: Artifact register value dependent on register type.
-          example: release-1.0
-        artifactUri:
-          type: string
-          description: URI of the artifact.
-          example: docker.io/project/image:tag
-        artifactory:
-          type: string
-          description: Name of the artifactory.
-          example: DOCKER
-        blueprintName:
-          type: string
-          description: Blueprint name associated with the artifact.
-          example: blueprint-1
-        ciName:
-          type: string
-          description: Custom CI name if applicationName is not used.
-          example: ci-my-app
-        externalId:
-          type: string
-          description: External identifier for the artifact.
-          example: '12345'
-        repositoryName:
-          type: string
-          description: Repository name in the artifactory.
-          example: repo-name
-        tag:
-          type: string
-          description: The tag of the artifact.
-          example: v1.0
-      description: Request details for registering a SaaS artifact.
-    PushCredentialsResponse:
-      type: object
-      properties:
-        artifactoryUri:
-          type: string
-        password:
-          type: string
-        repositoryUri:
-          type: string
-        username:
-          type: string
     CiCdDto:
       required:
       - promotionHierarchies
@@ -960,6 +901,34 @@ components:
           description: Name of the project.
           example: my-project
       description: Details required for configuring CI/CD for a project.
+    WorkflowHierarchy:
+      type: object
+      properties:
+        registrationValue:
+          type: string
+        sequence:
+          type: integer
+          format: int32
+    PushCredentialsRequest:
+      required:
+      - applicationName
+      - artifactory
+      - blueprintName
+      type: object
+      properties:
+        applicationName:
+          type: string
+          description: Application name associated with the request.
+          example: my-app
+        artifactory:
+          type: string
+          description: Name of the artifactory.
+          example: DOCKER
+        blueprintName:
+          type: string
+          description: Blueprint name for which credentials are requested.
+          example: blueprint-1
+      description: Request details for generating push credentials for an artifact.
     CiCustomCiCdResponse:
       type: object
       properties:
@@ -1013,6 +982,37 @@ components:
           description: Name of the project.
           example: my-project
       description: Response containing CI-level CI/CD configuration details.
+    ErrorDetails:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    Criterion:
+      required:
+      - metadataKey
+      - operator
+      - routeTo
+      - value
+      type: object
+      properties:
+        metadataKey:
+          type: string
+        operator:
+          type: string
+          enum:
+          - EQUALS
+          - STARTS_WITH
+          - ENDS_WITH
+          - CONTAINS
+        priority:
+          type: integer
+          format: int32
+        routeTo:
+          type: string
+        value:
+          type: string
   securitySchemes:
     basicAuth:
       description: Basic Authentication

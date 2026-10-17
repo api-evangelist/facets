@@ -478,45 +478,21 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    OpaPolicyExecutionResult:
+    GithubAppPermissionsPendingErrorDetails:
       type: object
       properties:
-        errorDetails:
-          type: object
-          additionalProperties:
-            type: object
-        serverResponse:
-          type: object
-        status:
-          type: boolean
-    EnableDisableOPAPolicy:
-      type: object
-      properties:
-        disabled:
-          type: boolean
-        policyName:
+        approvalUrl:
           type: string
-    PolicyTemplateDTO:
-      type: object
-      properties:
-        description:
+        code:
           type: string
-        flavours:
+        errorCode:
+          type: string
+        message:
+          type: string
+        missingPermissions:
           type: array
           items:
             type: string
-        inputData:
-          type: object
-          additionalProperties:
-            type: object
-        resourceTypes:
-          type: array
-          items:
-            type: string
-        templateId:
-          type: string
-        templateName:
-          type: string
     OpaPolicy:
       type: object
       properties:
@@ -576,6 +552,38 @@ components:
           type: string
         templateId:
           type: string
+    PolicyTemplateDTO:
+      type: object
+      properties:
+        description:
+          type: string
+        flavours:
+          type: array
+          items:
+            type: string
+        inputData:
+          type: object
+          additionalProperties:
+            type: object
+        resourceTypes:
+          type: array
+          items:
+            type: string
+        templateId:
+          type: string
+        templateName:
+          type: string
+    OpaPolicyExecutionResult:
+      type: object
+      properties:
+        errorDetails:
+          type: object
+          additionalProperties:
+            type: object
+        serverResponse:
+          type: object
+        status:
+          type: boolean
     OpaPolicyRequest:
       type: object
       properties:
@@ -632,21 +640,13 @@ components:
           type: string
         message:
           type: string
-    GithubAppPermissionsPendingErrorDetails:
+    EnableDisableOPAPolicy:
       type: object
       properties:
-        approvalUrl:
+        disabled:
+          type: boolean
+        policyName:
           type: string
-        code:
-          type: string
-        errorCode:
-          type: string
-        message:
-          type: string
-        missingPermissions:
-          type: array
-          items:
-            type: string
   securitySchemes:
     basicAuth:
       description: Basic Authentication

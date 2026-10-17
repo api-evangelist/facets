@@ -215,6 +215,37 @@ components:
           format: int64
         version:
           type: string
+    Repository:
+      type: object
+      properties:
+        display_name:
+          type: string
+        kind:
+          type: integer
+          format: int32
+        name:
+          type: string
+        official:
+          type: boolean
+        organization_display_name:
+          type: string
+        organization_name:
+          type: string
+        repository_id:
+          type: string
+        scanner_disabled:
+          type: boolean
+        url:
+          type: string
+        verified_publisher:
+          type: boolean
+    PackageResponse:
+      type: object
+      properties:
+        packages:
+          type: array
+          items:
+            $ref: '#/components/schemas/Package'
     SecurityReportSummary:
       type: object
       properties:
@@ -240,30 +271,6 @@ components:
           type: string
         message:
           type: string
-    Repository:
-      type: object
-      properties:
-        display_name:
-          type: string
-        kind:
-          type: integer
-          format: int32
-        name:
-          type: string
-        official:
-          type: boolean
-        organization_display_name:
-          type: string
-        organization_name:
-          type: string
-        repository_id:
-          type: string
-        scanner_disabled:
-          type: boolean
-        url:
-          type: string
-        verified_publisher:
-          type: boolean
     GithubAppPermissionsPendingErrorDetails:
       type: object
       properties:
@@ -279,13 +286,6 @@ components:
           type: array
           items:
             type: string
-    PackageResponse:
-      type: object
-      properties:
-        packages:
-          type: array
-          items:
-            $ref: '#/components/schemas/Package'
   securitySchemes:
     basicAuth:
       description: Basic Authentication
