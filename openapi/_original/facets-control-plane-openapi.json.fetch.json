@@ -1,0 +1,12 @@
+{
+ "url": "https://facetsdemo.console.facets.cloud/v3/api-docs",
+ "requested_url": "https://facetsdemo.console.facets.cloud/v3/api-docs",
+ "status": 200,
+ "content_type": "application/json",
+ "bytes": 1098669,
+ "sha256": "47c129a67c2702302e24c105d4b9bb92a1b8ef1fe9035974a79841265ff7e097",
+ "fetched_at": "2026-10-19",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "equivalent",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the provider's current document describes the same operations (Jaccard 0.965), but the bytes differ, so the archive is an earlier or reformatted copy."
+}
