@@ -550,3 +550,9 @@ components:
       description: Basic Authentication
       scheme: basic
       type: http
+x-provenance:
+  method: harvested
+  publisher: Facets
+  source: https://facetsdemo.console.facets.cloud/v3/api-docs
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)
