@@ -1,0 +1,59 @@
+# Pricing transcribed from the provider's own page — see provenance. Numbers are quoted, not derived.
+generated: '2026-10-28'
+method: searched
+source: https://www.facets.cloud/pricing
+sources:
+- https://www.facets.cloud/pricing
+provenance:
+  tool: engine/economics/harvest_pricing.py
+  run: 20261028T141238
+  grounding: every price_text was found verbatim in the fetched page text
+audience: business-product
+pricing_basis: usage-other
+delivery:
+  delivery: managed+licensed
+  method: page
+  read: '2026-10-28'
+  evidence: Self-hosted in your VPC
+  managed_tier: SaaS
+published: true
+note: SaaS tier priced per Resource Instance with volume discounts; Enterprise is negotiated self-hosted.
+  14-day free trial. Also sold via AWS/Azure/GCP marketplaces.
+plan_count: 2
+currency: USD
+plans:
+- name: SaaS Pay-as-you-go
+  price_text: $799 /month
+  price: 799
+  currency: USD
+  period: month
+  unit: Resource Instance
+  included_quota: 20 Resource Instances included
+  overage: $10/RI after; first 250 additional RIs are $10/month each, 251–500 RIs are $8/month each; above
+    500 custom
+- name: Enterprise Custom Contract
+  price_text: Custom
+  period: none
+  included_quota: Unlimited Resource Instances, self-hosted in your VPC
+x-canonical:
+  generated: '2026-11-01'
+  vocabulary: engine/economics/plans-canonical.yml
+  models:
+  - hybrid
+  units: []
+  plans:
+  - name: SaaS Pay-as-you-go
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - other
+    periods:
+    - month
+  - name: Enterprise Custom Contract
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods:
+    - none
